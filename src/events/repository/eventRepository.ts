@@ -46,7 +46,6 @@ export class EventsRepository {
   }
 
   async findOneByTimePeriod(TimePeriod: Period): Promise<Event> {
-    console.log(TimePeriod)
     const event = await this.eventRepository.findOne(  {
       relations: [ "users", "criteria", "criteria.subCriteria" ],
       where: { TimePeriod: TimePeriod }

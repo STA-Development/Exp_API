@@ -30,7 +30,6 @@ export class EventsService {
   async addCriteria(eventId: number, criteriaRef: ICriteriaRef) {
     const criteria = await this.criteriaRepository.findOne(criteriaRef.id)
     const event = await this.eventsRepository.findOneById(eventId)
-    console.log(event)
     event.criteria.push(criteria)
     return this.eventsRepository.addUsers(event)
   }

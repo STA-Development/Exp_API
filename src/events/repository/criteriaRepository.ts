@@ -27,7 +27,6 @@ export class CriteriaRepository {
     const criteria = await this.criteriaRepository.findOne(id, {
       relations: ["subCriteria"],
     });
-    console.log(criteria)
     return criteria;
   }
 

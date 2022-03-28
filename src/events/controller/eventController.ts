@@ -29,7 +29,6 @@ export class EventsController {
       @Param("id") eventId: number,
       @Body() criteriaRef: SubCriteriaRefDto
   ): Promise<Event> {
-    console.log(criteriaRef.id)
     return this.eventsService.addCriteria(eventId, criteriaRef);
   }
 
