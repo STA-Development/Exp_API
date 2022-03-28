@@ -10,7 +10,6 @@ export class UsersService {
     usersRepository: UsersRepository;
 
     create(createUserDto: CreateUserDto): Promise<User> {
-       // console.log( (this.usersRepository.create(createUserDto)).firstname);
         return this.usersRepository.create(createUserDto)
     }
 
