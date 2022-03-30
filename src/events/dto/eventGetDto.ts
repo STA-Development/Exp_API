@@ -9,5 +9,5 @@ export const eventGetDto = (event: Event): Event => ({
   users: event.users,
   criteria: event.criteria,
   createdAt: event.createdAt,
-  endsAt: event.endsAt,
+  // endsAt: event.endsAt,
 });
