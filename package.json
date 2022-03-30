@@ -6,14 +6,22 @@
    "scripts": {
       "start": "nodemon src/index.ts",
       "typeorm": "node --require ts-node/register ./node_modules/typeorm/cli.js",
+
       "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' --write",
       "lint": "eslint  . --ext .ts"
+
    },
    "devDependencies": {
       "@types/multer": "^1.4.7",
       "@types/node": "^16.11.10",
-      "eslint": "^8.11.0",
+
       "eslint-plugin-react": "^7.29.4",
+
+      "@typescript-eslint/eslint-plugin": "^5.15.0",
+      "@typescript-eslint/parser": "^5.15.0",
+      "eslint": "^8.11.0",
+      "eslint-config-google": "^0.14.0",
+
       "nodemon": "^2.0.15",
       "prettier": "^2.6.0",
       "ts-node": "^10.4.0",
@@ -26,6 +34,7 @@
       "@nestjs/jwt": "^8.0.0",
       "@nestjs/mapped-types": "^1.0.1",
       "@nestjs/platform-express": "^8.4.1",
+      "@nestjs/swagger": "^5.2.0",
       "@nestjs/typeorm": "^8.0.3",
       "bcrypt": "^5.0.1",
       "buffer-to-stream": "^1.0.0",
@@ -38,6 +47,17 @@
       "nodemailer": "^6.7.3",
       "reflect-metadata": "^0.1.13",
       "rxjs": "^7.5.5",
+
+      "dayjs": "^1.11.0",
+      "mysql2": "^2.3.3",
+      "nest-winston": "^1.6.2",
+      "reflect-metadata": "^0.1.13",
+      "swagger-ui-express": "^4.3.0",
+      "typeorm": "0.2.45",
+      "winston": "^3.6.0",
+      "reflect-metadata": "^0.1.13",
+      "swagger-ui-express": "^4.3.0",
+
       "typeorm": "0.2.45"
    }
 }
