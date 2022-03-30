@@ -19,5 +19,5 @@ export interface IEvent {
   users: User[];
   criteria: Criteria[];
   createdAt: Date;
-  endsAt: Date;
+  //endsAt: Date;
 }
