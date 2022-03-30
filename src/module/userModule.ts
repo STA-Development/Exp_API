@@ -1,12 +1,15 @@
 import { Module } from '@nestjs/common';
 import { UsersController } from '../controller/userController';
 import { UsersService } from '../service/userService';
-// import { UsersModule } from '../module/userModule';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { User } from '../entity/user';
 import { UsersRepository } from '../repository/userRepository';
 import {JwtModule} from "@nestjs/jwt";
+import { CloudinaryProvider } from '../cloudinary/cloudinaryProvider';
+import { CloudinaryService } from '../cloudinary/cloudinaryService';
+
+
 @Module({
   imports: [
     ConfigModule.forRoot(),
@@ -25,10 +28,12 @@ import {JwtModule} from "@nestjs/jwt";
     JwtModule.register({
       secret: 'secret',
       signOptions: {expiresIn: '1d'}
-    })
+    }),
 
   ],
+
+
   controllers: [UsersController],
-  providers: [UsersService, UsersRepository]
+  providers: [UsersService, UsersRepository,CloudinaryService,CloudinaryProvider]
 })
 export class UserModule {}

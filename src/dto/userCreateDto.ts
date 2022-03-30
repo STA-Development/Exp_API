@@ -9,4 +9,9 @@ export class CreateUserDto {
   readonly email: string;
   @IsString()
   password: string;
+
+
+
+
+
 }
