@@ -45,8 +45,8 @@ export class Event implements IEvent {
 
   @CreateDateColumn({ type: "timestamp" } )
   createdAt: Date;
-
-  @Column({ type: "timestamp" })
-  endsAt: Date;
+  //
+  // @Column({ type: "timestamp" })
+  // endsAt: Date;
 
 }

@@ -35,7 +35,7 @@ export class CreateEventDto {
   @IsOptional()
   createdAt: Date;
 
-  @IsNumber()
-  endsAt: Date;
+  // @IsNumber()
+  // endsAt: Date;
 
 }

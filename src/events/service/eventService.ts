@@ -43,7 +43,7 @@ export class EventsService {
   }
 
   async create(createEventDto: CreateEventDto) {
-    createEventDto.endsAt = dayjs().add( +createEventDto.endsAt, 'day').toDate();
+    //createEventDto.endsAt = dayjs().add( +createEventDto.endsAt, 'day').toDate();
     //const event = await this.eventsRepository.create(createEventDto);
     return this.eventsRepository.create(createEventDto);
   }
