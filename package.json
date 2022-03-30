@@ -43,7 +43,7 @@
       "mysql2": "^2.3.3",
       "nest-winston": "^1.6.2",
       "reflect-metadata": "^0.1.13",
-      "typeorm": "0.2.45"
+      "typeorm": "0.2.45",
       "rxjs": "^7.5.5",
       "swagger-ui-express": "^4.3.0",
       "winston": "^3.6.0"
