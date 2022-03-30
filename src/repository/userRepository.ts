@@ -5,11 +5,9 @@ import { User } from '../entity/user';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-
 @Injectable()
-export class UsersRepository {
-  @InjectRepository(User)
-  userRepository: Repository<User>;
+  export class UsersRepository {
+  @InjectRepository(User) userRepository: Repository<User>;
 
   create(createUserDto: CreateUserDto): Promise<User> {
     const user = this.userRepository.create(createUserDto);
@@ -21,12 +19,10 @@ export class UsersRepository {
   }
 
   async findOne(id: number): Promise<User> {
-
     const user = await this.userRepository.findOne(id);
     if (!user) {
       throw new NotFoundException(`User with ID=${id} not found`);
     }
-
     return user;
   }
 

@@ -9,7 +9,6 @@ import {JwtModule} from "@nestjs/jwt";
 import { CloudinaryProvider } from '../cloudinary/cloudinaryProvider';
 import { CloudinaryService } from '../cloudinary/cloudinaryService';
 
-
 @Module({
   imports: [
     ConfigModule.forRoot(),
@@ -29,9 +28,7 @@ import { CloudinaryService } from '../cloudinary/cloudinaryService';
       secret: 'secret',
       signOptions: {expiresIn: '1d'}
     }),
-
   ],
-
 
   controllers: [UsersController],
   providers: [UsersService, UsersRepository,CloudinaryService,CloudinaryProvider]

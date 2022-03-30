@@ -13,10 +13,8 @@ export class CloudinaryService {
                 if (error) return reject(error);
                 resolve(result);
             });
-
             toStream(file.buffer).pipe(upload);
         });
-
     }
     async deleteImg(
         public_id,
@@ -26,9 +24,6 @@ export class CloudinaryService {
                 if (error) return reject(error);
                 resolve(result);
             });
-
-
         });
-
     }
 }

@@ -28,8 +28,4 @@ export class User {
 
   @Column({ default: null})
   avatar_public_id: string;
-
-
-
-
 }
