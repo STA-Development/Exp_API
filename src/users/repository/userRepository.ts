@@ -19,14 +19,22 @@ export class UserRepository {
     return this.userRepository.find({relations: ["events"],});
   }
 
-  findOne(id: number): Promise<User> {
-    return this.userRepository.findOne(id, {relations: ["events"],});
+  async findOne(id: number): Promise<User> {
+    const user = await this.userRepository.findOne(id, {relations: ["events"]});
+    if (!user) {
+      throw new NotFoundException(`User with ID=${id} not found`);
+    }
+    return user;
   }
 
   async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
     const user = await this.userRepository.preload({
-      ...updateUserDto,
+      id: id,
+      ...updateUserDto
     });
+    if (!user) {
+      throw new NotFoundException(`User with ID=${id} not found`);
+    }
     return this.userRepository.save(user);
   }
 

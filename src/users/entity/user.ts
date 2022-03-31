@@ -3,26 +3,39 @@ import {
   Column,
   PrimaryGeneratedColumn,
   ManyToMany,
-  JoinTable,
 } from "typeorm";
 import { IUser } from "../interface/userInterface";
 import { Event } from "../../events/entity/event";
-import {IsString} from "class-validator";
+
 
 @Entity()
 export class User implements IUser {
-  @PrimaryGeneratedColumn("increment")
+  @PrimaryGeneratedColumn()
   id: number;
 
-  @IsString()
-  @Column({ length: 100 })
+  @Column()
   firstName: string;
 
-  @Column({ length: 100 })
+  @Column()
   lastName: string;
 
-  @Column({ length: 100 })
+  @Column( {unique: true })
   email: string;
+
+  @Column()
+  password: string;
+
+  @Column({ default: false })
+  isAdmin: boolean;
+
+  @Column({ default: 60000 })
+  salary: number;
+
+  @Column({ default: "https://www.w3schools.com/howto/img_avatar.png"})
+  avatar: string;
+
+  @Column({ default: null})
+  avatar_public_id: string;
 
   @ManyToMany(() => Event, (events) => events.users)
   events: Event[];

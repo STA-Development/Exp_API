@@ -10,6 +10,9 @@ export class CreateUserDto extends User {
   readonly firstName: string;
 
   @IsString()
+   password: string;
+
+  @IsString()
   readonly lastName: string;
 
   @IsEmail()

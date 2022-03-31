@@ -5,13 +5,15 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { ConfigModule } from "@nestjs/config";
 import { User } from "../entity/user";
 import { UserRepository } from "../repository/userRepository";
+import { JwtModule } from "@nestjs/jwt";
+import { CloudinaryProvider } from '../../cloudinary/cloudinaryProvider';
+import { CloudinaryService } from '../../cloudinary/cloudinaryService';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
     TypeOrmModule.forFeature([User] ),
     TypeOrmModule.forRoot({
-
       type: "mysql",
       host: process.env.DB_HOST,
       port: +process.env.DB_PORT,
@@ -23,9 +25,13 @@ import { UserRepository } from "../repository/userRepository";
       keepConnectionAlive: true,
       socketPath: "/Applications/MAMP/tmp/mysql/mysql.sock",
     }),
+    JwtModule.register({
+      secret: 'secret',
+      signOptions: {expiresIn: '1d'}
+    }),
   ],
   controllers: [UsersController],
-  providers: [UsersService, UserRepository, Logger],
+  providers: [UsersService, UserRepository, Logger, CloudinaryService,CloudinaryProvider],
 
 })
 export class UserModule {}
