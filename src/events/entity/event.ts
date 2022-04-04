@@ -9,6 +9,7 @@ import {
 import { IEvent, Period } from "../interface/eventInterface";
 import { User } from "../../users/entity/user";
 import {Criteria} from "./criteria";
+import {Rating} from "./rating";
 
 @Entity()
 export class Event implements IEvent {
@@ -21,8 +22,13 @@ export class Event implements IEvent {
   @Column()
   bonus: number;
 
-  @Column()
-  rating: number;
+  @ManyToMany(() => Rating, (rating) => rating.events, {cascade: true})
+  @JoinTable({
+    name: "event_rating",
+    joinColumn: { name: "ratingId" },
+    inverseJoinColumn: { name: "eventId" },
+  })
+  rating: Rating[];
 
   @Column()
   TimePeriod: Period;

@@ -1,10 +1,13 @@
 import { SubCriteria } from "../entity/subCriteria";
+import {criteriaGetDto} from "./criteriaGetDto";
+import {eventGetDto} from "./eventGetDto";
 
-export const subCriteriaGetDto = (criteria: SubCriteria): SubCriteria => {
+export const subCriteriaGetDto = (subCriteria: SubCriteria): SubCriteria => {
+ // console.log(`This is our subCriteriaDto`)
   return ({
-    id: criteria.id,
-    name: criteria.name,
-    subCriteria: criteria.subCriteria,
-    criteria: criteria.criteria,
+    id: subCriteria.id,
+    name: subCriteria.name,
+    subCriteria: subCriteria.subCriteria,
+    criteria:  ((!subCriteria.criteria) ? subCriteria.criteria : criteriaGetDto(subCriteria.criteria)),
   });
 };

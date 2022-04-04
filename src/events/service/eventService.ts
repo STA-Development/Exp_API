@@ -4,16 +4,17 @@ import { UpdateEventDto } from "../dto/eventUpdateDto";
 import { Event } from "../entity/event";
 import { EventsRepository } from "../repository/eventRepository";
 import {InjectRepository} from "@nestjs/typeorm";
-import {Repository} from "typeorm";
+import {getConnection, getRepository, Repository} from "typeorm";
 import {User} from "../../users/entity/user";
 import {IUserRef} from "../interface/userRefInterface";
 import * as dayjs from "dayjs";
 import {Period} from "../interface/eventInterface";
-import {ISubCriteriaRef} from "../interface/subCriteriaRefInterface";
-import {SubCriteria} from "../entity/subCriteria";
 import {ICriteriaRef} from "../interface/criteriaRefInterface";
 import {Criteria} from "../entity/criteria";
-
+import {Rating} from "../entity/rating";
+import {RatingRepository} from "../repository/ratingRepository";
+import {eventLogger} from "../../logger";
+import {Connection} from "typeorm";
 
 @Injectable()
 export class EventsService {
@@ -26,6 +27,21 @@ export class EventsService {
 
   @InjectRepository(Criteria)
   criteriaRepository: Repository<Criteria>;
+
+  @InjectRepository(Rating)
+  ratingRepository: Repository<Rating>;
+
+  async addRating(eventId: number, criteriaRef: ICriteriaRef) {
+    const rating = await this.ratingRepository.findOne(criteriaRef.id)
+    const event = await this.eventsRepository.findOneById(eventId)
+    if(event.rating == null){
+      event.rating = [rating]
+    }
+    else{
+      event.rating.push(rating)
+    }
+    return this.eventsRepository.addUsers(event)       // @ndharacnenq addusers@
+  }
 
   async addCriteria(eventId: number, criteriaRef: ICriteriaRef) {
     const criteria = await this.criteriaRepository.findOne(criteriaRef.id)
@@ -43,8 +59,11 @@ export class EventsService {
   }
 
   async create(createEventDto: CreateEventDto) {
-    createEventDto.endsAt = dayjs().add( +createEventDto.endsAt, 'day').toDate();
-    //const event = await this.eventsRepository.create(createEventDto);
+    try { createEventDto.endsAt = dayjs().add(+createEventDto.endsAt, 'day').toDate(); }
+    catch(error){
+      eventLogger.error(`end date doesn't created ${error.message}`)
+    }
+    createEventDto.rating = await this.ratingRepository.find({take: 3})
     return this.eventsRepository.create(createEventDto);
   }
 

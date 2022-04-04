@@ -1,0 +1,231 @@
+2022-04-04T14:27:40.852Z info: All events Black_Eval,Yellow_Eval,Red_Eval,Orange_Eval,White_Eval,Green_Eval,Blue_Eval,Purple_Eval: {}
+2022-04-04T14:27:40.853Z info: e: {}
+2022-04-04T14:29:48.310Z INFO "All events Black_Eval,Yellow_Eval,Red_Eval,Orange_Eval,White_Eval,Green_Eval,Blue_Eval,Purple_Eval"
+2022-04-04T14:29:48.311Z INFO "e"
+2022-04-04T14:32:48.001Z INFO "All events Black_Eval,Yellow_Eval,Red_Eval,Orange_Eval,White_Eval,Green_Eval,Blue_Eval,Purple_Eval"
+2022-04-04T14:32:48.002Z INFO "e"
+2022-04-04T14:34:52.435Z INFO "All events Black_Eval,Yellow_Eval,Red_Eval,Orange_Eval,White_Eval,Green_Eval,Blue_Eval,Purple_Eval"info
+2022-04-04T14:34:52.435Z INFO "e"info
+undefined INFO "All events Black_Eval,Yellow_Eval,Red_Eval,Orange_Eval,White_Eval,Green_Eval,Blue_Eval,Purple_Eval"
+undefined INFO "e"
+2022-04-04T14:42:39.880Z INFO "All events Black_Eval,Yellow_Eval,Red_Eval,Orange_Eval,White_Eval,Green_Eval,Blue_Eval,Purple_Eval"
+2022-04-04T14:42:39.881Z INFO "e"
+2022-04-04T14:42:52.964Z INFO "All events Black_Eval,Yellow_Eval,Red_Eval,Orange_Eval,White_Eval,Green_Eval,Blue_Eval,Purple_Eval"
+2022-04-04T14:42:52.965Z INFO "e"
+2022-04-04T14:47:29.338Z INFO "All events Black_Eval,Yellow_Eval,Red_Eval,Orange_Eval,White_Eval,Green_Eval,Blue_Eval,Purple_Eval"
+2022-04-04T14:47:29.340Z INFO "e"
+2022-04-04T14:48:05.155Z INFO "All events Black_Eval,Yellow_Eval,Red_Eval,Orange_Eval,White_Eval,Green_Eval,Blue_Eval,Purple_Eval"
+2022-04-04T14:48:05.156Z INFO "e"
+2022-04-04T14:48:26.272Z INFO "All events Black_Eval,Yellow_Eval,Red_Eval,Orange_Eval,White_Eval,Green_Eval,Blue_Eval,Purple_Eval"
+2022-04-04T14:48:26.273Z INFO "e"
+2022-04-04T14:49:54.932Z INFO "All events Black_Eval,Yellow_Eval,Red_Eval,Orange_Eval,White_Eval,Green_Eval,Blue_Eval,Purple_Eval"
+2022-04-04T14:49:54.933Z INFO "e"
+2022-04-04T14:50:08.077Z INFO "All events Black_Eval,Yellow_Eval,Red_Eval,Orange_Eval,White_Eval,Green_Eval,Blue_Eval,Purple_Eval"
+2022-04-04T14:50:08.077Z INFO "e"
+2022-04-04T14:50:15.864Z INFO "All events Black_Eval,Yellow_Eval,Red_Eval,Orange_Eval,White_Eval,Green_Eval,Blue_Eval,Purple_Eval"
+2022-04-04T14:50:15.864Z INFO "e"
+2022-04-04T14:50:34.367Z INFO "All events Black_Eval,Yellow_Eval,Red_Eval,Orange_Eval,White_Eval,Green_Eval,Blue_Eval,Purple_Eval"
+2022-04-04T14:50:34.368Z INFO "e"
+2022-04-04T14:50:50.102Z INFO "All events Black_Eval,Yellow_Eval,Red_Eval,Orange_Eval,White_Eval,Green_Eval,Blue_Eval,Purple_Eval"
+2022-04-04T14:50:50.103Z INFO "e"
+2022-04-04T14:51:22.494Z INFO "All events Black_Eval,Yellow_Eval,Red_Eval,Orange_Eval,White_Eval,Green_Eval,Blue_Eval,Purple_Eval"
+2022-04-04T14:51:22.495Z ERROR "e"
+2022-04-04T14:51:26.773Z INFO "All events Black_Eval,Yellow_Eval,Red_Eval,Orange_Eval,White_Eval,Green_Eval,Blue_Eval,Purple_Eval"
+2022-04-04T14:51:26.774Z ERROR "e"
+2022-04-04T14:51:46.035Z INFO "All events Black_Eval,Yellow_Eval,Red_Eval,Orange_Eval,White_Eval,Green_Eval,Blue_Eval,Purple_Eval"
+2022-04-04T14:51:46.036Z ERROR "e"
+2022-04-04T14:51:50.403Z INFO "All events Black_Eval,Yellow_Eval,Red_Eval,Orange_Eval,White_Eval,Green_Eval,Blue_Eval,Purple_Eval"
+2022-04-04T14:51:50.403Z ERROR "e"
+2022-04-04T14:52:04.836Z INFO "All events Black_Eval,Yellow_Eval,Red_Eval,Orange_Eval,White_Eval,Green_Eval,Blue_Eval,Purple_Eval"
+2022-04-04T14:52:21.095Z INFO "All events Black_Eval,Yellow_Eval,Red_Eval,Orange_Eval,White_Eval,Green_Eval,Blue_Eval,Purple_Eval"
+2022-04-04T14:52:21.096Z WARN "e"
+2022-04-04T14:53:48.045Z INFO "[object Object]"
+2022-04-04T14:53:52.388Z INFO "[object Object]"
+2022-04-04T14:54:04.927Z DEBUG "[object Object]"
+2022-04-04T14:54:26.685Z DEBUG "[object Object]"
+2022-04-04T14:54:42.028Z INFO "[object Object]"
+2022-04-04T14:55:29.428Z INFO "[object Object]"
+2022-04-04T14:58:23.756Z INFO "{\"id\":1,\"title\":\"Black_Eval\",\"bonus\":15,\"TimePeriod\":\"annually\",\"createdAt\":\"2022-03-29T16:40:46.993Z\",\"endsAt\":null,\"users\":[{\"id\":1,\"firstName\":\"Leonardo\",\"lastName\":\"da Vinci\",\"email\":\"leoda@gmail.com\"}],\"rating\":[],\"criteria\":[{\"id\":1,\"name\":\"Big_3\",\"criteria\":true,\"subCriteria\":[{\"id\":1,\"name\":\"Small_1\",\"subCriteria\":true},{\"id\":2,\"name\":\"Small_2\",\"subCriteria\":true}]},{\"id\":2,\"name\":\"Big_4\",\"criteria\":true,\"subCriteria\":[]}]}"
+2022-04-04T14:59:12.687Z [info] : [object Object] {}
+2022-04-04T14:59:38.625Z [info] : [object Object] {}
+2022-04-04T15:00:02.552Z INFO "[object Object]"
+2022-04-04T15:00:45.913Z INFO "sdaf: [object Object]"
+2022-04-04T15:02:30.590Z INFO {"id":1,"title":"Black_Eval","bonus":15,"TimePeriod":"annually","createdAt":"2022-03-29T16:40:46.993Z","endsAt":null,"users":[{"id":1,"firstName":"Leonardo","lastName":"da Vinci","email":"leoda@gmail.com"}],"rating":[],"criteria":[{"id":1,"name":"Big_3","criteria":true,"subCriteria":[{"id":1,"name":"Small_1","subCriteria":true},{"id":2,"name":"Small_2","subCriteria":true}]},{"id":2,"name":"Big_4","criteria":true,"subCriteria":[]}]}
+2022-04-04T15:02:52.335Z INFO [object Object]
+2022-04-04T15:03:42.060Z INFO {"id":1,"title":"Black_Eval","bonus":15,"TimePeriod":"annually","createdAt":"2022-03-29T16:40:46.993Z","endsAt":null,"users":[{"id":1,"firstName":"Leonardo","lastName":"da Vinci","email":"leoda@gmail.com"}],"rating":[],"criteria":[{"id":1,"name":"Big_3","criteria":true,"subCriteria":[{"id":1,"name":"Small_1","subCriteria":true},{"id":2,"name":"Small_2","subCriteria":true}]},{"id":2,"name":"Big_4","criteria":true,"subCriteria":[]}]}
+2022-04-04T15:06:49.801Z INFO {"id":1,"title":"Black_Eval","bonus":15,"TimePeriod":"annually","createdAt":"2022-03-29T16:40:46.993Z","endsAt":null,"users":[{"id":1,"firstName":"Leonardo","lastName":"da Vinci","email":"leoda@gmail.com"}],"rating":[],"criteria":[{"id":1,"name":"Big_3","criteria":true,"subCriteria":[{"id":1,"name":"Small_1","subCriteria":true},{"id":2,"name":"Small_2","subCriteria":true}]},{"id":2,"name":"Big_4","criteria":true,"subCriteria":[]}]}
+2022-04-04T15:10:05.447Z INFO 
+	{"id":1,"title":"Black_Eval","bonus":15,"TimePeriod":"annually","createdAt":"2022-03-29T16:40:46.993Z","endsAt":null,"users":[{"id":1,"firstName":"Leonardo","lastName":"da Vinci","email":"leoda@gmail.com"}],"rating":[],"criteria":[{"id":1,"name":"Big_3","criteria":true,"subCriteria":[{"id":1,"name":"Small_1","subCriteria":true},{"id":2,"name":"Small_2","subCriteria":true}]},{"id":2,"name":"Big_4","criteria":true,"subCriteria":[]}]}
+2022-04-04T15:10:28.243Z INFO 
+	"\n\t[object Object]"
+2022-04-04T15:13:27.537Z INFO 
+	{
+  "id": 1,
+  "title": "Black_Eval",
+  "bonus": 15,
+  "TimePeriod": "annually",
+  "createdAt": "2022-03-29T16:40:46.993Z",
+  "endsAt": null,
+  "users": [
+    {
+      "id": 1,
+      "firstName": "Leonardo",
+      "lastName": "da Vinci",
+      "email": "leoda@gmail.com"
+    }
+  ],
+  "rating": [],
+  "criteria": [
+    {
+      "id": 1,
+      "name": "Big_3",
+      "criteria": true,
+      "subCriteria": [
+        {
+          "id": 1,
+          "name": "Small_1",
+          "subCriteria": true
+        },
+        {
+          "id": 2,
+          "name": "Small_2",
+          "subCriteria": true
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Big_4",
+      "criteria": true,
+      "subCriteria": []
+    }
+  ]
+}
+2022-04-04T15:13:43.167Z INFO 
+	{
+  "id": 1,
+  "title": "Black_Eval",
+  "bonus": 15,
+  "TimePeriod": "annually",
+  "createdAt": "2022-03-29T16:40:46.993Z",
+  "endsAt": null,
+  "users": [
+    {
+      "id": 1,
+      "firstName": "Leonardo",
+      "lastName": "da Vinci",
+      "email": "leoda@gmail.com"
+    }
+  ],
+  "rating": [],
+  "criteria": [
+    {
+      "id": 1,
+      "name": "Big_3",
+      "criteria": true,
+      "subCriteria": [
+        {
+          "id": 1,
+          "name": "Small_1",
+          "subCriteria": true
+        },
+        {
+          "id": 2,
+          "name": "Small_2",
+          "subCriteria": true
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Big_4",
+      "criteria": true,
+      "subCriteria": []
+    }
+  ]
+}
+2022-04-04T15:17:45.894Z INFO 
+	{
+  "id": 1,
+  "title": "Black_Eval",
+  "bonus": 15,
+  "TimePeriod": "annually",
+  "createdAt": "2022-03-29T16:40:46.993Z",
+  "endsAt": null,
+  "users": [
+    {
+      "id": 1,
+      "firstName": "Leonardo",
+      "lastName": "da Vinci",
+      "email": "leoda@gmail.com"
+    }
+  ],
+  "rating": [],
+  "criteria": [
+    {
+      "id": 1,
+      "name": "Big_3",
+      "criteria": true,
+      "subCriteria": [
+        {
+          "id": 1,
+          "name": "Small_1",
+          "subCriteria": true
+        },
+        {
+          "id": 2,
+          "name": "Small_2",
+          "subCriteria": true
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Big_4",
+      "criteria": true,
+      "subCriteria": []
+    }
+  ]
+}
+2022-04-04T15:18:12.261Z INFO {
+  "id": 1,
+  "title": "Black_Eval",
+  "bonus": 15,
+  "TimePeriod": "annually",
+  "createdAt": "2022-03-29T16:40:46.993Z",
+  "endsAt": null,
+  "users": [
+    {
+      "id": 1,
+      "firstName": "Leonardo",
+      "lastName": "da Vinci",
+      "email": "leoda@gmail.com"
+    }
+  ],
+  "rating": [],
+  "criteria": [
+    {
+      "id": 1,
+      "name": "Big_3",
+      "criteria": true,
+      "subCriteria": [
+        {
+          "id": 1,
+          "name": "Small_1",
+          "subCriteria": true
+        },
+        {
+          "id": 2,
+          "name": "Small_2",
+          "subCriteria": true
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Big_4",
+      "criteria": true,
+      "subCriteria": []
+    }
+  ]
+}

@@ -5,6 +5,7 @@ import { Event } from "../entity/event";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import {Period} from "../interface/eventInterface";
+import {eventLogger} from "../../logger";
 
 @Injectable()
 export class EventsRepository {
@@ -21,17 +22,19 @@ export class EventsRepository {
   }
 
   findAll(): Promise<Event[]> {
-    return this.eventRepository.find({ relations: [ "users", "criteria", "criteria.subCriteria" ] });
+    return this.eventRepository.find({
+      relations: [ "users", "rating", "criteria", "criteria.subCriteria" ] });
   }
 
   findAllByTitle(title: string): Promise<Event[]> {
-    return this.eventRepository.find({ relations: [ "users", "criteria", "criteria.subCriteria" ], where: { title: title } });     /////
+    return this.eventRepository.find({
+      relations: [ "users", "rating", "criteria", "criteria.subCriteria" ], where: { title: title } });     /////
   }
 
   async findOneById(id: number): Promise<Event> {
-    const event = await this.eventRepository.findOne(id, {
-      relations: ["users", "criteria", "criteria.subCriteria"],
-    });
+    let event;
+      event = await this.eventRepository.findOne(id,
+        {relations: ["users", "rating", "criteria", "criteria.subCriteria"],});
 
     return event;
   }

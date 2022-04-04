@@ -1,14 +1,14 @@
 import {
-  Controller,
+
   Get,
   Post,
   Body,
   Param,
   Delete,
-  Put,
-  Inject,
+  Put,Inject,
+  Controller,
   UseInterceptors,
-  ClassSerializerInterceptor,
+  ClassSerializerInterceptor, forwardRef,
 } from "@nestjs/common";
 import { EventsService } from "../service/eventService";
 import { CreateEventDto } from "../dto/eventCreateDto";
@@ -17,11 +17,31 @@ import { Event } from "../entity/event";
 import { eventGetDto } from "../dto/eventGetDto";
 import { SubCriteriaRefDto } from "../dto/subCriteriaRefDto";
 import { Period } from "../interface/eventInterface";
+import { Logger } from '@nestjs/common';
+import {eventLogger} from "../../logger"
+import {ratingGetDto} from "../dto/ratingGetDto";
+import {userGetDto} from "../../users/dto/userGetDto";
+import {criteriaGetDto} from "../dto/criteriaGetDto";
+import {Rating} from "../entity/rating";
+import {loadFiles} from "typeorm-seeding/dist/utils/file.util";
 
 @Controller("events")
 export class EventsController {
   @Inject()
   eventsService: EventsService;
+
+  // @Inject(forwardRef(() => Logger))
+  // logger: Logger;
+
+
+  @UseInterceptors(ClassSerializerInterceptor)
+  @Put(":id/rating")
+  addRating(
+      @Param("id") eventId: number,
+      @Body() criteriaRef: SubCriteriaRefDto
+  ): Promise<Event> {
+    return this.eventsService.addRating(eventId, criteriaRef);
+  }
 
   @UseInterceptors(ClassSerializerInterceptor)
   @Put(":id/criteria")
@@ -50,6 +70,7 @@ export class EventsController {
   @UseInterceptors(ClassSerializerInterceptor)
   @Get()
   async findAll(): Promise<Event[]> {
+    eventLogger.info((await this.eventsService.findOneById(1)))
     return (await this.eventsService.findAll()).map((event) => eventGetDto(event));
   }
 

@@ -14,6 +14,7 @@ import { UsersService } from "../service/userService";
 import { CreateUserDto } from "../dto/userCreateDto";
 import { UpdateUserDto } from "../dto/userUpdateDto";
 import { User } from "../entity/user";
+import {eventLogger} from "../../logger";
 
 @Controller("users")
 export class UsersController {
@@ -29,6 +30,7 @@ export class UsersController {
   @UseInterceptors(ClassSerializerInterceptor)
   @Get()
   async findAll(): Promise<User[]> {
+    eventLogger.info('Get all users');
     return this.usersService.findAll();
   }
 

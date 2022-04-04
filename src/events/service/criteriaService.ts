@@ -5,6 +5,7 @@ import { Criteria } from "../entity/criteria";
 import { CriteriaRepository } from "../repository/criteriaRepository";
 import {ISubCriteriaRef} from "../interface/subCriteriaRefInterface";
 import {SubCriteriaRepository} from "../repository/subCriteriaRepository";
+import {eventLogger} from "../../logger";
 
 
 @Injectable()
@@ -21,8 +22,11 @@ export class CriteriaService {
     const criteria = await this.criteriaRepository.findOneById(criteriaId)
     if(criteria.subCriteria == null){
       criteria.subCriteria = [await this.subCriteriaRepository.findOneById(criteriaRef.id)]
+      eventLogger.error(`${(criteria)} `);
+
     }
     else{
+      eventLogger.info(`adding new subcriteria to ${(criteria.name)} criteria`);
       criteria.subCriteria.push(subCriteria)
     }
     return this.criteriaRepository.addSubCriteria(criteria)

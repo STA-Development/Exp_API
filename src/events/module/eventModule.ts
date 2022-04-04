@@ -1,4 +1,4 @@
-import { Module } from "@nestjs/common";
+import {forwardRef, Logger, MiddlewareConsumer, Module, NestModule} from "@nestjs/common";
 import { EventsController } from "../controller/eventController";
 import { EventsService } from "../service/eventService";
 import { TypeOrmModule } from "@nestjs/typeorm";
@@ -7,16 +7,19 @@ import { Event } from "../entity/event";
 import { EventsRepository } from "../repository/eventRepository";
 import { User } from "../../users/entity/user";
 import { UserRepository } from "../../users/repository/userRepository";
-import {SubCriteria} from "../entity/subCriteria";
-import {SubCriteriaRepository} from "../repository/subCriteriaRepository";
 import {CriteriaRepository} from "../repository/criteriaRepository";
 import {Criteria} from "../entity/criteria";
+import {Rating} from "../entity/rating";
+import {RatingRepository} from "../repository/ratingRepository";
+import {eventLogger} from "../../logger";
+//import ormconfig from "../../../ormconfig";
 
 @Module({
-  imports: [
+  imports: [// forwardRef(()=> Logger),
     ConfigModule.forRoot(),
-    TypeOrmModule.forFeature([Event, User, Criteria]),
+    TypeOrmModule.forFeature([Event, User, Criteria, Rating]),
     TypeOrmModule.forRoot({
+
       type: "mysql",
       host: process.env.DB_HOST,
       port: +process.env.DB_PORT,
@@ -30,8 +33,14 @@ import {Criteria} from "../entity/criteria";
 
   ],
   controllers: [EventsController],
-  providers: [EventsService, EventsRepository, UserRepository, CriteriaRepository],
+  providers: [EventsService, EventsRepository, UserRepository, CriteriaRepository, RatingRepository ],
 
 })
 
-export class EventModule {}
+export class EventModule implements  NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+        .apply(eventLogger)                            ////////////////////////////
+        .forRoutes(EventsController);
+  }
+}

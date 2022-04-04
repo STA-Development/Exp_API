@@ -1,4 +1,4 @@
-import { Module } from "@nestjs/common";
+import {forwardRef, Logger, Module} from "@nestjs/common";
 import { CriteriaController } from "../controller/criteriaController";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { ConfigModule } from "@nestjs/config";
@@ -7,6 +7,7 @@ import { CriteriaRepository } from "../repository/criteriaRepository";
 import { CriteriaService } from "../service/criteriaService";
 import {SubCriteria} from "../entity/subCriteria";
 import {SubCriteriaRepository} from "../repository/subCriteriaRepository";
+import { ConnectionOptions, createConnection, getRepository } from "typeorm";
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import {SubCriteriaRepository} from "../repository/subCriteriaRepository";
       database: process.env.DB_DATABASE,
       autoLoadEntities: true,
       synchronize: true,
+      logging: false,
       socketPath: "/Applications/MAMP/tmp/mysql/mysql.sock",
     }),
 

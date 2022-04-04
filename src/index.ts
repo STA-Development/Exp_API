@@ -1,12 +1,23 @@
 import {NestFactory} from '@nestjs/core';
 import {ValidationPipe} from '@nestjs/common';
 import {DocumentBuilder, SwaggerModule} from "@nestjs/swagger";
-
-import {EventsModule } from './events/module/appModule';
+import {EventsModule } from './events/module/eventAppModule';
 import {UserModule } from './users/module/userModule';
+import {createLogger, loggers} from "winston";
+import {eventLogger} from "./logger";
+//import { createLogger } from './logger'
 
-async function bootstrap() {
-    const eventApp = await NestFactory.create( EventsModule );
+
+async function bootstrap():Promise<void> {
+    const eventApp = await NestFactory.create( EventsModule,
+        {
+            logger: eventLogger,                   //process.env.NODE_ENV === "development" ?  eventLogger : createLogger()
+            bufferLogs: true,
+            autoFlushLogs: false,
+        }
+    );
+  //  console.log(eventLogger)
+ //   eventApp.useLogger(eventApp.get(eventLogger));
     const eventConfig = new DocumentBuilder()
         .setTitle('Events')
         .setDescription('The events API description')
@@ -23,7 +34,14 @@ async function bootstrap() {
     );
     await eventApp.listen(3030);
 
-    const userApp = await NestFactory.create( UserModule );
+    const userApp = await NestFactory.create( UserModule,
+        {
+            logger: eventLogger,            //process.env.NODE_ENV === "development" ?  userLogger : createLogger()
+           // bufferLogs: true,
+          //  autoFlushLogs: false,
+        }
+    );
+  //  userApp.useLogger(userApp.get(userLogger));
     const userConfig = new DocumentBuilder()
         .setTitle('Users')
         .setDescription('The users API description')

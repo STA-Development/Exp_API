@@ -1,6 +1,7 @@
 import { User } from "../../users/entity/user";
 import { SubCriteria } from "../entity/subCriteria";
 import {Criteria} from "../entity/criteria";
+import {Rating} from "../entity/rating";
 
 export enum Period {
   never = "never",
@@ -14,7 +15,7 @@ export interface IEvent {
   id: number;
   title: string;
   bonus: number;
-  rating: number;
+  rating: Rating[];
   TimePeriod: Period;
   users: User[];
   criteria: Criteria[];

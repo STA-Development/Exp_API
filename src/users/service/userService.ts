@@ -1,5 +1,5 @@
 import { Inject, Injectable, NotFoundException } from "@nestjs/common";
-import { UserGetDto } from "../dto/userGetDto";
+import { userGetDto } from "../dto/userGetDto";
 import { CreateUserDto } from "../dto/userCreateDto";
 import { UpdateUserDto } from "../dto/userUpdateDto";
 import { User } from "../entity/user";
@@ -17,7 +17,7 @@ export class UsersService {
   async findAll(): Promise<User[]> {
     const users = await this.usersRepository.findAll();
 
-    return users.map((user) => UserGetDto(user));
+    return users.map((user) => userGetDto(user));
   }
 
   async findOne(id: number): Promise<User> {
@@ -25,7 +25,7 @@ export class UsersService {
     if (!user) {
       throw new NotFoundException(`User with ID=${id} not found`);
     }
-    return UserGetDto(user);
+    return userGetDto(user);
   }
 
   update(id: number, updateUserDto: UpdateUserDto): Promise<User> {

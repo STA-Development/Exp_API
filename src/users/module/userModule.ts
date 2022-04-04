@@ -11,7 +11,7 @@ import { UserRepository } from "../repository/userRepository";
     ConfigModule.forRoot(),
     TypeOrmModule.forFeature([User] ),
     TypeOrmModule.forRoot({
-
+     // name: "mysql",
       type: "mysql",
       host: process.env.DB_HOST,
       port: +process.env.DB_PORT,
@@ -25,7 +25,7 @@ import { UserRepository } from "../repository/userRepository";
     }),
   ],
   controllers: [UsersController],
-  providers: [UsersService, UserRepository, Logger],
+  providers: [UsersService, UserRepository],
 
 })
 export class UserModule {}

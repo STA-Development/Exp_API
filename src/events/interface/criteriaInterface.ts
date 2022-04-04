@@ -2,7 +2,7 @@ import {Event} from "../entity/event";
 import {SubCriteria} from "../entity/subCriteria";
 
 export interface ICriteria {
-  id: number;
+  // id: number;
   name: string;
   criteria: boolean;
   events: Event[];

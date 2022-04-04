@@ -2,25 +2,27 @@ import {
   IsString,
   IsInt,
   IsEnum,
-  IsEmpty,
   IsDate,
   IsNotEmpty,
-  isNotEmpty, IsObject, IsOptional, IsDateString, IsISO8601, IsNumber,
+  IsOptional, IsNumber, Min, Max,
 } from "class-validator";
 
 import { Period } from "../interface/eventInterface";
 import { User } from "../../users/entity/user";
 import {Criteria} from "../entity/criteria";
+import {Rating} from "../entity/rating";
 
 export class CreateEventDto {
   @IsString()
   readonly title: string;
 
   @IsInt()
+  @Min(0)
+  @Max(100)
   readonly bonus: number;
 
-  @IsInt()
-  readonly rating: number;
+  @IsOptional()
+  rating: Rating[];
 
   @IsEnum(Period)
   readonly TimePeriod: Period;

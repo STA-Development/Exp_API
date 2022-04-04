@@ -15,7 +15,6 @@ import { CreateSubCriteriaDto } from "../dto/subCriteriaCreateDto";
 import { UpdateSubCriteriaDto } from "../dto/subCriteriaUpdateDto";
 import { SubCriteria } from "../entity/subCriteria";
 import { subCriteriaGetDto } from "../dto/subCriteriaGetDto";
-//import { UserRefDto } from "../../criteria/dto/userRefDto";
 
 @Controller("subCriteria")
 export class SubCriteriaController {
