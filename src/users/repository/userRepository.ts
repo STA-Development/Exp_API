@@ -10,8 +10,8 @@ export class UserRepository {
   @InjectRepository(User)
   userRepository: Repository<User>;
 
-  create(createUserDto: CreateUserDto): Promise<User> {
-    const user = this.userRepository.create(createUserDto);
+   create(createUserDto: CreateUserDto): Promise<User> {
+    const user =  this.userRepository.create(createUserDto);
     return this.userRepository.save(user);
   }
 
@@ -21,9 +21,6 @@ export class UserRepository {
 
   async findOne(id: number): Promise<User> {
     const user = await this.userRepository.findOne(id, {relations: ["events"]});
-    if (!user) {
-      throw new NotFoundException(`User with ID=${id} not found`);
-    }
     return user;
   }
 
@@ -32,9 +29,6 @@ export class UserRepository {
       id: id,
       ...updateUserDto
     });
-    if (!user) {
-      throw new NotFoundException(`User with ID=${id} not found`);
-    }
     return this.userRepository.save(user);
   }
 

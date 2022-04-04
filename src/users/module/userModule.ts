@@ -25,13 +25,9 @@ import { CloudinaryService } from '../../cloudinary/cloudinaryService';
       keepConnectionAlive: true,
       socketPath: "/Applications/MAMP/tmp/mysql/mysql.sock",
     }),
-    JwtModule.register({
-      secret: 'secret',
-      signOptions: {expiresIn: '1d'}
-    }),
+    JwtModule.register({}),
   ],
   controllers: [UsersController],
   providers: [UsersService, UserRepository, Logger, CloudinaryService,CloudinaryProvider],
-
 })
 export class UserModule {}

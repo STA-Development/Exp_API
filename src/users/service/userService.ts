@@ -6,6 +6,7 @@ import {UserRepository} from '../repository/userRepository';
 import {Repository} from "typeorm";
 import {InjectRepository} from "@nestjs/typeorm";
 import { CloudinaryService } from '../../cloudinary/cloudinaryService';
+
 @Injectable()
 export class UsersService {
   constructor(
@@ -19,7 +20,7 @@ export class UsersService {
     try {
       return await this.usersRepository.create(createUserDto);
     } catch (err) {
-      console.log({ message: 404 });
+      return err
     }
   }
 
@@ -35,7 +36,7 @@ export class UsersService {
     return user;
   }
 
-  async findOneEmail(condition: string): Promise<User> {
+   findOneEmail(condition: string): Promise<User> {
     return this.userRepository.findOne({
       where: [
         { email: condition}
@@ -43,18 +44,29 @@ export class UsersService {
   }
 
   update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
-    return this.usersRepository.update(id, updateUserDto);
+    const user=this.usersRepository.update(id, updateUserDto);
+    if (!user) {
+      throw new NotFoundException(`User with ID=${id} not found`);
+    }
+    return user;
   }
 
   remove(id: number): Promise<User> {
-    return this.usersRepository.remove(id);
+    const user =this.usersRepository.remove(id);
+    if (!user) {
+      throw new NotFoundException(`User with ID=${id} not found`);
+    }
+    return user
   }
 
-  async resetFindeOne(condition: number,pass:string): Promise<User> {
+  async resetFindeOne(id: number,pass:string): Promise<User> {
     const user = await this.userRepository.preload({
-      id: condition,
+      id: id,
       password:pass
     });
+    if (!user) {
+      throw new NotFoundException(`User with ID=${id} not found`);
+    }
     return this.userRepository.save(user);
 
   }
@@ -66,20 +78,23 @@ export class UsersService {
         id:id,
         salary:salary
       });
+      if (!changeSal) {
+        throw new NotFoundException(`User with ID=${userId} not found or not admin`);
+      }
       return this.userRepository.save(changeSal);
     }
   }
 
-  async uploadImageToCloudinary(file: Express.Multer.File,condition: number) {
-    const userId = await this.usersRepository.findOne(condition);
-    if(userId.avatar_public_id){
-      await this.cloudinary.deleteImg(userId.avatar_public_id);
+  async uploadImageToCloudinary(file: Express.Multer.File,id: number) {
+    const userId = await this.usersRepository.findOne(id);
+    if(userId.avatarPublicId){
+      await this.cloudinary.deleteImg(userId.avatarPublicId);
     }
     const cloudinaryRes =await this.cloudinary.uploadImage(file);
     const user = await this.userRepository.preload({
-      id: condition,
+      id: id,
       avatar:cloudinaryRes.url,
-      avatar_public_id:cloudinaryRes.public_id
+      avatarPublicId:cloudinaryRes.public_id
     });
     return this.userRepository.save(user);
   }

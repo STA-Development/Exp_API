@@ -5,9 +5,9 @@ export const CloudinaryProvider: { provide: string; useFactory: () => ConfigOpti
     provide: CLOUDINARY,
     useFactory: () => {
         return v2.config({
-            cloud_name: process.env.CLOUDINARY_cloud_nam,
-            api_key: process.env.CLOUDINARY_api_key,
-            api_secret: process.env.CLOUDINARY_api_secret,
+            cloud_name: process.env.CLOUDINARY_Name,
+            api_key: process.env.CLOUDINARY_API_KEY,
+            api_secret: process.env.CLOUDINARY_API_SECRET,
         });
     },
 };

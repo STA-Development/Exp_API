@@ -9,7 +9,6 @@ import {
   Param,
   Post,
   Put,
-  Res,
   Response,
   UseGuards,
   Patch,
@@ -26,7 +25,6 @@ import {JwtService} from '@nestjs/jwt';
 import {AuthGuard} from '../../middlewares/checkJwt'
 import * as bcrypt from 'bcrypt';
 import * as jwt from "jsonwebtoken";
-import {JwtPayload} from "jsonwebtoken";
 import {Token} from '../../middlewares/jwtDecorator';
 
 @Controller("users")
@@ -40,11 +38,11 @@ export class UsersController {
   @UseInterceptors(ClassSerializerInterceptor)
   @Post('create')
   async create(@Body() createUserDto: CreateUserDto): Promise<User> {
-    const hashedPassword = await bcrypt.hash(createUserDto.password, 12);
+    const hashedPassword = await bcrypt.hash(createUserDto.password, +process.env.BCRYPT_KEY);
     createUserDto.password = hashedPassword;
+    createUserDto.avatar=process.env.AVATAR_URL;
     return this.usersService.create(createUserDto);
   }
-
 
   @UseInterceptors(ClassSerializerInterceptor)
   @UseGuards(AuthGuard)
@@ -58,24 +56,26 @@ export class UsersController {
   async login(
     @Body() login: {email: string, password: string},
     @Response({passthrough: true}) response
-  ): Promise<string> {
+  ): Promise<object> {
     const user =  await this.usersService.findOneEmail(login.email);
     if (!user) {
-      throw new BadRequestException('invalid credentials1');
+      throw new BadRequestException('invalid credentials');
     }
     if (!await bcrypt.compare(login.password, user.password)) {
-      throw new BadRequestException('invalid credentials2');
+      throw new BadRequestException('invalid credentials');
     }
-    const jwt = await this.jwtService.signAsync({id: user.id},
-      {secret: process.env.JWT_ACCESS, expiresIn: '1h' });
-    return jwt ;
+    const accesToken:string = await this.jwtService.signAsync({id: user.id},
+      {secret: process.env.JWT_ACCESS, expiresIn: process.env.LOGIN_ACCESS_TOKEN_TIME});
+    const refreshToken:string = await this.jwtService.signAsync({id: user.id},
+      {secret: process.env.JWT_ACCESS, expiresIn: process.env.LOGIN_REFRESH_TOKEN_TIME});
+    return  {accesToken,refreshToken}
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
   @UseGuards(AuthGuard)
   @Get('me')
-  async findOne(@Token() data: number): Promise<User> {
-    return await this.usersService.findOne(data)
+   findOne(@Token() data: number): Promise<User> {
+    return  this.usersService.findOne(data)
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
@@ -97,13 +97,15 @@ export class UsersController {
   @Post('forgot')
   async forgotPassword(
     @Body() forgot: {email: string},
-  ): Promise<string> {
+  ): Promise<object> {
     const user =  await this.usersService.findOneEmail(forgot.email);
-    const forgotJwt = <string>await this.jwtService.signAsync({id: user.id},
-      {secret: process.env.JWT_ACCESS_FORGOT, expiresIn: '1m' });
-    const link ="http://localhost:3000/users/reset/?code="+forgotJwt;
+    const accesToken:string = await this.jwtService.signAsync({id: user.id},
+      {secret: process.env.JWT_ACCESS, expiresIn: process.env.FORGOT_ACCESS_TOKEN_TIME});
+    const refreshToken:string = await this.jwtService.signAsync({id: user.id},
+      {secret: process.env.JWT_ACCESS, expiresIn: process.env.FORGOT_REFRESH_TOKEN_TIME});
+    const link =process.env.FORGOT_LINK+accesToken;
     await sendEmail(forgot.email, link);
-    return forgotJwt;
+    return  {accesToken,refreshToken}
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
@@ -112,23 +114,21 @@ export class UsersController {
     @Body() reset: {password: string,confirmPass: string,token:string}
   ): Promise<string> {
     try{
-      const jwtPayload: JwtPayload | string = jwt.verify(reset.token, process.env.JWT_ACCESS_FORGOT);
-      if(reset.password==reset.confirmPass){
-        const hashedPassword = await bcrypt.hash(reset.password, 12);
-        if(typeof jwtPayload !== "string") {
+      const jwtPayload: jwt.JwtPayload | string = jwt.verify(reset.token, process.env.JWT_ACCESS_FORGOT) as jwt.JwtPayload;
+      if(reset.password === reset.confirmPass){
+        const hashedPassword = await bcrypt.hash(reset.password, +process.env.BCRYPT_KEY);
           this.usersService.resetFindeOne(jwtPayload.id,hashedPassword);
-          return  "pass is changed";
-        }
+          return "pass is changed";
       }}
     catch(error){
-      return "try again" ;
+      return error ;
     }
   }
 
   @Patch('avatar')
   @UseGuards(AuthGuard)
   @UseInterceptors(FileInterceptor('avatar'))
-  async changeUserImg(@UploadedFile() file: Express.Multer.File,@Token() data: number,
+   changeUserImg(@UploadedFile() file: Express.Multer.File,@Token() data: number,
   ): Promise<object> {
     return this.usersService.uploadImageToCloudinary(file,data);
   }
@@ -136,12 +136,11 @@ export class UsersController {
   @UseInterceptors(ClassSerializerInterceptor)
   @UseGuards(AuthGuard)
   @Patch(':id/salary')
-  async changeSalary(
+   changeSalary(
     @Token() data: number,
-    @Body() salary: {salary: number},
+    @Body() body: {salary: number},
     @Param('id') id:number
   ): Promise<User> {
-    return await this.usersService.changeSalary(data,salary.salary,id)
+    return  this.usersService.changeSalary(data,body.salary,id)
   }
-
 }

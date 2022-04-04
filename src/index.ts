@@ -1,8 +1,6 @@
-
 import {NestFactory} from '@nestjs/core';
 import {ValidationPipe} from '@nestjs/common';
 import {DocumentBuilder, SwaggerModule} from "@nestjs/swagger";
-
 import {EventsModule } from './events/module/appModule';
 import {UserModule } from './users/module/userModule';
 
@@ -39,8 +37,7 @@ async function bootstrap() {
             transform: true,
         }),
     );
+
     await userApp.listen(3000);
-
-
 }
 bootstrap();

@@ -1,4 +1,4 @@
-import { IsString, IsEmail, IsEmpty } from "class-validator";
+import { IsString, IsEmail, IsEmpty,IsOptional } from "class-validator";
 import { User } from "../entity/user";
 import { Event } from "../../events/entity/event";
 
@@ -14,6 +14,9 @@ export class CreateUserDto extends User {
 
   @IsString()
   readonly lastName: string;
+
+  @IsOptional()
+  avatar: string;
 
   @IsEmail()
   readonly email: string;

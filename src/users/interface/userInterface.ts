@@ -9,6 +9,6 @@ export interface IUser {
   isAdmin: boolean;
   salary: number;
   avatar: string;
-  avatar_public_id: string;
+  avatarPublicId: string;
   events: Event[];
 }

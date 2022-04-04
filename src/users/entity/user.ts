@@ -7,7 +7,6 @@ import {
 import { IUser } from "../interface/userInterface";
 import { Event } from "../../events/entity/event";
 
-
 @Entity()
 export class User implements IUser {
   @PrimaryGeneratedColumn()
@@ -31,11 +30,11 @@ export class User implements IUser {
   @Column({ default: 60000 })
   salary: number;
 
-  @Column({ default: "https://www.w3schools.com/howto/img_avatar.png"})
+  @Column()
   avatar: string;
 
   @Column({ default: null})
-  avatar_public_id: string;
+  avatarPublicId: string;
 
   @ManyToMany(() => Event, (events) => events.users)
   events: Event[];
