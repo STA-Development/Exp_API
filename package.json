@@ -40,6 +40,8 @@
       "cookie-parser": "^1.4.6",
       "dayjs": "^1.11.0",
       "ejs": "^3.1.6",
+      "firebase": "^9.6.10",
+      "firebase-admin": "^10.0.2",
       "multer": "^1.4.4",
       "mysql2": "^2.3.3",
       "nest-winston": "^1.6.2",

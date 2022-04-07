@@ -1,4 +1,4 @@
-import {Inject, Injectable, NotFoundException,BadRequestException} from '@nestjs/common';
+import {Inject, Injectable, NotFoundException} from '@nestjs/common';
 import {CreateUserDto} from '../dto/userCreateDto';
 import {UpdateUserDto} from '../dto/userUpdateDto';
 import {User} from '../entity/user';
@@ -6,6 +6,7 @@ import {UserRepository} from '../repository/userRepository';
 import {Repository} from "typeorm";
 import {InjectRepository} from "@nestjs/typeorm";
 import { CloudinaryService } from '../../cloudinary/cloudinaryService';
+import { dbAuth } from "../auth/preauthMiddleware";
 
 @Injectable()
 export class UsersService {
@@ -18,6 +19,8 @@ export class UsersService {
   usersRepository: UserRepository;
   async create(createUserDto: CreateUserDto): Promise<User> {
     try {
+    const auth =  await dbAuth.createUser({ email:createUserDto.email, password:createUserDto.password })
+          createUserDto.authUid=auth.uid
       return await this.usersRepository.create(createUserDto);
     } catch (err) {
       return err
@@ -28,19 +31,12 @@ export class UsersService {
     return this.usersRepository.findAll();
   }
 
-  async findOne(id: number): Promise<User> {
-    const user = await this.usersRepository.findOne(id);
+  async findOne(authUid: string): Promise<User> {
+    const user =  this.usersRepository.findOne(authUid);
     if (!user) {
-      throw new NotFoundException(`User with ID=${id} not found`);
+      throw new NotFoundException(`User with ID=${authUid} not found`);
     }
     return user;
-  }
-
-   findOneEmail(condition: string): Promise<User> {
-    return this.userRepository.findOne({
-      where: [
-        { email: condition}
-      ],});
   }
 
   update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
@@ -51,27 +47,15 @@ export class UsersService {
     return user;
   }
 
-  remove(id: number): Promise<User> {
-    const user =this.usersRepository.remove(id);
+  remove(id: number,data:string): Promise<User> {
+    const user =this.usersRepository.remove(id,data);
     if (!user) {
       throw new NotFoundException(`User with ID=${id} not found`);
     }
     return user
   }
 
-  async resetFindeOne(id: number,pass:string): Promise<User> {
-    const user = await this.userRepository.preload({
-      id: id,
-      password:pass
-    });
-    if (!user) {
-      throw new NotFoundException(`User with ID=${id} not found`);
-    }
-    return this.userRepository.save(user);
-
-  }
-
-  async changeSalary(userId: number,salary:number,id:number): Promise<User> {
+  async changeSalary(userId: string,salary:number,id:number): Promise<User> {
     const user = await this.usersRepository.findOne(userId);
     if(user.isAdmin){
       const changeSal = await this.userRepository.preload({
@@ -85,14 +69,14 @@ export class UsersService {
     }
   }
 
-  async uploadImageToCloudinary(file: Express.Multer.File,id: number) {
+  async uploadImageToCloudinary(file: Express.Multer.File,id: string) {
     const userId = await this.usersRepository.findOne(id);
     if(userId.avatarPublicId){
       await this.cloudinary.deleteImg(userId.avatarPublicId);
     }
     const cloudinaryRes =await this.cloudinary.uploadImage(file);
     const user = await this.userRepository.preload({
-      id: id,
+      id: userId.id,
       avatar:cloudinaryRes.url,
       avatarPublicId:cloudinaryRes.public_id
     });

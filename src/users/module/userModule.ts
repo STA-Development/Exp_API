@@ -25,6 +25,7 @@ import { CloudinaryService } from '../../cloudinary/cloudinaryService';
       keepConnectionAlive: true,
       socketPath: "/Applications/MAMP/tmp/mysql/mysql.sock",
     }),
+
     JwtModule.register({}),
   ],
   controllers: [UsersController],

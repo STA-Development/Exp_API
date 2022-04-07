@@ -4,7 +4,7 @@ import {UpdateUserDto} from "../dto/userUpdateDto";
 import {User} from "../entity/user";
 import {InjectRepository} from "@nestjs/typeorm";
 import {Repository} from "typeorm";
-
+import { dbAuth } from "../auth/preauthMiddleware";
 @Injectable()
 export class UserRepository {
   @InjectRepository(User)
@@ -12,6 +12,7 @@ export class UserRepository {
 
    create(createUserDto: CreateUserDto): Promise<User> {
     const user =  this.userRepository.create(createUserDto);
+     console.log(user);
     return this.userRepository.save(user);
   }
 
@@ -19,8 +20,8 @@ export class UserRepository {
     return this.userRepository.find({relations: ["events"],});
   }
 
-  async findOne(id: number): Promise<User> {
-    const user = await this.userRepository.findOne(id, {relations: ["events"]});
+  async findOne(id: string): Promise<User> {
+    const user = await this.userRepository.findOne( {relations: ["events"], where:{authUid: id }});
     return user;
   }
 
@@ -32,8 +33,11 @@ export class UserRepository {
     return this.userRepository.save(user);
   }
 
-  async remove(id: number): Promise<User> {
-    const user = await this.findOne(id);
-    return this.userRepository.remove(user);
+  async remove(id: number,data:string): Promise<User> {
+    const user = await this.findOne(data);
+    const removeUserId = await this.userRepository.findOne(id)
+    if(user.isAdmin){
+      await dbAuth.deleteUser(removeUserId.authUid);
+    return this.userRepository.remove(removeUserId);}
   }
 }

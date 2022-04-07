@@ -22,7 +22,7 @@ export class User implements IUser {
   email: string;
 
   @Column()
-  password: string;
+  authUid: string;
 
   @Column({ default: false })
   isAdmin: boolean;
