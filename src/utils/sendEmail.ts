@@ -7,7 +7,7 @@ export const sendEmail = async (email: string, link: string) => {
         service:'gmail',
         auth: {
             user: process.env.email,
-            pass: process.env.emailPass,
+            pass: process.env.EMAIL_PASS,
         },
     });
 
