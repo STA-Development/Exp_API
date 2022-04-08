@@ -10,8 +10,8 @@ export class UserRepository {
   @InjectRepository(User)
   userRepository: Repository<User>;
 
-  create(createUserDto: CreateUserDto): Promise<User> {
-    const user = this.userRepository.create(createUserDto);
+   create(createUserDto: CreateUserDto): Promise<User> {
+    const user =  this.userRepository.create(createUserDto);
     return this.userRepository.save(user);
   }
 
@@ -19,13 +19,15 @@ export class UserRepository {
     return this.userRepository.find({relations: ["events"],});
   }
 
-  findOne(id: number): Promise<User> {
-    return this.userRepository.findOne(id, {relations: ["events"],});
+   findOne(id: number): Promise<User> {
+    const user =  this.userRepository.findOne(id, {relations: ["events"]});
+    return user;
   }
 
   async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
     const user = await this.userRepository.preload({
-      ...updateUserDto,
+      id: id,
+      ...updateUserDto
     });
     return this.userRepository.save(user);
   }

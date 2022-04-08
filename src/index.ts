@@ -1,7 +1,6 @@
 import {NestFactory} from '@nestjs/core';
 import {ValidationPipe} from '@nestjs/common';
 import {DocumentBuilder, SwaggerModule} from "@nestjs/swagger";
-
 import {EventsModule } from './events/module/appModule';
 import {UserModule } from './users/module/userModule';
 
@@ -29,6 +28,7 @@ async function bootstrap() {
         .setDescription('The users API description')
         .setVersion('1.0')
         .addTag('users')
+        .addBearerAuth({ in: 'header', type: 'http' })
         .build();
     const document = SwaggerModule.createDocument(userApp, userConfig);
     SwaggerModule.setup('swaggerUsers', userApp, document);
@@ -38,8 +38,7 @@ async function bootstrap() {
             transform: true,
         }),
     );
+
     await userApp.listen(3000);
-
 }
-
 bootstrap();
