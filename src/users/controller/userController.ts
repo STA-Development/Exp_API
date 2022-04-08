@@ -20,7 +20,7 @@ import { UpdateUserDto } from "../dto/userUpdateDto";
 import { User } from "../entity/user";
 import {AuthGuard} from '../../middlewares/checkJwt'
 import {Token} from '../../middlewares/jwtDecorator';
-
+import { ApiProperty, ApiBearerAuth } from '@nestjs/swagger';
 @Controller("users")
 export class UsersController {
 
@@ -35,6 +35,7 @@ export class UsersController {
 
   @UseInterceptors(ClassSerializerInterceptor)
   @UseGuards(AuthGuard)
+  @ApiBearerAuth()
   @Get()
   findAll(): Promise<Array<User>> {
     return this.usersService.findAll();
@@ -42,6 +43,7 @@ export class UsersController {
 
   @UseInterceptors(ClassSerializerInterceptor)
   @UseGuards(AuthGuard)
+  @ApiBearerAuth()
   @Get('me')
    findOne(@Token() data: string): Promise<User> {
     return  this.usersService.findOne(data)
@@ -65,6 +67,7 @@ export class UsersController {
 
   @Patch('avatar')
   @UseGuards(AuthGuard)
+  @ApiBearerAuth()
   @UseInterceptors(FileInterceptor('avatar'))
    changeUserImg(@UploadedFile() file: Express.Multer.File,@Token() data: string,
   ): Promise<object> {
@@ -73,6 +76,7 @@ export class UsersController {
 
   @UseInterceptors(ClassSerializerInterceptor)
   @UseGuards(AuthGuard)
+  @ApiBearerAuth()
   @Patch(':id/salary')
    changeSalary(
     @Token() data: string,

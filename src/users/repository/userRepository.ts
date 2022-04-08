@@ -12,7 +12,6 @@ export class UserRepository {
 
    create(createUserDto: CreateUserDto): Promise<User> {
     const user =  this.userRepository.create(createUserDto);
-     console.log(user);
     return this.userRepository.save(user);
   }
 

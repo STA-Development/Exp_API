@@ -28,6 +28,7 @@ async function bootstrap() {
         .setDescription('The users API description')
         .setVersion('1.0')
         .addTag('users')
+        .addBearerAuth({ in: 'header', type: 'http' })
         .build();
     const document = SwaggerModule.createDocument(userApp, userConfig);
     SwaggerModule.setup('swaggerUsers', userApp, document);

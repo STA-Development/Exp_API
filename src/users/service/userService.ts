@@ -1,4 +1,4 @@
-import {Inject, Injectable, NotFoundException} from '@nestjs/common';
+import {Inject, Injectable, NotFoundException,BadRequestException} from '@nestjs/common';
 import {CreateUserDto} from '../dto/userCreateDto';
 import {UpdateUserDto} from '../dto/userUpdateDto';
 import {User} from '../entity/user';
@@ -18,13 +18,13 @@ export class UsersService {
   @Inject()
   usersRepository: UserRepository;
   async create(createUserDto: CreateUserDto): Promise<User> {
-    try {
     const auth =  await dbAuth.createUser({ email:createUserDto.email, password:createUserDto.password })
-          createUserDto.authUid=auth.uid
-      return await this.usersRepository.create(createUserDto);
-    } catch (err) {
-      return err
+    createUserDto.authUid=auth.uid
+    const user = await this.usersRepository.create(createUserDto);
+    if (!user) {
+      throw new NotFoundException(`how have wrong schema`);
     }
+    return user;
   }
 
   findAll(): Promise<Array<User>> {
