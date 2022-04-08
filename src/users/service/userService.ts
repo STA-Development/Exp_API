@@ -17,11 +17,13 @@ export class UsersService {
   @Inject()
   usersRepository: UserRepository;
   async create(createUserDto: CreateUserDto): Promise<User> {
-    try {
-      return await this.usersRepository.create(createUserDto);
-    } catch (err) {
-      return err
+
+    const user = await this.usersRepository.create(createUserDto);
+    if (!user) {
+      throw new NotFoundException(`how have wrong schema`);
     }
+    return user;
+
   }
 
   findAll(): Promise<Array<User>> {

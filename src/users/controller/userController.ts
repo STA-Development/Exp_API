@@ -26,7 +26,7 @@ import {AuthGuard} from '../../middlewares/checkJwt'
 import * as bcrypt from 'bcrypt';
 import * as jwt from "jsonwebtoken";
 import {Token} from '../../middlewares/jwtDecorator';
-
+import { ApiProperty, ApiBearerAuth } from '@nestjs/swagger';
 @Controller("users")
 export class UsersController {
   constructor(
@@ -37,7 +37,7 @@ export class UsersController {
   usersService: UsersService;
   @UseInterceptors(ClassSerializerInterceptor)
   @Post('create')
-  async create(@Body() createUserDto: CreateUserDto): Promise<User> {
+  async create(@Body() createUserDto: CreateUserDto,): Promise<User> {
     const hashedPassword = await bcrypt.hash(createUserDto.password, +process.env.BCRYPT_KEY);
     createUserDto.password = hashedPassword;
     createUserDto.avatar=process.env.AVATAR_URL;
@@ -46,6 +46,7 @@ export class UsersController {
 
   @UseInterceptors(ClassSerializerInterceptor)
   @UseGuards(AuthGuard)
+  @ApiBearerAuth()
   @Get()
   findAll(): Promise<Array<User>> {
     return this.usersService.findAll();
@@ -73,6 +74,7 @@ export class UsersController {
 
   @UseInterceptors(ClassSerializerInterceptor)
   @UseGuards(AuthGuard)
+  @ApiBearerAuth()
   @Get('me')
    findOne(@Token() data: number): Promise<User> {
     return  this.usersService.findOne(data)
@@ -97,7 +99,7 @@ export class UsersController {
   @Post('forgot')
   async forgotPassword(
     @Body() forgot: {email: string},
-  ): Promise<object> {
+  ): Promise<string> {
     const user =  await this.usersService.findOneEmail(forgot.email);
     const accesToken:string = await this.jwtService.signAsync({id: user.id},
       {secret: process.env.JWT_ACCESS, expiresIn: process.env.FORGOT_ACCESS_TOKEN_TIME});
@@ -105,7 +107,7 @@ export class UsersController {
       {secret: process.env.JWT_ACCESS, expiresIn: process.env.FORGOT_REFRESH_TOKEN_TIME});
     const link =process.env.FORGOT_LINK+accesToken;
     await sendEmail(forgot.email, link);
-    return  {accesToken,refreshToken}
+    return  "The mail was sent";
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
@@ -127,6 +129,7 @@ export class UsersController {
 
   @Patch('avatar')
   @UseGuards(AuthGuard)
+  @ApiBearerAuth()
   @UseInterceptors(FileInterceptor('avatar'))
    changeUserImg(@UploadedFile() file: Express.Multer.File,@Token() data: number,
   ): Promise<object> {
@@ -135,8 +138,9 @@ export class UsersController {
 
   @UseInterceptors(ClassSerializerInterceptor)
   @UseGuards(AuthGuard)
+  @ApiBearerAuth()
   @Patch(':id/salary')
-   changeSalary(
+  changeSalary(
     @Token() data: number,
     @Body() body: {salary: number},
     @Param('id') id:number

@@ -1,5 +1,6 @@
 import * as nodemailer from 'nodemailer';
-const ejs = require ('ejs')
+// const ejs = require ('ejs')
+import * as ejs  from 'ejs'
 
 export const sendEmail = async (email: string, link: string) => {
     const transporter = nodemailer.createTransport({

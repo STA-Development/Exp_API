@@ -19,8 +19,8 @@ export class UserRepository {
     return this.userRepository.find({relations: ["events"],});
   }
 
-  async findOne(id: number): Promise<User> {
-    const user = await this.userRepository.findOne(id, {relations: ["events"]});
+   findOne(id: number): Promise<User> {
+    const user =  this.userRepository.findOne(id, {relations: ["events"]});
     return user;
   }
 
