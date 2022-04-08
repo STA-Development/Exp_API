@@ -3,9 +3,9 @@ import { CreateCriteriaDto } from "../dto/criteriaCreateDto";
 import { UpdateCriteriaDto } from "../dto/criteriaUpdateDto";
 import { Criteria } from "../entity/criteria";
 import { CriteriaRepository } from "../repository/criteriaRepository";
-import {ISubCriteriaRef} from "../interface/subCriteriaRefInterface";
+import {IIdRefDto} from "../interface/subCriteriaRefInterface";
 import {SubCriteriaRepository} from "../repository/subCriteriaRepository";
-import {eventLogger} from "../../logger";
+import {logger} from "../../logger";
 
 
 @Injectable()
@@ -17,17 +17,19 @@ export class CriteriaService {
   @Inject()
   subCriteriaRepository: SubCriteriaRepository;
 
-  async addSubCriteria(criteriaId: number, criteriaRef: ISubCriteriaRef) {
+  async addSubCriteria(criteriaId: number, criteriaRef: IIdRefDto) {
     const subCriteria = await this.subCriteriaRepository.findOneById(criteriaRef.id)
     const criteria = await this.criteriaRepository.findOneById(criteriaId)
-    if(criteria.subCriteria == null){
-      criteria.subCriteria = [await this.subCriteriaRepository.findOneById(criteriaRef.id)]
-      eventLogger.error(`${(criteria)} `);
+    if (criteria.subCriteria === null) {
+      criteria.subCriteria = [subCriteria]
+      logger.error(`${(criteria)} `);
 
-    }
-    else{
-      eventLogger.info(`adding new subcriteria to ${(criteria.name)} criteria`);
+    } else {
+      console.log({subCriteria})
+      logger.info(`adding new subcriteria to ${(criteria.name)} criteria`);
+      console.log({criteria})
       criteria.subCriteria.push(subCriteria)
+      console.log({criteria})
     }
     return this.criteriaRepository.addSubCriteria(criteria)
   }

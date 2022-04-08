@@ -1,4 +1,4 @@
-import {forwardRef, Logger, Module} from "@nestjs/common";
+import {Module} from "@nestjs/common";
 import { SubCriteriaController } from "../controller/subCriteriaController";
 import { SubCriteriaService } from "../service/subCriteriaService";
 import { TypeOrmModule } from "@nestjs/typeorm";

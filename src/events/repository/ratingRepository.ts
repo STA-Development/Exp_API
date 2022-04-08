@@ -1,7 +1,5 @@
 import { Injectable } from "@nestjs/common";
 import { CreateRatingDto } from "../dto/ratingCreateDto";
-import { UpdateSubCriteriaDto } from "../dto/subCriteriaUpdateDto";
-import { SubCriteria } from "../entity/subCriteria";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import {Rating} from "../entity/rating";

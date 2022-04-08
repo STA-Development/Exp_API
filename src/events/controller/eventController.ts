@@ -1,5 +1,4 @@
 import {
-
   Get,
   Post,
   Body,
@@ -8,37 +7,45 @@ import {
   Put,Inject,
   Controller,
   UseInterceptors,
-  ClassSerializerInterceptor, forwardRef,
+  ClassSerializerInterceptor,
 } from "@nestjs/common";
 import { EventsService } from "../service/eventService";
 import { CreateEventDto } from "../dto/eventCreateDto";
 import { UpdateEventDto } from "../dto/eventUpdateDto";
 import { Event } from "../entity/event";
 import { eventGetDto } from "../dto/eventGetDto";
-import { SubCriteriaRefDto } from "../dto/subCriteriaRefDto";
+import { idRefDto } from "../dto/idRefDto";
 import { Period } from "../interface/eventInterface";
-import { Logger } from '@nestjs/common';
-import {eventLogger} from "../../logger"
-import {ratingGetDto} from "../dto/ratingGetDto";
-import {userGetDto} from "../../users/dto/userGetDto";
-import {criteriaGetDto} from "../dto/criteriaGetDto";
-import {Rating} from "../entity/rating";
-import {loadFiles} from "typeorm-seeding/dist/utils/file.util";
+import {logger} from "../../logger"
+import DateCalc from "../utils/eventUtils"
 
 @Controller("events")
 export class EventsController {
   @Inject()
   eventsService: EventsService;
 
-  // @Inject(forwardRef(() => Logger))
-  // logger: Logger;
+  @UseInterceptors(ClassSerializerInterceptor)
+  @Get("/userRating")
+  async userRating() {
+    //  console.log(DateCalc.getUserRating())
+      //console.log(DateCalc.getUserRating())
+   // const users = await this.eventsService.findAll();
+   //  const a = (await this.eventsService.userRating())
+   //  console.log(a,2)
+   //  return a
+  }
 
+  @UseInterceptors(ClassSerializerInterceptor)
+  @Get("/ongoing")
+  async Ongoing():Promise<Event[]> {
+    return(await DateCalc.getOngoingEvents())
+  }
 
   @UseInterceptors(ClassSerializerInterceptor)
   @Put(":id/rating")
   addRating(
       @Param("id") eventId: number,
-      @Body() criteriaRef: SubCriteriaRefDto
+      @Body() criteriaRef: idRefDto
   ): Promise<Event> {
     return this.eventsService.addRating(eventId, criteriaRef);
   }
@@ -47,7 +54,7 @@ export class EventsController {
   @Put(":id/criteria")
   addCriteria(
       @Param("id") eventId: number,
-      @Body() criteriaRef: SubCriteriaRefDto
+      @Body() criteriaRef: idRefDto
   ): Promise<Event> {
     return this.eventsService.addCriteria(eventId, criteriaRef);
   }
@@ -56,7 +63,7 @@ export class EventsController {
   @Put(":id/user")
   addUsers(
     @Param("id") eventId: number,
-    @Body() userRef: SubCriteriaRefDto
+    @Body() userRef: idRefDto
   ): Promise<Event> {
     return this.eventsService.addUsers(eventId, userRef);
   }
@@ -70,7 +77,7 @@ export class EventsController {
   @UseInterceptors(ClassSerializerInterceptor)
   @Get()
   async findAll(): Promise<Event[]> {
-    eventLogger.info((await this.eventsService.findOneById(1)))
+    logger.info((await this.eventsService.findOneById(1)))
     return (await this.eventsService.findAll()).map((event) => eventGetDto(event));
   }
 
@@ -112,4 +119,5 @@ export class EventsController {
   remove(@Param("id") id: number): Promise<Event> {
     return this.eventsService.remove(id);
   }
+
 }

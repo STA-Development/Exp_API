@@ -11,7 +11,7 @@ export class CreateSubCriteriaDto extends SubCriteria{
   readonly name: string;
 
   @IsBoolean()
-  readonly subCriteria: boolean;
+  readonly state: boolean;
 
   @IsOptional()
   readonly criteria: Criteria;

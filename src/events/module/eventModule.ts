@@ -1,4 +1,4 @@
-import {forwardRef, Logger, MiddlewareConsumer, Module, NestModule} from "@nestjs/common";
+import {MiddlewareConsumer, Module, NestModule} from "@nestjs/common";
 import { EventsController } from "../controller/eventController";
 import { EventsService } from "../service/eventService";
 import { TypeOrmModule } from "@nestjs/typeorm";
@@ -11,15 +11,13 @@ import {CriteriaRepository} from "../repository/criteriaRepository";
 import {Criteria} from "../entity/criteria";
 import {Rating} from "../entity/rating";
 import {RatingRepository} from "../repository/ratingRepository";
-import {eventLogger} from "../../logger";
-//import ormconfig from "../../../ormconfig";
+import {logger} from "../../logger";
 
 @Module({
   imports: [// forwardRef(()=> Logger),
     ConfigModule.forRoot(),
     TypeOrmModule.forFeature([Event, User, Criteria, Rating]),
     TypeOrmModule.forRoot({
-
       type: "mysql",
       host: process.env.DB_HOST,
       port: +process.env.DB_PORT,
@@ -40,7 +38,7 @@ import {eventLogger} from "../../logger";
 export class EventModule implements  NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
-        .apply(eventLogger)                            ////////////////////////////
+        .apply(logger)                            ////////////////////////////
         .forRoutes(EventsController);
   }
 }

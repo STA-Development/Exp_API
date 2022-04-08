@@ -17,9 +17,9 @@ export class SubCriteria implements ISubCriteria {
   name: string;
 
   @Column()
-  subCriteria: boolean;
+  state: boolean;
 
-  @ManyToOne(() => Criteria, (criteria) => criteria.subCriteria , { createForeignKeyConstraints: false, onDelete: 'CASCADE' , cascade: true })
+  @ManyToOne(() => Criteria, (criteria) => criteria.subCriteria , {eager:true,createForeignKeyConstraints: false, cascade: true})
   criteria: Criteria;
 
 }

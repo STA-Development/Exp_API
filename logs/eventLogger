@@ -229,3 +229,3683 @@ undefined INFO "e"
     }
   ]
 }
+2022-04-04T15:49:57.231Z INFO {
+  "id": 1,
+  "title": "Black_Eval",
+  "bonus": 15,
+  "TimePeriod": "annually",
+  "createdAt": "2022-03-29T16:40:46.993Z",
+  "endsAt": null,
+  "users": [
+    {
+      "id": 1,
+      "firstName": "Leonardo",
+      "lastName": "da Vinci",
+      "email": "leoda@gmail.com"
+    }
+  ],
+  "rating": [],
+  "criteria": [
+    {
+      "id": 1,
+      "name": "Big_3",
+      "criteria": true,
+      "subCriteria": [
+        {
+          "id": 1,
+          "name": "Small_1",
+          "subCriteria": true
+        },
+        {
+          "id": 2,
+          "name": "Small_2",
+          "subCriteria": true
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Big_4",
+      "criteria": true,
+      "subCriteria": []
+    }
+  ]
+}
+2022-04-04T15:50:33.951Z INFO {
+  "id": 1,
+  "title": "Black_Eval",
+  "bonus": 15,
+  "TimePeriod": "annually",
+  "createdAt": "2022-03-29T16:40:46.993Z",
+  "endsAt": null,
+  "users": [
+    {
+      "id": 1,
+      "firstName": "Leonardo",
+      "lastName": "da Vinci",
+      "email": "leoda@gmail.com"
+    }
+  ],
+  "rating": [],
+  "criteria": [
+    {
+      "id": 1,
+      "name": "Big_3",
+      "criteria": true,
+      "subCriteria": [
+        {
+          "id": 1,
+          "name": "Small_1",
+          "subCriteria": true
+        },
+        {
+          "id": 2,
+          "name": "Small_2",
+          "subCriteria": true
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Big_4",
+      "criteria": true,
+      "subCriteria": []
+    }
+  ]
+}
+2022-04-04T15:50:34.960Z INFO {
+  "id": 1,
+  "title": "Black_Eval",
+  "bonus": 15,
+  "TimePeriod": "annually",
+  "createdAt": "2022-03-29T16:40:46.993Z",
+  "endsAt": null,
+  "users": [
+    {
+      "id": 1,
+      "firstName": "Leonardo",
+      "lastName": "da Vinci",
+      "email": "leoda@gmail.com"
+    }
+  ],
+  "rating": [],
+  "criteria": [
+    {
+      "id": 1,
+      "name": "Big_3",
+      "criteria": true,
+      "subCriteria": [
+        {
+          "id": 1,
+          "name": "Small_1",
+          "subCriteria": true
+        },
+        {
+          "id": 2,
+          "name": "Small_2",
+          "subCriteria": true
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Big_4",
+      "criteria": true,
+      "subCriteria": []
+    }
+  ]
+}
+2022-04-04T15:50:35.963Z INFO {
+  "id": 1,
+  "title": "Black_Eval",
+  "bonus": 15,
+  "TimePeriod": "annually",
+  "createdAt": "2022-03-29T16:40:46.993Z",
+  "endsAt": null,
+  "users": [
+    {
+      "id": 1,
+      "firstName": "Leonardo",
+      "lastName": "da Vinci",
+      "email": "leoda@gmail.com"
+    }
+  ],
+  "rating": [],
+  "criteria": [
+    {
+      "id": 1,
+      "name": "Big_3",
+      "criteria": true,
+      "subCriteria": [
+        {
+          "id": 1,
+          "name": "Small_1",
+          "subCriteria": true
+        },
+        {
+          "id": 2,
+          "name": "Small_2",
+          "subCriteria": true
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Big_4",
+      "criteria": true,
+      "subCriteria": []
+    }
+  ]
+}
+2022-04-04T15:50:39.104Z INFO "Get all users"
+2022-04-04T15:50:40.036Z INFO "Get all users"
+2022-04-04T16:00:58.681Z INFO "Get all users"
+2022-04-04T16:01:00.252Z INFO "Get all users"
+2022-04-04T16:01:01.734Z INFO "Get all users"
+2022-04-04T16:01:32.955Z INFO "Get all users"+0ms
+2022-04-04T16:01:33.980Z INFO "Get all users"+1s
+2022-04-04T16:01:37.747Z INFO "Get all users"+4s
+2022-04-04T16:01:45.806Z INFO "Get all users"+8s
+2022-04-04T16:01:49.334Z INFO "Get all users"+4s
+2022-04-04T16:01:49.817Z INFO "Get all users"+483ms
+2022-04-04T16:01:50.338Z INFO "Get all users"+521ms
+2022-04-04T16:01:50.726Z INFO "Get all users"+388ms
+2022-04-04T16:01:51.204Z INFO "Get all users"+478ms
+2022-04-04T16:01:51.580Z INFO "Get all users"+376ms
+2022-04-04T16:01:52.035Z INFO "Get all users"+455ms
+2022-04-04T16:01:52.457Z INFO "Get all users"+422ms
+2022-04-04T16:01:58.938Z INFO "Get all users"+6s
+2022-04-04T16:02:31.486Z INFO "Get all users"+0ms
+2022-04-04T16:02:32.541Z INFO "Get all users"+1s
+2022-04-04T16:02:33.199Z INFO "Get all users"+658ms
+2022-04-04T16:02:51.553Z INFO "Get all users" +0ms
+2022-04-04T16:02:52.942Z INFO "Get all users" +1s
+2022-04-04T16:02:55.046Z INFO "Get all users" +2s
+2022-04-04T16:02:55.864Z INFO "Get all users" +818ms
+2022-04-04T16:09:37.682Z INFO "Get all users" +2s
+2022-04-04T16:09:38.627Z INFO "Get all users" +945ms
+2022-04-04T16:09:45.818Z INFO "Get all users" +7s
+2022-04-04T16:20:15.788Z ERROR "Get all users" +5s
+2022-04-04T16:23:55.607Z INFO "Get all users" +5s
+2022-04-04T16:24:00.466Z INFO "Get all users" +5s
+2022-04-04T16:24:11.275Z INFO "Get all users" +3s
+2022-04-04T16:24:22.197Z INFO "Get all users" +2s
+2022-04-04T16:24:24.459Z INFO "Get all users" +2s
+2022-04-04T16:24:38.175Z INFO "Get all users" +3s
+2022-04-04T18:09:22.840Z ERROR "No repository for \"events\" was found. Looks like this entity is not registered in current \"default\" connection?" +5s
+2022-04-04T18:09:58.102Z INFO {
+  "id": 1,
+  "title": "Black_Eval",
+  "bonus": 15,
+  "TimePeriod": "annually",
+  "createdAt": "2022-03-29T16:40:46.993Z",
+  "endsAt": null,
+  "users": [
+    {
+      "id": 1,
+      "firstName": "Leonardo",
+      "lastName": "da Vinci",
+      "email": "leoda@gmail.com"
+    }
+  ],
+  "rating": [],
+  "criteria": [
+    {
+      "id": 1,
+      "name": "Big_3",
+      "criteria": true,
+      "subCriteria": [
+        {
+          "id": 1,
+          "name": "Small_1",
+          "subCriteria": true
+        },
+        {
+          "id": 2,
+          "name": "Small_2",
+          "subCriteria": true
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Big_4",
+      "criteria": true,
+      "subCriteria": []
+    }
+  ]
+} +3s
+2022-04-04T18:10:19.033Z ERROR "No repository for \"events\" was found. Looks like this entity is not registered in current \"default\" connection?" +11s
+2022-04-04T18:10:45.036Z ERROR "No repository for \"events\" was found. Looks like this entity is not registered in current \"default\" connection?" +2s
+2022-04-04T18:11:00.096Z INFO {
+  "id": 1,
+  "title": "Black_Eval",
+  "bonus": 15,
+  "TimePeriod": "annually",
+  "createdAt": "2022-03-29T16:40:46.993Z",
+  "endsAt": null,
+  "users": [
+    {
+      "id": 1,
+      "firstName": "Leonardo",
+      "lastName": "da Vinci",
+      "email": "leoda@gmail.com"
+    }
+  ],
+  "rating": [],
+  "criteria": [
+    {
+      "id": 1,
+      "name": "Big_3",
+      "criteria": true,
+      "subCriteria": [
+        {
+          "id": 1,
+          "name": "Small_1",
+          "subCriteria": true
+        },
+        {
+          "id": 2,
+          "name": "Small_2",
+          "subCriteria": true
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Big_4",
+      "criteria": true,
+      "subCriteria": []
+    }
+  ]
+} +2s
+2022-04-04T18:12:04.301Z INFO {
+  "id": 1,
+  "title": "Black_Eval",
+  "bonus": 15,
+  "TimePeriod": "annually",
+  "createdAt": "2022-03-29T16:40:46.993Z",
+  "endsAt": null,
+  "users": [
+    {
+      "id": 1,
+      "firstName": "Leonardo",
+      "lastName": "da Vinci",
+      "email": "leoda@gmail.com"
+    }
+  ],
+  "rating": [],
+  "criteria": [
+    {
+      "id": 1,
+      "name": "Big_3",
+      "criteria": true,
+      "subCriteria": [
+        {
+          "id": 1,
+          "name": "Small_1",
+          "subCriteria": true
+        },
+        {
+          "id": 2,
+          "name": "Small_2",
+          "subCriteria": true
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Big_4",
+      "criteria": true,
+      "subCriteria": []
+    }
+  ]
+} +4s
+2022-04-04T18:16:35.411Z INFO {
+  "id": 1,
+  "title": "Black_Eval",
+  "bonus": 15,
+  "TimePeriod": "annually",
+  "createdAt": "2022-03-29T16:40:46.993Z",
+  "endsAt": null,
+  "users": [
+    {
+      "id": 1,
+      "firstName": "Leonardo",
+      "lastName": "da Vinci",
+      "email": "leoda@gmail.com"
+    }
+  ],
+  "rating": [],
+  "criteria": [
+    {
+      "id": 1,
+      "name": "Big_3",
+      "criteria": true,
+      "subCriteria": [
+        {
+          "id": 1,
+          "name": "Small_1",
+          "subCriteria": true
+        },
+        {
+          "id": 2,
+          "name": "Small_2",
+          "subCriteria": true
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Big_4",
+      "criteria": true,
+      "subCriteria": []
+    }
+  ]
+} +4s
+2022-04-04T18:17:37.018Z ERROR "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ' `$d` = '2022-04-04 22:17:36.993', `$x` = '[object Object]', `$y` = 2022, `$M` =' at line 1" +2s
+2022-04-04T18:20:39.316Z ERROR "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ' `$d` = '2022-04-04 20:00:00.000', `$x` = '[object Object]', `$y` = 2022, `$M` =' at line 1" +8s
+2022-04-04T18:20:51.747Z ERROR "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ' `$d` = '2022-04-04 16:00:00.000', `$x` = '[object Object]', `$y` = 2022, `$M` =' at line 1" +2s
+2022-04-04T18:21:02.915Z ERROR "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ' `$d` = '2022-04-04 16:00:00.000', `$x` = '[object Object]', `$y` = 2022, `$M` =' at line 1" +2s
+2022-04-04T18:25:44.837Z ERROR "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ' `$d` = '2022-04-08 20:40:46.993', `$x` = '[object Object]', `$y` = 2022, `$M` =' at line 1" +4s
+2022-04-04T18:47:45.070Z ERROR "Unknown column 'NaN' in 'where clause'" +3s
+2022-04-04T18:48:21.173Z INFO {
+  "id": 1,
+  "title": "Black_Eval",
+  "bonus": 15,
+  "TimePeriod": "annually",
+  "createdAt": "2022-03-29T16:40:46.993Z",
+  "endsAt": null,
+  "users": [
+    {
+      "id": 1,
+      "firstName": "Leonardo",
+      "lastName": "da Vinci",
+      "email": "leoda@gmail.com"
+    }
+  ],
+  "rating": [],
+  "criteria": [
+    {
+      "id": 1,
+      "name": "Big_3",
+      "criteria": true,
+      "subCriteria": [
+        {
+          "id": 1,
+          "name": "Small_1",
+          "subCriteria": true
+        },
+        {
+          "id": 2,
+          "name": "Small_2",
+          "subCriteria": true
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Big_4",
+      "criteria": true,
+      "subCriteria": []
+    }
+  ]
+} +3s
+2022-04-04T18:48:36.759Z INFO {
+  "id": 1,
+  "title": "Black_Eval",
+  "bonus": 15,
+  "TimePeriod": "annually",
+  "createdAt": "2022-03-29T16:40:46.993Z",
+  "endsAt": null,
+  "users": [
+    {
+      "id": 1,
+      "firstName": "Leonardo",
+      "lastName": "da Vinci",
+      "email": "leoda@gmail.com"
+    }
+  ],
+  "rating": [],
+  "criteria": [
+    {
+      "id": 1,
+      "name": "Big_3",
+      "criteria": true,
+      "subCriteria": [
+        {
+          "id": 1,
+          "name": "Small_1",
+          "subCriteria": true
+        },
+        {
+          "id": 2,
+          "name": "Small_2",
+          "subCriteria": true
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Big_4",
+      "criteria": true,
+      "subCriteria": []
+    }
+  ]
+} +3s
+2022-04-04T18:50:03.618Z INFO {
+  "id": 1,
+  "title": "Black_Eval",
+  "bonus": 15,
+  "TimePeriod": "annually",
+  "createdAt": "2022-03-29T16:40:46.993Z",
+  "endsAt": null,
+  "users": [
+    {
+      "id": 1,
+      "firstName": "Leonardo",
+      "lastName": "da Vinci",
+      "email": "leoda@gmail.com"
+    }
+  ],
+  "rating": [],
+  "criteria": [
+    {
+      "id": 1,
+      "name": "Big_3",
+      "criteria": true,
+      "subCriteria": [
+        {
+          "id": 1,
+          "name": "Small_1",
+          "subCriteria": true
+        },
+        {
+          "id": 2,
+          "name": "Small_2",
+          "subCriteria": true
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Big_4",
+      "criteria": true,
+      "subCriteria": []
+    }
+  ]
+} +2s
+2022-04-04T19:16:11.171Z ERROR "Cannot read properties of undefined (reading 'find')" +7s
+2022-04-04T19:31:10.127Z ERROR "Cannot read properties of undefined (reading 'find')" +2s
+2022-04-04T19:36:59.773Z ERROR "Unknown column 'NaN' in 'where clause'" +13s
+2022-04-04T19:40:53.830Z ERROR "Unknown column 'NaN' in 'where clause'" +3s
+2022-04-04T19:41:10.674Z ERROR "Unknown column 'NaN' in 'where clause'" +3s
+2022-04-04T19:41:38.796Z ERROR "Unknown column 'NaN' in 'where clause'" +2s
+2022-04-04T19:41:59.199Z ERROR "Unknown column 'NaN' in 'where clause'" +2s
+2022-04-04T19:42:49.242Z ERROR "Unknown column 'NaN' in 'where clause'" +6s
+2022-04-04T19:43:29.036Z ERROR "Unknown column 'NaN' in 'where clause'" +19s
+2022-04-04T19:53:26.389Z INFO {
+  "id": 1,
+  "title": "Black_Eval",
+  "bonus": 15,
+  "TimePeriod": "annually",
+  "createdAt": "2022-03-29T16:40:46.993Z",
+  "endsAt": null,
+  "users": [
+    {
+      "id": 1,
+      "firstName": "Leonardo",
+      "lastName": "da Vinci",
+      "email": "leoda@gmail.com"
+    }
+  ],
+  "rating": [],
+  "criteria": [
+    {
+      "id": 1,
+      "name": "Big_3",
+      "criteria": true,
+      "subCriteria": [
+        {
+          "id": 1,
+          "name": "Small_1",
+          "subCriteria": true
+        },
+        {
+          "id": 2,
+          "name": "Small_2",
+          "subCriteria": true
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Big_4",
+      "criteria": true,
+      "subCriteria": []
+    }
+  ]
+} +41s
+2022-04-04T20:14:33.239Z INFO {
+  "id": 1,
+  "title": "Black_Eval",
+  "bonus": 15,
+  "TimePeriod": "annually",
+  "createdAt": "2022-03-29T16:40:46.993Z",
+  "endsAt": null,
+  "users": [
+    {
+      "id": 1,
+      "firstName": "Leonardo",
+      "lastName": "da Vinci",
+      "email": "leoda@gmail.com"
+    }
+  ],
+  "rating": [],
+  "criteria": [
+    {
+      "id": 1,
+      "name": "Big_3",
+      "criteria": true,
+      "subCriteria": [
+        {
+          "id": 1,
+          "name": "Small_1",
+          "subCriteria": true
+        },
+        {
+          "id": 2,
+          "name": "Small_2",
+          "subCriteria": true
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Big_4",
+      "criteria": true,
+      "subCriteria": []
+    }
+  ]
+} +4s
+2022-04-05T11:43:22.259Z ERROR "Unable to connect to the database. Retrying (1)..." +0ms
+2022-04-05T11:43:26.096Z ERROR "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '= 'en', `$d` = '2022-04-05 15:43:26.079', `$x` = '[object Object]', `$y` = 2022,' at line 1" +4s
+2022-04-05T11:43:51.975Z ERROR "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '= 'en', `$d` = '2022-04-05 15:43:51.953', `$x` = '[object Object]', `$y` = 2022,' at line 1" +2s
+2022-04-05T11:44:43.577Z INFO {
+  "id": 1,
+  "title": "Black_Eval",
+  "bonus": 15,
+  "TimePeriod": "annually",
+  "createdAt": "2022-03-29T16:40:46.993Z",
+  "endsAt": null,
+  "users": [
+    {
+      "id": 1,
+      "firstName": "",
+      "lastName": "",
+      "email": "",
+      "rating": 0,
+      "performerType": "Employee"
+    }
+  ],
+  "rating": [],
+  "criteria": [
+    {
+      "id": 1,
+      "name": "Big_3",
+      "criteria": true,
+      "subCriteria": [
+        {
+          "id": 1,
+          "name": "Small_1",
+          "subCriteria": true
+        },
+        {
+          "id": 2,
+          "name": "Small_2",
+          "subCriteria": true
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Big_4",
+      "criteria": true,
+      "subCriteria": []
+    }
+  ]
+} +5s
+2022-04-05T11:45:04.410Z ERROR "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '= 'en', `$d` = '2022-04-05 15:45:04.395', `$x` = '[object Object]', `$y` = 2022,' at line 1" +21s
+2022-04-05T11:50:24.518Z INFO {
+  "id": 1,
+  "title": "Black_Eval",
+  "bonus": 15,
+  "TimePeriod": "annually",
+  "createdAt": "2022-03-29T16:40:46.993Z",
+  "endsAt": null,
+  "users": [
+    {
+      "id": 1,
+      "firstName": "",
+      "lastName": "",
+      "email": "",
+      "rating": 0,
+      "performerType": "Employee"
+    }
+  ],
+  "rating": [],
+  "criteria": [
+    {
+      "id": 1,
+      "name": "Big_3",
+      "criteria": true,
+      "subCriteria": [
+        {
+          "id": 1,
+          "name": "Small_1",
+          "subCriteria": true
+        },
+        {
+          "id": 2,
+          "name": "Small_2",
+          "subCriteria": true
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Big_4",
+      "criteria": true,
+      "subCriteria": []
+    }
+  ]
+} +9s
+2022-04-05T12:06:33.139Z INFO "Get all users" +9s
+2022-04-05T12:07:52.247Z ERROR "Cannot read properties of undefined (reading 'id')" +1m
+2022-04-05T12:07:56.164Z INFO "Get all users" +4s
+2022-04-05T12:08:41.063Z INFO "Get all users" +3s
+2022-04-05T12:11:45.001Z INFO "Get all users" +5s
+2022-04-05T12:11:45.022Z ERROR "Relation \"events.criteria.subCriteria\" was not found; please check if it is correct and really exists in your entity." +21ms
+2022-04-05T12:12:03.210Z INFO "Get all users" +3s
+2022-04-05T12:12:03.227Z ERROR "Relation \"events.criteria\" was not found; please check if it is correct and really exists in your entity." +17ms
+2022-04-05T12:12:16.349Z INFO "Get all users" +2s
+2022-04-05T12:12:16.368Z ERROR "Relation \"criteria\" was not found; please check if it is correct and really exists in your entity." +19ms
+2022-04-05T12:18:07.627Z INFO "Get all users" +3m
+2022-04-05T12:51:37.241Z ERROR "Converting circular structure to JSON\n    --> starting at object with constructor 'EntityMetadata'\n    |     property 'ownColumns' -> object with constructor 'Array'\n    |     index 0 -> object with constructor 'ColumnMetadata'\n    --- property 'entityMetadata' closes the circle" +6s
+2022-04-05T12:57:50.088Z ERROR "Converting circular structure to JSON\n    --> starting at object with constructor 'EntityMetadata'\n    |     property 'ownColumns' -> object with constructor 'Array'\n    |     index 0 -> object with constructor 'ColumnMetadata'\n    --- property 'entityMetadata' closes the circle" +2s
+2022-04-05T13:23:34.230Z ERROR "User with ID=1 not foundFindRelationsNotFoundError: Relation \"event\" was not found; please check if it is correct and really exists in your entity." +3s
+2022-04-05T13:35:19.468Z ERROR "Unable to connect to the database. Retrying (1)..." +0ms
+2022-04-05T13:47:06.553Z ERROR "Cannot read properties of undefined (reading 'push')" +4s
+2022-04-05T14:15:55.340Z INFO "adding new subcriteria to Big_4 criteria" +1m
+2022-04-05T14:18:32.969Z INFO "adding new subcriteria to Big_4 criteria" +3m
+2022-04-05T14:19:09.479Z INFO "adding new subcriteria to Big_4 criteria" +37s
+2022-04-05T14:19:13.166Z INFO "adding new subcriteria to Big_4 criteria" +4s
+2022-04-05T14:19:29.582Z INFO "adding new subcriteria to Big_3 criteria" +16s
+2022-04-05T14:19:50.055Z INFO "adding new subcriteria to Big_3 criteria" +20s
+2022-04-05T14:19:58.416Z INFO "adding new subcriteria to Big_3 criteria" +8s
+2022-04-05T14:22:24.628Z ERROR "Cannot read properties of undefined (reading '0')" +2s
+2022-04-05T14:22:55.138Z ERROR "Cannot read properties of undefined (reading '0')" +3s
+2022-04-05T14:23:43.561Z ERROR "Cannot read properties of undefined (reading 'push')" +4s
+2022-04-05T14:24:32.763Z ERROR "Cannot read properties of undefined (reading '0')" +7s
+2022-04-05T14:32:27.982Z INFO "adding new subcriteria to Big_5 criteria" +3m
+2022-04-05T14:32:32.094Z INFO "adding new subcriteria to Big_5 criteria" +4s
+2022-04-05T14:32:36.389Z INFO "adding new subcriteria to Big_5 criteria" +4s
+2022-04-05T14:32:47.836Z INFO "adding new subcriteria to Big_6 criteria" +11s
+2022-04-05T14:32:51.769Z INFO "adding new subcriteria to Big_6 criteria" +4s
+2022-04-05T14:32:55.133Z INFO "adding new subcriteria to Big_6 criteria" +3s
+2022-04-05T14:33:28.329Z INFO "adding new subcriteria to Big_5 criteria" +33s
+2022-04-05T14:33:47.655Z INFO "adding new subcriteria to Big_3 criteria" +19s
+2022-04-05T14:33:52.123Z INFO "adding new subcriteria to Big_3 criteria" +4s
+2022-04-05T14:33:55.313Z INFO "adding new subcriteria to Big_3 criteria" +3s
+2022-04-05T14:34:14.471Z INFO "adding new subcriteria to Big_6 criteria" +19s
+2022-04-05T14:34:59.074Z INFO "adding new subcriteria to Big_5 criteria" +45s
+2022-04-05T14:35:03.563Z INFO "adding new subcriteria to Big_5 criteria" +4s
+2022-04-05T14:35:07.987Z INFO "adding new subcriteria to Big_5 criteria" +4s
+2022-04-05T14:35:11.505Z INFO "adding new subcriteria to Big_5 criteria" +4s
+2022-04-05T14:49:39.549Z ERROR "Unable to connect to the database. Retrying (1)..." +0ms
+2022-04-05T14:59:30.493Z INFO "adding new subcriteria to Big_5 criteria" +10m
+2022-04-05T14:59:50.205Z INFO "adding new subcriteria to Big_5 criteria" +20s
+2022-04-05T14:59:57.404Z INFO "adding new subcriteria to Big_6 criteria" +7s
+2022-04-05T15:00:10.809Z INFO "adding new subcriteria to Big_3 criteria" +13s
+2022-04-05T15:03:30.112Z INFO "adding new subcriteria to Big_4 criteria" +3m
+2022-04-05T15:03:34.354Z INFO "adding new subcriteria to Big_5 criteria" +4s
+2022-04-05T15:07:17.725Z INFO "adding new subcriteria to Big_5 criteria" +2s
+2022-04-05T15:07:46.908Z INFO "adding new subcriteria to Big_4 criteria" +29s
+2022-04-05T15:10:48.186Z INFO "adding new subcriteria to Big_4 criteria" +15s
+2022-04-05T15:10:53.506Z INFO "adding new subcriteria to Big_5 criteria" +5s
+2022-04-05T15:14:30.180Z INFO "adding new subcriteria to Big_5 criteria" +25s
+2022-04-05T15:14:34.578Z INFO "adding new subcriteria to Big_3 criteria" +4s
+2022-04-05T15:14:37.995Z INFO "adding new subcriteria to Big_3 criteria" +3s
+2022-04-05T15:14:40.829Z INFO "adding new subcriteria to Big_6 criteria" +3s
+2022-04-05T15:14:56.975Z INFO "adding new subcriteria to Big_3 criteria" +16s
+2022-04-05T15:15:00.805Z INFO "adding new subcriteria to Big_4 criteria" +4s
+2022-04-05T15:15:24.664Z INFO "adding new subcriteria to Big_6 criteria" +24s
+2022-04-05T15:15:40.322Z INFO "adding new subcriteria to Big_4 criteria" +16s
+2022-04-05T15:15:56.672Z INFO "adding new subcriteria to Big_4 criteria" +16s
+2022-04-05T15:16:19.642Z INFO "adding new subcriteria to Big_4 criteria" +23s
+2022-04-05T15:16:37.261Z INFO "adding new subcriteria to Big_4 criteria" +18s
+2022-04-05T15:18:17.148Z ERROR "Unable to connect to the database. Retrying (1)..." +1ms
+2022-04-05T15:18:25.865Z INFO "adding new subcriteria to Big_4 criteria" +9s
+2022-04-05T15:18:30.581Z INFO "adding new subcriteria to Big_4 criteria" +5s
+2022-04-05T15:18:41.021Z INFO "adding new subcriteria to Big_3 criteria" +10s
+2022-04-05T15:19:02.154Z INFO "adding new subcriteria to Big_6 criteria" +21s
+2022-04-05T15:53:07.177Z INFO "Get all users" +5s
+2022-04-05T15:55:37.802Z INFO "Get all users" +3s
+2022-04-05T15:57:21.952Z INFO "Get all users" +2s
+2022-04-05T15:58:20.653Z INFO "Get all users" +2s
+2022-04-05T15:58:58.305Z INFO "Get all users" +2s
+2022-04-05T15:59:27.872Z INFO "Get all users" +2s
+2022-04-05T15:59:59.437Z INFO "Get all users" +3s
+2022-04-05T16:01:22.573Z INFO "Get all users" +2s
+2022-04-05T16:02:33.861Z INFO "Get all users" +2s
+2022-04-05T16:04:55.252Z INFO "Get all users" +1s
+2022-04-05T16:06:47.977Z INFO "Get all users" +3s
+2022-04-05T16:07:17.930Z INFO "Get all users" +2s
+2022-04-05T16:09:22.949Z INFO "Get all users" +2s
+2022-04-05T16:09:43.374Z INFO "Get all users" +2s
+2022-04-05T16:11:11.048Z INFO "Get all users" +2s
+2022-04-05T16:12:59.745Z INFO "Get all users" +2s
+2022-04-05T16:32:15.720Z INFO "Get all users" +5s
+2022-04-05T16:32:32.349Z INFO "Get all users" +2s
+2022-04-05T16:34:26.643Z INFO "Get all users" +2s
+2022-04-05T16:35:01.959Z INFO "Get all users" +2s
+2022-04-05T16:35:25.121Z INFO "Get all users" +2s
+2022-04-05T16:45:41.912Z INFO "adding new subcriteria to Big_6 criteria" +10m
+2022-04-05T16:45:48.359Z INFO "adding new subcriteria to Big_6 criteria" +6s
+2022-04-05T16:45:53.593Z INFO "adding new subcriteria to Big_6 criteria" +5s
+2022-04-05T16:45:58.412Z INFO "adding new subcriteria to Big_6 criteria" +5s
+2022-04-05T16:46:06.987Z INFO "adding new subcriteria to Big_6 criteria" +9s
+2022-04-05T16:46:11.703Z INFO "adding new subcriteria to Big_4 criteria" +5s
+2022-04-05T16:46:14.805Z INFO "adding new subcriteria to Big_4 criteria" +3s
+2022-04-05T16:46:19.015Z INFO "Get all users" +4s
+2022-04-05T16:46:35.488Z INFO "adding new subcriteria to Big_4 criteria" +16s
+2022-04-05T16:46:39.926Z INFO "Get all users" +4s
+2022-04-05T16:49:55.794Z INFO "Get all users" +55s
+2022-04-05T16:49:55.823Z ERROR "Table 'evaluation.criteria' doesn't exist" +29ms
+2022-04-05T16:50:01.854Z INFO "Get all users" +6s
+2022-04-05T16:50:01.858Z ERROR "Table 'evaluation.criteria' doesn't exist" +4ms
+2022-04-05T16:50:27.467Z ERROR "Unable to connect to the database. Retrying (1)..." +0ms
+2022-04-05T16:53:54.620Z INFO "adding new subcriteria to Big_1 criteria" +3m
+2022-04-05T16:53:59.736Z INFO "adding new subcriteria to Big_1 criteria" +5s
+2022-04-05T16:54:02.973Z INFO "adding new subcriteria to Big_1 criteria" +3s
+2022-04-05T16:54:07.287Z INFO "adding new subcriteria to Big_1 criteria" +4s
+2022-04-05T16:54:27.430Z INFO "adding new subcriteria to Big_2 criteria" +20s
+2022-04-05T16:54:30.828Z INFO "adding new subcriteria to Big_2 criteria" +3s
+2022-04-05T17:00:08.585Z INFO "Get all users" +9s
+2022-04-05T17:00:12.626Z INFO "adding new subcriteria to Big_2 criteria" +4s
+2022-04-05T17:00:17.795Z INFO "adding new subcriteria to Big_2 criteria" +5s
+2022-04-05T17:00:21.342Z INFO "adding new subcriteria to Big_2 criteria" +4s
+2022-04-05T17:00:26.062Z INFO "adding new subcriteria to Big_1 criteria" +5s
+2022-04-05T17:01:06.935Z INFO "adding new subcriteria to Big_1 criteria" +41s
+2022-04-05T17:01:10.612Z INFO "adding new subcriteria to Big_1 criteria" +4s
+2022-04-05T17:01:29.005Z INFO "adding new subcriteria to Big_2 criteria" +18s
+2022-04-05T17:01:34.061Z INFO "adding new subcriteria to Big_3 criteria" +5s
+2022-04-05T17:02:07.745Z INFO "adding new subcriteria to Big_3 criteria" +34s
+2022-04-05T17:02:14.121Z INFO "adding new subcriteria to Big_3 criteria" +6s
+2022-04-05T17:06:46.117Z INFO "adding new subcriteria to Big_3 criteria" +6s
+2022-04-05T17:06:46.136Z INFO "adding new subcriteria to Big_3 criteria" +19ms
+2022-04-05T17:06:48.481Z INFO "adding new subcriteria to Big_3 criteria" +2s
+2022-04-05T17:06:48.484Z INFO "adding new subcriteria to Big_3 criteria" +3ms
+2022-04-05T17:07:08.371Z INFO "adding new subcriteria to Big_3 criteria" +3s
+2022-04-05T17:07:08.388Z INFO "adding new subcriteria to Big_3 criteria" +17ms
+2022-04-05T17:07:22.977Z INFO "adding new subcriteria to Big_2 criteria" +15s
+2022-04-05T17:07:22.995Z INFO "adding new subcriteria to Big_2 criteria" +18ms
+2022-04-05T17:07:32.326Z INFO "adding new subcriteria to Big_2 criteria" +9s
+2022-04-05T17:07:32.341Z INFO "adding new subcriteria to Big_2 criteria" +15ms
+2022-04-05T17:07:41.879Z INFO "adding new subcriteria to Big_2 criteria" +10s
+2022-04-05T17:07:41.890Z INFO "adding new subcriteria to Big_2 criteria" +11ms
+2022-04-05T17:09:08.515Z INFO "adding new subcriteria to Big_1 criteria" +1m
+2022-04-05T17:09:08.527Z INFO "adding new subcriteria to Big_1 criteria" +12ms
+2022-04-05T17:09:35.776Z INFO "adding new subcriteria to Big_3 criteria" +27s
+2022-04-05T17:09:35.787Z INFO "adding new subcriteria to Big_3 criteria" +11ms
+2022-04-05T17:16:57.850Z INFO "adding new subcriteria to Big_1 criteria" +1m
+2022-04-05T17:16:57.871Z INFO "adding new subcriteria to Big_1 criteria" +21ms
+2022-04-05T17:17:01.725Z INFO "adding new subcriteria to Big_1 criteria" +4s
+2022-04-05T17:17:01.736Z INFO "adding new subcriteria to Big_1 criteria" +11ms
+2022-04-05T17:17:05.547Z INFO "adding new subcriteria to Big_1 criteria" +4s
+2022-04-05T17:17:05.554Z INFO "adding new subcriteria to Big_1 criteria" +7ms
+2022-04-05T17:17:09.575Z INFO "adding new subcriteria to Big_1 criteria" +4s
+2022-04-05T17:17:09.581Z INFO "adding new subcriteria to Big_1 criteria" +6ms
+2022-04-05T17:17:41.184Z INFO "adding new subcriteria to Big_2 criteria" +32s
+2022-04-05T17:17:41.195Z INFO "adding new subcriteria to Big_2 criteria" +11ms
+2022-04-05T17:17:46.835Z INFO "adding new subcriteria to Big_3 criteria" +6s
+2022-04-05T17:17:46.849Z INFO "adding new subcriteria to Big_3 criteria" +14ms
+2022-04-05T17:18:14.093Z INFO "adding new subcriteria to Big_2 criteria" +27s
+2022-04-05T17:18:14.104Z INFO "adding new subcriteria to Big_2 criteria" +11ms
+2022-04-05T17:18:16.996Z INFO "adding new subcriteria to Big_2 criteria" +3s
+2022-04-05T17:18:17.006Z INFO "adding new subcriteria to Big_2 criteria" +10ms
+2022-04-05T17:24:42.923Z ERROR "Unable to connect to the database. Retrying (1)..." +0ms
+2022-04-05T17:25:21.598Z INFO "adding new subcriteria to Big_2 criteria" +39s
+2022-04-05T17:25:21.613Z INFO "adding new subcriteria to Big_2 criteria" +15ms
+2022-04-05T17:25:22.396Z INFO "adding new subcriteria to Big_2 criteria" +783ms
+2022-04-05T17:25:22.403Z INFO "adding new subcriteria to Big_2 criteria" +7ms
+2022-04-05T17:25:22.979Z INFO "adding new subcriteria to Big_2 criteria" +576ms
+2022-04-05T17:25:22.984Z INFO "adding new subcriteria to Big_2 criteria" +5ms
+2022-04-05T17:25:28.011Z INFO "adding new subcriteria to Big_2 criteria" +5s
+2022-04-05T17:25:28.026Z INFO "adding new subcriteria to Big_2 criteria" +15ms
+2022-04-05T17:25:31.765Z INFO "adding new subcriteria to Big_2 criteria" +4s
+2022-04-05T17:25:31.770Z INFO "adding new subcriteria to Big_2 criteria" +5ms
+2022-04-05T17:25:32.466Z INFO "adding new subcriteria to Big_2 criteria" +696ms
+2022-04-05T17:25:32.475Z INFO "adding new subcriteria to Big_2 criteria" +9ms
+2022-04-05T17:25:35.390Z INFO "adding new subcriteria to Big_2 criteria" +3s
+2022-04-05T17:25:35.396Z INFO "adding new subcriteria to Big_2 criteria" +6ms
+2022-04-05T17:48:07.156Z ERROR "Unable to connect to the database. Retrying (1)..." +1ms
+2022-04-05T17:49:00.553Z INFO "Get all users" +53s
+2022-04-05T17:55:16.214Z ERROR "Unable to connect to the database. Retrying (1)..." +0ms
+2022-04-05T17:55:26.001Z INFO "Get all users" +10s
+2022-04-05T17:58:59.994Z INFO "Get all users" +4m
+2022-04-05T18:01:04.118Z INFO "Get all users" +3s
+2022-04-05T18:01:58.141Z INFO "Get all users" +3s
+2022-04-05T18:02:22.264Z INFO "Get all users" +2s
+2022-04-05T18:08:01.265Z INFO {
+  "id": 1,
+  "title": "Black_Eval",
+  "bonus": 15,
+  "TimePeriod": "annually",
+  "createdAt": "2022-03-29T16:40:46.993Z",
+  "endsAt": null,
+  "users": [
+    {
+      "id": 1,
+      "firstName": "",
+      "lastName": "",
+      "email": "",
+      "rating": 0,
+      "performerType": "Waiting For The Evaluation"
+    }
+  ],
+  "rating": [],
+  "criteria": [
+    {
+      "id": 1,
+      "name": "Big_1",
+      "criteria": false,
+      "rating": 0,
+      "subCriteria": [
+        {
+          "id": 1,
+          "name": "Small_1",
+          "state": true,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 2,
+          "name": "Small_2",
+          "state": true,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 3,
+          "name": "Small_3",
+          "state": false,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Big_2",
+      "criteria": false,
+      "rating": 0,
+      "subCriteria": [
+        {
+          "id": 4,
+          "name": "Small_4",
+          "state": false,
+          "criteria": {
+            "id": 2,
+            "name": "Big_2",
+            "criteria": false,
+            "rating": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Big_3",
+      "criteria": true,
+      "rating": 0,
+      "subCriteria": []
+    },
+    {
+      "id": 4,
+      "name": "Big_4",
+      "criteria": false,
+      "rating": 0,
+      "subCriteria": []
+    }
+  ]
+} +6m
+2022-04-05T18:10:18.480Z INFO "Get all users" +14s
+2022-04-05T18:21:21.988Z INFO "Get all users" +23s
+2022-04-05T18:27:48.469Z INFO "Get all users" +3s
+2022-04-05T18:28:24.933Z INFO "Get all users" +2s
+2022-04-05T18:29:38.652Z INFO "Get all users" +2s
+2022-04-05T18:30:07.466Z INFO "Get all users" +2s
+2022-04-05T19:02:46.072Z INFO "Get all users" +8m
+2022-04-05T19:02:49.872Z INFO "Get all users" +4s
+2022-04-05T19:02:51.196Z INFO "Get all users" +1s
+2022-04-05T19:05:11.087Z INFO "Get all users" +2s
+2022-04-05T19:05:55.137Z INFO "Get all users" +5s
+2022-04-05T19:06:37.864Z INFO {
+  "id": 1,
+  "title": "Black_Eval",
+  "bonus": 15,
+  "TimePeriod": "annually",
+  "createdAt": "2022-03-29T16:40:46.993Z",
+  "endsAt": null,
+  "users": [
+    {
+      "id": 1,
+      "firstName": "",
+      "lastName": "",
+      "email": "",
+      "rating": 0,
+      "performerType": "Waiting For The Evaluation"
+    }
+  ],
+  "rating": [],
+  "criteria": [
+    {
+      "id": 1,
+      "name": "Big_1",
+      "criteria": false,
+      "rating": 0,
+      "subCriteria": [
+        {
+          "id": 1,
+          "name": "Small_1",
+          "state": true,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 2,
+          "name": "Small_2",
+          "state": true,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 3,
+          "name": "Small_3",
+          "state": false,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Big_2",
+      "criteria": false,
+      "rating": 0,
+      "subCriteria": [
+        {
+          "id": 4,
+          "name": "Small_4",
+          "state": false,
+          "criteria": {
+            "id": 2,
+            "name": "Big_2",
+            "criteria": false,
+            "rating": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Big_3",
+      "criteria": true,
+      "rating": 0,
+      "subCriteria": []
+    },
+    {
+      "id": 4,
+      "name": "Big_4",
+      "criteria": false,
+      "rating": 0,
+      "subCriteria": []
+    }
+  ]
+} +25s
+2022-04-05T19:06:48.930Z ERROR "Cannot read properties of undefined (reading 'map')" +11s
+2022-04-05T19:07:16.603Z ERROR "Cannot read properties of undefined (reading 'map')" +2s
+2022-04-05T19:07:56.770Z ERROR "Cannot read properties of undefined (reading 'map')" +2s
+2022-04-05T19:08:27.750Z ERROR "Cannot read properties of undefined (reading 'map')" +3s
+2022-04-05T19:22:37.675Z INFO "adding new subcriteria to Big_2 criteria" +10m
+2022-04-05T19:22:37.684Z INFO "adding new subcriteria to Big_2 criteria" +9ms
+2022-04-05T19:24:30.037Z INFO "adding new subcriteria to Big_3 criteria" +2m
+2022-04-05T19:24:30.048Z INFO "adding new subcriteria to Big_3 criteria" +11ms
+2022-04-05T19:26:55.308Z INFO "adding new subcriteria to Big_2 criteria" +2m
+2022-04-05T19:26:55.316Z INFO "adding new subcriteria to Big_2 criteria" +8ms
+2022-04-05T19:32:54.091Z INFO "adding new subcriteria to Big_3 criteria" +52s
+2022-04-06T12:38:39.344Z ERROR "Unable to connect to the database. Retrying (1)..." +1ms
+2022-04-06T12:39:27.710Z INFO  +12s
+2022-04-06T12:43:33.455Z ERROR "Unable to connect to the database. Retrying (1)..." +0ms
+2022-04-06T13:37:06.290Z ERROR "Unable to connect to the database. Retrying (1)..." +0ms
+2022-04-06T13:37:06.292Z ERROR "Unable to connect to the database. Retrying (1)..." +2ms
+2022-04-06T13:37:06.292Z ERROR "Unable to connect to the database. Retrying (2)..." +0ms
+2022-04-06T13:37:06.292Z ERROR "Unable to connect to the database. Retrying (2)..." +0ms
+2022-04-06T13:37:06.293Z ERROR "Unable to connect to the database. Retrying (3)..." +1ms
+2022-04-06T13:37:31.754Z ERROR "Unable to connect to the database. Retrying (1)..." +1ms
+2022-04-06T14:22:42.395Z ERROR "Unable to connect to the database. Retrying (1)..." +172ms
+2022-04-06T14:22:43.074Z ERROR "Unable to connect to the database. Retrying (1)..." +679ms
+2022-04-06T14:22:46.078Z ERROR "Unable to connect to the database. Retrying (2)..." +3s
+2022-04-06T14:22:46.151Z ERROR "Unable to connect to the database. Retrying (2)..." +73ms
+2022-04-06T14:22:49.152Z ERROR "Unable to connect to the database. Retrying (3)..." +3s
+2022-04-06T14:22:49.734Z ERROR "Unable to connect to the database. Retrying (3)..." +582ms
+2022-04-06T14:22:52.737Z ERROR "Unable to connect to the database. Retrying (4)..." +3s
+2022-04-06T14:22:52.917Z ERROR "Unable to connect to the database. Retrying (4)..." +180ms
+2022-04-06T14:22:55.921Z ERROR "Unable to connect to the database. Retrying (5)..." +3s
+2022-04-06T14:22:56.488Z ERROR "Unable to connect to the database. Retrying (5)..." +567ms
+2022-04-06T14:22:59.490Z ERROR "Unable to connect to the database. Retrying (6)..." +3s
+2022-04-06T14:22:59.558Z ERROR "Unable to connect to the database. Retrying (6)..." +68ms
+2022-04-06T14:23:02.560Z ERROR "Unable to connect to the database. Retrying (7)..." +3s
+2022-04-06T14:23:03.249Z ERROR "Unable to connect to the database. Retrying (7)..." +689ms
+2022-04-06T14:23:06.250Z ERROR "Unable to connect to the database. Retrying (8)..." +3s
+2022-04-06T14:23:06.309Z ERROR "Unable to connect to the database. Retrying (8)..." +59ms
+2022-04-06T14:23:09.311Z ERROR "Unable to connect to the database. Retrying (9)..." +3s
+2022-04-06T14:23:49.513Z ERROR "Unable to connect to the database. Retrying (1)..." +115ms
+2022-04-06T14:23:50.093Z ERROR "Unable to connect to the database. Retrying (1)..." +580ms
+2022-04-06T14:23:53.100Z ERROR "Unable to connect to the database. Retrying (2)..." +3s
+2022-04-06T14:23:53.225Z ERROR "Unable to connect to the database. Retrying (2)..." +125ms
+2022-04-06T14:23:56.230Z ERROR "Unable to connect to the database. Retrying (3)..." +3s
+2022-04-06T14:23:56.793Z ERROR "Unable to connect to the database. Retrying (3)..." +563ms
+2022-04-06T14:23:59.796Z ERROR "Unable to connect to the database. Retrying (4)..." +3s
+2022-04-06T14:23:59.964Z ERROR "Unable to connect to the database. Retrying (4)..." +168ms
+2022-04-06T14:24:02.964Z ERROR "Unable to connect to the database. Retrying (5)..." +3s
+2022-04-06T14:24:03.538Z ERROR "Unable to connect to the database. Retrying (5)..." +574ms
+2022-04-06T14:24:06.540Z ERROR "Unable to connect to the database. Retrying (6)..." +3s
+2022-04-06T14:24:06.692Z ERROR "Unable to connect to the database. Retrying (6)..." +152ms
+2022-04-06T14:24:09.693Z ERROR "Unable to connect to the database. Retrying (7)..." +3s
+2022-04-06T14:24:10.244Z ERROR "Unable to connect to the database. Retrying (7)..." +550ms
+2022-04-06T14:24:13.247Z ERROR "Unable to connect to the database. Retrying (8)..." +3s
+2022-04-06T14:24:13.413Z ERROR "Unable to connect to the database. Retrying (8)..." +166ms
+2022-04-06T14:24:16.417Z ERROR "Unable to connect to the database. Retrying (9)..." +3s
+2022-04-06T14:29:22.665Z ERROR "Unable to connect to the database. Retrying (1)..." +98ms
+2022-04-06T14:30:04.154Z ERROR "Unable to connect to the database. Retrying (1)..." +110ms
+2022-04-06T14:30:04.696Z ERROR "Unable to connect to the database. Retrying (1)..." +542ms
+2022-04-06T14:30:07.702Z ERROR "Unable to connect to the database. Retrying (2)..." +3s
+2022-04-06T14:30:07.870Z ERROR "Unable to connect to the database. Retrying (2)..." +168ms
+2022-04-06T14:30:11.420Z ERROR "Unable to connect to the database. Retrying (3)..." +546ms
+2022-04-06T14:30:15.170Z ERROR "Unable to connect to the database. Retrying (4)..." +4s
+2022-04-06T14:30:18.912Z ERROR "Unable to connect to the database. Retrying (5)..." +4s
+2022-04-06T14:30:22.579Z ERROR "Unable to connect to the database. Retrying (6)..." +4s
+2022-04-06T14:30:26.289Z ERROR "Unable to connect to the database. Retrying (7)..." +4s
+2022-04-06T14:30:30.035Z ERROR "Unable to connect to the database. Retrying (8)..." +4s
+2022-04-06T14:30:33.832Z ERROR "Unable to connect to the database. Retrying (9)..." +4s
+2022-04-06T14:30:54.894Z ERROR "Unable to connect to the database. Retrying (1)..." +256ms
+2022-04-06T14:30:55.619Z ERROR "Unable to connect to the database. Retrying (1)..." +725ms
+2022-04-06T14:30:58.613Z ERROR "Unable to connect to the database. Retrying (2)..." +3s
+2022-04-06T14:30:59.341Z ERROR "Unable to connect to the database. Retrying (2)..." +728ms
+2022-04-06T14:31:02.291Z ERROR "Unable to connect to the database. Retrying (3)..." +3s
+2022-04-06T14:31:03.119Z ERROR "Unable to connect to the database. Retrying (3)..." +828ms
+2022-04-06T14:31:06.040Z ERROR "Unable to connect to the database. Retrying (4)..." +3s
+2022-04-06T14:31:06.833Z ERROR "Unable to connect to the database. Retrying (4)..." +793ms
+2022-04-06T14:31:09.798Z ERROR "Unable to connect to the database. Retrying (5)..." +3s
+2022-04-06T14:31:10.599Z ERROR "Unable to connect to the database. Retrying (5)..." +801ms
+2022-04-06T14:31:13.559Z ERROR "Unable to connect to the database. Retrying (6)..." +3s
+2022-04-06T14:31:14.341Z ERROR "Unable to connect to the database. Retrying (6)..." +782ms
+2022-04-06T14:31:20.901Z ERROR "Unable to connect to the database. Retrying (1)..." +125ms
+2022-04-06T14:31:21.393Z ERROR "Unable to connect to the database. Retrying (1)..." +491ms
+2022-04-06T14:31:24.398Z ERROR "Unable to connect to the database. Retrying (2)..." +3s
+2022-04-06T14:31:24.649Z ERROR "Unable to connect to the database. Retrying (2)..." +251ms
+2022-04-06T14:31:27.651Z ERROR "Unable to connect to the database. Retrying (3)..." +3s
+2022-04-06T14:31:28.125Z ERROR "Unable to connect to the database. Retrying (3)..." +474ms
+2022-04-06T14:31:31.129Z ERROR "Unable to connect to the database. Retrying (4)..." +3s
+2022-04-06T14:31:31.373Z ERROR "Unable to connect to the database. Retrying (4)..." +244ms
+2022-04-06T14:31:34.375Z ERROR "Unable to connect to the database. Retrying (5)..." +3s
+2022-04-06T14:31:34.906Z ERROR "Unable to connect to the database. Retrying (5)..." +531ms
+2022-04-06T14:31:37.909Z ERROR "Unable to connect to the database. Retrying (6)..." +3s
+2022-04-06T14:31:38.026Z ERROR "Unable to connect to the database. Retrying (6)..." +117ms
+2022-04-06T14:31:41.028Z ERROR "Unable to connect to the database. Retrying (7)..." +3s
+2022-04-06T14:31:41.622Z ERROR "Unable to connect to the database. Retrying (7)..." +594ms
+2022-04-06T14:31:44.624Z ERROR "Unable to connect to the database. Retrying (8)..." +3s
+2022-04-06T14:31:44.671Z ERROR "Unable to connect to the database. Retrying (8)..." +47ms
+2022-04-06T14:31:47.674Z ERROR "Unable to connect to the database. Retrying (9)..." +3s
+2022-04-06T14:32:41.374Z ERROR "Unable to connect to the database. Retrying (1)..." +198ms
+2022-04-06T14:32:42.035Z ERROR "Unable to connect to the database. Retrying (1)..." +661ms
+2022-04-06T14:32:45.039Z ERROR "Unable to connect to the database. Retrying (2)..." +3s
+2022-04-06T14:32:45.099Z ERROR "Unable to connect to the database. Retrying (2)..." +60ms
+2022-04-06T14:32:48.100Z ERROR "Unable to connect to the database. Retrying (3)..." +3s
+2022-04-06T14:32:48.757Z ERROR "Unable to connect to the database. Retrying (3)..." +657ms
+2022-04-06T14:32:51.760Z ERROR "Unable to connect to the database. Retrying (4)..." +3s
+2022-04-06T14:32:51.795Z ERROR "Unable to connect to the database. Retrying (4)..." +35ms
+2022-04-06T14:32:54.795Z ERROR "Unable to connect to the database. Retrying (5)..." +3s
+2022-04-06T14:32:55.415Z ERROR "Unable to connect to the database. Retrying (5)..." +620ms
+2022-04-06T14:32:58.416Z ERROR "Unable to connect to the database. Retrying (6)..." +3s
+2022-04-06T14:32:58.577Z ERROR "Unable to connect to the database. Retrying (6)..." +161ms
+2022-04-06T14:33:01.581Z ERROR "Unable to connect to the database. Retrying (7)..." +3s
+2022-04-06T14:33:02.139Z ERROR "Unable to connect to the database. Retrying (7)..." +558ms
+2022-04-06T14:33:10.814Z ERROR "Unable to connect to the database. Retrying (1)..." +137ms
+2022-04-06T14:33:11.268Z ERROR "Unable to connect to the database. Retrying (1)..." +454ms
+2022-04-06T14:33:14.273Z ERROR "Unable to connect to the database. Retrying (2)..." +3s
+2022-04-06T14:33:14.453Z ERROR "Unable to connect to the database. Retrying (2)..." +180ms
+2022-04-06T14:33:17.454Z ERROR "Unable to connect to the database. Retrying (3)..." +3s
+2022-04-06T14:33:35.593Z ERROR "Unable to connect to the database. Retrying (1)..." +97ms
+2022-04-06T14:33:36.196Z ERROR "Unable to connect to the database. Retrying (1)..." +603ms
+2022-04-06T14:33:39.199Z ERROR "Unable to connect to the database. Retrying (2)..." +3s
+2022-04-06T14:33:39.315Z ERROR "Unable to connect to the database. Retrying (2)..." +116ms
+2022-04-06T14:33:42.318Z ERROR "Unable to connect to the database. Retrying (3)..." +3s
+2022-04-06T14:33:42.945Z ERROR "Unable to connect to the database. Retrying (3)..." +627ms
+2022-04-06T14:33:45.947Z ERROR "Unable to connect to the database. Retrying (4)..." +3s
+2022-04-06T14:33:46.032Z ERROR "Unable to connect to the database. Retrying (4)..." +85ms
+2022-04-06T14:33:49.034Z ERROR "Unable to connect to the database. Retrying (5)..." +3s
+2022-04-06T14:33:49.633Z ERROR "Unable to connect to the database. Retrying (5)..." +599ms
+2022-04-06T14:33:52.635Z ERROR "Unable to connect to the database. Retrying (6)..." +3s
+2022-04-06T14:33:52.714Z ERROR "Unable to connect to the database. Retrying (6)..." +79ms
+2022-04-06T14:33:55.716Z ERROR "Unable to connect to the database. Retrying (7)..." +3s
+2022-04-06T14:33:56.292Z ERROR "Unable to connect to the database. Retrying (7)..." +576ms
+2022-04-06T14:33:59.296Z ERROR "Unable to connect to the database. Retrying (8)..." +3s
+2022-04-06T14:33:59.408Z ERROR "Unable to connect to the database. Retrying (8)..." +112ms
+2022-04-06T14:34:04.194Z ERROR "Unable to connect to the database. Retrying (1)..." +129ms
+2022-04-06T14:34:04.922Z ERROR "Unable to connect to the database. Retrying (1)..." +728ms
+2022-04-06T14:34:07.928Z ERROR "Unable to connect to the database. Retrying (2)..." +3s
+2022-04-06T14:34:07.951Z ERROR "Unable to connect to the database. Retrying (2)..." +23ms
+2022-04-06T14:34:10.952Z ERROR "Unable to connect to the database. Retrying (3)..." +3s
+2022-04-06T14:34:11.706Z ERROR "Unable to connect to the database. Retrying (3)..." +754ms
+2022-04-06T14:34:14.695Z ERROR "Unable to connect to the database. Retrying (4)..." +3s
+2022-04-06T14:34:15.412Z ERROR "Unable to connect to the database. Retrying (4)..." +717ms
+2022-04-06T14:34:18.417Z ERROR "Unable to connect to the database. Retrying (5)..." +3s
+2022-04-06T14:34:18.439Z ERROR "Unable to connect to the database. Retrying (5)..." +22ms
+2022-04-06T14:34:21.441Z ERROR "Unable to connect to the database. Retrying (6)..." +3s
+2022-04-06T14:34:22.144Z ERROR "Unable to connect to the database. Retrying (6)..." +703ms
+2022-04-06T14:34:25.146Z ERROR "Unable to connect to the database. Retrying (7)..." +3s
+2022-04-06T14:34:25.192Z ERROR "Unable to connect to the database. Retrying (7)..." +46ms
+2022-04-06T14:34:28.192Z ERROR "Unable to connect to the database. Retrying (8)..." +3s
+2022-04-06T14:34:28.884Z ERROR "Unable to connect to the database. Retrying (8)..." +692ms
+2022-04-06T14:34:31.886Z ERROR "Unable to connect to the database. Retrying (9)..." +3s
+2022-04-06T14:37:47.982Z ERROR "Unable to connect to the database. Retrying (1)..." +145ms
+2022-04-06T14:37:48.629Z ERROR "Unable to connect to the database. Retrying (1)..." +647ms
+2022-04-06T14:37:51.646Z ERROR "Unable to connect to the database. Retrying (2)..." +3s
+2022-04-06T14:37:51.741Z ERROR "Unable to connect to the database. Retrying (2)..." +95ms
+2022-04-06T14:37:56.819Z ERROR "Unable to connect to the database. Retrying (1)..." +162ms
+2022-04-06T14:37:57.479Z ERROR "Unable to connect to the database. Retrying (1)..." +660ms
+2022-04-06T14:38:00.483Z ERROR "Unable to connect to the database. Retrying (2)..." +3s
+2022-04-06T14:38:00.601Z ERROR "Unable to connect to the database. Retrying (2)..." +118ms
+2022-04-06T14:38:03.604Z ERROR "Unable to connect to the database. Retrying (3)..." +3s
+2022-04-06T14:38:04.177Z ERROR "Unable to connect to the database. Retrying (3)..." +573ms
+2022-04-06T14:38:07.180Z ERROR "Unable to connect to the database. Retrying (4)..." +3s
+2022-04-06T14:38:07.306Z ERROR "Unable to connect to the database. Retrying (4)..." +126ms
+2022-04-06T14:38:10.309Z ERROR "Unable to connect to the database. Retrying (5)..." +3s
+2022-04-06T14:38:10.916Z ERROR "Unable to connect to the database. Retrying (5)..." +607ms
+2022-04-06T14:38:13.918Z ERROR "Unable to connect to the database. Retrying (6)..." +3s
+2022-04-06T14:38:14.034Z ERROR "Unable to connect to the database. Retrying (6)..." +116ms
+2022-04-06T14:38:17.036Z ERROR "Unable to connect to the database. Retrying (7)..." +3s
+2022-04-06T14:38:17.657Z ERROR "Unable to connect to the database. Retrying (7)..." +621ms
+2022-04-06T14:38:20.658Z ERROR "Unable to connect to the database. Retrying (8)..." +3s
+2022-04-06T14:38:20.816Z ERROR "Unable to connect to the database. Retrying (8)..." +158ms
+2022-04-06T14:38:26.364Z ERROR "Unable to connect to the database. Retrying (1)..." +122ms
+2022-04-06T14:38:26.954Z ERROR "Unable to connect to the database. Retrying (1)..." +590ms
+2022-04-06T14:38:29.957Z ERROR "Unable to connect to the database. Retrying (2)..." +3s
+2022-04-06T14:38:30.060Z ERROR "Unable to connect to the database. Retrying (2)..." +103ms
+2022-04-06T14:38:33.061Z ERROR "Unable to connect to the database. Retrying (3)..." +3s
+2022-04-06T14:38:33.618Z ERROR "Unable to connect to the database. Retrying (3)..." +557ms
+2022-04-06T14:38:36.619Z ERROR "Unable to connect to the database. Retrying (4)..." +3s
+2022-04-06T14:38:36.721Z ERROR "Unable to connect to the database. Retrying (4)..." +102ms
+2022-04-06T14:38:39.724Z ERROR "Unable to connect to the database. Retrying (5)..." +3s
+2022-04-06T14:38:40.303Z ERROR "Unable to connect to the database. Retrying (5)..." +579ms
+2022-04-06T14:38:43.305Z ERROR "Unable to connect to the database. Retrying (6)..." +3s
+2022-04-06T14:38:43.394Z ERROR "Unable to connect to the database. Retrying (6)..." +89ms
+2022-04-06T14:38:46.397Z ERROR "Unable to connect to the database. Retrying (7)..." +3s
+2022-04-06T14:38:47.016Z ERROR "Unable to connect to the database. Retrying (7)..." +619ms
+2022-04-06T14:38:50.017Z ERROR "Unable to connect to the database. Retrying (8)..." +3s
+2022-04-06T14:38:50.066Z ERROR "Unable to connect to the database. Retrying (8)..." +49ms
+2022-04-06T14:38:56.785Z ERROR "Unable to connect to the database. Retrying (1)..." +137ms
+2022-04-06T14:38:57.484Z ERROR "Unable to connect to the database. Retrying (1)..." +699ms
+2022-04-06T14:39:00.481Z ERROR "Unable to connect to the database. Retrying (2)..." +3s
+2022-04-06T14:39:01.155Z ERROR "Unable to connect to the database. Retrying (2)..." +674ms
+2022-04-06T14:39:04.161Z ERROR "Unable to connect to the database. Retrying (3)..." +3s
+2022-04-06T14:39:04.248Z ERROR "Unable to connect to the database. Retrying (3)..." +87ms
+2022-04-06T14:39:07.250Z ERROR "Unable to connect to the database. Retrying (4)..." +3s
+2022-04-06T14:39:07.888Z ERROR "Unable to connect to the database. Retrying (4)..." +638ms
+2022-04-06T14:39:10.890Z ERROR "Unable to connect to the database. Retrying (5)..." +3s
+2022-04-06T14:39:10.981Z ERROR "Unable to connect to the database. Retrying (5)..." +91ms
+2022-04-06T14:39:13.984Z ERROR "Unable to connect to the database. Retrying (6)..." +3s
+2022-04-06T14:39:14.562Z ERROR "Unable to connect to the database. Retrying (6)..." +578ms
+2022-04-06T14:39:17.566Z ERROR "Unable to connect to the database. Retrying (7)..." +3s
+2022-04-06T14:39:17.754Z ERROR "Unable to connect to the database. Retrying (7)..." +188ms
+2022-04-06T14:39:20.754Z ERROR "Unable to connect to the database. Retrying (8)..." +3s
+2022-04-06T14:39:21.344Z ERROR "Unable to connect to the database. Retrying (8)..." +590ms
+2022-04-06T14:39:26.140Z ERROR "Unable to connect to the database. Retrying (1)..." +133ms
+2022-04-06T14:39:26.827Z ERROR "Unable to connect to the database. Retrying (1)..." +687ms
+2022-04-06T14:39:29.832Z ERROR "Unable to connect to the database. Retrying (2)..." +3s
+2022-04-06T14:39:29.834Z ERROR "Unable to connect to the database. Retrying (2)..." +2ms
+2022-04-06T14:39:32.895Z ERROR "Unable to connect to the database. Retrying (3)..." +3s
+2022-04-06T14:39:33.547Z ERROR "Unable to connect to the database. Retrying (3)..." +652ms
+2022-04-06T14:39:40.008Z ERROR "Unable to connect to the database. Retrying (1)..." +124ms
+2022-04-06T14:39:40.678Z ERROR "Unable to connect to the database. Retrying (1)..." +670ms
+2022-04-06T14:39:43.683Z ERROR "Unable to connect to the database. Retrying (2)..." +3s
+2022-04-06T14:39:43.714Z ERROR "Unable to connect to the database. Retrying (2)..." +31ms
+2022-04-06T14:39:46.717Z ERROR "Unable to connect to the database. Retrying (3)..." +3s
+2022-04-06T14:39:47.390Z ERROR "Unable to connect to the database. Retrying (3)..." +673ms
+2022-04-06T14:39:50.393Z ERROR "Unable to connect to the database. Retrying (4)..." +3s
+2022-04-06T14:39:50.419Z ERROR "Unable to connect to the database. Retrying (4)..." +26ms
+2022-04-06T14:39:53.420Z ERROR "Unable to connect to the database. Retrying (5)..." +3s
+2022-04-06T14:39:54.111Z ERROR "Unable to connect to the database. Retrying (5)..." +691ms
+2022-04-06T14:40:00.449Z ERROR "Unable to connect to the database. Retrying (1)..." +209ms
+2022-04-06T14:40:01.026Z ERROR "Unable to connect to the database. Retrying (1)..." +577ms
+2022-04-06T14:40:04.034Z ERROR "Unable to connect to the database. Retrying (2)..." +3s
+2022-04-06T14:40:04.282Z ERROR "Unable to connect to the database. Retrying (2)..." +248ms
+2022-04-06T14:40:07.284Z ERROR "Unable to connect to the database. Retrying (3)..." +3s
+2022-04-06T14:40:07.761Z ERROR "Unable to connect to the database. Retrying (3)..." +477ms
+2022-04-06T14:40:10.763Z ERROR "Unable to connect to the database. Retrying (4)..." +3s
+2022-04-06T14:40:10.975Z ERROR "Unable to connect to the database. Retrying (4)..." +212ms
+2022-04-06T14:40:13.977Z ERROR "Unable to connect to the database. Retrying (5)..." +3s
+2022-04-06T14:40:18.337Z ERROR "Unable to connect to the database. Retrying (1)..." +121ms
+2022-04-06T14:40:18.789Z ERROR "Unable to connect to the database. Retrying (1)..." +452ms
+2022-04-06T14:40:21.793Z ERROR "Unable to connect to the database. Retrying (2)..." +3s
+2022-04-06T14:40:22.033Z ERROR "Unable to connect to the database. Retrying (2)..." +240ms
+2022-04-06T14:40:28.706Z ERROR "Unable to connect to the database. Retrying (1)..." +137ms
+2022-04-06T14:40:29.366Z ERROR "Unable to connect to the database. Retrying (1)..." +660ms
+2022-04-06T14:40:32.371Z ERROR "Unable to connect to the database. Retrying (2)..." +3s
+2022-04-06T14:40:32.408Z ERROR "Unable to connect to the database. Retrying (2)..." +37ms
+2022-04-06T14:40:38.824Z ERROR "Unable to connect to the database. Retrying (1)..." +175ms
+2022-04-06T14:40:39.465Z ERROR "Unable to connect to the database. Retrying (1)..." +641ms
+2022-04-06T14:40:42.471Z ERROR "Unable to connect to the database. Retrying (2)..." +3s
+2022-04-06T14:40:42.488Z ERROR "Unable to connect to the database. Retrying (2)..." +17ms
+2022-04-06T14:40:45.490Z ERROR "Unable to connect to the database. Retrying (3)..." +3s
+2022-04-06T14:40:46.122Z ERROR "Unable to connect to the database. Retrying (3)..." +632ms
+2022-04-06T14:40:52.450Z ERROR "Unable to connect to the database. Retrying (1)..." +179ms
+2022-04-06T14:40:53.048Z ERROR "Unable to connect to the database. Retrying (1)..." +598ms
+2022-04-06T14:40:56.052Z ERROR "Unable to connect to the database. Retrying (2)..." +3s
+2022-04-06T14:40:56.133Z ERROR "Unable to connect to the database. Retrying (2)..." +81ms
+2022-04-06T14:40:59.137Z ERROR "Unable to connect to the database. Retrying (3)..." +3s
+2022-04-06T14:40:59.725Z ERROR "Unable to connect to the database. Retrying (3)..." +588ms
+2022-04-06T14:41:02.727Z ERROR "Unable to connect to the database. Retrying (4)..." +3s
+2022-04-06T14:41:02.787Z ERROR "Unable to connect to the database. Retrying (4)..." +60ms
+2022-04-06T14:41:05.789Z ERROR "Unable to connect to the database. Retrying (5)..." +3s
+2022-04-06T15:01:27.379Z ERROR "Table 'evaluation_tmp.event' doesn't exist" +22s
+2022-04-06T15:31:09.306Z INFO  +0ms
+2022-04-06T15:31:10.228Z INFO  +922ms
+2022-04-06T15:37:47.877Z INFO "Get all users" +7s
+2022-04-06T19:44:52.515Z INFO "Get all users" +27s
+2022-04-06T19:46:19.680Z INFO "Get all users" +1m
+2022-04-06T20:00:58.690Z INFO {
+  "id": 1,
+  "title": "Black_Eval",
+  "bonus": 15,
+  "TimePeriod": "annually",
+  "createdAt": "2022-03-29T16:40:46.993Z",
+  "endsAt": null,
+  "users": [
+    {
+      "id": 1,
+      "firstName": "",
+      "lastName": "",
+      "email": "",
+      "rating": 0,
+      "performerType": "Waiting For The Evaluation"
+    }
+  ],
+  "rating": [],
+  "criteria": [
+    {
+      "id": 1,
+      "name": "Big_1",
+      "criteria": false,
+      "rating": 0,
+      "subCriteria": [
+        {
+          "id": 1,
+          "name": "Small_1",
+          "state": true,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 2,
+          "name": "Small_2",
+          "state": true,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 3,
+          "name": "Small_3",
+          "state": false,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Big_3",
+      "criteria": true,
+      "rating": 0,
+      "subCriteria": [
+        {
+          "id": 4,
+          "name": "Small_4",
+          "state": false,
+          "criteria": {
+            "id": 3,
+            "name": "Big_3",
+            "criteria": true,
+            "rating": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Big_2",
+      "criteria": false,
+      "rating": 0,
+      "subCriteria": []
+    },
+    {
+      "id": 4,
+      "name": "Big_4",
+      "criteria": false,
+      "rating": 0,
+      "subCriteria": []
+    }
+  ]
+} +14s
+2022-04-06T20:00:59.344Z INFO {
+  "id": 1,
+  "title": "Black_Eval",
+  "bonus": 15,
+  "TimePeriod": "annually",
+  "createdAt": "2022-03-29T16:40:46.993Z",
+  "endsAt": null,
+  "users": [
+    {
+      "id": 1,
+      "firstName": "",
+      "lastName": "",
+      "email": "",
+      "rating": 0,
+      "performerType": "Waiting For The Evaluation"
+    }
+  ],
+  "rating": [],
+  "criteria": [
+    {
+      "id": 1,
+      "name": "Big_1",
+      "criteria": false,
+      "rating": 0,
+      "subCriteria": [
+        {
+          "id": 1,
+          "name": "Small_1",
+          "state": true,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 2,
+          "name": "Small_2",
+          "state": true,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 3,
+          "name": "Small_3",
+          "state": false,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Big_3",
+      "criteria": true,
+      "rating": 0,
+      "subCriteria": [
+        {
+          "id": 4,
+          "name": "Small_4",
+          "state": false,
+          "criteria": {
+            "id": 3,
+            "name": "Big_3",
+            "criteria": true,
+            "rating": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Big_2",
+      "criteria": false,
+      "rating": 0,
+      "subCriteria": []
+    },
+    {
+      "id": 4,
+      "name": "Big_4",
+      "criteria": false,
+      "rating": 0,
+      "subCriteria": []
+    }
+  ]
+} +654ms
+2022-04-06T20:00:59.803Z INFO {
+  "id": 1,
+  "title": "Black_Eval",
+  "bonus": 15,
+  "TimePeriod": "annually",
+  "createdAt": "2022-03-29T16:40:46.993Z",
+  "endsAt": null,
+  "users": [
+    {
+      "id": 1,
+      "firstName": "",
+      "lastName": "",
+      "email": "",
+      "rating": 0,
+      "performerType": "Waiting For The Evaluation"
+    }
+  ],
+  "rating": [],
+  "criteria": [
+    {
+      "id": 1,
+      "name": "Big_1",
+      "criteria": false,
+      "rating": 0,
+      "subCriteria": [
+        {
+          "id": 1,
+          "name": "Small_1",
+          "state": true,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 2,
+          "name": "Small_2",
+          "state": true,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 3,
+          "name": "Small_3",
+          "state": false,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Big_3",
+      "criteria": true,
+      "rating": 0,
+      "subCriteria": [
+        {
+          "id": 4,
+          "name": "Small_4",
+          "state": false,
+          "criteria": {
+            "id": 3,
+            "name": "Big_3",
+            "criteria": true,
+            "rating": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Big_2",
+      "criteria": false,
+      "rating": 0,
+      "subCriteria": []
+    },
+    {
+      "id": 4,
+      "name": "Big_4",
+      "criteria": false,
+      "rating": 0,
+      "subCriteria": []
+    }
+  ]
+} +459ms
+2022-04-06T20:04:31.004Z INFO {
+  "id": 1,
+  "title": "Black_Eval",
+  "bonus": 15,
+  "TimePeriod": "annually",
+  "createdAt": "2022-03-29T16:40:46.993Z",
+  "endsAt": null,
+  "users": [
+    {
+      "id": 1,
+      "firstName": "",
+      "lastName": "",
+      "email": "",
+      "rating": 0,
+      "performerType": "Waiting For The Evaluation"
+    }
+  ],
+  "rating": [],
+  "criteria": [
+    {
+      "id": 1,
+      "name": "Big_1",
+      "criteria": false,
+      "rating": 0,
+      "subCriteria": [
+        {
+          "id": 1,
+          "name": "Small_1",
+          "state": true,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 2,
+          "name": "Small_2",
+          "state": true,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 3,
+          "name": "Small_3",
+          "state": false,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Big_3",
+      "criteria": true,
+      "rating": 0,
+      "subCriteria": [
+        {
+          "id": 4,
+          "name": "Small_4",
+          "state": false,
+          "criteria": {
+            "id": 3,
+            "name": "Big_3",
+            "criteria": true,
+            "rating": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Big_2",
+      "criteria": false,
+      "rating": 0,
+      "subCriteria": []
+    },
+    {
+      "id": 4,
+      "name": "Big_4",
+      "criteria": false,
+      "rating": 0,
+      "subCriteria": []
+    }
+  ]
+} +44s
+2022-04-06T20:22:17.896Z INFO "Get all users" +4s
+2022-04-06T20:22:20.751Z INFO "Get all users" +3s
+2022-04-06T20:22:39.371Z INFO "Get all users" +2s
+2022-04-06T20:22:40.130Z INFO "Get all users" +759ms
+2022-04-06T20:22:43.178Z INFO "Get all users" +3s
+2022-04-07T11:23:05.905Z ERROR "User with ID=9 not foundFindRelationsNotFoundError: Relation \"events.criteria.subCriteria, criteria\" was not found; please check if it is correct and really exists in your entity." +2m
+2022-04-07T11:23:14.493Z ERROR "User with ID=9 not foundFindRelationsNotFoundError: Relation \"events.criteria.subCriteria, criteria\" was not found; please check if it is correct and really exists in your entity." +9s
+2022-04-07T11:23:18.209Z INFO "Get all users" +4s
+2022-04-07T11:23:18.225Z ERROR "Relation \"events.criteria.subCriteria, criteria\" was not found; please check if it is correct and really exists in your entity." +16ms
+2022-04-07T11:23:58.242Z INFO "Get all users" +11s
+2022-04-07T12:40:34.489Z ERROR "Nest can't resolve dependencies of the UsersService. Please make sure that the \"criteriaRepository\" property is available in the current context.\n\nPotential solutions:\n- If CriteriaRepository is a provider, is it part of the current UserModule?\n- If CriteriaRepository is exported from a separate @Module, is that module imported within UserModule?\n  @Module({\n    imports: [ /* the Module containing CriteriaRepository */ ]\n  })\n" +2ms
+2022-04-07T12:40:54.266Z ERROR "Nest can't resolve dependencies of the UsersService. Please make sure that the \"criteriaRepository\" property is available in the current context.\n\nPotential solutions:\n- If CriteriaRepository is a provider, is it part of the current UserModule?\n- If CriteriaRepository is exported from a separate @Module, is that module imported within UserModule?\n  @Module({\n    imports: [ /* the Module containing CriteriaRepository */ ]\n  })\n" +2ms
+2022-04-07T12:41:09.187Z ERROR "Nest can't resolve dependencies of the CriteriaRepository. Please make sure that the \"criteriaRepository\" property is available in the current context.\n\nPotential solutions:\n- If CriteriaRepository is a provider, is it part of the current UserModule?\n- If CriteriaRepository is exported from a separate @Module, is that module imported within UserModule?\n  @Module({\n    imports: [ /* the Module containing CriteriaRepository */ ]\n  })\n" +1ms
+2022-04-07T13:08:17.077Z ERROR "Cannot read properties of undefined (reading 'find')" +1m
+2022-04-07T13:10:54.008Z ERROR "Cannot read properties of undefined (reading 'find')" +14s
+2022-04-07T13:14:19.044Z ERROR "Cannot read properties of undefined (reading 'find')" +4s
+2022-04-07T13:14:19.773Z ERROR "Cannot read properties of undefined (reading 'find')" +729ms
+2022-04-07T13:16:53.094Z ERROR "Cannot read properties of undefined (reading 'find')" +23s
+2022-04-07T13:26:15.409Z ERROR "Cannot read properties of undefined (reading 'find')" +2s
+2022-04-07T13:26:51.675Z ERROR "Cannot read properties of undefined (reading 'find')" +2s
+2022-04-07T13:31:21.700Z ERROR "Cannot read properties of undefined (reading 'reduce')" +2s
+2022-04-07T13:34:45.831Z ERROR "Cannot read properties of undefined (reading 'reduce')" +3s
+2022-04-07T13:36:22.797Z ERROR "Cannot read properties of undefined (reading 'reduce')" +7s
+2022-04-07T13:38:45.106Z ERROR "Cannot read properties of undefined (reading 'reduce')" +6s
+2022-04-07T13:40:19.400Z ERROR "Cannot read properties of undefined (reading 'reduce')" +5s
+2022-04-07T13:41:34.261Z ERROR "Cannot read properties of undefined (reading 'reduce')" +2s
+2022-04-07T13:42:17.843Z ERROR "Cannot read properties of undefined (reading 'reduce')" +2s
+2022-04-07T13:42:42.558Z ERROR "Cannot read properties of undefined (reading 'reduce')" +2s
+2022-04-07T13:45:33.832Z ERROR "Cannot read properties of undefined (reading 'reduce')" +2s
+2022-04-07T13:46:07.558Z ERROR "Cannot read properties of undefined (reading 'reduce')" +10s
+2022-04-07T13:46:34.950Z ERROR "Cannot read properties of undefined (reading 'reduce')" +3s
+2022-04-07T13:49:24.635Z ERROR "Cannot read properties of undefined (reading 'reduce')" +6s
+2022-04-07T13:49:41.353Z ERROR "Relation \"subCriteria\" was not found; please check if it is correct and really exists in your entity." +2s
+2022-04-07T13:52:58.686Z ERROR "Cannot read properties of undefined (reading 'reduce')" +3s
+2022-04-07T14:10:00.885Z INFO {
+  "id": 1,
+  "title": "Black_Eval",
+  "bonus": 15,
+  "TimePeriod": "annually",
+  "createdAt": "2022-03-29T16:40:46.993Z",
+  "endsAt": null,
+  "users": [
+    {
+      "id": 7,
+      "firstName": "Rich",
+      "lastName": "Alex",
+      "email": "Hardt@gmail.com",
+      "rating": 0,
+      "performerType": "Waiting For The Evaluation"
+    }
+  ],
+  "rating": [],
+  "criteria": [
+    {
+      "id": 1,
+      "name": "Big_1",
+      "criteria": false,
+      "rating": 0,
+      "subCriteria": [
+        {
+          "id": 1,
+          "name": "Small_1",
+          "state": true,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 2,
+          "name": "Small_2",
+          "state": true,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 3,
+          "name": "Small_3",
+          "state": false,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Big_3",
+      "criteria": true,
+      "rating": 0,
+      "subCriteria": [
+        {
+          "id": 4,
+          "name": "Small_4",
+          "state": false,
+          "criteria": {
+            "id": 3,
+            "name": "Big_3",
+            "criteria": true,
+            "rating": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Big_2",
+      "criteria": false,
+      "rating": 0,
+      "subCriteria": []
+    },
+    {
+      "id": 4,
+      "name": "Big_4",
+      "criteria": false,
+      "rating": 0,
+      "subCriteria": []
+    }
+  ]
+} +28s
+2022-04-07T14:10:32.478Z INFO {
+  "id": 1,
+  "title": "Black_Eval",
+  "bonus": 15,
+  "TimePeriod": "annually",
+  "createdAt": "2022-03-29T16:40:46.993Z",
+  "endsAt": null,
+  "users": [
+    {
+      "id": 7,
+      "firstName": "Rich",
+      "lastName": "Alex",
+      "email": "Hardt@gmail.com",
+      "rating": 0,
+      "performerType": "Waiting For The Evaluation"
+    }
+  ],
+  "rating": [],
+  "criteria": [
+    {
+      "id": 1,
+      "name": "Big_1",
+      "criteria": false,
+      "rating": 0,
+      "subCriteria": [
+        {
+          "id": 1,
+          "name": "Small_1",
+          "state": true,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 2,
+          "name": "Small_2",
+          "state": true,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 3,
+          "name": "Small_3",
+          "state": false,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Big_3",
+      "criteria": true,
+      "rating": 0,
+      "subCriteria": [
+        {
+          "id": 4,
+          "name": "Small_4",
+          "state": false,
+          "criteria": {
+            "id": 3,
+            "name": "Big_3",
+            "criteria": true,
+            "rating": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Big_2",
+      "criteria": false,
+      "rating": 0,
+      "subCriteria": []
+    },
+    {
+      "id": 4,
+      "name": "Big_4",
+      "criteria": false,
+      "rating": 0,
+      "subCriteria": []
+    }
+  ]
+} +4s
+2022-04-07T14:11:05.427Z INFO {
+  "id": 1,
+  "title": "Black_Eval",
+  "bonus": 15,
+  "TimePeriod": "annually",
+  "createdAt": "2022-03-29T16:40:46.993Z",
+  "endsAt": null,
+  "users": [
+    {
+      "id": 7,
+      "firstName": "Rich",
+      "lastName": "Alex",
+      "email": "Hardt@gmail.com",
+      "rating": 0,
+      "performerType": "Waiting For The Evaluation"
+    }
+  ],
+  "rating": [],
+  "criteria": [
+    {
+      "id": 1,
+      "name": "Big_1",
+      "criteria": false,
+      "rating": 0,
+      "subCriteria": [
+        {
+          "id": 1,
+          "name": "Small_1",
+          "state": true,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 2,
+          "name": "Small_2",
+          "state": true,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 3,
+          "name": "Small_3",
+          "state": false,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Big_3",
+      "criteria": true,
+      "rating": 0,
+      "subCriteria": [
+        {
+          "id": 4,
+          "name": "Small_4",
+          "state": false,
+          "criteria": {
+            "id": 3,
+            "name": "Big_3",
+            "criteria": true,
+            "rating": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Big_2",
+      "criteria": false,
+      "rating": 0,
+      "subCriteria": []
+    },
+    {
+      "id": 4,
+      "name": "Big_4",
+      "criteria": false,
+      "rating": 0,
+      "subCriteria": []
+    }
+  ]
+} +2s
+2022-04-07T14:11:52.203Z INFO {
+  "id": 1,
+  "title": "Black_Eval",
+  "bonus": 15,
+  "TimePeriod": "annually",
+  "createdAt": "2022-03-29T16:40:46.993Z",
+  "endsAt": null,
+  "users": [
+    {
+      "id": 7,
+      "firstName": "Rich",
+      "lastName": "Alex",
+      "email": "Hardt@gmail.com",
+      "rating": 0,
+      "performerType": "Waiting For The Evaluation"
+    }
+  ],
+  "rating": [],
+  "criteria": [
+    {
+      "id": 1,
+      "name": "Big_1",
+      "criteria": false,
+      "rating": 0,
+      "subCriteria": [
+        {
+          "id": 1,
+          "name": "Small_1",
+          "state": true,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 2,
+          "name": "Small_2",
+          "state": true,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 3,
+          "name": "Small_3",
+          "state": false,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Big_3",
+      "criteria": true,
+      "rating": 0,
+      "subCriteria": [
+        {
+          "id": 4,
+          "name": "Small_4",
+          "state": false,
+          "criteria": {
+            "id": 3,
+            "name": "Big_3",
+            "criteria": true,
+            "rating": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Big_2",
+      "criteria": false,
+      "rating": 0,
+      "subCriteria": []
+    },
+    {
+      "id": 4,
+      "name": "Big_4",
+      "criteria": false,
+      "rating": 0,
+      "subCriteria": []
+    }
+  ]
+} +2s
+2022-04-07T14:20:43.771Z INFO {
+  "id": 1,
+  "title": "Black_Eval",
+  "bonus": 15,
+  "TimePeriod": "annually",
+  "createdAt": "2022-03-29T16:40:46.993Z",
+  "endsAt": null,
+  "users": [
+    {
+      "id": 7,
+      "firstName": "Rich",
+      "lastName": "Alex",
+      "email": "Hardt@gmail.com",
+      "rating": 0,
+      "performerType": "Waiting For The Evaluation"
+    }
+  ],
+  "rating": [],
+  "criteria": [
+    {
+      "id": 1,
+      "name": "Big_1",
+      "criteria": false,
+      "rating": 0,
+      "subCriteria": [
+        {
+          "id": 1,
+          "name": "Small_1",
+          "state": true,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 2,
+          "name": "Small_2",
+          "state": true,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 3,
+          "name": "Small_3",
+          "state": false,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Big_3",
+      "criteria": true,
+      "rating": 0,
+      "subCriteria": [
+        {
+          "id": 4,
+          "name": "Small_4",
+          "state": false,
+          "criteria": {
+            "id": 3,
+            "name": "Big_3",
+            "criteria": true,
+            "rating": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Big_2",
+      "criteria": false,
+      "rating": 0,
+      "subCriteria": []
+    },
+    {
+      "id": 4,
+      "name": "Big_4",
+      "criteria": false,
+      "rating": 0,
+      "subCriteria": []
+    }
+  ]
+} +16s
+2022-04-07T14:22:36.107Z INFO {
+  "id": 1,
+  "title": "Black_Eval",
+  "bonus": 15,
+  "TimePeriod": "annually",
+  "createdAt": "2022-03-29T16:40:46.993Z",
+  "endsAt": null,
+  "users": [
+    {
+      "id": 7,
+      "firstName": "Rich",
+      "lastName": "Alex",
+      "email": "Hardt@gmail.com",
+      "rating": 0,
+      "performerType": "Waiting For The Evaluation"
+    }
+  ],
+  "rating": [],
+  "criteria": [
+    {
+      "id": 1,
+      "name": "Big_1",
+      "criteria": false,
+      "rating": 0,
+      "subCriteria": [
+        {
+          "id": 1,
+          "name": "Small_1",
+          "state": true,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 2,
+          "name": "Small_2",
+          "state": true,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 3,
+          "name": "Small_3",
+          "state": false,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Big_3",
+      "criteria": true,
+      "rating": 0,
+      "subCriteria": [
+        {
+          "id": 4,
+          "name": "Small_4",
+          "state": false,
+          "criteria": {
+            "id": 3,
+            "name": "Big_3",
+            "criteria": true,
+            "rating": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Big_2",
+      "criteria": false,
+      "rating": 0,
+      "subCriteria": []
+    },
+    {
+      "id": 4,
+      "name": "Big_4",
+      "criteria": false,
+      "rating": 0,
+      "subCriteria": []
+    }
+  ]
+} +2s
+2022-04-07T14:22:55.060Z INFO {
+  "id": 1,
+  "title": "Black_Eval",
+  "bonus": 15,
+  "TimePeriod": "annually",
+  "createdAt": "2022-03-29T16:40:46.993Z",
+  "endsAt": null,
+  "users": [
+    {
+      "id": 7,
+      "firstName": "Rich",
+      "lastName": "Alex",
+      "email": "Hardt@gmail.com",
+      "rating": 0,
+      "performerType": "Waiting For The Evaluation"
+    }
+  ],
+  "rating": [],
+  "criteria": [
+    {
+      "id": 1,
+      "name": "Big_1",
+      "criteria": false,
+      "rating": 0,
+      "subCriteria": [
+        {
+          "id": 1,
+          "name": "Small_1",
+          "state": true,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 2,
+          "name": "Small_2",
+          "state": true,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 3,
+          "name": "Small_3",
+          "state": false,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Big_3",
+      "criteria": true,
+      "rating": 0,
+      "subCriteria": [
+        {
+          "id": 4,
+          "name": "Small_4",
+          "state": false,
+          "criteria": {
+            "id": 3,
+            "name": "Big_3",
+            "criteria": true,
+            "rating": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Big_2",
+      "criteria": false,
+      "rating": 0,
+      "subCriteria": []
+    },
+    {
+      "id": 4,
+      "name": "Big_4",
+      "criteria": false,
+      "rating": 0,
+      "subCriteria": []
+    }
+  ]
+} +2s
+2022-04-07T14:24:00.080Z ERROR "Relation \"user\" was not found; please check if it is correct and really exists in your entity." +5s
+2022-04-07T14:26:11.921Z ERROR "Cannot read properties of undefined (reading 'criteria')" +2s
+2022-04-07T14:27:15.594Z ERROR "Cannot read properties of undefined (reading 'reduce')" +4s
+2022-04-07T14:27:55.636Z ERROR "Cannot read properties of undefined (reading 'reduce')" +2s
+2022-04-07T14:28:07.398Z ERROR "Cannot read properties of undefined (reading 'reduce')" +2s
+2022-04-07T14:28:36.428Z ERROR "Cannot read properties of undefined (reading 'reduce')" +2s
+2022-04-07T14:29:05.576Z ERROR "Cannot read properties of undefined (reading 'reduce')" +2s
+2022-04-07T14:29:24.073Z ERROR "Cannot read properties of undefined (reading 'reduce')" +1s
+2022-04-07T14:29:37.966Z ERROR "Cannot read properties of undefined (reading 'reduce')" +2s
+2022-04-07T14:29:58.031Z ERROR "Cannot read properties of undefined (reading 'reduce')" +2s
+2022-04-07T14:30:41.886Z ERROR "Cannot read properties of undefined (reading 'reduce')" +6s
+2022-04-07T15:02:32.737Z INFO "adding new subcriteria to Big_1 criteria" +19m
+2022-04-07T15:02:37.963Z INFO "adding new subcriteria to Big_1 criteria" +5s
+2022-04-07T15:03:55.790Z INFO "adding new subcriteria to Big_1 criteria" +1m
+2022-04-07T15:03:59.685Z INFO "adding new subcriteria to Big_1 criteria" +4s
+2022-04-07T15:04:03.741Z INFO "adding new subcriteria to Big_1 criteria" +4s
+2022-04-07T15:05:02.027Z INFO "adding new subcriteria to Big_1 criteria" +58s
+2022-04-07T15:05:20.162Z INFO "adding new subcriteria to Big_1 criteria" +18s
+2022-04-07T15:05:29.355Z INFO "adding new subcriteria to Big_1 criteria" +9s
+2022-04-07T15:05:39.287Z INFO "adding new subcriteria to Big_1 criteria" +10s
+2022-04-07T15:05:46.879Z INFO "adding new subcriteria to Big_1 criteria" +8s
+2022-04-07T15:05:57.949Z INFO "adding new subcriteria to Big_1 criteria" +11s
+2022-04-07T15:06:14.999Z INFO "adding new subcriteria to Big_1 criteria" +17s
+2022-04-07T15:17:28.977Z ERROR "Cannot read properties of undefined (reading 'reduce')" +5s
+2022-04-07T15:18:58.316Z ERROR "Cannot read properties of undefined (reading 'reduce')" +2s
+2022-04-07T15:29:43.645Z ERROR "Cannot query across many-to-many for property events" +5s
+2022-04-07T15:33:13.220Z ERROR "No entity column \"event_user\" was found." +3s
+2022-04-07T15:40:00.731Z ERROR "No entity column \"event\" was found." +5s
+2022-04-07T16:05:08.064Z ERROR "No entity column \"event\" was found." +4s
+2022-04-07T16:05:21.689Z ERROR "user.reduce is not a function" +2s
+2022-04-07T16:06:30.114Z ERROR "user.reduce is not a function" +2s
+2022-04-07T16:07:00.176Z ERROR "user.reduce is not a function" +2s
+2022-04-07T16:09:49.498Z ERROR "user.map is not a function" +2s
+2022-04-07T16:24:05.085Z ERROR "currentEvent.users.findOne is not a function" +3s
+2022-04-07T16:24:29.389Z ERROR "Cannot read properties of undefined (reading 'reduce')" +2s
+2022-04-07T16:24:59.735Z INFO {
+  "id": 1,
+  "title": "Black_Eval",
+  "bonus": 15,
+  "TimePeriod": "annually",
+  "createdAt": "2022-03-29T16:40:46.993Z",
+  "endsAt": null,
+  "users": [
+    {
+      "id": 7,
+      "firstName": "Rich",
+      "lastName": "Alex",
+      "email": "Hardt@gmail.com",
+      "rating": 0,
+      "performerType": "Waiting For The Evaluation"
+    }
+  ],
+  "rating": [],
+  "criteria": [
+    {
+      "id": 1,
+      "name": "Big_1",
+      "criteria": false,
+      "rating": 0,
+      "subCriteria": [
+        {
+          "id": 1,
+          "name": "Small_1",
+          "state": true,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 2,
+          "name": "Small_2",
+          "state": true,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 3,
+          "name": "Small_3",
+          "state": false,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 4,
+          "name": "Small_4",
+          "state": false,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 5,
+          "name": "Small_9",
+          "state": false,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 6,
+          "name": "Small_10",
+          "state": false,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 8,
+          "name": "Small_12",
+          "state": true,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 9,
+          "name": "Small_13",
+          "state": true,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 10,
+          "name": "Small_14",
+          "state": true,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Big_2",
+      "criteria": false,
+      "rating": 0,
+      "subCriteria": []
+    },
+    {
+      "id": 3,
+      "name": "Big_3",
+      "criteria": true,
+      "rating": 0,
+      "subCriteria": []
+    },
+    {
+      "id": 4,
+      "name": "Big_4",
+      "criteria": false,
+      "rating": 0,
+      "subCriteria": []
+    }
+  ]
+} +9s
+2022-04-07T16:25:03.927Z ERROR "currentEvent.users.findOne is not a function" +4s
+2022-04-07T16:26:12.165Z ERROR "undefined is not a function" +1s
+2022-04-07T16:26:49.147Z ERROR "Cannot read properties of undefined (reading 'findOne')" +2s
+2022-04-07T16:31:27.881Z ERROR "Cannot read properties of undefined (reading 'reduce')" +2s
+2022-04-07T17:10:35.789Z ERROR "user.rating.reduce is not a function" +6s
+2022-04-07T17:11:05.713Z ERROR "user.reduce is not a function" +4s
+2022-04-07T17:21:19.887Z ERROR "Cannot read properties of undefined (reading 'reduce')" +4s
+2022-04-07T17:22:47.218Z INFO "Get all users" +29s
+2022-04-07T17:26:20.666Z INFO "adding new subcriteria to Big_4 criteria" +4m
+2022-04-07T17:26:24.689Z INFO "adding new subcriteria to Big_4 criteria" +4s
+2022-04-07T17:26:28.377Z INFO "adding new subcriteria to Big_4 criteria" +4s
+2022-04-07T17:26:31.962Z INFO "adding new subcriteria to Big_4 criteria" +4s
+2022-04-07T17:26:35.210Z INFO "adding new subcriteria to Big_4 criteria" +3s
+2022-04-07T17:58:37.768Z ERROR "Relation \"subCriteria\" was not found; please check if it is correct and really exists in your entity." +29s
+2022-04-08T13:11:45.893Z INFO {
+  "id": 1,
+  "title": "Black_Eval",
+  "bonus": 15,
+  "TimePeriod": "annually",
+  "createdAt": "2022-03-29T16:40:46.993Z",
+  "endsAt": null,
+  "users": [
+    {
+      "id": 7,
+      "firstName": "Rich",
+      "lastName": "Alex",
+      "email": "Hardt@gmail.com",
+      "rating": 0,
+      "performerType": "Waiting For The Evaluation"
+    },
+    {
+      "id": 8,
+      "firstName": "hoho",
+      "lastName": "ohoih",
+      "email": "eie@gmail.com",
+      "rating": 0,
+      "performerType": "Waiting For The Evaluation"
+    }
+  ],
+  "rating": [],
+  "criteria": [
+    {
+      "id": 1,
+      "name": "Big_1",
+      "criteria": false,
+      "rating": 0,
+      "subCriteria": [
+        {
+          "id": 1,
+          "name": "Small_1",
+          "state": true,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 2,
+          "name": "Small_2",
+          "state": true,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 3,
+          "name": "Small_3",
+          "state": false,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 4,
+          "name": "Small_4",
+          "state": false,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 5,
+          "name": "Small_9",
+          "state": false,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 6,
+          "name": "Small_10",
+          "state": false,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 8,
+          "name": "Small_12",
+          "state": true,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 9,
+          "name": "Small_13",
+          "state": true,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 10,
+          "name": "Small_14",
+          "state": true,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Big_4",
+      "criteria": false,
+      "rating": 0,
+      "subCriteria": [
+        {
+          "id": 12,
+          "name": "Small_16",
+          "state": true,
+          "criteria": {
+            "id": 4,
+            "name": "Big_4",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 13,
+          "name": "Small_17",
+          "state": false,
+          "criteria": {
+            "id": 4,
+            "name": "Big_4",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 14,
+          "name": "Small_18",
+          "state": false,
+          "criteria": {
+            "id": 4,
+            "name": "Big_4",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 15,
+          "name": "Small_19",
+          "state": true,
+          "criteria": {
+            "id": 4,
+            "name": "Big_4",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 16,
+          "name": "Small_20",
+          "state": true,
+          "criteria": {
+            "id": 4,
+            "name": "Big_4",
+            "criteria": false,
+            "rating": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Big_2",
+      "criteria": false,
+      "rating": 0,
+      "subCriteria": []
+    },
+    {
+      "id": 3,
+      "name": "Big_3",
+      "criteria": true,
+      "rating": 0,
+      "subCriteria": []
+    }
+  ]
+} +8m
+2022-04-08T13:11:52.190Z ERROR "Unknown column 'NaN' in 'where clause'" +6s
+2022-04-08T13:12:06.944Z INFO {
+  "id": 1,
+  "title": "Black_Eval",
+  "bonus": 15,
+  "TimePeriod": "annually",
+  "createdAt": "2022-03-29T16:40:46.993Z",
+  "endsAt": null,
+  "users": [
+    {
+      "id": 7,
+      "firstName": "Rich",
+      "lastName": "Alex",
+      "email": "Hardt@gmail.com",
+      "rating": 0,
+      "performerType": "Waiting For The Evaluation"
+    },
+    {
+      "id": 8,
+      "firstName": "hoho",
+      "lastName": "ohoih",
+      "email": "eie@gmail.com",
+      "rating": 0,
+      "performerType": "Waiting For The Evaluation"
+    }
+  ],
+  "rating": [],
+  "criteria": [
+    {
+      "id": 1,
+      "name": "Big_1",
+      "criteria": false,
+      "rating": 0,
+      "subCriteria": [
+        {
+          "id": 1,
+          "name": "Small_1",
+          "state": true,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 2,
+          "name": "Small_2",
+          "state": true,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 3,
+          "name": "Small_3",
+          "state": false,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 4,
+          "name": "Small_4",
+          "state": false,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 5,
+          "name": "Small_9",
+          "state": false,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 6,
+          "name": "Small_10",
+          "state": false,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 8,
+          "name": "Small_12",
+          "state": true,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 9,
+          "name": "Small_13",
+          "state": true,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 10,
+          "name": "Small_14",
+          "state": true,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Big_4",
+      "criteria": false,
+      "rating": 0,
+      "subCriteria": [
+        {
+          "id": 12,
+          "name": "Small_16",
+          "state": true,
+          "criteria": {
+            "id": 4,
+            "name": "Big_4",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 13,
+          "name": "Small_17",
+          "state": false,
+          "criteria": {
+            "id": 4,
+            "name": "Big_4",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 14,
+          "name": "Small_18",
+          "state": false,
+          "criteria": {
+            "id": 4,
+            "name": "Big_4",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 15,
+          "name": "Small_19",
+          "state": true,
+          "criteria": {
+            "id": 4,
+            "name": "Big_4",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 16,
+          "name": "Small_20",
+          "state": true,
+          "criteria": {
+            "id": 4,
+            "name": "Big_4",
+            "criteria": false,
+            "rating": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Big_2",
+      "criteria": false,
+      "rating": 0,
+      "subCriteria": []
+    },
+    {
+      "id": 3,
+      "name": "Big_3",
+      "criteria": true,
+      "rating": 0,
+      "subCriteria": []
+    }
+  ]
+} +15s
+2022-04-08T13:12:21.729Z INFO "Get all users" +15s
+2022-04-08T13:12:31.343Z ERROR "Unknown column 'NaN' in 'where clause'" +10s
+2022-04-08T13:12:35.966Z ERROR "Unknown column 'NaN' in 'where clause'" +5s
+2022-04-08T13:13:19.727Z ERROR "Unknown column 'NaN' in 'where clause'" +44s
+2022-04-08T13:13:25.568Z ERROR "Unknown column 'NaN' in 'where clause'" +6s
+2022-04-08T13:13:49.749Z ERROR "Unknown column 'NaN' in 'where clause'" +24s
+2022-04-08T13:13:54.208Z ERROR "Unknown column 'NaN' in 'where clause'" +4s
+2022-04-08T13:17:49.231Z INFO {
+  "id": 1,
+  "title": "Black_Eval",
+  "bonus": 15,
+  "TimePeriod": "annually",
+  "createdAt": "2022-03-29T16:40:46.993Z",
+  "endsAt": null,
+  "users": [
+    {
+      "id": 7,
+      "firstName": "Rich",
+      "lastName": "Alex",
+      "email": "Hardt@gmail.com",
+      "rating": 0,
+      "performerType": "Waiting For The Evaluation"
+    },
+    {
+      "id": 8,
+      "firstName": "hoho",
+      "lastName": "ohoih",
+      "email": "eie@gmail.com",
+      "rating": 0,
+      "performerType": "Waiting For The Evaluation"
+    }
+  ],
+  "rating": [],
+  "criteria": [
+    {
+      "id": 1,
+      "name": "Big_1",
+      "criteria": false,
+      "rating": 0,
+      "subCriteria": [
+        {
+          "id": 1,
+          "name": "Small_1",
+          "state": true,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 2,
+          "name": "Small_2",
+          "state": true,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 3,
+          "name": "Small_3",
+          "state": false,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 4,
+          "name": "Small_4",
+          "state": false,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 5,
+          "name": "Small_9",
+          "state": false,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 6,
+          "name": "Small_10",
+          "state": false,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 8,
+          "name": "Small_12",
+          "state": true,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 9,
+          "name": "Small_13",
+          "state": true,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 10,
+          "name": "Small_14",
+          "state": true,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Big_4",
+      "criteria": false,
+      "rating": 0,
+      "subCriteria": [
+        {
+          "id": 12,
+          "name": "Small_16",
+          "state": true,
+          "criteria": {
+            "id": 4,
+            "name": "Big_4",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 13,
+          "name": "Small_17",
+          "state": false,
+          "criteria": {
+            "id": 4,
+            "name": "Big_4",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 14,
+          "name": "Small_18",
+          "state": false,
+          "criteria": {
+            "id": 4,
+            "name": "Big_4",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 15,
+          "name": "Small_19",
+          "state": true,
+          "criteria": {
+            "id": 4,
+            "name": "Big_4",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 16,
+          "name": "Small_20",
+          "state": true,
+          "criteria": {
+            "id": 4,
+            "name": "Big_4",
+            "criteria": false,
+            "rating": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Big_2",
+      "criteria": false,
+      "rating": 0,
+      "subCriteria": []
+    },
+    {
+      "id": 3,
+      "name": "Big_3",
+      "criteria": true,
+      "rating": 0,
+      "subCriteria": []
+    }
+  ]
+} +4m
+2022-04-08T14:10:59.449Z INFO {
+  "id": 1,
+  "title": "Black_Eval",
+  "bonus": 15,
+  "TimePeriod": "annually",
+  "createdAt": "2022-03-29T16:40:46.993Z",
+  "endsAt": null,
+  "users": [
+    {
+      "id": 7,
+      "firstName": "Rich",
+      "lastName": "Alex",
+      "email": "Hardt@gmail.com",
+      "rating": 0,
+      "performerType": "Waiting For The Evaluation"
+    },
+    {
+      "id": 8,
+      "firstName": "hoho",
+      "lastName": "ohoih",
+      "email": "eie@gmail.com",
+      "rating": 0,
+      "performerType": "Waiting For The Evaluation"
+    }
+  ],
+  "rating": [],
+  "criteria": [
+    {
+      "id": 1,
+      "name": "Big_1",
+      "criteria": false,
+      "rating": 0,
+      "subCriteria": [
+        {
+          "id": 1,
+          "name": "Small_1",
+          "state": true,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 2,
+          "name": "Small_2",
+          "state": true,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 3,
+          "name": "Small_3",
+          "state": false,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 4,
+          "name": "Small_4",
+          "state": false,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 5,
+          "name": "Small_9",
+          "state": false,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 6,
+          "name": "Small_10",
+          "state": false,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 8,
+          "name": "Small_12",
+          "state": true,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 9,
+          "name": "Small_13",
+          "state": true,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 10,
+          "name": "Small_14",
+          "state": true,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Big_4",
+      "criteria": false,
+      "rating": 0,
+      "subCriteria": [
+        {
+          "id": 12,
+          "name": "Small_16",
+          "state": true,
+          "criteria": {
+            "id": 4,
+            "name": "Big_4",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 13,
+          "name": "Small_17",
+          "state": false,
+          "criteria": {
+            "id": 4,
+            "name": "Big_4",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 14,
+          "name": "Small_18",
+          "state": false,
+          "criteria": {
+            "id": 4,
+            "name": "Big_4",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 15,
+          "name": "Small_19",
+          "state": true,
+          "criteria": {
+            "id": 4,
+            "name": "Big_4",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 16,
+          "name": "Small_20",
+          "state": true,
+          "criteria": {
+            "id": 4,
+            "name": "Big_4",
+            "criteria": false,
+            "rating": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Big_2",
+      "criteria": false,
+      "rating": 0,
+      "subCriteria": []
+    },
+    {
+      "id": 3,
+      "name": "Big_3",
+      "criteria": true,
+      "rating": 0,
+      "subCriteria": []
+    }
+  ]
+} +2s
+2022-04-08T14:45:37.885Z INFO {
+  "id": 1,
+  "title": "Black_Eval",
+  "bonus": 15,
+  "TimePeriod": "annually",
+  "createdAt": "2022-03-29T16:40:46.993Z",
+  "endsAt": null,
+  "users": [
+    {
+      "id": 7,
+      "firstName": "Rich",
+      "lastName": "Alex",
+      "email": "Hardt@gmail.com",
+      "rating": 0,
+      "performerType": "Waiting For The Evaluation"
+    },
+    {
+      "id": 8,
+      "firstName": "hoho",
+      "lastName": "ohoih",
+      "email": "eie@gmail.com",
+      "rating": 0,
+      "performerType": "Waiting For The Evaluation"
+    }
+  ],
+  "rating": [],
+  "criteria": [
+    {
+      "id": 1,
+      "name": "Big_1",
+      "criteria": false,
+      "rating": 0,
+      "subCriteria": [
+        {
+          "id": 1,
+          "name": "Small_1",
+          "state": true,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 2,
+          "name": "Small_2",
+          "state": true,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 3,
+          "name": "Small_3",
+          "state": false,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 4,
+          "name": "Small_4",
+          "state": false,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 5,
+          "name": "Small_9",
+          "state": false,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 6,
+          "name": "Small_10",
+          "state": false,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 8,
+          "name": "Small_12",
+          "state": true,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 9,
+          "name": "Small_13",
+          "state": true,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 10,
+          "name": "Small_14",
+          "state": true,
+          "criteria": {
+            "id": 1,
+            "name": "Big_1",
+            "criteria": false,
+            "rating": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Big_4",
+      "criteria": false,
+      "rating": 0,
+      "subCriteria": [
+        {
+          "id": 12,
+          "name": "Small_16",
+          "state": true,
+          "criteria": {
+            "id": 4,
+            "name": "Big_4",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 13,
+          "name": "Small_17",
+          "state": false,
+          "criteria": {
+            "id": 4,
+            "name": "Big_4",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 14,
+          "name": "Small_18",
+          "state": false,
+          "criteria": {
+            "id": 4,
+            "name": "Big_4",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 15,
+          "name": "Small_19",
+          "state": true,
+          "criteria": {
+            "id": 4,
+            "name": "Big_4",
+            "criteria": false,
+            "rating": 0
+          }
+        },
+        {
+          "id": 16,
+          "name": "Small_20",
+          "state": true,
+          "criteria": {
+            "id": 4,
+            "name": "Big_4",
+            "criteria": false,
+            "rating": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Big_2",
+      "criteria": false,
+      "rating": 0,
+      "subCriteria": []
+    },
+    {
+      "id": 3,
+      "name": "Big_3",
+      "criteria": true,
+      "rating": 0,
+      "subCriteria": []
+    }
+  ]
+} +4m
+2022-04-08T15:01:53.568Z ERROR "Cannot read properties of undefined (reading 'map')" +6s
+2022-04-08T15:03:40.600Z ERROR "Cannot access 'v' before initialization" +2s
+2022-04-08T15:04:14.220Z ERROR "Cannot access 'o' before initialization" +2s
+2022-04-08T15:41:47.518Z INFO "Get all users" +22s
+2022-04-08T15:49:05.196Z INFO "Get all users" +4s
+2022-04-08T15:49:11.487Z ERROR "Relations \"users.criteria\", \"users.criteria.subCriteria\", \"rating\" were not found; please check if relations are correct and they exist in your entities." +6s
+2022-04-08T15:49:31.258Z ERROR "Relations \"user.criteria\", \"users.criteria.subCriteria\", \"rating\" were not found; please check if relations are correct and they exist in your entities." +2s
+2022-04-08T15:50:46.662Z ERROR "Relation \"rating\" was not found; please check if it is correct and really exists in your entity." +8s

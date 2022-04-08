@@ -4,7 +4,7 @@ import { UpdateEventDto } from "../dto/eventUpdateDto";
 import { Event } from "../entity/event";
 import { EventsRepository } from "../repository/eventRepository";
 import {InjectRepository} from "@nestjs/typeorm";
-import {getConnection, getRepository, Repository} from "typeorm";
+import {Repository} from "typeorm";
 import {User} from "../../users/entity/user";
 import {IUserRef} from "../interface/userRefInterface";
 import * as dayjs from "dayjs";
@@ -12,9 +12,7 @@ import {Period} from "../interface/eventInterface";
 import {ICriteriaRef} from "../interface/criteriaRefInterface";
 import {Criteria} from "../entity/criteria";
 import {Rating} from "../entity/rating";
-import {RatingRepository} from "../repository/ratingRepository";
-import {eventLogger} from "../../logger";
-import {Connection} from "typeorm";
+import {logger} from "../../logger";
 
 @Injectable()
 export class EventsService {
@@ -40,14 +38,14 @@ export class EventsService {
     else{
       event.rating.push(rating)
     }
-    return this.eventsRepository.addUsers(event)       // @ndharacnenq addusers@
+    return this.eventsRepository.addElement(event)       // @ndharacnenq addusers@
   }
 
   async addCriteria(eventId: number, criteriaRef: ICriteriaRef) {
     const criteria = await this.criteriaRepository.findOne(criteriaRef.id)
     const event = await this.eventsRepository.findOneById(eventId)
     event.criteria.push(criteria)
-    return this.eventsRepository.addUsers(event)
+    return this.eventsRepository.addElement(event)
   }
 
   async addUsers(eventId: number, userRef: IUserRef) {
@@ -55,13 +53,13 @@ export class EventsService {
     const event = await this.eventsRepository.findOneById(eventId)
     event.users.push(user)
 
-    return this.eventsRepository.addUsers(event)
+    return this.eventsRepository.addElement(event)
   }
 
   async create(createEventDto: CreateEventDto) {
     try { createEventDto.endsAt = dayjs().add(+createEventDto.endsAt, 'day').toDate(); }
     catch(error){
-      eventLogger.error(`end date doesn't created ${error.message}`)
+      logger.error(`end date doesn't created ${error.message}`)
     }
     createEventDto.rating = await this.ratingRepository.find({take: 3})
     return this.eventsRepository.create(createEventDto);
@@ -94,6 +92,5 @@ export class EventsService {
   remove(id: number): Promise<Event> {
     return this.eventsRepository.remove(id);
   }
-
 
 }

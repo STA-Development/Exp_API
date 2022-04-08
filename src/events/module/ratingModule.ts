@@ -1,4 +1,4 @@
-import {forwardRef, Logger, Module} from '@nestjs/common';
+import {Module} from '@nestjs/common';
 import {RatingController} from '../controller/ratingController';
 import {TypeOrmModule} from '@nestjs/typeorm';
 import {ConfigModule} from '@nestjs/config';

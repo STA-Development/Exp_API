@@ -2,12 +2,12 @@ import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
-  ManyToMany,
-  JoinTable,
+  ManyToMany, JoinTable,
 } from "typeorm";
-import { IUser } from "../interface/userInterface";
+import {IUser, PerformerType} from "../interface/userInterface";
 import { Event } from "../../events/entity/event";
 import {IsString} from "class-validator";
+import {Criteria} from "../../events/entity/criteria";
 
 @Entity()
 export class User implements IUser {
@@ -15,15 +15,31 @@ export class User implements IUser {
   id: number;
 
   @IsString()
-  @Column({ length: 100 })
+  @Column()
   firstName: string;
 
-  @Column({ length: 100 })
+  @Column()
   lastName: string;
 
-  @Column({ length: 100 })
+  @Column()
   email: string;
+
+  @Column()
+  rating: number;
+
+  @Column({default: PerformerType.waitingForEvaluation})
+  performerType: string;
 
   @ManyToMany(() => Event, (events) => events.users)
   events: Event[];
+
+  @ManyToMany(() => Criteria, (criteria) => criteria.users)
+  @JoinTable({
+    name: "user_criteria",
+    joinColumn: { name: "criteriaId" },
+    inverseJoinColumn: { name: "userId" },
+  })
+  criteria: Criteria[];
+
+
 }

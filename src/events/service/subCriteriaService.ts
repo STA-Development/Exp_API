@@ -3,10 +3,6 @@ import { CreateSubCriteriaDto } from "../dto/subCriteriaCreateDto";
 import { UpdateSubCriteriaDto } from "../dto/subCriteriaUpdateDto";
 import { SubCriteria } from "../entity/subCriteria";
 import { SubCriteriaRepository } from "../repository/subCriteriaRepository";
-import {InjectRepository} from "@nestjs/typeorm";
-import {Repository} from "typeorm";
-import * as dayjs from "dayjs";
-
 
 @Injectable()
 export class SubCriteriaService {

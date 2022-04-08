@@ -19,7 +19,6 @@ export class SubCriteriaRepository {
   findAll(): Promise<SubCriteria[]> {
     return this.subCriteriaRepository.find({ relations: ["criteria"] });
   }
-
   async findOneById(id: number): Promise<SubCriteria> {
     const subCriteria = await this.subCriteriaRepository.findOne(id, {
       relations: ["criteria"],

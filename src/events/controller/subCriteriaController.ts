@@ -36,6 +36,7 @@ export class SubCriteriaController {
   @UseInterceptors(ClassSerializerInterceptor)
   @Get(":id")
   async findOneById(@Param("id") id: number): Promise<SubCriteria> {
+   // console.log(await this.subCriteriaService.findOneById(id))
     return subCriteriaGetDto(await this.subCriteriaService.findOneById(id));
   }
 

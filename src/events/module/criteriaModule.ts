@@ -1,4 +1,4 @@
-import {forwardRef, Logger, Module} from "@nestjs/common";
+import {Module} from "@nestjs/common";
 import { CriteriaController } from "../controller/criteriaController";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { ConfigModule } from "@nestjs/config";
@@ -7,13 +7,13 @@ import { CriteriaRepository } from "../repository/criteriaRepository";
 import { CriteriaService } from "../service/criteriaService";
 import {SubCriteria} from "../entity/subCriteria";
 import {SubCriteriaRepository} from "../repository/subCriteriaRepository";
-import { ConnectionOptions, createConnection, getRepository } from "typeorm";
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
     TypeOrmModule.forFeature([ Criteria, SubCriteria ]),
     TypeOrmModule.forRoot({
+      keepConnectionAlive: true,
       type: "mysql",
       host: process.env.DB_HOST,
       port: +process.env.DB_PORT,

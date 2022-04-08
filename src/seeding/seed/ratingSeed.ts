@@ -1,8 +1,6 @@
 import { Factory, Seeder } from "typeorm-seeding";
-import {Connection, getConnectionManager, getRepository} from "typeorm";
-import { ConnectionOptions } from "typeorm";
+import {Connection} from "typeorm";
 import { Rating } from "../../events/entity/rating";
-import ormconfig from "../../../ormconfig";
 
 export default class InitialDatabaseSeed implements Seeder {
     public async run(factory: Factory, connection: Connection): Promise<void> {

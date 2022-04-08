@@ -3,21 +3,17 @@ import {ValidationPipe} from '@nestjs/common';
 import {DocumentBuilder, SwaggerModule} from "@nestjs/swagger";
 import {EventsModule } from './events/module/eventAppModule';
 import {UserModule } from './users/module/userModule';
-import {createLogger, loggers} from "winston";
-import {eventLogger} from "./logger";
-//import { createLogger } from './logger'
-
+import {logger} from "./logger";
 
 async function bootstrap():Promise<void> {
     const eventApp = await NestFactory.create( EventsModule,
         {
-            logger: eventLogger,                   //process.env.NODE_ENV === "development" ?  eventLogger : createLogger()
-            bufferLogs: true,
-            autoFlushLogs: false,
+           // logger: logger,
+         //   bufferLogs: true,
+          //  autoFlushLogs: false,
         }
     );
-  //  console.log(eventLogger)
- //   eventApp.useLogger(eventApp.get(eventLogger));
+
     const eventConfig = new DocumentBuilder()
         .setTitle('Events')
         .setDescription('The events API description')
@@ -36,7 +32,7 @@ async function bootstrap():Promise<void> {
 
     const userApp = await NestFactory.create( UserModule,
         {
-            logger: eventLogger,            //process.env.NODE_ENV === "development" ?  userLogger : createLogger()
+            logger: logger,
            // bufferLogs: true,
           //  autoFlushLogs: false,
         }

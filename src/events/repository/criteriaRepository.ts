@@ -20,12 +20,12 @@ export class CriteriaRepository {
   }
 
   findAll(): Promise<Criteria[]> {
-    return this.criteriaRepository.find({ relations: ["subCriteria"] });
+    return this.criteriaRepository.find({ relations: ["subCriteria", "users"] });
   }
 
   async findOneById(id: number): Promise<Criteria> {
     const criteria = await this.criteriaRepository.findOne(id, {
-      relations: ["subCriteria"],
+      relations: ["subCriteria", "users"],
     });
     return criteria;
   }

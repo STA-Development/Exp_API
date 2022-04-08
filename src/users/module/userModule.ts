@@ -1,17 +1,18 @@
-import {Logger, Module} from "@nestjs/common";
+import {Module} from "@nestjs/common";
 import { UsersController } from "../controller/userController";
 import { UsersService } from "../service/userService";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { ConfigModule } from "@nestjs/config";
 import { User } from "../entity/user";
 import { UserRepository } from "../repository/userRepository";
+import {Criteria} from "../../events/entity/criteria";
+import {CriteriaRepository} from "../../events/repository/criteriaRepository";
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    TypeOrmModule.forFeature([User] ),
+    TypeOrmModule.forFeature([User, Criteria] ),
     TypeOrmModule.forRoot({
-     // name: "mysql",
       type: "mysql",
       host: process.env.DB_HOST,
       port: +process.env.DB_PORT,
@@ -25,7 +26,7 @@ import { UserRepository } from "../repository/userRepository";
     }),
   ],
   controllers: [UsersController],
-  providers: [UsersService, UserRepository],
+  providers: [UsersService, UserRepository, CriteriaRepository],
 
 })
 export class UserModule {}

@@ -5,7 +5,6 @@ import { Event } from "../entity/event";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import {Period} from "../interface/eventInterface";
-import {eventLogger} from "../../logger";
 
 @Injectable()
 export class EventsRepository {
@@ -13,7 +12,7 @@ export class EventsRepository {
   @InjectRepository(Event)
   eventRepository: Repository<Event>;
 
-  addUsers(event:Event) {
+  addElement(event:Event) {
     return this.eventRepository.save(event)
   }
 
@@ -72,4 +71,5 @@ export class EventsRepository {
     const event = await this.findOneById(id);
     return this.eventRepository.remove(event);
   }
+
 }

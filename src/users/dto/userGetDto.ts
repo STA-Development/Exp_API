@@ -1,5 +1,6 @@
 import { User } from "../entity/user";
 import {eventGetDto} from "../../events/dto/eventGetDto";
+import {criteriaGetDto} from "../../events/dto/criteriaGetDto";
 
 export const userGetDto = (user: User): User => {
   return ({
@@ -7,7 +8,9 @@ export const userGetDto = (user: User): User => {
     firstName: user.firstName,
     lastName: user.lastName,
     email: user.email,
-    events: ((!user.events || !user.events.length) ? user.events : user.events.map(event => eventGetDto(event))),
-
+    rating: user.rating,
+    performerType: user.performerType,
+    events: user?.events?.length ? user.events.map(event => eventGetDto(event)) : [],
+    criteria: user?.criteria?.length ? user.criteria.map(criteria => criteriaGetDto(criteria)) : [],
   });
 };
