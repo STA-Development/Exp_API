@@ -20,9 +20,10 @@ export class UsersService {
   async create(createUserDto: CreateUserDto): Promise<User> {
     const auth =  await dbAuth.createUser({ email:createUserDto.email, password:createUserDto.password })
     createUserDto.authUid=auth.uid
+    createUserDto.avatar=process.env.AVATAR_URL;
     const user = await this.usersRepository.create(createUserDto);
     if (!user) {
-      throw new NotFoundException(`how have wrong schema`);
+      throw new NotFoundException(`you have wrong schema`);
     }
     return user;
   }
@@ -47,8 +48,8 @@ export class UsersService {
     return user;
   }
 
-  remove(id: number,data:string): Promise<User> {
-    const user =this.usersRepository.remove(id,data);
+  remove(id: number,uid:string): Promise<User> {
+    const user =this.usersRepository.remove(id,uid);
     if (!user) {
       throw new NotFoundException(`User with ID=${id} not found`);
     }

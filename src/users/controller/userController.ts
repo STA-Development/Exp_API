@@ -29,7 +29,6 @@ export class UsersController {
   @UseInterceptors(ClassSerializerInterceptor)
   @Post('create')
   async create(@Body() createUserDto: CreateUserDto): Promise<User> {
-     createUserDto.avatar=process.env.AVATAR_URL;
     return this.usersService.create(createUserDto);
   }
 
@@ -45,8 +44,8 @@ export class UsersController {
   @UseGuards(AuthGuard)
   @ApiBearerAuth()
   @Get('me')
-   findOne(@Token() data: string): Promise<User> {
-    return  this.usersService.findOne(data)
+   findOne(@Token() uid: string): Promise<User> {
+    return  this.usersService.findOne(uid)
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
@@ -61,28 +60,28 @@ export class UsersController {
   @UseInterceptors(ClassSerializerInterceptor)
   @UseGuards(AuthGuard)
   @Delete(':id')
-  remove(@Param('id') id: number,@Token() data: string): Promise<User> {
-    return this.usersService.remove(id,data);
+  remove(@Param('id') id: number,@Token() uid: string): Promise<User> {
+    return this.usersService.remove(id,uid);
   }
 
   @Patch('avatar')
   @UseGuards(AuthGuard)
   @ApiBearerAuth()
   @UseInterceptors(FileInterceptor('avatar'))
-   changeUserImg(@UploadedFile() file: Express.Multer.File,@Token() data: string,
+   changeUserImg(@UploadedFile() file: Express.Multer.File,@Token() uid: string,
   ): Promise<object> {
-    return this.usersService.uploadImageToCloudinary(file,data);
+    return this.usersService.uploadImageToCloudinary(file,uid);
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
   @UseGuards(AuthGuard)
   @ApiBearerAuth()
   @Patch(':id/salary')
-   changeSalary(
-    @Token() data: string,
+  changeSalary(
+    @Token() uid: string,
     @Body() body: {salary: number},
     @Param('id') id:number
   ): Promise<User> {
-    return  this.usersService.changeSalary(data,body.salary,id)
+    return  this.usersService.changeSalary(uid,body.salary,id)
   }
 }

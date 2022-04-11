@@ -37,6 +37,6 @@ export class UserRepository {
     const removeUserId = await this.userRepository.findOne(id)
     if(user.isAdmin){
       await dbAuth.deleteUser(removeUserId.authUid);
-    return this.userRepository.remove(removeUserId);}
+      return this.userRepository.remove(removeUserId);}
   }
 }
