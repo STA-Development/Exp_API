@@ -1,4 +1,4 @@
-import { User } from "../entity/user";
+import { User } from '../entity/user';
 
 export const UserGetDto = (user: User): User => ({
   id: user.id,

@@ -11,19 +11,19 @@ import {
   UseGuards,
   Patch,
   UploadedFile,
-  UseInterceptors,
+  UseInterceptors
 } from '@nestjs/common';
-import {FileInterceptor} from '@nestjs/platform-express';
-import { UsersService } from "../service/userService";
-import { CreateUserDto } from "../dto/userCreateDto";
-import { UpdateUserDto } from "../dto/userUpdateDto";
-import { User } from "../entity/user";
-import {AuthGuard} from '../../middlewares/checkJwt'
-import {Token} from '../../middlewares/jwtDecorator';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { UsersService } from '../service/userService';
+import { CreateUserDto } from '../dto/userCreateDto';
+import { UpdateUserDto } from '../dto/userUpdateDto';
+import { User } from '../entity/user';
+import { AuthGuard } from '../../middlewares/checkJwt';
+import { Token } from '../../middlewares/jwtDecorator';
 import { ApiProperty, ApiBearerAuth } from '@nestjs/swagger';
-@Controller("users")
-export class UsersController {
 
+@Controller('users')
+export class UsersController {
   @Inject()
   usersService: UsersService;
   @UseInterceptors(ClassSerializerInterceptor)
@@ -44,8 +44,8 @@ export class UsersController {
   @UseGuards(AuthGuard)
   @ApiBearerAuth()
   @Get('me')
-   findOne(@Token() uid: string): Promise<User> {
-    return  this.usersService.findOne(uid)
+  async findOne(@Token() uid: string): Promise<User> {
+    return await this.usersService.findOne(uid);
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
@@ -60,17 +60,19 @@ export class UsersController {
   @UseInterceptors(ClassSerializerInterceptor)
   @UseGuards(AuthGuard)
   @Delete(':id')
-  remove(@Param('id') id: number,@Token() uid: string): Promise<User> {
-    return this.usersService.remove(id,uid);
+  async remove(@Param('id') id: number, @Token() uid: string): Promise<User> {
+    return await this.usersService.remove(id, uid);
   }
 
   @Patch('avatar')
   @UseGuards(AuthGuard)
   @ApiBearerAuth()
   @UseInterceptors(FileInterceptor('avatar'))
-   changeUserImg(@UploadedFile() file: Express.Multer.File,@Token() uid: string,
+  changeUserImg(
+    @UploadedFile() file: Express.Multer.File,
+    @Token() uid: string
   ): Promise<object> {
-    return this.usersService.uploadImageToCloudinary(file,uid);
+    return this.usersService.uploadImageToCloudinary(file, uid);
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
@@ -79,9 +81,9 @@ export class UsersController {
   @Patch(':id/salary')
   changeSalary(
     @Token() uid: string,
-    @Body() body: {salary: number},
-    @Param('id') id:number
+    @Body() body: { salary: number },
+    @Param('id') id: number
   ): Promise<User> {
-    return  this.usersService.changeSalary(uid,body.salary,id)
+    return this.usersService.changeSalary(uid, body.salary, id);
   }
 }

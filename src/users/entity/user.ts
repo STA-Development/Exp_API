@@ -1,11 +1,6 @@
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  ManyToMany,
-} from "typeorm";
-import { IUser } from "../interface/userInterface";
-import { Event } from "../../events/entity/event";
+import { Entity, Column, PrimaryGeneratedColumn, ManyToMany } from 'typeorm';
+import { IUser } from '../interface/userInterface';
+import { Event } from '../../events/entity/event';
 
 @Entity()
 export class User implements IUser {
@@ -18,7 +13,7 @@ export class User implements IUser {
   @Column()
   lastName: string;
 
-  @Column( {unique: true })
+  @Column({ unique: true })
   email: string;
 
   @Column()
@@ -33,7 +28,7 @@ export class User implements IUser {
   @Column()
   avatar: string;
 
-  @Column({ default: null})
+  @Column({ default: null })
   avatarPublicId: string;
 
   @ManyToMany(() => Event, (events) => events.users)

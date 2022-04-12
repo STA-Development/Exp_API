@@ -1,4 +1,4 @@
-import { Event } from "../../events/entity/event";
+import { Event } from '../../events/entity/event';
 
 export interface IUser {
   id: number;

@@ -1,4 +1,4 @@
-import * as admin from 'firebase-admin'
+import * as admin from 'firebase-admin';
 
 const firebaseConfig = {
   type: process.env.FB_TYPE,
@@ -13,7 +13,7 @@ const firebaseConfig = {
   clientC509CertUrl: process.env.FB_CLIENT_URL
 };
 
- admin.initializeApp({
+admin.initializeApp({
   credential: admin.credential.cert(firebaseConfig),
   databaseURL: process.env.FB_DB_URL
 });
