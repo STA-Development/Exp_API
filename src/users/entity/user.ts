@@ -1,13 +1,7 @@
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  ManyToMany, JoinTable,
-} from "typeorm";
-import {IUser, PerformerType} from "../interface/userInterface";
-import { Event } from "../../events/entity/event";
-import {IsString} from "class-validator";
-import {Criteria} from "../../events/entity/criteria";
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from "typeorm";
+import { IUser, PerformerType } from "../interface/userInterface";
+import { IsString } from "class-validator";
+import { Pivot, PivotDto } from "../../events/entity/pivot";
 
 @Entity()
 export class User implements IUser {
@@ -27,19 +21,23 @@ export class User implements IUser {
   @Column()
   rating: number;
 
-  @Column({default: PerformerType.waitingForEvaluation})
+  @Column({ default: PerformerType.waitingForEvaluation })
   performerType: string;
 
-  @ManyToMany(() => Event, (events) => events.users)
-  events: Event[];
-
-  @ManyToMany(() => Criteria, (criteria) => criteria.users)
-  @JoinTable({
-    name: "user_criteria",
-    joinColumn: { name: "criteriaId" },
-    inverseJoinColumn: { name: "userId" },
+  @OneToMany(() => Pivot, (pivot) => pivot.user, {
+    onUpdate: "CASCADE",
+    onDelete: "CASCADE",
+    createForeignKeyConstraints: false,
   })
-  criteria: Criteria[];
+  pivot: Pivot[];
+}
 
-
+export class UserPivot {
+  id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  rating: number;
+  performerType: string;
+  pivot: PivotDto[];
 }

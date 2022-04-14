@@ -5,13 +5,14 @@ import {ConfigModule} from '@nestjs/config';
 import {RatingRepository} from '../repository/ratingRepository';
 import {RatingService} from '../service/ratingService';
 import {Rating} from '../entity/rating';
+import {Pivot} from '../entity/pivot';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
-      TypeOrmModule.forFeature([Rating]),
+      TypeOrmModule.forFeature([Rating, Pivot]),
     TypeOrmModule.forRoot({
-      type: "mysql",
+      type: 'mysql',
       host: process.env.DB_HOST,
       port: +process.env.DB_PORT,
       username: process.env.DB_USERNAME,
@@ -20,11 +21,11 @@ import {Rating} from '../entity/rating';
       autoLoadEntities: true,
       synchronize: true,
       logging: false,
-      socketPath: "/Applications/MAMP/tmp/mysql/mysql.sock",
+      socketPath: '/Applications/MAMP/tmp/mysql/mysql.sock',
     }),
 
   ],
   controllers: [RatingController],
-  providers: [ RatingService, RatingRepository ],
+  providers: [RatingService, RatingRepository],
 })
 export class RatingModule {}

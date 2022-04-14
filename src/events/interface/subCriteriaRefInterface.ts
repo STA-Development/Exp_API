@@ -1,3 +1,4 @@
-export interface IIdRefDto {
-    id: number;
+export interface ISubCriteriaRef {
+  subCriteriaId: number;
+  userId: number;
 }

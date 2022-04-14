@@ -1,14 +1,13 @@
-import { Inject, Injectable } from "@nestjs/common";
-import { CreateSubCriteriaDto } from "../dto/subCriteriaCreateDto";
-import { UpdateSubCriteriaDto } from "../dto/subCriteriaUpdateDto";
-import { SubCriteria } from "../entity/subCriteria";
-import { SubCriteriaRepository } from "../repository/subCriteriaRepository";
+import {Inject, Injectable} from '@nestjs/common';
+import {CreateSubCriteriaDto} from '../dto/subCriteriaCreateDto';
+import {UpdateSubCriteriaDto} from '../dto/subCriteriaUpdateDto';
+import {SubCriteria} from '../entity/subCriteria';
+import {SubCriteriaRepository} from '../repository/subCriteriaRepository';
 
 @Injectable()
 export class SubCriteriaService {
-
   @Inject()
-  subCriteriaRepository: SubCriteriaRepository;
+    subCriteriaRepository: SubCriteriaRepository;
 
   async create(createSubCriteriaDto: CreateSubCriteriaDto) {
     const subCriteria = await this.subCriteriaRepository.create(createSubCriteriaDto);
@@ -30,6 +29,4 @@ export class SubCriteriaService {
   remove(id: number): Promise<SubCriteria> {
     return this.subCriteriaRepository.remove(id);
   }
-
-
 }

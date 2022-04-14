@@ -1,8 +1,8 @@
-import {Event} from "../entity/event";
+import { Pivot } from "../entity/pivot";
 
 export interface IRating {
-    from: number;
-    to: number;
-    isSelected: boolean;
-    events: Event[];
+  from: number;
+  to: number;
+  isSelected: number;
+  pivot: Pivot[];
 }

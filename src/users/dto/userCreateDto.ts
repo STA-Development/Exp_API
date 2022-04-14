@@ -1,10 +1,8 @@
-import {IsString, IsEmail, IsEmpty, IsNumber, IsOptional} from "class-validator";
+import { IsString, IsEmail, IsNumber, IsOptional } from "class-validator";
 import { User } from "../entity/user";
-import { Event } from "../../events/entity/event";
-import {Criteria} from "../../events/entity/criteria";
+import { Pivot } from "../../events/entity/pivot";
 
 export class CreateUserDto extends User {
-
   readonly id: number;
 
   @IsString()
@@ -22,9 +20,6 @@ export class CreateUserDto extends User {
   @IsOptional()
   readonly performerType: string;
 
-  @IsEmpty()
-  readonly events: Event[];
-
   @IsOptional()
-  readonly criteria: Criteria[];
+  pivot: Pivot[];
 }

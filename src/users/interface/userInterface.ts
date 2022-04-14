@@ -1,11 +1,10 @@
-import { Event } from "../../events/entity/event";
-import {Criteria} from "../../events/entity/criteria";
+import { Pivot } from "../../events/entity/pivot";
 
-export enum PerformerType{
+export enum PerformerType {
   rockStar = "Rock Star",
   goodPotential = "Good Potential",
   needHelp = "Need Help",
-  waitingForEvaluation = "Waiting For The Evaluation"
+  waitingForEvaluation = "Waiting For The Evaluation",
 }
 
 export interface IUser {
@@ -15,6 +14,5 @@ export interface IUser {
   email: string;
   rating: number;
   performerType: string;
-  events: Event[];
-  criteria: Criteria[];
+  pivot: Pivot[];
 }

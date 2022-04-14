@@ -1,12 +1,14 @@
-import { Rating } from "../entity/rating";
-import {eventGetDto} from "./eventGetDto";
+import { RatingPivotDto } from "../entity/rating";
+import { pivotGetDto } from "./pivotGetDto";
 
-export const ratingGetDto = (rating: Rating): Rating => {
-    return ({
-        id: rating.id,
-        from: rating.from,
-        to: rating.to,
-        isSelected: rating.isSelected,
-        events: rating?.events?.length ? rating.events.map(event => eventGetDto(event)) : [],
-    });
+export const ratingGetDto = (rating: RatingPivotDto): RatingPivotDto => {
+  return {
+    id: rating.id,
+    from: rating.from,
+    to: rating.to,
+    isSelected: rating.isSelected,
+    pivot: rating?.pivot?.length
+      ? rating.pivot.map((pivot) => pivotGetDto(pivot))
+      : rating.pivot,
+  };
 };

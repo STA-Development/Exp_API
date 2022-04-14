@@ -1,17 +1,18 @@
-import {Module} from "@nestjs/common";
-import { SubCriteriaController } from "../controller/subCriteriaController";
-import { SubCriteriaService } from "../service/subCriteriaService";
-import { TypeOrmModule } from "@nestjs/typeorm";
-import { ConfigModule } from "@nestjs/config";
-import { SubCriteria } from "../entity/subCriteria";
-import { SubCriteriaRepository } from "../repository/subCriteriaRepository";
+import {Module} from '@nestjs/common';
+import {SubCriteriaController} from '../controller/subCriteriaController';
+import {SubCriteriaService} from '../service/subCriteriaService';
+import {TypeOrmModule} from '@nestjs/typeorm';
+import {ConfigModule} from '@nestjs/config';
+import {SubCriteria} from '../entity/subCriteria';
+import {SubCriteriaRepository} from '../repository/subCriteriaRepository';
+import {Pivot} from '../entity/pivot';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    TypeOrmModule.forFeature([ SubCriteria ]),
+    TypeOrmModule.forFeature([SubCriteria, Pivot]),
     TypeOrmModule.forRoot({
-      type: "mysql",
+      type: 'mysql',
       host: process.env.DB_HOST,
       port: +process.env.DB_PORT,
       username: process.env.DB_USERNAME,
@@ -20,12 +21,12 @@ import { SubCriteriaRepository } from "../repository/subCriteriaRepository";
       autoLoadEntities: true,
       synchronize: true,
       logging: false,
-      socketPath: "/Applications/MAMP/tmp/mysql/mysql.sock",
+      socketPath: '/Applications/MAMP/tmp/mysql/mysql.sock',
     }),
 
   ],
   controllers: [SubCriteriaController],
-  providers: [SubCriteriaService, SubCriteriaRepository ],
+  providers: [SubCriteriaService, SubCriteriaRepository],
 })
 
 export class SubCriteriaModule {}

@@ -3,65 +3,177 @@ import { CreateEventDto } from "../dto/eventCreateDto";
 import { UpdateEventDto } from "../dto/eventUpdateDto";
 import { Event } from "../entity/event";
 import { EventsRepository } from "../repository/eventRepository";
-import {InjectRepository} from "@nestjs/typeorm";
-import {Repository} from "typeorm";
-import {User} from "../../users/entity/user";
-import {IUserRef} from "../interface/userRefInterface";
+import { InjectRepository } from "@nestjs/typeorm";
+import { getRepository, Repository } from "typeorm";
+import { IUserRef } from "../interface/userRefInterface";
 import * as dayjs from "dayjs";
-import {Period} from "../interface/eventInterface";
-import {ICriteriaRef} from "../interface/criteriaRefInterface";
-import {Criteria} from "../entity/criteria";
-import {Rating} from "../entity/rating";
-import {logger} from "../../logger";
+import { Period } from "../interface/eventInterface";
+import { ISubCriteriaRef } from "../interface/subCriteriaRefInterface";
+import { logger } from "../../logger";
+import { Pivot } from "../entity/pivot";
+import { Rating } from "../entity/rating";
 
 @Injectable()
 export class EventsService {
-
   @Inject()
   eventsRepository: EventsRepository;
-
-  @InjectRepository(User)
-  userRepository: Repository<User>;
-
-  @InjectRepository(Criteria)
-  criteriaRepository: Repository<Criteria>;
 
   @InjectRepository(Rating)
   ratingRepository: Repository<Rating>;
 
-  async addRating(eventId: number, criteriaRef: ICriteriaRef) {
-    const rating = await this.ratingRepository.findOne(criteriaRef.id)
-    const event = await this.eventsRepository.findOneById(eventId)
-    if(event.rating == null){
-      event.rating = [rating]
-    }
-    else{
-      event.rating.push(rating)
-    }
-    return this.eventsRepository.addElement(event)       // @ndharacnenq addusers@
+  async addRating(Id: number, idRef: IUserRef) {
+    const pivotRepository = await getRepository(Pivot);
+    const currentPivot = await pivotRepository.findOne({
+      order: { id: "DESC" },
+      where: { eventId: Id },
+    });
+    const { eventId, criteriaId, subCriteriaId, userId } = currentPivot
+      ? currentPivot
+      : { eventId: 0, criteriaId: 0, subCriteriaId: 0, userId: 0 };
+    (await pivotRepository.createQueryBuilder().where({ eventId: Id }).getOne())
+      ? (await pivotRepository
+          .createQueryBuilder()
+          .where({ eventId: Id })
+          .andWhere({ ratingId: idRef.id })
+          .getOne())
+        ? logger.info("data already exists")
+        : await pivotRepository
+            .createQueryBuilder()
+            .insert()
+            .values({
+              ratingId: idRef.id,
+              eventId: eventId,
+              criteriaId: criteriaId,
+              subCriteriaId: subCriteriaId,
+              userId: userId,
+            })
+            .execute()
+      : await pivotRepository.save({
+          eventId: Id,
+          ratingId: idRef.id,
+          criteriaId,
+          subCriteriaId,
+          userId,
+        });
   }
 
-  async addCriteria(eventId: number, criteriaRef: ICriteriaRef) {
-    const criteria = await this.criteriaRepository.findOne(criteriaRef.id)
-    const event = await this.eventsRepository.findOneById(eventId)
-    event.criteria.push(criteria)
-    return this.eventsRepository.addElement(event)
+  async addCriteria(Id: number, idRef: IUserRef) {
+    const pivotRepository = await getRepository(Pivot);
+    const currentPivot = await pivotRepository.findOne({
+      order: { id: "DESC" },
+      where: { eventId: Id },
+    });
+    const { eventId, ratingId, subCriteriaId, userId } = currentPivot
+      ? currentPivot
+      : { eventId: 0, ratingId: 0, subCriteriaId: 0, userId: 0 };
+    (await pivotRepository.createQueryBuilder().where({ eventId: Id }).getOne())
+      ? (await pivotRepository
+          .createQueryBuilder()
+          .where({ eventId: Id })
+          .andWhere({ criteriaId: idRef.id })
+          .getOne())
+        ? logger.info("data already exists")
+        : await pivotRepository
+            .createQueryBuilder()
+            .insert()
+            .values({
+              criteriaId: idRef.id,
+              eventId: eventId,
+              ratingId: ratingId,
+              subCriteriaId: subCriteriaId,
+              userId: userId,
+            })
+            .execute()
+      : await pivotRepository.save({
+          eventId: Id,
+          criteriaId: idRef.id,
+          ratingId,
+          subCriteriaId,
+          userId,
+        });
   }
 
-  async addUsers(eventId: number, userRef: IUserRef) {
-    const user = await this.userRepository.findOne(userRef.id)
-    const event = await this.eventsRepository.findOneById(eventId)
-    event.users.push(user)
+  async addSubCriteria(Id: number, idRef: ISubCriteriaRef) {
+    const pivotRepository = await getRepository(Pivot);
+    const currentPivot = await pivotRepository.findOne({
+      order: { id: "DESC" },
+      where: { eventId: Id, userId: idRef.userId },
+    });
+    const { eventId, criteriaId, ratingId, userId } = currentPivot
+      ? currentPivot
+      : { eventId: 0, criteriaId: 0, ratingId: 0, userId: 0 };
+    (await pivotRepository.createQueryBuilder().where({ eventId: Id }).getOne())
+      ? (await pivotRepository
+          .createQueryBuilder()
+          .where({ eventId: Id })
+          .andWhere({ userId: idRef.userId })
+          .andWhere({ subCriteriaId: idRef.subCriteriaId })
+          .getOne())
+        ? logger.info("data already exists")
+        : await pivotRepository
+            .createQueryBuilder()
+            .insert()
+            .values({
+              subCriteriaId: idRef.subCriteriaId,
+              eventId: eventId,
+              criteriaId: criteriaId,
+              ratingId: ratingId,
+              userId: userId,
+            })
+            .execute()
+      : await pivotRepository.save({
+          eventId: Id,
+          subCriteriaId: idRef.subCriteriaId,
+          userId: idRef.userId,
+          criteriaId,
+          ratingId,
+        });
+  }
 
-    return this.eventsRepository.addElement(event)
+  async addUsers(Id: number, idRef: IUserRef) {
+    const pivotRepository = await getRepository(Pivot);
+    const currentPivot = await pivotRepository.findOne({
+      order: { id: "DESC" },
+      where: { eventId: Id },
+    });
+    const { eventId, criteriaId, subCriteriaId, ratingId } = currentPivot
+      ? currentPivot
+      : { eventId: 0, criteriaId: 0, subCriteriaId: 0, ratingId: 0 };
+    (await pivotRepository.createQueryBuilder().where({ eventId: Id }).getOne())
+      ? (await pivotRepository
+          .createQueryBuilder()
+          .where({ eventId: Id })
+          .andWhere({ userId: idRef.id })
+          .getOne())
+        ? logger.info("data already exists")
+        : await pivotRepository
+            .createQueryBuilder()
+            .insert()
+            .values({
+              userId: idRef.id,
+              eventId: eventId,
+              criteriaId: criteriaId,
+              subCriteriaId: subCriteriaId,
+              ratingId: ratingId,
+            })
+            .execute()
+      : await pivotRepository.save({
+          eventId: Id,
+          userId: idRef.id,
+          criteriaId,
+          subCriteriaId,
+          ratingId,
+        });
   }
 
   async create(createEventDto: CreateEventDto) {
-    try { createEventDto.endsAt = dayjs().add(+createEventDto.endsAt, 'day').toDate(); }
-    catch(error){
-      logger.error(`end date doesn't created ${error.message}`)
+    try {
+      createEventDto.endsAt = dayjs()
+        .add(+createEventDto.endsAt, "day")
+        .toDate();
+    } catch (error) {
+      logger.error(`end date doesn't created ${error.message}`);
     }
-    createEventDto.rating = await this.ratingRepository.find({take: 3})
     return this.eventsRepository.create(createEventDto);
   }
 
@@ -92,5 +204,4 @@ export class EventsService {
   remove(id: number): Promise<Event> {
     return this.eventsRepository.remove(id);
   }
-
 }

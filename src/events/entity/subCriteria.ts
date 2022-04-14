@@ -1,12 +1,6 @@
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  ManyToOne,
-} from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from "typeorm";
 import { ISubCriteria } from "../interface/subCriteriaInterface";
-import {Criteria} from "./criteria";
-
+import { Pivot, PivotDto } from "./pivot";
 
 @Entity()
 export class SubCriteria implements ISubCriteria {
@@ -19,7 +13,17 @@ export class SubCriteria implements ISubCriteria {
   @Column()
   state: boolean;
 
-  @ManyToOne(() => Criteria, (criteria) => criteria.subCriteria , {eager:true,createForeignKeyConstraints: false, cascade: true})
-  criteria: Criteria;
+  @OneToMany(() => Pivot, (pivot) => pivot.subCriteria, {
+    onUpdate: "CASCADE",
+    onDelete: "CASCADE",
+    createForeignKeyConstraints: false,
+  })
+  pivot: Pivot[];
+}
 
+export class SubCriteriaPivotDto {
+  id: number;
+  name: string;
+  state: boolean;
+  pivot: PivotDto[];
 }

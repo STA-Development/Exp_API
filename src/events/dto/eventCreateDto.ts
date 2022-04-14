@@ -3,14 +3,14 @@ import {
   IsInt,
   IsEnum,
   IsDate,
-  IsNotEmpty,
-  IsOptional, IsNumber, Min, Max,
+  IsOptional,
+  IsNumber,
+  Min,
+  Max,
 } from "class-validator";
 
 import { Period } from "../interface/eventInterface";
-import { User } from "../../users/entity/user";
-import {Criteria} from "../entity/criteria";
-import {Rating} from "../entity/rating";
+import { Pivot } from "../entity/pivot";
 
 export class CreateEventDto {
   @IsString()
@@ -21,17 +21,11 @@ export class CreateEventDto {
   @Max(100)
   readonly bonus: number;
 
-  @IsOptional()
-  rating: Rating[];
-
   @IsEnum(Period)
   readonly TimePeriod: Period;
 
-  @IsNotEmpty()
-  users: User[];
-
-  @IsNotEmpty()
-  criteria: Criteria[];
+  @IsOptional()
+  pivot: Pivot[];
 
   @IsDate()
   @IsOptional()
@@ -39,5 +33,4 @@ export class CreateEventDto {
 
   @IsNumber()
   endsAt: Date;
-
 }

@@ -1,17 +1,16 @@
-import {Module} from "@nestjs/common";
+import { Module } from "@nestjs/common";
 import { CriteriaController } from "../controller/criteriaController";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { ConfigModule } from "@nestjs/config";
 import { Criteria } from "../entity/criteria";
 import { CriteriaRepository } from "../repository/criteriaRepository";
 import { CriteriaService } from "../service/criteriaService";
-import {SubCriteria} from "../entity/subCriteria";
-import {SubCriteriaRepository} from "../repository/subCriteriaRepository";
+import { Pivot } from "../entity/pivot";
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    TypeOrmModule.forFeature([ Criteria, SubCriteria ]),
+    TypeOrmModule.forFeature([Criteria, Pivot]),
     TypeOrmModule.forRoot({
       keepConnectionAlive: true,
       type: "mysql",
@@ -25,10 +24,8 @@ import {SubCriteriaRepository} from "../repository/subCriteriaRepository";
       logging: false,
       socketPath: "/Applications/MAMP/tmp/mysql/mysql.sock",
     }),
-
   ],
-  controllers: [ CriteriaController ],
-  providers: [ CriteriaService, CriteriaRepository, SubCriteriaRepository ],
+  controllers: [CriteriaController],
+  providers: [CriteriaService, CriteriaRepository],
 })
-
 export class CriteriaModule {}

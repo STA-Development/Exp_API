@@ -1,18 +1,14 @@
-import {Injectable} from "@nestjs/common";
-import {CreateUserDto} from "../dto/userCreateDto";
-import {UpdateUserDto} from "../dto/userUpdateDto";
-import {User} from "../entity/user";
-import {InjectRepository} from "@nestjs/typeorm";
-import {Repository} from "typeorm";
+import { Injectable } from "@nestjs/common";
+import { CreateUserDto } from "../dto/userCreateDto";
+import { UpdateUserDto } from "../dto/userUpdateDto";
+import { User } from "../entity/user";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Repository } from "typeorm";
 
 @Injectable()
 export class UserRepository {
   @InjectRepository(User)
   userRepository: Repository<User>;
-
-  addCriteria(user:User) {
-    return this.userRepository.save(user)
-  }
 
   create(createUserDto: CreateUserDto): Promise<User> {
     const user = this.userRepository.create(createUserDto);
@@ -20,11 +16,13 @@ export class UserRepository {
   }
 
   findAll(): Promise<User[]> {
-    return this.userRepository.find({relations: ["events", "events.criteria", "events.criteria.subCriteria", "criteria"],});
+    return this.userRepository.find({ relations: ["pivot", "pivot.event"] });
   }
 
   findOne(id: number): Promise<User> {
-    return this.userRepository.findOne(id, {relations: ["events", "events.criteria", "events.criteria.subCriteria", "criteria"],});
+    return this.userRepository.findOne(id, {
+      relations: ["pivot", "pivot.event"],
+    });
   }
 
   async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {

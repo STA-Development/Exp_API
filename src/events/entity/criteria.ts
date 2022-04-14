@@ -1,15 +1,6 @@
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  ManyToMany,
-  OneToMany,
-} from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from "typeorm";
 import { ICriteria } from "../interface/criteriaInterface";
-import {Event} from "./event";
-import {SubCriteria} from "./subCriteria";
-import {User} from "../../users/entity/user";
-
+import { Pivot, PivotDto } from "./pivot";
 
 @Entity()
 export class Criteria implements ICriteria {
@@ -25,14 +16,18 @@ export class Criteria implements ICriteria {
   @Column()
   rating: number;
 
-  @ManyToMany(() => Event, (event) => event.criteria)
-  events: Event[];
+  @OneToMany(() => Pivot, (pivot) => pivot.criteria, {
+    onUpdate: "CASCADE",
+    onDelete: "CASCADE",
+    createForeignKeyConstraints: false,
+  })
+  pivot: Pivot[];
+}
 
-  @OneToMany(() => SubCriteria, (subCriteria) => subCriteria.criteria,{ onDelete: 'CASCADE', onUpdate: 'CASCADE', createForeignKeyConstraints: false})
-  subCriteria: SubCriteria[];
-
-  @ManyToMany(() => User, (user) => user.criteria)
-  users: User[];
-
-
+export class CriteriaPivotDto {
+  id: number;
+  name: string;
+  criteria: boolean;
+  rating: number;
+  pivot: PivotDto[];
 }
