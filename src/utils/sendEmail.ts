@@ -1,5 +1,4 @@
 import * as nodemailer from 'nodemailer';
-// const ejs = require ('ejs')
 import * as ejs from 'ejs';
 
 export const sendEmail = async (email: string, link: string) => {
@@ -16,7 +15,7 @@ export const sendEmail = async (email: string, link: string) => {
     { link: link },
     async (err, data) => {
       await transporter.sendMail({
-        from: process.env.email,
+        from: process.env.EMAIL,
         to: email,
         subject: 'Hello ',
         html: data

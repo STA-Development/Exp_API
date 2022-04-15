@@ -44,8 +44,8 @@ export class UsersController {
   @UseGuards(AuthGuard)
   @ApiBearerAuth()
   @Get('me')
-  async findOne(@Token() uid: string): Promise<User> {
-    return await this.usersService.findOne(uid);
+  findOne(@Token() uid: string): Promise<User> {
+    return  this.usersService.findOne(uid);
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
@@ -60,8 +60,8 @@ export class UsersController {
   @UseInterceptors(ClassSerializerInterceptor)
   @UseGuards(AuthGuard)
   @Delete(':id')
-  async remove(@Param('id') id: number, @Token() uid: string): Promise<User> {
-    return await this.usersService.remove(id, uid);
+  remove(@Param('id') id: number, @Token() uid: string): Promise<User> {
+    return this.usersService.remove(id, uid);
   }
 
   @Patch('avatar')

@@ -12,6 +12,7 @@ import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CloudinaryService } from '../../cloudinary/cloudinaryService';
 import { dbAuth } from '../auth/preauthMiddleware';
+import { error } from "winston";
 
 @Injectable()
 export class UsersService {
@@ -31,7 +32,7 @@ export class UsersService {
     createUserDto.avatar = process.env.AVATAR_URL;
     const user = await this.usersRepository.create(createUserDto);
     if (!user) {
-      throw new NotFoundException(`you have wrong schema`);
+      throw new BadRequestException(`Method Not Allowed`);
     }
     return user;
   }
@@ -48,8 +49,8 @@ export class UsersService {
     return user;
   }
 
-  update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
-    const user = this.usersRepository.update(id, updateUserDto);
+  async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
+    const user = await this.usersRepository.update(id, updateUserDto);
     if (!user) {
       throw new NotFoundException(`User with ID=${id} not found`);
     }
@@ -57,11 +58,23 @@ export class UsersService {
   }
 
   async remove(id: number, uid: string): Promise<User> {
-    const user = await this.usersRepository.remove(id, uid);
-    if (!user) {
-      throw new NotFoundException(`User with ID=${id} not found`);
+    const user = await this.findOne(uid);
+    if (user.isAdmin) {
+      try {
+        return await this.usersRepository.remove(id);
+      }catch (err){
+        throw {
+          statusCode:404,
+          message: 'Not Found'
+        };
+      }
     }
-    return user;
+    else{
+      throw {
+        statusCode:400,
+        message: 'User doesn`t have access to delete other users'
+      };
+    }
   }
 
   async changeSalary(

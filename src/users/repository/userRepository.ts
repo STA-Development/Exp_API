@@ -11,8 +11,8 @@ export class UserRepository {
   @InjectRepository(User)
   userRepository: Repository<User>;
 
-  create(createUserDto: CreateUserDto): Promise<User> {
-    const user = this.userRepository.create(createUserDto);
+  async create(createUserDto: CreateUserDto): Promise<User> {
+    const user = await this.userRepository.create(createUserDto);
     return this.userRepository.save(user);
   }
 
@@ -20,8 +20,8 @@ export class UserRepository {
     return this.userRepository.find({ relations: ['events'] });
   }
 
-  async findOne(id: string): Promise<User> {
-    return await this.userRepository.findOne({
+   findOne(id: string): Promise<User> {
+    return this.userRepository.findOne({
       relations: ['events'],
       where: { authUid: id }
     });
@@ -35,17 +35,9 @@ export class UserRepository {
     return this.userRepository.save(user);
   }
 
-  async remove(id: number, uid: string): Promise<User> {
-    const user = await this.findOne(uid);
+  async remove(id: number): Promise<User> {
     const removeUserId = await this.userRepository.findOne(id);
-    if (user.isAdmin) {
       await dbAuth.deleteUser(removeUserId.authUid);
-      return await this.userRepository.remove(removeUserId);
-    }
-    if (!user) {
-      throw new NotFoundException(
-        `User with ID=${id} not found or you are not admin`
-      );
-    }
+      return this.userRepository.remove(removeUserId);
   }
 }
