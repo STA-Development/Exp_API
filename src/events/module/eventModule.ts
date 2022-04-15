@@ -1,34 +1,34 @@
-import { MiddlewareConsumer, Module, NestModule } from "@nestjs/common";
-import { EventsController } from "../controller/eventController";
-import { EventsService } from "../service/eventService";
-import { TypeOrmModule } from "@nestjs/typeorm";
-import { ConfigModule } from "@nestjs/config";
-import { Event } from "../entity/event";
-import { EventsRepository } from "../repository/eventRepository";
-import { User } from "../../users/entity/user";
-import { UserRepository } from "../../users/repository/userRepository";
-import { CriteriaRepository } from "../repository/criteriaRepository";
-import { Criteria } from "../entity/criteria";
-import { Rating } from "../entity/rating";
-import { RatingRepository } from "../repository/ratingRepository";
-import { logger } from "../../logger";
-import { Pivot } from "../entity/pivot";
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
+import { EventsController } from '../controller/eventController';
+import { EventsService } from '../service/eventService';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { ConfigModule } from '@nestjs/config';
+import { Event } from '../entity/event';
+import { EventsRepository } from '../repository/eventRepository';
+import { User } from '../../users/entity/user';
+import { UserRepository } from '../../users/repository/userRepository';
+import { CriteriaRepository } from '../repository/criteriaRepository';
+import { Criteria } from '../entity/criteria';
+import { Rating } from '../entity/rating';
+import { RatingRepository } from '../repository/ratingRepository';
+import { logger } from '../../logger';
+import { Pivot } from '../entity/pivot';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
     TypeOrmModule.forFeature([Event, User, Criteria, Rating, Pivot]),
     TypeOrmModule.forRoot({
-      type: "mysql",
+      type: 'mysql',
       host: process.env.DB_HOST,
-      port: +process.env.DB_PORT,
+      port: Number(process.env.DB_PORT),
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
       autoLoadEntities: true,
       synchronize: true,
-      socketPath: "/Applications/MAMP/tmp/mysql/mysql.sock",
-    }),
+      socketPath: '/Applications/MAMP/tmp/mysql/mysql.sock'
+    })
   ],
   controllers: [EventsController],
   providers: [
@@ -36,8 +36,8 @@ import { Pivot } from "../entity/pivot";
     EventsRepository,
     UserRepository,
     CriteriaRepository,
-    RatingRepository,
-  ],
+    RatingRepository
+  ]
 })
 export class EventModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

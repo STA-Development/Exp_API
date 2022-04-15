@@ -1,27 +1,28 @@
-import { Injectable } from "@nestjs/common";
-import { CreateRatingDto } from "../dto/ratingCreateDto";
-import { InjectRepository } from "@nestjs/typeorm";
-import { Repository } from "typeorm";
-import { Rating } from "../entity/rating";
-import { UpdateRatingDto } from "../dto/ratingUpdateDto";
+import { Injectable } from '@nestjs/common';
+import { CreateRatingDto } from '../dto/ratingCreateDto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Rating } from '../entity/rating';
+import { UpdateRatingDto } from '../dto/ratingUpdateDto';
 
 @Injectable()
 export class RatingRepository {
   @InjectRepository(Rating)
   ratingRepository: Repository<Rating>;
 
-  create(createRatingDto: CreateRatingDto): Promise<Rating> {
-    const rating = this.ratingRepository.create(createRatingDto); // event@ animast popoxakan chi?
-    return this.ratingRepository.save(rating);
+  async create(createRatingDto: CreateRatingDto): Promise<Rating> {
+    return this.ratingRepository.save(
+      await this.ratingRepository.create(createRatingDto)
+    );
   }
 
   findAll(): Promise<Rating[]> {
-    return this.ratingRepository.find({ relations: ["pivot", "pivot.event"] });
+    return this.ratingRepository.find({ relations: ['pivot', 'pivot.event'] });
   }
 
   async findOneById(id: number): Promise<Rating> {
     const rating = await this.ratingRepository.findOne(id, {
-      relations: ["pivot", "pivot.event"],
+      relations: ['pivot', 'pivot.event']
     });
     return rating;
   }
@@ -32,7 +33,7 @@ export class RatingRepository {
   ): Promise<Rating> {
     const rating = await this.ratingRepository.preload({
       id: eventId,
-      ...updateRatingDto,
+      ...updateRatingDto
     });
 
     return this.ratingRepository.save(rating);

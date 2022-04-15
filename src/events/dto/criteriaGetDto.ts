@@ -1,9 +1,7 @@
-import { CriteriaPivotDto } from "../entity/criteria";
-import { pivotGetDto } from "./pivotGetDto";
+import { Criteria, CriteriaPivotDto } from '../entity/criteria';
+import { pivotGetDto } from './pivotGetDto';
 
-export const criteriaGetDto = (
-  criteria: CriteriaPivotDto
-): CriteriaPivotDto => {
+export const criteriaGetDto = (criteria: Criteria): CriteriaPivotDto => {
   return {
     id: criteria.id,
     name: criteria.name,
@@ -11,6 +9,6 @@ export const criteriaGetDto = (
     rating: criteria.rating,
     pivot: criteria?.pivot?.length
       ? criteria.pivot.map((pivot) => pivotGetDto(pivot))
-      : criteria.pivot,
+      : []
   };
 };

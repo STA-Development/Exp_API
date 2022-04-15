@@ -1,19 +1,16 @@
-import {
-  IsBoolean,
-  IsOptional, IsInt,
-} from 'class-validator';
-import {Pivot} from '../entity/pivot';
+import { IsBoolean, IsOptional, IsInt } from 'class-validator';
+import { Pivot } from '../entity/pivot';
 
 export class CreateRatingDto {
-    @IsInt()
+  @IsInt()
   readonly from: number;
 
-    @IsInt()
-    readonly to: number;
+  @IsInt()
+  readonly to: number;
 
-    @IsBoolean()
-    readonly isSelected: number;
+  @IsBoolean()
+  readonly isSelected: number;
 
-    @IsOptional()
-      pivot: Pivot[];
+  @IsOptional()
+  pivot: Pivot[];
 }

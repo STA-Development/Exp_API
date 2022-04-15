@@ -4,9 +4,15 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   OneToMany,
-} from "typeorm";
-import { IEvent, Period } from "../interface/eventInterface";
-import { Pivot, PivotDto } from "./pivot";
+  ManyToMany,
+  JoinTable
+} from 'typeorm';
+import { IEvent, Period } from '../interface/eventInterface';
+import { Pivot, PivotDto } from './pivot';
+import { User } from '../../users/entity/user';
+import { Rating } from './rating';
+import { Criteria } from './criteria';
+import { SubCriteria } from './subCriteria';
 
 @Entity()
 export class Event implements IEvent {
@@ -20,26 +26,66 @@ export class Event implements IEvent {
   bonus: number;
 
   @Column()
-  TimePeriod: Period;
+  timePeriod: Period;
 
   @OneToMany(() => Pivot, (pivot) => pivot.event, {
-    onUpdate: "CASCADE",
-    onDelete: "CASCADE",
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE',
     createForeignKeyConstraints: false,
+    eager: true
   })
   pivot: Pivot[];
 
-  @CreateDateColumn({ type: "timestamp" })
+  @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
 
-  @Column({ type: "timestamp" })
+  @Column({ type: 'timestamp' })
   endsAt: Date;
+
+  @ManyToMany(() => User, (user) => user.events, {
+    // onUpdate: 'CASCADE',
+    // onDelete: 'CASCADE',
+    //createForeignKeyConstraints: false
+    cascade: true
+  })
+  @JoinTable({
+    name: 'event_user',
+    joinColumn: { name: 'userId' },
+    inverseJoinColumn: { name: 'eventId' }
+  })
+  users: User[];
+
+  @ManyToMany(() => Rating, (rating) => rating.events, {
+    // onUpdate: 'CASCADE',
+    // onDelete: 'CASCADE',
+    //createForeignKeyConstraints: false
+    cascade: true
+  })
+  @JoinTable({
+    name: 'event_rating',
+    joinColumn: { name: 'ratingId' },
+    inverseJoinColumn: { name: 'eventId' }
+  })
+  rating: Rating[];
+
+  @ManyToMany(() => Criteria, (criteria) => criteria.events, {
+    // onUpdate: 'CASCADE',
+    // onDelete: 'CASCADE',
+    // createForeignKeyConstraints: false
+    cascade: true
+  })
+  @JoinTable({
+    name: 'event_criteria',
+    joinColumn: { name: 'criteriaId' },
+    inverseJoinColumn: { name: 'eventId' }
+  })
+  criteria: Criteria[];
 }
 export class EventPivotDto {
   id: number;
   title: string;
   bonus: number;
-  TimePeriod: Period;
+  timePeriod: Period;
   pivot: PivotDto[];
   createdAt: Date;
   endsAt: Date;

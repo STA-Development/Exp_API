@@ -1,11 +1,11 @@
-import { Pivot } from "../entity/pivot";
+import { Pivot } from '../entity/pivot';
 
 export enum Period {
-  never = "never",
-  monthly = "monthly",
-  quarterly = "quarterly",
-  sixMonths = "sixMonths",
-  annually = "annually",
+  never = 'never',
+  monthly = 'monthly',
+  quarterly = 'quarterly',
+  sixMonths = 'sixMonths',
+  annually = 'annually'
 }
 
 export interface IEvent {
@@ -13,7 +13,7 @@ export interface IEvent {
   title: string;
   bonus: number;
   pivot: Pivot[];
-  TimePeriod: Period;
+  timePeriod: Period;
   createdAt: Date;
-  endsAt: Date;
+  //endsAt: Date;
 }

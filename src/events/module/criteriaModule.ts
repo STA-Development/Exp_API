@@ -1,31 +1,32 @@
-import { Module } from "@nestjs/common";
-import { CriteriaController } from "../controller/criteriaController";
-import { TypeOrmModule } from "@nestjs/typeorm";
-import { ConfigModule } from "@nestjs/config";
-import { Criteria } from "../entity/criteria";
-import { CriteriaRepository } from "../repository/criteriaRepository";
-import { CriteriaService } from "../service/criteriaService";
-import { Pivot } from "../entity/pivot";
+import { Module } from '@nestjs/common';
+import { CriteriaController } from '../controller/criteriaController';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { ConfigModule } from '@nestjs/config';
+import { Criteria } from '../entity/criteria';
+import { CriteriaRepository } from '../repository/criteriaRepository';
+import { CriteriaService } from '../service/criteriaService';
+import { Pivot } from '../entity/pivot';
+import { SubCriteria } from '../entity/subCriteria';
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    TypeOrmModule.forFeature([Criteria, Pivot]),
+    TypeOrmModule.forFeature([Criteria, Pivot, SubCriteria]),
     TypeOrmModule.forRoot({
       keepConnectionAlive: true,
-      type: "mysql",
+      type: 'mysql',
       host: process.env.DB_HOST,
-      port: +process.env.DB_PORT,
+      port: Number(process.env.DB_PORT),
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
       autoLoadEntities: true,
       synchronize: true,
       logging: false,
-      socketPath: "/Applications/MAMP/tmp/mysql/mysql.sock",
-    }),
+      socketPath: '/Applications/MAMP/tmp/mysql/mysql.sock'
+    })
   ],
   controllers: [CriteriaController],
-  providers: [CriteriaService, CriteriaRepository],
+  providers: [CriteriaService, CriteriaRepository]
 })
 export class CriteriaModule {}

@@ -1,8 +1,8 @@
-import { Pivot } from "../entity/pivot";
+import { Pivot } from '../entity/pivot';
 
 export interface ISubCriteria {
   id: number;
   name: string;
-  state: boolean;
+  result: boolean;
   pivot: Pivot[];
 }

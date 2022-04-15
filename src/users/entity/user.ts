@@ -1,11 +1,12 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from "typeorm";
-import { IUser, PerformerType } from "../interface/userInterface";
-import { IsString } from "class-validator";
-import { Pivot, PivotDto } from "../../events/entity/pivot";
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { IUser, PerformerType } from '../interface/userInterface';
+import { IsString } from 'class-validator';
+import { Pivot, PivotDto } from '../../events/entity/pivot';
+import { Event } from '../../events/entity/event';
 
 @Entity()
 export class User implements IUser {
-  @PrimaryGeneratedColumn("increment")
+  @PrimaryGeneratedColumn('increment')
   id: number;
 
   @IsString()
@@ -25,11 +26,18 @@ export class User implements IUser {
   performerType: string;
 
   @OneToMany(() => Pivot, (pivot) => pivot.user, {
-    onUpdate: "CASCADE",
-    onDelete: "CASCADE",
-    createForeignKeyConstraints: false,
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE',
+    createForeignKeyConstraints: false
   })
   pivot: Pivot[];
+
+  @OneToMany(() => Event, (event) => event.users, {
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE',
+    createForeignKeyConstraints: false
+  })
+  events: Event[];
 }
 
 export class UserPivot {

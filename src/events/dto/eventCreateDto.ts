@@ -6,11 +6,11 @@ import {
   IsOptional,
   IsNumber,
   Min,
-  Max,
-} from "class-validator";
+  Max
+} from 'class-validator';
 
-import { Period } from "../interface/eventInterface";
-import { Pivot } from "../entity/pivot";
+import { Period } from '../interface/eventInterface';
+import { Pivot } from '../entity/pivot';
 
 export class CreateEventDto {
   @IsString()
@@ -22,7 +22,7 @@ export class CreateEventDto {
   readonly bonus: number;
 
   @IsEnum(Period)
-  readonly TimePeriod: Period;
+  readonly timePeriod: Period;
 
   @IsOptional()
   pivot: Pivot[];

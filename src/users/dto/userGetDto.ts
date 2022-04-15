@@ -1,7 +1,7 @@
-import { UserPivot } from "../entity/user";
-import { pivotGetDto } from "../../events/dto/pivotGetDto";
+import { User, UserPivot } from '../entity/user';
+import { pivotGetDto } from '../../events/dto/pivotGetDto';
 
-export const userGetDto = (user: UserPivot): UserPivot => {
+export const userGetDto = (user: User): UserPivot => {
   return {
     id: user.id,
     firstName: user.firstName,
@@ -11,6 +11,6 @@ export const userGetDto = (user: UserPivot): UserPivot => {
     performerType: user.performerType,
     pivot: user?.pivot?.length
       ? user.pivot.map((pivot) => pivotGetDto(pivot))
-      : user.pivot,
+      : user.pivot
   };
 };

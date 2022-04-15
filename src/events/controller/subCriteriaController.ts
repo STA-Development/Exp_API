@@ -8,15 +8,15 @@ import {
   Put,
   Inject,
   UseInterceptors,
-  ClassSerializerInterceptor,
-} from "@nestjs/common";
-import { SubCriteriaService } from "../service/subCriteriaService";
-import { CreateSubCriteriaDto } from "../dto/subCriteriaCreateDto";
-import { UpdateSubCriteriaDto } from "../dto/subCriteriaUpdateDto";
-import { SubCriteria, SubCriteriaPivotDto } from "../entity/subCriteria";
-import { subCriteriaGetDto } from "../dto/subCriteriaGetDto";
+  ClassSerializerInterceptor
+} from '@nestjs/common';
+import { SubCriteriaService } from '../service/subCriteriaService';
+import { CreateSubCriteriaDto } from '../dto/subCriteriaCreateDto';
+import { UpdateSubCriteriaDto } from '../dto/subCriteriaUpdateDto';
+import { SubCriteria, SubCriteriaPivotDto } from '../entity/subCriteria';
+import { subCriteriaGetDto } from '../dto/subCriteriaGetDto';
 
-@Controller("subCriteria")
+@Controller('subCriteria')
 export class SubCriteriaController {
   @Inject()
   subCriteriaService: SubCriteriaService;
@@ -38,24 +38,23 @@ export class SubCriteriaController {
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
-  @Get(":id")
-  async findOneById(@Param("id") id: number): Promise<SubCriteriaPivotDto> {
-    // console.log(await this.subCriteriaService.findOneById(id))
+  @Get(':id')
+  async findOneById(@Param('id') id: number): Promise<SubCriteriaPivotDto> {
     return subCriteriaGetDto(await this.subCriteriaService.findOneById(id));
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
-  @Put(":id")
+  @Put(':id')
   update(
-    @Param("id") id: number,
+    @Param('id') id: number,
     @Body() updateCriteriaDto: UpdateSubCriteriaDto
   ): Promise<SubCriteria> {
     return this.subCriteriaService.update(id, updateCriteriaDto);
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
-  @Delete(":id")
-  remove(@Param("id") id: number): Promise<SubCriteria> {
+  @Delete(':id')
+  remove(@Param('id') id: number): Promise<SubCriteria> {
     return this.subCriteriaService.remove(id);
   }
 }

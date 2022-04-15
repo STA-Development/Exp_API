@@ -1,16 +1,16 @@
-import { Event, EventPivotDto } from "../entity/event";
-import { pivotGetDto } from "./pivotGetDto";
+import { Event, EventPivotDto } from '../entity/event';
+import { pivotGetDto } from './pivotGetDto';
 
-export const eventGetDto = (event: EventPivotDto): EventPivotDto => {
+export const eventGetDto = (event: Event): EventPivotDto => {
   return {
     id: event.id,
     title: event.title,
     bonus: event.bonus,
     pivot: event?.pivot?.length
       ? event.pivot.map((pivot) => pivotGetDto(pivot))
-      : event.pivot,
-    TimePeriod: event.TimePeriod,
+      : [],
+    timePeriod: event.timePeriod,
     createdAt: event.createdAt,
-    endsAt: event.endsAt,
+    endsAt: event.endsAt
   };
 };
