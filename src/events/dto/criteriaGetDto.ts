@@ -1,11 +1,14 @@
-import {Criteria} from "../entity/criteria";
+import { Criteria, CriteriaPivotDto } from '../entity/criteria';
+import { pivotGetDto } from './pivotGetDto';
 
-export const criteriaGetDto = (criteria: Criteria): Criteria => {
-  return ({
+export const criteriaGetDto = (criteria: Criteria): CriteriaPivotDto => {
+  return {
     id: criteria.id,
     name: criteria.name,
     criteria: criteria.criteria,
-    events: criteria.events,
-    subCriteria: criteria.subCriteria,
-  });
+    rating: criteria.rating,
+    pivot: criteria?.pivot?.length
+      ? criteria.pivot.map((pivot) => pivotGetDto(pivot))
+      : []
+  };
 };

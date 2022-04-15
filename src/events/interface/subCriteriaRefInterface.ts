@@ -1,3 +1,4 @@
 export interface ISubCriteriaRef {
-    id: number;
+  subCriteriaId: number;
+  userId: number;
 }

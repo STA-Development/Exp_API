@@ -1,9 +1,9 @@
-import {Injectable, NotFoundException} from "@nestjs/common";
-import {CreateUserDto} from "../dto/userCreateDto";
-import {UpdateUserDto} from "../dto/userUpdateDto";
-import {User} from "../entity/user";
-import {InjectRepository} from "@nestjs/typeorm";
-import {Repository} from "typeorm";
+import { Injectable } from '@nestjs/common';
+import { CreateUserDto } from '../dto/userCreateDto';
+import { UpdateUserDto } from '../dto/userUpdateDto';
+import { User } from '../entity/user';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class UserRepository {
@@ -16,12 +16,13 @@ export class UserRepository {
   }
 
   findAll(): Promise<User[]> {
-    return this.userRepository.find({relations: ["events"],});
+    return this.userRepository.find({ relations: ['pivot', 'pivot.event'] });
   }
 
-   findOne(id: number): Promise<User> {
-    const user =  this.userRepository.findOne(id, {relations: ["events"]});
-    return user;
+  findOne(id: number): Promise<User> {
+    return this.userRepository.findOne(id, {
+      relations: ['pivot', 'pivot.event']
+    });
   }
 
   async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {

@@ -3,12 +3,16 @@ import {
   Column,
   PrimaryGeneratedColumn,
   CreateDateColumn,
+  OneToMany,
   ManyToMany,
-  JoinTable,
-} from "typeorm";
-import { IEvent, Period } from "../interface/eventInterface";
-import { User } from "../../users/entity/user";
-import {Criteria} from "./criteria";
+  JoinTable
+} from 'typeorm';
+import { IEvent, Period } from '../interface/eventInterface';
+import { Pivot, PivotDto } from './pivot';
+import { User } from '../../users/entity/user';
+import { Rating } from './rating';
+import { Criteria } from './criteria';
+import { SubCriteria } from './subCriteria';
 
 @Entity()
 export class Event implements IEvent {
@@ -22,31 +26,67 @@ export class Event implements IEvent {
   bonus: number;
 
   @Column()
-  rating: number;
+  timePeriod: Period;
 
-  @Column()
-  TimePeriod: Period;
+  @OneToMany(() => Pivot, (pivot) => pivot.event, {
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE',
+    createForeignKeyConstraints: false,
+    eager: true
+  })
+  pivot: Pivot[];
 
-  @ManyToMany(() => User, (users) => users.events)
+  @CreateDateColumn({ type: 'timestamp' })
+  createdAt: Date;
+
+  @Column({ type: 'timestamp' })
+  endsAt: Date;
+
+  @ManyToMany(() => User, (user) => user.events, {
+    // onUpdate: 'CASCADE',
+    // onDelete: 'CASCADE',
+    //createForeignKeyConstraints: false
+    cascade: true
+  })
   @JoinTable({
-    name: "event_user",
-    joinColumn: { name: "userId" },
-    inverseJoinColumn: { name: "eventId" },
+    name: 'event_user',
+    joinColumn: { name: 'userId' },
+    inverseJoinColumn: { name: 'eventId' }
   })
   users: User[];
 
-  @ManyToMany(() => Criteria, (criteria) => criteria.events, {cascade: true})
+  @ManyToMany(() => Rating, (rating) => rating.events, {
+    // onUpdate: 'CASCADE',
+    // onDelete: 'CASCADE',
+    //createForeignKeyConstraints: false
+    cascade: true
+  })
   @JoinTable({
-    name: "event_criteria",
-    joinColumn: { name: "criteriaId" },
-    inverseJoinColumn: { name: "eventId" },
+    name: 'event_rating',
+    joinColumn: { name: 'ratingId' },
+    inverseJoinColumn: { name: 'eventId' }
+  })
+  rating: Rating[];
+
+  @ManyToMany(() => Criteria, (criteria) => criteria.events, {
+    // onUpdate: 'CASCADE',
+    // onDelete: 'CASCADE',
+    // createForeignKeyConstraints: false
+    cascade: true
+  })
+  @JoinTable({
+    name: 'event_criteria',
+    joinColumn: { name: 'criteriaId' },
+    inverseJoinColumn: { name: 'eventId' }
   })
   criteria: Criteria[];
-
-  @CreateDateColumn({ type: "timestamp" } )
+}
+export class EventPivotDto {
+  id: number;
+  title: string;
+  bonus: number;
+  timePeriod: Period;
+  pivot: PivotDto[];
   createdAt: Date;
-  //
-  // @Column({ type: "timestamp" })
-  // endsAt: Date;
-
+  endsAt: Date;
 }

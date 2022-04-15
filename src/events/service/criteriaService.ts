@@ -3,30 +3,11 @@ import { CreateCriteriaDto } from "../dto/criteriaCreateDto";
 import { UpdateCriteriaDto } from "../dto/criteriaUpdateDto";
 import { Criteria } from "../entity/criteria";
 import { CriteriaRepository } from "../repository/criteriaRepository";
-import {ISubCriteriaRef} from "../interface/subCriteriaRefInterface";
-import {SubCriteriaRepository} from "../repository/subCriteriaRepository";
-
 
 @Injectable()
 export class CriteriaService {
-
   @Inject()
   criteriaRepository: CriteriaRepository;
-
-  @Inject()
-  subCriteriaRepository: SubCriteriaRepository;
-
-  async addSubCriteria(criteriaId: number, criteriaRef: ISubCriteriaRef) {
-    const subCriteria = await this.subCriteriaRepository.findOneById(criteriaRef.id)
-    const criteria = await this.criteriaRepository.findOneById(criteriaId)
-    if(criteria.subCriteria == null){
-      criteria.subCriteria = [await this.subCriteriaRepository.findOneById(criteriaRef.id)]
-    }
-    else{
-      criteria.subCriteria.push(subCriteria)
-    }
-    return this.criteriaRepository.addSubCriteria(criteria)
-  }
 
   async create(createCriteriaDto: CreateCriteriaDto) {
     return this.criteriaRepository.create(createCriteriaDto);
@@ -47,6 +28,4 @@ export class CriteriaService {
   remove(id: number): Promise<Criteria> {
     return this.criteriaRepository.remove(id);
   }
-
-
 }
