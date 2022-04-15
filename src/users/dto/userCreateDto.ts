@@ -9,22 +9,25 @@ export class CreateUserDto extends User {
 
   @ApiProperty()
   @IsString()
-  readonly firstName: string;
+  firstName: string;
+
+  @IsOptional()
+  authUid: string;
 
   @ApiProperty()
   @IsString()
-  readonly lastName: string;
+  password: string;
+
+  @ApiProperty()
+  @IsString()
+  lastName: string;
+
+  @IsOptional()
+  avatar: string;
 
   @ApiProperty()
   @IsEmail()
   readonly email: string;
-
-  @ApiProperty()
-  @IsString()
-   password: string;
-
-  @IsOptional()
-  avatar: string;
 
   @IsEmpty()
   readonly events: Event[];

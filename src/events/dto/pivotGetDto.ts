@@ -8,12 +8,10 @@ import { ratingGetDto } from './ratingGetDto';
 export const pivotGetDto = (pivot: Pivot): PivotDto => {
   return {
     // id: pivot.id,
-    criteria: pivot?.criteria ? criteriaGetDto(pivot.criteria) : pivot.criteria,
-    event: pivot?.event ? eventGetDto(pivot.event) : pivot.event,
-    rating: pivot?.rating ? ratingGetDto(pivot.rating) : pivot.rating,
-    subCriteria: pivot?.subCriteria
-      ? subCriteriaGetDto(pivot.subCriteria)
-      : pivot.subCriteria,
-    user: pivot?.user ? userGetDto(pivot.user) : pivot.user
+    criteria: pivot?.criteria && criteriaGetDto(pivot.criteria),
+    event: pivot?.event && eventGetDto(pivot.event),
+    rating: pivot?.rating && ratingGetDto(pivot.rating),
+    subCriteria: pivot?.subCriteria && subCriteriaGetDto(pivot.subCriteria),
+    user: pivot?.user && userGetDto(pivot.user)
   };
 };

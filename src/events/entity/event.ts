@@ -39,7 +39,7 @@ export class Event implements IEvent {
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
 
-  @Column({ type: 'timestamp' })
+  @Column({ type: 'timestamp', default: () => "CURRENT_TIMESTAMP" })
   endsAt: Date;
 
   @ManyToMany(() => User, (user) => user.events, {

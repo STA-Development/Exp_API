@@ -42,7 +42,7 @@ export class User implements IUser {
     createForeignKeyConstraints: false
   })
   @Column()
-  password: string;
+  authUid: string;
 
   @Column({ default: false })
   isAdmin: boolean;
@@ -66,7 +66,7 @@ export class UserPivot {
   lastName: string;
   email: string;
   isAdmin: boolean;
-  password: string;
+  authUid: string;
   salary: number;
   rating: number;
   avatar: string;

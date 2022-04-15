@@ -63,7 +63,7 @@ export class EventsService {
   }
 
   async addUsers(eventId: number, userRef: IUserRef) {
-    const user = await this.userRepository.findOne(userRef.id); //xi findOne?
+    const user = await this.userRepository.findOneById(userRef.id);
     const event = await this.eventsRepository.findOneById(eventId);
     if (event.rating == null) {
       event.users = [user];

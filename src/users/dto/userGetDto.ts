@@ -9,7 +9,7 @@ export const userGetDto = (user: User): UserPivot => {
     email: user.email,
     rating: user.rating,
     performerType: user.performerType,
-    password: user.password,
+    authUid: user.authUid,
     pivot: user?.pivot?.length
       ? user.pivot.map((pivot) => pivotGetDto(pivot))
       : [],
