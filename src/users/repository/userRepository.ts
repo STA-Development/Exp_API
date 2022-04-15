@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from '../dto/userCreateDto';
 import { UpdateUserDto } from '../dto/userUpdateDto';
 import { User } from '../entity/user';
@@ -17,12 +17,19 @@ export class UserRepository {
   }
 
   findAll(): Promise<User[]> {
-    return this.userRepository.find({ relations: ['events'] });
+    return this.userRepository.find({ relations: ['pivot', 'pivot.event'] });
+  }
+
+  findOneById(id: number): Promise<User> {
+    return this.userRepository.findOne({
+      relations: ['pivot', 'pivot.event'],
+      where: { id }
+    });
   }
 
    findOne(id: string): Promise<User> {
     return this.userRepository.findOne({
-      relations: ['events'],
+      relations: ['pivot', 'pivot.event'],
       where: { authUid: id }
     });
   }

@@ -1,18 +1,14 @@
-import {
-  Inject,
-  Injectable,
-  NotFoundException,
-  BadRequestException
-} from '@nestjs/common';
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { CreateUserDto } from '../dto/userCreateDto';
 import { UpdateUserDto } from '../dto/userUpdateDto';
-import { User } from '../entity/user';
-import { UserRepository } from '../repository/userRepository';
-import { Repository } from 'typeorm';
+import { User , UserPivot} from '../entity/user';
+import { logger } from '../../logger';
+import {Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CloudinaryService } from '../../cloudinary/cloudinaryService';
 import { dbAuth } from '../auth/preauthMiddleware';
-import { error } from "winston";
+import { NotFoundException } from '@nestjs/common';
+import { UserRepository } from "../repository/userRepository";
 
 @Injectable()
 export class UsersService {
@@ -21,8 +17,11 @@ export class UsersService {
     private cloudinary: CloudinaryService
   ) {}
 
+  // @InjectRepository(User)
+  // usersRepository: Repository<User>;
   @Inject()
   usersRepository: UserRepository;
+
   async create(createUserDto: CreateUserDto): Promise<User> {
     const auth = await dbAuth.createUser({
       email: createUserDto.email,
@@ -37,14 +36,26 @@ export class UsersService {
     return user;
   }
 
-  findAll(): Promise<Array<User>> {
-    return this.usersRepository.findAll();
+  async findAll(): Promise<UserPivot[]> {
+    return await this.usersRepository.findAll();
+  }
+
+  async findOneById(id: number): Promise<User> {
+    let user;
+    try {
+      user = await this.userRepository.findOne(id);
+    } catch (error) {
+      logger.error(`User with ID=${id} not found` + error);
+    }
+    return user;
   }
 
   async findOne(authUid: string): Promise<User> {
-    const user = await this.usersRepository.findOne(authUid);
-    if (!user) {
-      throw new NotFoundException(`User with ID=${authUid} not found`);
+    let user;
+    try {
+      user = await this.usersRepository.findOne(authUid);
+    } catch (error) {
+      logger.error(`User with ID=${authUid} not found` + error);
     }
     return user;
   }

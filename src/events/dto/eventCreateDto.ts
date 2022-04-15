@@ -2,40 +2,36 @@ import {
   IsString,
   IsInt,
   IsEnum,
-  IsEmpty,
   IsDate,
-  IsNotEmpty,
-  isNotEmpty, IsObject, IsOptional, IsDateString, IsISO8601, IsNumber,
-} from "class-validator";
+  IsOptional,
+  IsNumber,
+  Min,
+  Max
+} from 'class-validator';
 
-import { Period } from "../interface/eventInterface";
-import { User } from "../../users/entity/user";
-import {Criteria} from "../entity/criteria";
+import { Period } from '../interface/eventInterface';
+import { Pivot } from '../entity/pivot';
 
 export class CreateEventDto {
   @IsString()
   readonly title: string;
 
   @IsInt()
+  @Min(0)
+  @Max(100)
   readonly bonus: number;
 
-  @IsInt()
-  readonly rating: number;
-
   @IsEnum(Period)
-  readonly TimePeriod: Period;
+  readonly timePeriod: Period;
 
-  @IsNotEmpty()
-  users: User[];
-
-  @IsNotEmpty()
-  criteria: Criteria[];
+  @IsOptional()
+  pivot: Pivot[];
 
   @IsDate()
   @IsOptional()
   createdAt: Date;
 
-  // @IsNumber()
-  // endsAt: Date;
+  @IsNumber()
+  endsAt: Date;
 
 }

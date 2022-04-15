@@ -13,23 +13,13 @@ import {
 import { CriteriaService } from "../service/criteriaService";
 import { CreateCriteriaDto } from "../dto/criteriaCreateDto";
 import { UpdateCriteriaDto } from "../dto/criteriaUpdateDto";
-import { Criteria } from "../entity/criteria";
+import { Criteria, CriteriaPivotDto } from "../entity/criteria";
 import { criteriaGetDto } from "../dto/criteriaGetDto";
-import {SubCriteriaRefDto} from "../dto/subCriteriaRefDto";
 
 @Controller("criteria")
 export class CriteriaController {
   @Inject()
   criteriaService: CriteriaService;
-
-  @UseInterceptors(ClassSerializerInterceptor)
-  @Put(":id/subCriteria")
-  addSubCriteria(
-      @Param("id") CriteriaId: number,
-      @Body() criteriaRef: SubCriteriaRefDto
-  ): Promise<Criteria> {
-    return this.criteriaService.addSubCriteria(CriteriaId, criteriaRef);
-  }
 
   @UseInterceptors(ClassSerializerInterceptor)
   @Post()
@@ -39,14 +29,17 @@ export class CriteriaController {
 
   @UseInterceptors(ClassSerializerInterceptor)
   @Get()
-  async findAll(): Promise<Criteria[]> {
-    return ( await this.criteriaService.findAll()).map((criteria) => criteriaGetDto(criteria));
+  async findAll(): Promise<CriteriaPivotDto[]> {
+    return (await this.criteriaService.findAll()).map((criteria) =>
+      criteriaGetDto(criteria)
+    );
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
   @Get(":id")
-  async findOneById(@Param("id") id: number): Promise<Criteria> {
-    return criteriaGetDto(await this.criteriaService.findOneById(id));
+  async findOneById(@Param("id") id: number): Promise<CriteriaPivotDto> {
+    const criteria = await this.criteriaService.findOneById(id);
+    return criteriaGetDto(criteria);
   }
 
   @UseInterceptors(ClassSerializerInterceptor)

@@ -17,11 +17,14 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { UsersService } from '../service/userService';
 import { CreateUserDto } from '../dto/userCreateDto';
 import { UpdateUserDto } from '../dto/userUpdateDto';
-import { User } from '../entity/user';
+import { User, UserPivot } from '../entity/user';
 import { AuthGuard } from '../../middlewares/checkJwt';
 import { Token } from '../../middlewares/jwtDecorator';
-import { ApiProperty, ApiBearerAuth } from '@nestjs/swagger';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
+import { logger } from '../../logger';
+import { userGetDto } from '../dto/userGetDto';
+import { UpdateResult } from 'typeorm';
 @Controller('users')
 export class UsersController {
   @Inject()
@@ -36,8 +39,15 @@ export class UsersController {
   @UseGuards(AuthGuard)
   @ApiBearerAuth()
   @Get()
-  findAll(): Promise<Array<User>> {
-    return this.usersService.findAll();
+  async findAll(): Promise<UserPivot[]> {
+    logger.info('Get all users');
+    return (await this.usersService.findAll()).map((user) => user); //TODO dto
+  }
+
+  @UseInterceptors(ClassSerializerInterceptor)
+  @Get(':id')
+  async find(@Param('id') id: number): Promise<UserPivot> {
+    return userGetDto(await this.usersService.findOneById(id));
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
@@ -45,7 +55,7 @@ export class UsersController {
   @ApiBearerAuth()
   @Get('me')
   findOne(@Token() uid: string): Promise<User> {
-    return  this.usersService.findOne(uid);
+    return this.usersService.findOne(uid);
   }
 
   @UseInterceptors(ClassSerializerInterceptor)

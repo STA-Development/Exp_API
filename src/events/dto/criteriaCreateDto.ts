@@ -1,22 +1,16 @@
-import {
-  IsString,
-  IsBoolean,
-  IsOptional,
-} from "class-validator";
-import {SubCriteria} from "../entity/subCriteria";
-import {Event} from "../entity/event";
+import { IsString, IsBoolean, IsOptional, IsNumber } from "class-validator";
+import { Pivot } from "../entity/pivot";
 
 export class CreateCriteriaDto {
-
   @IsString()
   readonly name: string;
 
   @IsBoolean()
   readonly criteria: boolean;
 
-  @IsOptional() //
-  readonly subCriteria: SubCriteria[];
+  @IsNumber()
+  readonly rating: number;
 
-  @IsOptional() //
-  readonly events: Event[];
+  @IsOptional()
+  pivot: Pivot[];
 }

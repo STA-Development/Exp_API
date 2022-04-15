@@ -1,10 +1,8 @@
-import {Event} from "../entity/event";
-import {SubCriteria} from "../entity/subCriteria";
+import { Pivot } from "../entity/pivot";
 
 export interface ICriteria {
-  id: number;
   name: string;
   criteria: boolean;
-  events: Event[];
-  subCriteria: SubCriteria[];
+  rating: number;
+  pivot: Pivot[];
 }
