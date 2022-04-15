@@ -33,4 +33,5 @@ export class CreateEventDto {
 
   @IsNumber()
   endsAt: Date;
+
 }

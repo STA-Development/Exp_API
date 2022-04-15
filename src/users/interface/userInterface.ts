@@ -1,4 +1,5 @@
 import { Pivot } from '../../events/entity/pivot';
+import {Event} from "../../events/entity/event";
 
 export enum PerformerType {
   rockStar = 'Rock Star',
@@ -15,4 +16,10 @@ export interface IUser {
   rating: number;
   performerType: string;
   pivot: Pivot[];
+  password: string;
+  isAdmin: boolean;
+  salary: number;
+  avatar: string;
+  avatarPublicId: string;
+  events: Event[];
 }

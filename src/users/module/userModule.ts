@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { UsersController } from '../controller/userController';
 import { UsersService } from '../service/userService';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -6,6 +6,10 @@ import { ConfigModule } from '@nestjs/config';
 import { User } from '../entity/user';
 import { UserRepository } from '../repository/userRepository';
 import { Pivot } from '../../events/entity/pivot';
+import { JwtModule } from '@nestjs/jwt';
+import { CloudinaryProvider } from '../../cloudinary/cloudinaryProvider';
+import { CloudinaryService } from '../../cloudinary/cloudinaryService';
+import { logger } from '../../logger';
 
 @Module({
   imports: [
@@ -22,9 +26,19 @@ import { Pivot } from '../../events/entity/pivot';
       synchronize: true,
       keepConnectionAlive: true,
       socketPath: '/Applications/MAMP/tmp/mysql/mysql.sock'
-    })
+    }),
+    JwtModule.register({})
   ],
   controllers: [UsersController],
-  providers: [UsersService, UserRepository]
+  providers: [
+    UsersService,
+    UserRepository,
+    CloudinaryService,
+    CloudinaryProvider
+  ]
 })
-export class UserModule {}
+export class UserModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(logger).forRoutes(UsersController);
+  }
+}

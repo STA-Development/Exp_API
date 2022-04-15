@@ -9,8 +9,14 @@ export const userGetDto = (user: User): UserPivot => {
     email: user.email,
     rating: user.rating,
     performerType: user.performerType,
+    password: user.password,
     pivot: user?.pivot?.length
       ? user.pivot.map((pivot) => pivotGetDto(pivot))
-      : user.pivot
+      : user.pivot,
+    isAdmin: user.isAdmin,
+    salary: user.salary,
+    avatar: user.avatar,
+    avatarPublicId: user.avatarPublicId,
+    events: user.events
   };
 };

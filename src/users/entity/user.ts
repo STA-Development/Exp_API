@@ -1,22 +1,26 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToMany,
+  OneToMany
+} from 'typeorm';
 import { IUser, PerformerType } from '../interface/userInterface';
-import { IsString } from 'class-validator';
-import { Pivot, PivotDto } from '../../events/entity/pivot';
 import { Event } from '../../events/entity/event';
+import { Pivot, PivotDto } from '../../events/entity/pivot';
 
 @Entity()
 export class User implements IUser {
   @PrimaryGeneratedColumn('increment')
   id: number;
 
-  @IsString()
   @Column()
   firstName: string;
 
   @Column()
   lastName: string;
 
-  @Column()
+  @Column({ unique: true })
   email: string;
 
   @Column()
@@ -37,6 +41,22 @@ export class User implements IUser {
     onDelete: 'CASCADE',
     createForeignKeyConstraints: false
   })
+  @Column()
+  password: string;
+
+  @Column({ default: false })
+  isAdmin: boolean;
+
+  @Column({ default: 60000 })
+  salary: number;
+
+  @Column()
+  avatar: string;
+
+  @Column({ default: null })
+  avatarPublicId: string;
+
+  @ManyToMany(() => Event, (events) => events.users)
   events: Event[];
 }
 
@@ -45,7 +65,13 @@ export class UserPivot {
   firstName: string;
   lastName: string;
   email: string;
+  isAdmin: boolean;
+  password: string;
+  salary: number;
   rating: number;
+  avatar: string;
+  avatarPublicId: string;
   performerType: string;
   pivot: PivotDto[];
+  events: Event[];
 }
