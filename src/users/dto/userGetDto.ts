@@ -12,7 +12,7 @@ export const userGetDto = (user: User): UserPivot => {
     password: user.password,
     pivot: user?.pivot?.length
       ? user.pivot.map((pivot) => pivotGetDto(pivot))
-      : user.pivot,
+      : [],
     isAdmin: user.isAdmin,
     salary: user.salary,
     avatar: user.avatar,
