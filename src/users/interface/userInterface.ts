@@ -1,5 +1,5 @@
 import { Pivot } from '../../events/entity/pivot';
-import {Event} from '../../events/entity/event';
+import { Event } from '../../events/entity/event';
 
 export enum PerformerType {
   rockStar = 'Rock Star',

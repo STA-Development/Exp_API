@@ -23,7 +23,7 @@ export class User implements IUser {
   @Column({ unique: true })
   email: string;
 
-  @Column()
+  @Column({ default: 0 })
   rating: number;
 
   @Column({ default: PerformerType.waitingForEvaluation })
@@ -36,11 +36,6 @@ export class User implements IUser {
   })
   pivot: Pivot[];
 
-  @OneToMany(() => Event, (event) => event.users, {
-    onUpdate: 'CASCADE',
-    onDelete: 'CASCADE',
-    createForeignKeyConstraints: false
-  })
   @Column()
   authUid: string;
 

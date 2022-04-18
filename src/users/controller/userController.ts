@@ -21,14 +21,14 @@ import { User, UserPivot } from '../entity/user';
 import { AuthGuard } from '../../middlewares/checkJwt';
 import { Token } from '../../middlewares/jwtDecorator';
 import { ApiBearerAuth } from '@nestjs/swagger';
-
 import { logger } from '../../logger';
 import { userGetDto } from '../dto/userGetDto';
-import { UpdateResult } from 'typeorm';
+
 @Controller('users')
 export class UsersController {
   @Inject()
   usersService: UsersService;
+
   @UseInterceptors(ClassSerializerInterceptor)
   @Post('create')
   async create(@Body() createUserDto: CreateUserDto): Promise<User> {
@@ -44,11 +44,6 @@ export class UsersController {
     return (await this.usersService.findAll()).map((user) => user); //TODO dto
   }
 
-  @UseInterceptors(ClassSerializerInterceptor)
-  @Get(':id')
-  async find(@Param('id') id: number): Promise<UserPivot> {
-    return userGetDto(await this.usersService.findOneById(id));
-  }
 
   @UseInterceptors(ClassSerializerInterceptor)
   @UseGuards(AuthGuard)
@@ -56,6 +51,12 @@ export class UsersController {
   @Get('me')
   findOne(@Token() uid: string): Promise<User> {
     return this.usersService.findOne(uid);
+  }
+
+  @UseInterceptors(ClassSerializerInterceptor)
+  @Get(':id')
+  async find(@Param('id') id: number): Promise<UserPivot> {
+    return userGetDto(await this.usersService.findOneById(id));
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
@@ -75,14 +76,17 @@ export class UsersController {
   }
 
   @Patch('avatar')
-  @UseGuards(AuthGuard)
+   @UseGuards(AuthGuard)
   @ApiBearerAuth()
   @UseInterceptors(FileInterceptor('avatar'))
   changeUserImg(
     @UploadedFile() file: Express.Multer.File,
     @Token() uid: string
   ): Promise<object> {
-    return this.usersService.uploadImageToCloudinary(file, uid);
+    return this.usersService.uploadImageToCloudinary(
+      file,
+      uid
+    );
   }
 
   @UseInterceptors(ClassSerializerInterceptor)

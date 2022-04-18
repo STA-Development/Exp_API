@@ -1,7 +1,13 @@
-import { IsString, IsEmail, IsNumber, IsOptional, IsEmpty } from 'class-validator';
+import {
+  IsString,
+  IsEmail,
+  IsNumber,
+  IsOptional,
+  IsEmpty
+} from 'class-validator';
 import { User } from '../entity/user';
 import { Pivot } from '../../events/entity/pivot';
-import { Event } from "../../events/entity/event";
+import { Event } from '../../events/entity/event';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateUserDto extends User {
@@ -32,7 +38,7 @@ export class CreateUserDto extends User {
   @IsEmpty()
   readonly events: Event[];
 
-  @IsNumber()
+  @IsOptional()
   readonly rating: number;
 
   @IsOptional()
