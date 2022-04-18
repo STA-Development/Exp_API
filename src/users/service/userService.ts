@@ -28,8 +28,7 @@ export class UsersService {
       });
       createUserDto.authUid = auth.uid;
       createUserDto.avatar = process.env.AVATAR_URL;
-      const user = await this.usersRepository.create(createUserDto);
-      return user;
+      return await this.usersRepository.create(createUserDto);
     } catch (err) {
       throw new BadRequestException(`Method Not Allowed`);
     }

@@ -76,7 +76,7 @@ export class UsersController {
   }
 
   @Patch('avatar')
-   @UseGuards(AuthGuard)
+  @UseGuards(AuthGuard)
   @ApiBearerAuth()
   @UseInterceptors(FileInterceptor('avatar'))
   changeUserImg(
