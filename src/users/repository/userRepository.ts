@@ -49,11 +49,11 @@ export class UserRepository {
   }
 
   async changeSalary(id: number, salary: number): Promise<User> {
-    const Salary = await this.userRepository.preload({
+    const salaryAmount = await this.userRepository.preload({
       id: id,
       salary: salary
     });
-    return this.userRepository.save(Salary);
+    return this.userRepository.save(salaryAmount);
   }
 
   async uploadImage(
