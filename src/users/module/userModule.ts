@@ -34,7 +34,6 @@ import { logger } from '../../logger';
   providers: [
     UsersService,
     UserRepository,
-
     CloudinaryService,
     CloudinaryProvider
   ]
