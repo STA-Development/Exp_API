@@ -82,7 +82,7 @@ export class UsersController {
   changeUserImg(
     @UploadedFile() file: Express.Multer.File,
     @Token() uid: string
-  ): Promise<object> {
+  ): Promise<User> {
     return this.usersService.uploadImageToCloudinary(
       file,
       uid

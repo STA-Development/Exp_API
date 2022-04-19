@@ -27,8 +27,8 @@ export class UserRepository {
     });
   }
 
-  async findOne(uid: string): Promise<User> {
-    return await this.userRepository.findOne({
+  findOne(uid: string): Promise<User> {
+    return this.userRepository.findOne({
       relations: ['pivot', 'pivot.event'],
       where: { authUid: uid }
     });
@@ -49,11 +49,11 @@ export class UserRepository {
   }
 
   async changeSalary(id: number, salary: number): Promise<User> {
-    const changeSal = await this.userRepository.preload({
+    const user = await this.userRepository.preload({
       id: id,
       salary: salary
     });
-    return this.userRepository.save(changeSal);
+    return this.userRepository.save(user);
   }
 
   async uploadImage(
