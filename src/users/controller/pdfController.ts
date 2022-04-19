@@ -8,7 +8,6 @@ import {
   UseGuards,
   UseInterceptors
 } from '@nestjs/common';
-
 import { AuthGuard } from '../../middlewares/checkJwt';
 import { PdfService } from '../service/pdfService';
 import { ApiBearerAuth } from '@nestjs/swagger';
