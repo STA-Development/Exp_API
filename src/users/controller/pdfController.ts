@@ -18,7 +18,7 @@ export class PdfController {
   pdfService: PdfService;
 
   @UseInterceptors(ClassSerializerInterceptor)
- // @UseGuards(AuthGuard)
+  @UseGuards(AuthGuard)
   @ApiBearerAuth()
   @Post()
   async generatePdf(
@@ -39,9 +39,9 @@ export class PdfController {
     } catch (err) {
       throw {
         statusCode: 400,
-        message: 'Cannot open the PDF. The file may be corrupt, or in an unsupported format.'
+        message:
+          'Cannot open the PDF. The file may be corrupt, or in an unsupported format.'
       };
-
     }
   }
 }
