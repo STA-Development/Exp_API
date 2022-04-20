@@ -34,8 +34,18 @@ export class UsersService {
     }
   }
 
-  async findAll(): Promise<UserPivot[]> {
-    return await this.usersRepository.findAll();
+  async findAll(
+    limit: number = 10,
+    page: number = 0
+  ): Promise<{ data: Promise<User[]>; count: number }> {
+    if (limit > 100) {
+      throw {
+        statusCode: 400,
+        message: 'Incorrect syntax near LIMIT'
+      };
+    } else {
+      return await this.usersRepository.findAll(limit, page);
+    }
   }
 
   async findOneById(id: number): Promise<User> {
@@ -49,7 +59,7 @@ export class UsersService {
   }
 
   async findOne(authUid: string): Promise<User> {
-     return this.usersRepository.findOne(authUid);
+    return this.usersRepository.findOne(authUid);
   }
 
   async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
@@ -62,23 +72,23 @@ export class UsersService {
 
   async remove(id: number, uid: string): Promise<User> {
     try {
-    const user = await this.findOne(uid);
-    if (user.isAdmin) {
-      try {
-        return await this.usersRepository.remove(id);
-      } catch (err) {
+      const user = await this.findOne(uid);
+      if (user.isAdmin) {
+        try {
+          return await this.usersRepository.remove(id);
+        } catch (err) {
+          throw {
+            statusCode: 404,
+            message: 'Not Found'
+          };
+        }
+      } else {
         throw {
-          statusCode: 404,
-          message: 'Not Found'
+          statusCode: 400,
+          message: 'User doesn`t have access to delete other users'
         };
       }
-    } else {
-      throw {
-        statusCode: 400,
-        message: 'User doesn`t have access to delete other users'
-      };
-    }
-    }catch (err) {
+    } catch (err) {
       throw {
         statusCode: 404,
         message: `User with ID=${uid} not found`

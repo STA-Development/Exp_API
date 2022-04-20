@@ -16,8 +16,19 @@ export class UserRepository {
     return this.userRepository.save(user);
   }
 
-  findAll(): Promise<User[]> {
-    return this.userRepository.find({ relations: ['pivot', 'pivot.event'] });
+  async findAll(
+    limit: number,
+    page: number
+  ): Promise<{ data: Promise<User[]>; count: number }> {
+    const builder = this.userRepository.createQueryBuilder('user');
+    const total = await builder.getCount();
+    const pages = Math.ceil(total / limit);
+    const data = this.userRepository.find({
+      relations: ['pivot', 'pivot.event'],
+      take: limit,
+      skip: (page - 1) * limit
+    });
+    return { data: data, count: pages };
   }
 
   findOneById(id: number): Promise<User> {
