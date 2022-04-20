@@ -13,14 +13,15 @@ export class PdfService {
       nameSurname: nameSurname,
       totalScore: totalScore
     });
-    return new Promise((resolve) => {
+    return new Promise((resolve,reject) => {
       const options = {
         width: '860px',
         height: '640px'
       };
       pdf.create(data, options).toStream(function (err, stream) {
+       // err = new Error("Memory allocation")
         if (err) {
-          throw ('PDF generation error');
+          reject(err)
         } else {
           resolve(stream);
         }
