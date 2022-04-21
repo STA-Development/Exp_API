@@ -1,20 +1,22 @@
-import { UsersController } from '../controller/userController';
-import { UsersService } from '../service/userService';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { ConfigModule } from '@nestjs/config';
-import { User } from '../entity/user';
-import { UserRepository } from '../repository/userRepository';
-import { JwtModule } from '@nestjs/jwt';
-import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
-import { Pivot } from '../../events/entity/pivot';
-import { CloudinaryProvider } from '../../cloudinary/cloudinaryProvider';
-import { CloudinaryService } from '../../cloudinary/cloudinaryService';
-import { logger } from '../../logger';
+import {TypeOrmModule} from '@nestjs/typeorm'
+import {ConfigModule} from '@nestjs/config'
+import {JwtModule} from '@nestjs/jwt'
+import {MiddlewareConsumer, Module, NestModule} from '@nestjs/common'
+import {UsersController} from '../controller/userController'
+import {UsersService} from '../service/userService'
+import {User} from '../entity/user'
+import {UserRepository} from '../repository/userRepository'
+import {UserSubCriteria} from '../../events/entity/userSubCriteria'
+import {CloudinaryProvider} from '../../cloudinary/cloudinaryProvider'
+import {CloudinaryService} from '../../cloudinary/cloudinaryService'
+import {logger} from '../../logger'
+import {EventEvaluator} from '../../events/entity/eventEvaluator'
+import {EventEvaluatee} from '../../events/entity/eventEvaluatee'
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    TypeOrmModule.forFeature([User, Pivot]),
+    TypeOrmModule.forFeature([User, UserSubCriteria, EventEvaluator, EventEvaluatee]),
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: process.env.DB_HOST,
@@ -25,22 +27,16 @@ import { logger } from '../../logger';
       autoLoadEntities: true,
       synchronize: true,
       keepConnectionAlive: true,
-      socketPath: '/Applications/MAMP/tmp/mysql/mysql.sock'
+      socketPath: '/Applications/MAMP/tmp/mysql/mysql.sock',
     }),
 
-    JwtModule.register({})
+    JwtModule.register({}),
   ],
   controllers: [UsersController],
-  providers: [
-    UsersService,
-    UserRepository,
-
-    CloudinaryService,
-    CloudinaryProvider
-  ]
+  providers: [UsersService, UserRepository, CloudinaryService, CloudinaryProvider],
 })
 export class UserModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(logger).forRoutes(UsersController);
+    consumer.apply(logger).forRoutes(UsersController)
   }
 }

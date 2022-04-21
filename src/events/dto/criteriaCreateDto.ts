@@ -1,16 +1,12 @@
-import { IsString, IsBoolean, IsOptional, IsNumber } from "class-validator";
-import { Pivot } from "../entity/pivot";
+import {IsString, IsBoolean, IsNumber} from 'class-validator'
 
 export class CreateCriteriaDto {
   @IsString()
-  readonly name: string;
+  readonly name: string
 
   @IsBoolean()
-  readonly criteria: boolean;
+  readonly criteria: boolean
 
   @IsNumber()
-  readonly rating: number;
-
-  @IsOptional()
-  pivot: Pivot[];
+  readonly rating: number
 }

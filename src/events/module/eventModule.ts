@@ -1,23 +1,33 @@
-import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
-import { EventsController } from '../controller/eventController';
-import { EventsService } from '../service/eventService';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { ConfigModule } from '@nestjs/config';
-import { Event } from '../entity/event';
-import { EventsRepository } from '../repository/eventRepository';
-import { User } from '../../users/entity/user';
-import { UserRepository } from '../../users/repository/userRepository';
-import { CriteriaRepository } from '../repository/criteriaRepository';
-import { Criteria } from '../entity/criteria';
-import { Rating } from '../entity/rating';
-import { RatingRepository } from '../repository/ratingRepository';
-import { logger } from '../../logger';
-import { Pivot } from '../entity/pivot';
+import {MiddlewareConsumer, Module, NestModule} from '@nestjs/common'
+import {TypeOrmModule} from '@nestjs/typeorm'
+import {ConfigModule} from '@nestjs/config'
+import {EventsController} from '../controller/eventController'
+import {EventsService} from '../service/eventService'
+import {Event} from '../entity/event'
+import {EventsRepository} from '../repository/eventRepository'
+import {User} from '../../users/entity/user'
+import {UserRepository} from '../../users/repository/userRepository'
+import {CriteriaRepository} from '../repository/criteriaRepository'
+import {Criteria} from '../entity/criteria'
+import {Rating} from '../entity/rating'
+import {RatingRepository} from '../repository/ratingRepository'
+import {logger} from '../../logger'
+import {UserSubCriteria} from '../entity/userSubCriteria'
+import {EventEvaluator} from '../entity/eventEvaluator'
+import {EventEvaluatee} from '../entity/eventEvaluatee'
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    TypeOrmModule.forFeature([Event, User, Criteria, Rating, Pivot]),
+    TypeOrmModule.forFeature([
+      Event,
+      User,
+      Criteria,
+      Rating,
+      UserSubCriteria,
+      EventEvaluator,
+      EventEvaluatee,
+    ]),
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: process.env.DB_HOST,
@@ -27,8 +37,8 @@ import { Pivot } from '../entity/pivot';
       database: process.env.DB_DATABASE,
       autoLoadEntities: true,
       synchronize: true,
-      socketPath: '/Applications/MAMP/tmp/mysql/mysql.sock'
-    })
+      socketPath: '/Applications/MAMP/tmp/mysql/mysql.sock',
+    }),
   ],
   controllers: [EventsController],
   providers: [
@@ -36,11 +46,11 @@ import { Pivot } from '../entity/pivot';
     EventsRepository,
     UserRepository,
     CriteriaRepository,
-    RatingRepository
-  ]
+    RatingRepository,
+  ],
 })
 export class EventModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(logger).forRoutes(EventsController);
+    consumer.apply(logger).forRoutes(EventsController)
   }
 }

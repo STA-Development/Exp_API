@@ -8,130 +8,104 @@ import {
   Inject,
   Controller,
   UseInterceptors,
-  ClassSerializerInterceptor
-} from '@nestjs/common';
-import { EventsService } from '../service/eventService';
-import { CreateEventDto } from '../dto/eventCreateDto';
-import { UpdateEventDto } from '../dto/eventUpdateDto';
-import { Event, EventPivotDto } from '../entity/event';
-import { eventGetDto } from '../dto/eventGetDto';
-import { elementIdDto } from '../dto/elementIdDto';
-import { SubCriteriaIdRefDto } from '../dto/subCriteriaIdRefDto';
-import { Period } from '../interface/eventInterface';
-import { logger } from '../../logger';
-import { User } from '../../users/entity/user';
+  ClassSerializerInterceptor,
+  Req,
+} from '@nestjs/common'
+import {Request} from 'express'
+import {EventsService} from '../service/eventService'
+import {CreateEventDto} from '../dto/eventCreateDto'
+import {UpdateEventDto} from '../dto/eventUpdateDto'
+import {Event, EventDto} from '../entity/event'
+import {eventGetDto} from '../dto/eventGetDto'
+import {elementIdDto} from '../dto/elementIdDto'
+import {User} from '../../users/entity/user'
+import {IEventSearch} from '../interface/eventSearchInterface'
+import {ISubCriteriaRef} from '../interface/subCriteriaRefInterface'
 
 @Controller('events')
 export class EventsController {
   @Inject()
-  eventsService: EventsService;
+  eventsService: EventsService
 
   @UseInterceptors(ClassSerializerInterceptor)
-  @Get('/ongoing')
-  ongoing(): Promise<Event[]> {
-    return this.eventsService.ongoing();
+  @Get('search')
+  async search(@Req() req: Request): Promise<EventDto[]> {
+    const params: IEventSearch = {...req.query}
+    return (await this.eventsService.search(params)).map((event) => eventGetDto(event))
+  }
+
+  @UseInterceptors(ClassSerializerInterceptor)
+  @Get('ongoing')
+  getOngoingEvents(): Promise<Event[]> {
+    return this.eventsService.getOngoingEvents()
+  }
+
+  @UseInterceptors(ClassSerializerInterceptor)
+  @Get()
+  async findAll(): Promise<EventDto[]> {
+    return (await this.eventsService.findAll()).map((event) => eventGetDto(event))
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
   @Get(':id/userRating')
   async getUserRating(@Param('id') eventId: number): Promise<User[]> {
-    return this.eventsService.getUserRating(eventId);
-  }
-
-  @UseInterceptors(ClassSerializerInterceptor)
-  @Put(':id/rating')
-  addRating(
-    @Param('id') eventId: number,
-    @Body() ratingRef: elementIdDto
-  ): Promise<Event> {
-    return this.eventsService.addRating(eventId, ratingRef);
-  }
-
-  @UseInterceptors(ClassSerializerInterceptor)
-  @Put(':id/criteria')
-  addCriteria(
-    @Param('id') eventId: number,
-    @Body() criteriaRef: elementIdDto
-  ): Promise<Event> {
-    return this.eventsService.addCriteria(eventId, criteriaRef);
-  }
-
-  @UseInterceptors(ClassSerializerInterceptor) //TODO pivotov te sovorakan manytomany ov?
-  @Put(':id/subCriteria')
-  addSubCriteria(
-    @Param('id') eventId: number,
-    @Body() criteriaRef: SubCriteriaIdRefDto
-  ): Promise<void> {
-    return this.eventsService.addSubCriteria(eventId, criteriaRef);
-  }
-
-  @UseInterceptors(ClassSerializerInterceptor)
-  @Put(':id/user')
-  addUsers(
-    @Param('id') eventId: number,
-    @Body() userRef: elementIdDto
-  ): Promise<Event> {
-    return this.eventsService.addUsers(eventId, userRef);
-  }
-
-  @UseInterceptors(ClassSerializerInterceptor)
-  @Post()
-  create(@Body() createEventDto: CreateEventDto): Promise<Event> {
-    return this.eventsService.create(createEventDto);
-  }
-
-  @UseInterceptors(ClassSerializerInterceptor)
-  @Get()
-  async findAll(): Promise<EventPivotDto[]> {
-    return (await this.eventsService.findAll()).map((event) =>
-      eventGetDto(event)
-    );
-  }
-
-  @UseInterceptors(ClassSerializerInterceptor)
-  @Get('/allByTitle/:title')
-  async findAllByTitle(
-    @Param('title') title: string
-  ): Promise<EventPivotDto[]> {
-    return (await this.eventsService.findAllByTitle(title)).map((event) =>
-      eventGetDto(event)
-    );
+    return this.eventsService.getUserRating(eventId)
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
   @Get(':id')
-  async findOneById(@Param('id') id: number): Promise<EventPivotDto> {
-    return eventGetDto(await this.eventsService.findOneById(id));
+  async findOneById(@Param('id') id: number): Promise<EventDto> {
+    return eventGetDto(await this.eventsService.findOneById(id))
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
-  @Get('/byTitle/:title')
-  async findOneByTitle(@Param('title') title: string): Promise<EventPivotDto> {
-    return eventGetDto(await this.eventsService.findOneByTitle(title));
+  @Post()
+  create(@Body() createEventDto: CreateEventDto): Promise<EventDto> {
+    return this.eventsService.create(createEventDto)
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
-  @Get('/byTimePeriod/:timePeriod')
-  async findOneByTimePeriod(
-    @Param('TimePeriod') timePeriod: Period
-  ): Promise<EventPivotDto> {
-    return eventGetDto(
-      await this.eventsService.findOneByTimePeriod(timePeriod)
-    );
+  @Put(':id/rating')
+  addRating(@Param('id') eventId: number, @Body() ratingRef: elementIdDto): Promise<Event> {
+    return this.eventsService.addRating(eventId, ratingRef)
+  }
+
+  @UseInterceptors(ClassSerializerInterceptor)
+  @Put(':id/criteria')
+  addCriteria(@Param('id') eventId: number, @Body() criteriaRef: elementIdDto): Promise<Event> {
+    return this.eventsService.addCriteria(eventId, criteriaRef)
+  }
+
+  @UseInterceptors(ClassSerializerInterceptor)
+  @Put(':id/subCriteria')
+  addSubCriteria(
+    @Param('id') eventId: number,
+    @Body() criteriaRef: ISubCriteriaRef,
+  ): Promise<void> {
+    return this.eventsService.addSubCriteria(eventId, criteriaRef)
+  }
+
+  @UseInterceptors(ClassSerializerInterceptor)
+  @Put(':id/evaluator')
+  addEvaluators(@Param('id') eventId: number, @Body() userRef: elementIdDto): Promise<void> {
+    return this.eventsService.addEvaluators(eventId, userRef)
+  }
+
+  @UseInterceptors(ClassSerializerInterceptor)
+  @Put(':id/evaluatee')
+  addEvaluatees(@Param('id') eventId: number, @Body() userRef: elementIdDto): Promise<void> {
+    return this.eventsService.addEvaluatees(eventId, userRef)
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
   @Put(':id')
-  update(
-    @Param('id') id: number,
-    @Body() updateEventDto: UpdateEventDto
-  ): Promise<Event> {
-    return this.eventsService.update(id, updateEventDto);
+  update(@Param('id') id: number, @Body() updateEventDto: UpdateEventDto): Promise<Event> {
+    return this.eventsService.update(id, updateEventDto)
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
   @Delete(':id')
   remove(@Param('id') id: number): Promise<Event> {
-    return this.eventsService.remove(id);
+    return this.eventsService.remove(id)
   }
 }

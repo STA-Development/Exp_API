@@ -1,37 +1,32 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { CreateSubCriteriaDto } from '../dto/subCriteriaCreateDto';
-import { UpdateSubCriteriaDto } from '../dto/subCriteriaUpdateDto';
-import { SubCriteria } from '../entity/subCriteria';
-import { SubCriteriaRepository } from '../repository/subCriteriaRepository';
+import {Inject, Injectable} from '@nestjs/common'
+import {CreateSubCriteriaDto} from '../dto/subCriteriaCreateDto'
+import {UpdateSubCriteriaDto} from '../dto/subCriteriaUpdateDto'
+import {SubCriteria} from '../entity/subCriteria'
+import {SubCriteriaRepository} from '../repository/subCriteriaRepository'
 
 @Injectable()
 export class SubCriteriaService {
   @Inject()
-  subCriteriaRepository: SubCriteriaRepository;
+  subCriteriaRepository: SubCriteriaRepository
 
   async create(createSubCriteriaDto: CreateSubCriteriaDto) {
-    const subCriteria = await this.subCriteriaRepository.create(
-      createSubCriteriaDto
-    );
-    return this.subCriteriaRepository.create(subCriteria);
+    const subCriteria = await this.subCriteriaRepository.create(createSubCriteriaDto)
+    return this.subCriteriaRepository.create(subCriteria)
   }
 
   async findAll(): Promise<SubCriteria[]> {
-    return this.subCriteriaRepository.findAll();
+    return this.subCriteriaRepository.findAll()
   }
 
   async findOneById(id: number): Promise<SubCriteria> {
-    return this.subCriteriaRepository.findOneById(id);
+    return this.subCriteriaRepository.findOneById(id)
   }
 
-  update(
-    id: number,
-    updateCriteriaDto: UpdateSubCriteriaDto
-  ): Promise<SubCriteria> {
-    return this.subCriteriaRepository.update(id, updateCriteriaDto);
+  update(id: number, updateCriteriaDto: UpdateSubCriteriaDto): Promise<SubCriteria> {
+    return this.subCriteriaRepository.update(id, updateCriteriaDto)
   }
 
   remove(id: number): Promise<SubCriteria> {
-    return this.subCriteriaRepository.remove(id);
+    return this.subCriteriaRepository.remove(id)
   }
 }
