@@ -48,7 +48,7 @@ export class EventsController {
 
   @UseInterceptors(ClassSerializerInterceptor)
   @Get(':id/userRating')
-  async getUserRating(@Param('id') eventId: number): Promise<User[]> {
+  getUserRating(@Param('id') eventId: number): Promise<User[]> {
     return this.eventsService.getUserRating(eventId)
   }
 
@@ -87,14 +87,14 @@ export class EventsController {
 
   @UseInterceptors(ClassSerializerInterceptor)
   @Put(':id/evaluator')
-  addEvaluators(@Param('id') eventId: number, @Body() userRef: elementIdDto): Promise<void> {
-    return this.eventsService.addEvaluators(eventId, userRef)
+  addEvaluators(@Param('id') eventId: number, @Body() userRef: elementIdDto): void {
+    this.eventsService.addEvaluators(eventId, userRef)
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
   @Put(':id/evaluatee')
-  addEvaluatees(@Param('id') eventId: number, @Body() userRef: elementIdDto): Promise<void> {
-    return this.eventsService.addEvaluatees(eventId, userRef)
+  addEvaluatees(@Param('id') eventId: number, @Body() userRef: elementIdDto): void {
+    this.eventsService.addEvaluatees(eventId, userRef)
   }
 
   @UseInterceptors(ClassSerializerInterceptor)

@@ -15,13 +15,11 @@ export class RatingRepository {
   }
 
   findAll(): Promise<Rating[]> {
-    return this.ratingRepository.find(/* { relations: ['pivot', 'pivot.event'] } */)
+    return this.ratingRepository.find()
   }
 
   async findOneById(id: number): Promise<Rating> {
-    const rating = await this.ratingRepository.findOne(id, {
-      // relations: ['pivot', 'pivot.event']
-    })
+    const rating = await this.ratingRepository.findOne(id)
     return rating
   }
 

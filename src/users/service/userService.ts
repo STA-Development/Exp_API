@@ -33,7 +33,7 @@ export class UsersService {
     }
   }
 
-  async findAll(): Promise<User[]> {
+  findAll(): Promise<User[]> {
     return this.usersRepository.findAll()
   }
 
