@@ -118,4 +118,23 @@ export class UsersService {
       throw new NotFoundException(`file is not found`);
     }
   }
+
+  async userAccess(id: number): Promise<string> {
+    try {
+    const user = await this.usersRepository.findOneById(id);
+    const authUser = await dbAuth.getUser(user.authUid)
+    if(authUser.disabled){
+    dbAuth.updateUser(user.authUid, {
+      disabled: false
+    });
+      return "user is activate"
+    }else{
+      dbAuth.updateUser(user.authUid, {
+        disabled: true
+      });
+      return "user is deactivate"
+    }}catch (err){
+      throw new NotFoundException(`User with ID=${id} not found`);
+    }
+  }
 }

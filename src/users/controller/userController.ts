@@ -100,4 +100,14 @@ export class UsersController {
   ): Promise<User> {
     return this.usersService.changeSalary(uid, body.salary, id);
   }
+
+  @UseInterceptors(ClassSerializerInterceptor)
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
+  @Patch(':id/access')
+  deactivateUser(
+    @Param('id') id: number
+  ): Promise<string> {
+    return this.usersService.userAccess(id);
+  }
 }
