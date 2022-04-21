@@ -60,45 +60,26 @@ export class UsersService {
     return user;
   }
 
-  async remove(id: number, uid: string): Promise<User> {
-    try {
-    const user = await this.findOne(uid);
-    if (user.isAdmin) {
+  async remove(id: number): Promise<User> {
       try {
         return await this.usersRepository.remove(id);
       } catch (err) {
         throw {
           statusCode: 404,
-          message: 'Not Found'
+          message: `User with ID=${id} not found`
         };
       }
-    } else {
-      throw {
-        statusCode: 400,
-        message: 'User doesn`t have access to delete other users'
-      };
-    }
-    }catch (err) {
-      throw {
-        statusCode: 404,
-        message: `User with ID=${uid} not found`
-      };
-    }
   }
 
   async changeSalary(
-    userId: string,
     salary: number,
     id: number
   ): Promise<User> {
-    const user = await this.usersRepository.findOne(userId);
-    if (user.isAdmin) {
-      return this.usersRepository.changeSalary(id, salary);
-    } else {
-      throw new NotFoundException(
-        `User with ID=${userId} not found or not admin`
-      );
-    }
+   try {
+     return this.usersRepository.changeSalary(id, salary);
+   }catch (err) {
+     throw new NotFoundException(`User with ID=${id} not found`);
+   }
   }
 
   async uploadImageToCloudinary(file: Express.Multer.File, uid: string) {
