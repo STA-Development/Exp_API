@@ -23,7 +23,6 @@ import {AuthGuard} from '../../middlewares/checkJwt'
 import {Token} from '../../middlewares/jwtDecorator'
 import {logger} from '../../logger'
 import {userGetDto} from '../dto/userGetDto'
-
 @Controller('users')
 export class UsersController {
   @Inject()
@@ -75,7 +74,7 @@ export class UsersController {
   @UseGuards(AuthGuard)
   @ApiBearerAuth()
   @UseInterceptors(FileInterceptor('avatar'))
-  changeUserImg(@UploadedFile() file: Express.Multer.File, @Token() uid: string): Promise<object> {
+  changeUserImg(@UploadedFile() file: Express.Multer.File, @Token() uid: string): Promise<User> {
     return this.usersService.uploadImageToCloudinary(file, uid)
   }
 

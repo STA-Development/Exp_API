@@ -27,7 +27,7 @@ export class CreateUserDto extends User {
   @IsEmail()
   readonly email: string
 
-  @IsNumber()
+  @IsOptional()
   readonly rating: number
 
   @IsOptional()

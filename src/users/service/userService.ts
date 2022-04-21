@@ -20,17 +20,17 @@ export class UsersService {
   usersRepository: UserRepository
 
   async create(createUserDto: CreateUserDto): Promise<User> {
-    const auth = await dbAuth.createUser({
-      email: createUserDto.email,
-      password: createUserDto.password,
-    })
-    createUserDto.authUid = auth.uid
-    createUserDto.avatar = process.env.AVATAR_URL
-    const user = await this.usersRepository.create(createUserDto)
-    if (!user) {
+    try {
+      const auth = await dbAuth.createUser({
+        email: createUserDto.email,
+        password: createUserDto.password,
+      })
+      createUserDto.authUid = auth.uid
+      createUserDto.avatar = process.env.AVATAR_URL
+      return await this.usersRepository.create(createUserDto)
+    } catch (err) {
       throw new BadRequestException(`Method Not Allowed`)
     }
-    return user
   }
 
   async findAll(): Promise<User[]> {
@@ -40,7 +40,7 @@ export class UsersService {
   async findOneById(id: number): Promise<User> {
     let user
     try {
-      user = await this.userRepository.findOne(id)
+      user = await this.usersRepository.findOneById(id)
     } catch (error) {
       logger.error(`User with ID=${id} not found ${error}`)
     }
@@ -66,20 +66,27 @@ export class UsersService {
   }
 
   async remove(id: number, uid: string): Promise<User> {
-    const user = await this.findOne(uid)
-    if (user.isAdmin) {
-      try {
-        return await this.usersRepository.remove(id)
-      } catch (err) {
+    try {
+      const user = await this.findOne(uid)
+      if (user.isAdmin) {
+        try {
+          return await this.usersRepository.remove(id)
+        } catch (err) {
+          throw {
+            statusCode: 404,
+            message: 'Not Found',
+          }
+        }
+      } else {
         throw {
-          statusCode: 404,
-          message: 'Not Found',
+          statusCode: 400,
+          message: 'User doesn`t have access to delete other users',
         }
       }
-    } else {
+    } catch (err) {
       throw {
-        statusCode: 400,
-        message: 'User doesn`t have access to delete other users',
+        statusCode: 404,
+        message: `User with ID=${uid} not found`,
       }
     }
   }
@@ -98,17 +105,21 @@ export class UsersService {
     }
   }
 
-  async uploadImageToCloudinary(file: Express.Multer.File, id: string) {
-    const userId = await this.usersRepository.findOne(id)
-    if (userId.avatarPublicId) {
-      await this.cloudinary.deleteImg(userId.avatarPublicId)
+  async uploadImageToCloudinary(file: Express.Multer.File, uid: string) {
+    try {
+      const user = await this.usersRepository.findOne(uid)
+      if (user.avatarPublicId) {
+        await this.cloudinary.deleteImg(user.avatarPublicId)
+      }
+      const cloudinaryRes = await this.cloudinary.uploadImage(file)
+      return this.usersRepository.uploadImage(
+        uid,
+        cloudinaryRes.public_id,
+        cloudinaryRes.url,
+        user.id,
+      )
+    } catch (err) {
+      throw new NotFoundException(`file is not found`)
     }
-    const cloudinaryRes = await this.cloudinary.uploadImage(file)
-    const user = await this.userRepository.preload({
-      id: userId.id,
-      avatar: cloudinaryRes.url,
-      avatarPublicId: cloudinaryRes.public_id,
-    })
-    return this.userRepository.save(user)
   }
 }

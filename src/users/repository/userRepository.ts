@@ -29,10 +29,10 @@ export class UserRepository {
     })
   }
 
-  findOne(id: string): Promise<User> {
+  findOne(uid: string): Promise<User> {
     return this.userRepository.findOne({
       relations: ['userSubCriteria', 'userSubCriteria.event'],
-      where: {authUid: id},
+      where: {authUid: uid},
     })
   }
 
@@ -48,5 +48,27 @@ export class UserRepository {
     const removeUserId = await this.userRepository.findOne(id)
     await dbAuth.deleteUser(removeUserId.authUid)
     return this.userRepository.remove(removeUserId)
+  }
+
+  async changeSalary(id: number, salary: number): Promise<User> {
+    const user = await this.userRepository.preload({
+      id: id,
+      salary: salary
+    });
+    return this.userRepository.save(user);
+  }
+
+  async uploadImage(
+    uid: string,
+    public_id: string,
+    url: string,
+    id: number
+  ): Promise<User> {
+    const user = await this.userRepository.preload({
+      id: id,
+      avatar: url,
+      avatarPublicId: public_id
+    });
+    return this.userRepository.save(user);
   }
 }
