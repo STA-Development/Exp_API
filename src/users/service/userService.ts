@@ -9,6 +9,7 @@ import { CloudinaryService } from '../../cloudinary/cloudinaryService';
 import { dbAuth } from '../auth/preauthMiddleware';
 import { NotFoundException } from '@nestjs/common';
 import { UserRepository } from '../repository/userRepository';
+import { UserSalaryDto } from '../dto/userSalaryDto';
 
 @Injectable()
 export class UsersService {
@@ -49,7 +50,7 @@ export class UsersService {
   }
 
   async findOne(authUid: string): Promise<User> {
-     return this.usersRepository.findOne(authUid);
+    return this.usersRepository.findOne(authUid);
   }
 
   async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
@@ -62,23 +63,23 @@ export class UsersService {
 
   async remove(id: number, uid: string): Promise<User> {
     try {
-    const user = await this.findOne(uid);
-    if (user.isAdmin) {
-      try {
-        return await this.usersRepository.remove(id);
-      } catch (err) {
+      const user = await this.findOne(uid);
+      if (user.isAdmin) {
+        try {
+          return await this.usersRepository.remove(id);
+        } catch (err) {
+          throw {
+            statusCode: 404,
+            message: 'Not Found'
+          };
+        }
+      } else {
         throw {
-          statusCode: 404,
-          message: 'Not Found'
+          statusCode: 400,
+          message: 'User doesn`t have access to delete other users'
         };
       }
-    } else {
-      throw {
-        statusCode: 400,
-        message: 'User doesn`t have access to delete other users'
-      };
-    }
-    }catch (err) {
+    } catch (err) {
       throw {
         statusCode: 404,
         message: `User with ID=${uid} not found`
@@ -88,12 +89,12 @@ export class UsersService {
 
   async changeSalary(
     userId: string,
-    salary: number,
+    userSalaryDto: UserSalaryDto,
     id: number
   ): Promise<User> {
     const user = await this.usersRepository.findOne(userId);
     if (user.isAdmin) {
-      return this.usersRepository.changeSalary(id, salary);
+      return this.usersRepository.changeSalary(id, userSalaryDto);
     } else {
       throw new NotFoundException(
         `User with ID=${userId} not found or not admin`
