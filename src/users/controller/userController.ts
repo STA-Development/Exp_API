@@ -13,7 +13,7 @@ import {
   UploadedFile,
   UseInterceptors
 } from '@nestjs/common';
-import { ApiFile } from '../dto/fileDto';
+import { ApiFile } from '../dto/createPdfDto';
 import { UsersService } from '../service/userService';
 import { CreateUserDto } from '../dto/userCreateDto';
 import { UpdateUserDto } from '../dto/userUpdateDto';
