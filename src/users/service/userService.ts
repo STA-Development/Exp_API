@@ -49,7 +49,7 @@ export class UsersService {
   }
 
   async findOne(authUid: string): Promise<User> {
-     return this.usersRepository.findOne(authUid);
+    return this.usersRepository.findOne(authUid);
   }
 
   async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
@@ -62,23 +62,23 @@ export class UsersService {
 
   async remove(id: number, uid: string): Promise<User> {
     try {
-    const user = await this.findOne(uid);
-    if (user.isAdmin) {
-      try {
-        return await this.usersRepository.remove(id);
-      } catch (err) {
+      const user = await this.findOne(uid);
+      if (user.isAdmin) {
+        try {
+          return await this.usersRepository.remove(id);
+        } catch (err) {
+          throw {
+            statusCode: 404,
+            message: 'Not Found'
+          };
+        }
+      } else {
         throw {
-          statusCode: 404,
-          message: 'Not Found'
+          statusCode: 400,
+          message: 'User doesn`t have access to delete other users'
         };
       }
-    } else {
-      throw {
-        statusCode: 400,
-        message: 'User doesn`t have access to delete other users'
-      };
-    }
-    }catch (err) {
+    } catch (err) {
       throw {
         statusCode: 404,
         message: `User with ID=${uid} not found`
@@ -119,21 +119,22 @@ export class UsersService {
     }
   }
 
-  async userAccess(id: number): Promise<string> {
+  async userDeactivate(id: number): Promise<string> {
     try {
-    const user = await this.usersRepository.findOneById(id);
-    const authUser = await dbAuth.getUser(user.authUid)
-    if(authUser.disabled){
-    dbAuth.updateUser(user.authUid, {
-      disabled: false
-    });
-      return "user is activate"
-    }else{
-      dbAuth.updateUser(user.authUid, {
-        disabled: true
-      });
-      return "user is deactivate"
-    }}catch (err){
+      const user = await this.usersRepository.findOneById(id);
+      const authUser = await dbAuth.getUser(user.authUid);
+      if (authUser.disabled) {
+        await dbAuth.updateUser(user.authUid, {
+          disabled: false
+        });
+        return 'user is activated';
+      } else {
+        await dbAuth.updateUser(user.authUid, {
+          disabled: true
+        });
+        return 'user is deactivate';
+      }
+    } catch (err) {
       throw new NotFoundException(`User with ID=${id} not found`);
     }
   }

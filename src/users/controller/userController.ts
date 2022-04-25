@@ -44,7 +44,6 @@ export class UsersController {
     return (await this.usersService.findAll()).map((user) => user); //TODO dto
   }
 
-
   @UseInterceptors(ClassSerializerInterceptor)
   @UseGuards(AuthGuard)
   @ApiBearerAuth()
@@ -83,10 +82,7 @@ export class UsersController {
     @UploadedFile() file: Express.Multer.File,
     @Token() uid: string
   ): Promise<User> {
-    return this.usersService.uploadImageToCloudinary(
-      file,
-      uid
-    );
+    return this.usersService.uploadImageToCloudinary(file, uid);
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
@@ -105,9 +101,7 @@ export class UsersController {
   @UseGuards(AuthGuard)
   @ApiBearerAuth()
   @Patch(':id/access')
-  deactivateUser(
-    @Param('id') id: number
-  ): Promise<string> {
-    return this.usersService.userAccess(id);
+  deactivateUser(@Param('id') id: number): Promise<string> {
+    return this.usersService.userDeactivate(id);
   }
 }
