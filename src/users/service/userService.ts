@@ -41,10 +41,11 @@ export class UsersService {
     if (limit > 100) {
       throw {
         statusCode: 400,
-        message: 'Incorrect syntax near LIMIT'
+        message:
+          'A portion of the request made to the API request was not valid or could not be processed in the current context.'
       };
     } else {
-      return await this.usersRepository.findAll(limit, page);
+      return this.usersRepository.findAll(limit, page);
     }
   }
 
@@ -79,13 +80,13 @@ export class UsersService {
         } catch (err) {
           throw {
             statusCode: 404,
-            message: 'Not Found'
+            message: 'The resource does not exist.'
           };
         }
       } else {
         throw {
           statusCode: 400,
-          message: 'User doesn`t have access to delete other users'
+          message: "User doesn't have access to delete other users"
         };
       }
     } catch (err) {

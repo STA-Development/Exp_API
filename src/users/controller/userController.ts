@@ -37,7 +37,7 @@ export class UsersController {
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
-  //@UseGuards(AuthGuard)
+  @UseGuards(AuthGuard)
   @ApiBearerAuth()
   @Get()
   async findAll(
