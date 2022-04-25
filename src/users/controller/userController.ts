@@ -45,7 +45,6 @@ export class UsersController {
     return (await this.usersService.findAll()).map((user) => user); //TODO dto
   }
 
-
   @UseInterceptors(ClassSerializerInterceptor)
   @UseGuards(AuthGuard)
   @ApiBearerAuth()
@@ -61,8 +60,8 @@ export class UsersController {
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
-  @UseGuards(AuthGuard)
   @UseGuards(RolesGuard)
+  @UseGuards(AuthGuard)
   @ApiBearerAuth()
   @Put(':id')
   update(
@@ -73,8 +72,8 @@ export class UsersController {
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
-  @UseGuards(AuthGuard)
   @UseGuards(RolesGuard)
+  @UseGuards(AuthGuard)
   @ApiBearerAuth()
   @Delete(':id')
   remove(@Param('id') id: number): Promise<User> {
@@ -89,15 +88,12 @@ export class UsersController {
     @UploadedFile() file: Express.Multer.File,
     @Token() uid: string
   ): Promise<User> {
-    return this.usersService.uploadImageToCloudinary(
-      file,
-      uid
-    );
+    return this.usersService.uploadImageToCloudinary(file, uid);
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
-  @UseGuards(AuthGuard)
   @UseGuards(RolesGuard)
+  @UseGuards(AuthGuard)
   @ApiBearerAuth()
   @Patch(':id/salary')
   changeSalary(

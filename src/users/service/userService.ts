@@ -49,7 +49,7 @@ export class UsersService {
   }
 
   async findOne(authUid: string): Promise<User> {
-     return this.usersRepository.findOne(authUid);
+    return this.usersRepository.findOne(authUid);
   }
 
   async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
@@ -61,25 +61,22 @@ export class UsersService {
   }
 
   async remove(id: number): Promise<User> {
-      try {
-        return await this.usersRepository.remove(id);
-      } catch (err) {
-        throw {
-          statusCode: 404,
-          message: `User with ID=${id} not found`
-        };
-      }
+    try {
+      return await this.usersRepository.remove(id);
+    } catch (err) {
+      throw {
+        statusCode: 404,
+        message: `User with ID=${id} not found`
+      };
+    }
   }
 
-  async changeSalary(
-    salary: number,
-    id: number
-  ): Promise<User> {
-   try {
-     return this.usersRepository.changeSalary(id, salary);
-   }catch (err) {
-     throw new NotFoundException(`User with ID=${id} not found`);
-   }
+  async changeSalary(id: number, salary: number): Promise<User> {
+    try {
+      return this.usersRepository.changeSalary(id, salary);
+    } catch (err) {
+      throw new NotFoundException(`User with ID=${id} not found`);
+    }
   }
 
   async uploadImageToCloudinary(file: Express.Multer.File, uid: string) {

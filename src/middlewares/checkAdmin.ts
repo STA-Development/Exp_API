@@ -2,11 +2,9 @@ import {
   Injectable,
   CanActivate,
   ExecutionContext,
-  Inject,
-  NotFoundException
+  Inject
 } from '@nestjs/common';
 import { UserRepository } from '../../src/users/repository/userRepository';
-import * as admin from 'firebase-admin';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
@@ -14,20 +12,14 @@ export class RolesGuard implements CanActivate {
   usersRepository: UserRepository;
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
+    const res = context.switchToHttp().getResponse();
+    const uid = res.locals.userUid;
     try {
-      const req = context.switchToHttp().getRequest();
-      const token = req.headers.authorization.split(' ')[1];
-      const decodedIdToken = await admin.auth().verifyIdToken(token);
-      const uid = decodedIdToken.uid;
-      try {
-        const user = await this.usersRepository.findOne(uid);
-        if (user.isAdmin) {
-          return true;
-        } else {
-          return false;
-        }
-      } catch (err) {
-        throw new NotFoundException(`User with ID=${uid} not found`);
+      const user = await this.usersRepository.findOne(uid);
+      if (user.isAdmin) {
+        return true;
+      } else {
+        return false;
       }
     } catch (err) {
       return false;
