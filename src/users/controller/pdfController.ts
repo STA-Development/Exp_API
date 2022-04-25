@@ -11,6 +11,7 @@ import {
 import { AuthGuard } from '../../middlewares/checkJwt';
 import { PdfService } from '../service/pdfService';
 import { ApiBearerAuth } from '@nestjs/swagger';
+import { CreatePdtDto } from '../dto/pdfDto';
 
 @Controller('pdf')
 export class PdfController {
@@ -18,29 +19,27 @@ export class PdfController {
   pdfService: PdfService;
 
   @UseInterceptors(ClassSerializerInterceptor)
-  @UseGuards(AuthGuard)
+  //@UseGuards(AuthGuard)
   @ApiBearerAuth()
   @Post()
   async generatePdf(
-    @Body() body: { nameSurname: string; totalScore: number },
+    @Body() createPdtDto:CreatePdtDto,
     @Response() res
   ) {
     try {
       const stream = await this.pdfService.generatePdf(
-        body.nameSurname,
-        body.totalScore
+        createPdtDto
       );
 
       res.writeHead(200, {
         'Content-Type': 'application/pdf',
-        'Content-disposition': `attachment; filename="${body.nameSurname}.pdf"`
+        'Content-disposition': `attachment; filename="${createPdtDto.nameSurname}.pdf"`
       });
       stream.pipe(res);
     } catch (err) {
       throw {
         statusCode: 400,
-        message:
-          'Cannot open the PDF. The file may be corrupt, or in an unsupported format.'
+        message: 'A portion of the request made to the API request was not valid or could not be processed in the current context.'
       };
     }
   }

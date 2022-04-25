@@ -2,16 +2,15 @@ import { Injectable } from '@nestjs/common';
 import * as fs from 'fs';
 import * as pdf from 'html-pdf';
 import * as ejs from 'ejs';
+import { CreatePdtDto } from "../dto/pdfDto";
 
 @Injectable()
 export class PdfService {
   async generatePdf(
-    nameSurname: string,
-    totalScore: number
+    createPdtDto:CreatePdtDto
   ): Promise<fs.ReadStream> {
-    const data = await ejs.renderFile(__dirname + '/../../utils/pdfForm.ejs', {
-      nameSurname: nameSurname,
-      totalScore: totalScore
+    const data = await ejs.renderFile(__dirname + '/../directory/pdfForm.ejs', {
+    ...createPdtDto
     });
     return new Promise((resolve, reject) => {
       const options = {
@@ -19,7 +18,6 @@ export class PdfService {
         height: '640px'
       };
       pdf.create(data, options).toStream(function (err, stream) {
-        // err = new Error("Memory allocation")
         if (err) {
           reject(err);
         } else {
