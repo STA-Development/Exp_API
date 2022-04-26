@@ -24,6 +24,7 @@ import { Token } from '../../middlewares/jwtDecorator';
 import { ApiBearerAuth, ApiOkResponse } from '@nestjs/swagger';
 import { logger } from '../../logger';
 import { userGetDto } from '../dto/userGetDto';
+import { AddUserDto } from '../dto/addUserDto';
 
 @Controller('users')
 export class UsersController {
@@ -99,5 +100,13 @@ export class UsersController {
     @Param('id') id: number
   ): Promise<User> {
     return this.usersService.changeSalary(uid, userSalaryDto, id);
+  }
+
+  @UseInterceptors(ClassSerializerInterceptor)
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
+  @Post('addUser')
+  async addUser(@Body() addUserDto: AddUserDto): Promise<User> {
+    return this.usersService.addUser(addUserDto);
   }
 }

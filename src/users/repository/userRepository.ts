@@ -6,6 +6,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { dbAuth } from '../auth/preauthMiddleware';
 import { UserSalaryDto } from '../dto/userSalaryDto';
+import { AddUserDto } from '../dto/addUserDto';
 
 @Injectable()
 export class UserRepository {
@@ -68,6 +69,11 @@ export class UserRepository {
       avatar: url,
       avatarPublicId: public_id
     });
+    return this.userRepository.save(user);
+  }
+
+  async addUser(addUserDto: AddUserDto): Promise<User> {
+    const user = await this.userRepository.create(addUserDto);
     return this.userRepository.save(user);
   }
 }

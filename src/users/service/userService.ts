@@ -10,6 +10,7 @@ import { dbAuth } from '../auth/preauthMiddleware';
 import { NotFoundException } from '@nestjs/common';
 import { UserRepository } from '../repository/userRepository';
 import { UserSalaryDto } from '../dto/userSalaryDto';
+import { AddUserDto } from '../dto/addUserDto';
 
 @Injectable()
 export class UsersService {
@@ -117,6 +118,15 @@ export class UsersService {
       );
     } catch (err) {
       throw new NotFoundException(`file is not found`);
+    }
+  }
+
+  async addUser(addUserDto: AddUserDto): Promise<User> {
+    try {
+      addUserDto.avatar = process.env.AVATAR_URL;
+      return await this.usersRepository.addUser(addUserDto);
+    } catch (err) {
+      throw new BadRequestException(`Method Not Allowed`);
     }
   }
 }

@@ -20,6 +20,7 @@ export interface IUser {
   isAdmin: boolean;
   salary: number;
   avatar: string;
+  position: string;
   avatarPublicId: string;
   events: Event[];
 }
