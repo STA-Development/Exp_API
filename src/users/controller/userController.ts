@@ -25,6 +25,7 @@ import { ApiBearerAuth, ApiOkResponse } from '@nestjs/swagger';
 import { logger } from '../../logger';
 import { userGetDto } from '../dto/userGetDto';
 import { AddUserDto } from '../dto/addUserDto';
+import { GetUserDto } from '../dto/getUserDto';
 
 @Controller('users')
 export class UsersController {
@@ -38,9 +39,9 @@ export class UsersController {
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
-  @UseGuards(AuthGuard)
+  //@UseGuards(AuthGuard)
   @ApiBearerAuth()
-  @ApiOkResponse({ type: CreateUserDto })
+  @ApiOkResponse({ type: GetUserDto })
   @Get()
   async findAll(): Promise<UserPivot[]> {
     logger.info('Get all users');
@@ -50,7 +51,7 @@ export class UsersController {
   @UseInterceptors(ClassSerializerInterceptor)
   @UseGuards(AuthGuard)
   @ApiBearerAuth()
-  @ApiOkResponse({ type: CreateUserDto })
+  @ApiOkResponse({ type: GetUserDto })
   @Get('me')
   findOne(@Token() uid: string): Promise<User> {
     return this.usersService.findOne(uid);
@@ -58,7 +59,7 @@ export class UsersController {
 
   @UseInterceptors(ClassSerializerInterceptor)
   @Get(':id')
-  @ApiOkResponse({ type: CreateUserDto })
+  @ApiOkResponse({ type: GetUserDto })
   async find(@Param('id') id: number): Promise<UserPivot> {
     return userGetDto(await this.usersService.findOneById(id));
   }
