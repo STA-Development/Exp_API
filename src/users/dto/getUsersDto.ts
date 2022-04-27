@@ -25,7 +25,7 @@ export class GetUserDto extends User {
   authUid: string;
 
   @ApiProperty()
-  isAdmin: boolean
+  isAdmin: boolean;
 
   @ApiProperty()
   salary: number;
@@ -37,7 +37,7 @@ export class GetUserDto extends User {
   avatarPublicId: string;
 
   @ApiProperty()
-  position:string;
+  position: string;
 
   @ApiProperty()
   pivot: Pivot[];

@@ -25,7 +25,7 @@ import { ApiBearerAuth, ApiOkResponse } from '@nestjs/swagger';
 import { logger } from '../../logger';
 import { userGetDto } from '../dto/userGetDto';
 import { AddUserDto } from '../dto/addUserDto';
-import { GetUserDto } from '../dto/getUserDto';
+import { GetUserDto } from '../dto/getUsersDto';
 
 @Controller('users')
 export class UsersController {
@@ -39,7 +39,7 @@ export class UsersController {
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
-  //@UseGuards(AuthGuard)
+  @UseGuards(AuthGuard)
   @ApiBearerAuth()
   @ApiOkResponse({ type: GetUserDto })
   @Get()
