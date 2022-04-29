@@ -11,7 +11,7 @@ import {
 import { AuthGuard } from '../../middlewares/checkJwt';
 import { PdfService } from '../service/pdfService';
 import { ApiBearerAuth } from '@nestjs/swagger';
-import { CreatePdtDto } from '../dto/pdfDto';
+import { CreatePdfDto } from '../dto/pdfDto';
 import { RolesGuard } from '../../middlewares/checkAdmin';
 
 @Controller('pdf')
@@ -24,12 +24,12 @@ export class PdfController {
   @UseGuards(AuthGuard)
   @ApiBearerAuth()
   @Post()
-  async generatePdf(@Body() createPdtDto: CreatePdtDto, @Response() res) {
+  async generatePdf(@Body() createPdfDto: CreatePdfDto, @Response() res) {
     try {
-      const stream = await this.pdfService.generatePdf(createPdtDto);
+      const stream = await this.pdfService.generatePdf(createPdfDto);
       res.writeHead(200, {
         'Content-Type': 'application/pdf',
-        'Content-disposition': `attachment; filename="${createPdtDto.firstName} ${createPdtDto.lastName}.pdf"`
+        'Content-disposition': `attachment; filename="${createPdfDto.firstName} ${createPdfDto.lastName}.pdf"`
       });
       stream.pipe(res);
     } catch (err) {

@@ -2,15 +2,13 @@ import { Injectable } from '@nestjs/common';
 import * as fs from 'fs';
 import * as pdf from 'html-pdf';
 import * as ejs from 'ejs';
-import { CreatePdtDto } from "../dto/pdfDto";
+import { CreatePdfDto } from '../dto/pdfDto';
 
 @Injectable()
 export class PdfService {
-  async generatePdf(
-    createPdtDto:CreatePdtDto
-  ): Promise<fs.ReadStream> {
+  async generatePdf(createPdfDto: CreatePdfDto): Promise<fs.ReadStream> {
     const data = await ejs.renderFile(__dirname + '/../directory/pdfForm.ejs', {
-    ...createPdtDto
+      ...createPdfDto
     });
     return new Promise((resolve, reject) => {
       const options = {
