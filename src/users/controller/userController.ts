@@ -20,6 +20,7 @@ import { UpdateUserDto } from '../dto/userUpdateDto';
 import { UserSalaryDto } from '../dto/userSalaryDto';
 import { User, UserPivot } from '../entity/user';
 import { AuthGuard } from '../../middlewares/checkJwt';
+import { RolesGuard } from '../../middlewares/checkAdmin';
 import { Token } from '../../middlewares/jwtDecorator';
 import { ApiBearerAuth, ApiOkResponse } from '@nestjs/swagger';
 import { logger } from '../../logger';
@@ -65,6 +66,9 @@ export class UsersController {
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
+  @UseGuards(RolesGuard)
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
   @Put(':id')
   update(
     @Param('id') id: number,
@@ -74,10 +78,12 @@ export class UsersController {
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
+  @UseGuards(RolesGuard)
   @UseGuards(AuthGuard)
+  @ApiBearerAuth()
   @Delete(':id')
-  remove(@Param('id') id: number, @Token() uid: string): Promise<User> {
-    return this.usersService.remove(id, uid);
+  remove(@Param('id') id: number): Promise<User> {
+    return this.usersService.remove(id);
   }
 
   @Patch('avatar')
@@ -92,15 +98,15 @@ export class UsersController {
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
+  @UseGuards(RolesGuard)
   @UseGuards(AuthGuard)
   @ApiBearerAuth()
   @Patch(':id/salary')
   changeSalary(
-    @Token() uid: string,
     @Body() userSalaryDto: UserSalaryDto,
     @Param('id') id: number
   ): Promise<User> {
-    return this.usersService.changeSalary(uid, userSalaryDto, id);
+    return this.usersService.changeSalary(id, userSalaryDto);
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
