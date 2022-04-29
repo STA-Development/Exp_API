@@ -20,6 +20,7 @@ import {CreateUserDto} from '../dto/userCreateDto'
 import {UpdateUserDto} from '../dto/userUpdateDto'
 import {User, UserDto} from '../entity/user'
 import {AuthGuard} from '../../middlewares/checkJwt'
+import {RolesGuard } from '../../middlewares/checkAdmin';
 import {Token} from '../../middlewares/jwtDecorator'
 import {logger} from '../../logger'
 import {userGetDto} from '../dto/userGetDto'
@@ -58,16 +59,21 @@ export class UsersController {
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
+  @UseGuards(RolesGuard)
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
   @Put(':id')
   update(@Param('id') id: number, @Body() updateUserDto: UpdateUserDto): Promise<User> {
     return this.usersService.update(id, updateUserDto)
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
+  @UseGuards(RolesGuard)
   @UseGuards(AuthGuard)
+  @ApiBearerAuth()
   @Delete(':id')
-  remove(@Param('id') id: number, @Token() uid: string): Promise<User> {
-    return this.usersService.remove(id, uid)
+  remove(@Param('id') id: number): Promise<User> {
+    return this.usersService.remove(id)
   }
 
   @Patch('avatar')
@@ -79,14 +85,14 @@ export class UsersController {
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
+  @UseGuards(RolesGuard)
   @UseGuards(AuthGuard)
   @ApiBearerAuth()
   @Patch(':id/salary')
   changeSalary(
-    @Token() uid: string,
     @Body() body: {salary: number},
     @Param('id') id: number,
   ): Promise<User> {
-    return this.usersService.changeSalary(uid, body.salary, id)
+    return this.usersService.changeSalary(body.salary, id)
   }
 }
