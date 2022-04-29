@@ -33,7 +33,7 @@ export class PdfController {
 
       res.writeHead(200, {
         'Content-Type': 'application/pdf',
-        'Content-disposition': `attachment; filename="${createPdtDto.nameSurname}.pdf"`
+        'Content-disposition': `attachment; filename="${createPdtDto.firstName+" "+createPdtDto.lastName}.pdf"`
       });
       stream.pipe(res);
     } catch (err) {

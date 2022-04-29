@@ -75,7 +75,7 @@ export class UsersService {
       } else {
         throw {
           statusCode: 400,
-          message: 'User doesn`t have access to delete other users'
+          message: "User doesn't have access to delete other users"
         };
       }
     } catch (err) {

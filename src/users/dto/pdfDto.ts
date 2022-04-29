@@ -9,7 +9,11 @@ export class CreatePdtDto extends User {
 
   @ApiProperty()
   @IsString()
-  nameSurname: string;
+  firstName: string;
+
+  @ApiProperty()
+  @IsString()
+  lastName: string;
 
   @ApiProperty()
   @IsNumber()
