@@ -104,7 +104,8 @@ export class UsersController {
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
-  //@UseGuards(AuthGuard)
+  @UseGuards(RolesGuard)
+  @UseGuards(AuthGuard)
   @ApiBearerAuth()
   @Patch(':id/disabled')
   deactivateUser(@Param('id') id: number) {
