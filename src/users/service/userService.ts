@@ -49,7 +49,7 @@ export class UsersService {
   }
 
   async findOne(authUid: string): Promise<User> {
-     return this.usersRepository.findOne(authUid);
+    return this.usersRepository.findOne(authUid);
   }
 
   async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
@@ -60,44 +60,22 @@ export class UsersService {
     return user;
   }
 
-  async remove(id: number, uid: string): Promise<User> {
+  async remove(id: number): Promise<User> {
     try {
-    const user = await this.findOne(uid);
-    if (user.isAdmin) {
-      try {
-        return await this.usersRepository.remove(id);
-      } catch (err) {
-        throw {
-          statusCode: 404,
-          message: 'Not Found'
-        };
-      }
-    } else {
-      throw {
-        statusCode: 400,
-        message: 'User doesn`t have access to delete other users'
-      };
-    }
-    }catch (err) {
+      return await this.usersRepository.remove(id);
+    } catch (err) {
       throw {
         statusCode: 404,
-        message: `User with ID=${uid} not found`
+        message: `User with ID=${id} not found`
       };
     }
   }
 
-  async changeSalary(
-    userId: string,
-    salary: number,
-    id: number
-  ): Promise<User> {
-    const user = await this.usersRepository.findOne(userId);
-    if (user.isAdmin) {
+  async changeSalary(id: number, salary: number): Promise<User> {
+    try {
       return this.usersRepository.changeSalary(id, salary);
-    } else {
-      throw new NotFoundException(
-        `User with ID=${userId} not found or not admin`
-      );
+    } catch (err) {
+      throw new NotFoundException(`User with ID=${id} not found`);
     }
   }
 
