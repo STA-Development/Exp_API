@@ -95,4 +95,13 @@ export class UsersController {
   ): Promise<User> {
     return this.usersService.changeSalary(body.salary, id)
   }
+
+  @UseInterceptors(ClassSerializerInterceptor)
+  @UseGuards(RolesGuard)
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
+  @Patch(':id/disabled')
+  deactivateUser(@Param('id') id: number) {
+    return this.usersService.userDeactivate(id);
+  }
 }
