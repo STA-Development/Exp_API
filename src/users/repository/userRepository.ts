@@ -19,11 +19,11 @@ export class UserRepository {
   async findAll(
     limit: number,
     page: number
-  ): Promise<{ data: Promise<User[]>; count: number }> {
+  ): Promise<{ data: User[]; count: number }> {
     const builder = this.userRepository.createQueryBuilder('user');
     const total = await builder.getCount();
     const pages = Math.ceil(total / limit);
-    const data = this.userRepository.find({
+    const data = await this.userRepository.find({
       relations: ['pivot', 'pivot.event'],
       take: limit,
       skip: (page - 1) * limit
