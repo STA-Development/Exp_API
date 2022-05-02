@@ -28,7 +28,7 @@ export class UserRepository {
       take: limit,
       skip: (page - 1) * limit
     });
-    return { data: data, count: pages };
+    return { data, count: pages };
   }
 
   findOneById(id: number): Promise<User> {

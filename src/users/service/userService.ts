@@ -41,12 +41,10 @@ export class UsersService {
     if (limit > 100) {
       throw {
         statusCode: 400,
-        message:
-          'A portion of the request made to the API request was not valid or could not be processed in the current context.'
+        message: 'Pagination limit exceeded'
       };
-    } else {
-      return this.usersRepository.findAll(limit, page);
     }
+    return this.usersRepository.findAll(limit, page);
   }
 
   async findOneById(id: number): Promise<User> {
