@@ -9,6 +9,7 @@ import { CloudinaryService } from '../../cloudinary/cloudinaryService';
 import { dbAuth } from '../auth/preauthMiddleware';
 import { NotFoundException } from '@nestjs/common';
 import { UserRepository } from '../repository/userRepository';
+import { UserSalaryDto } from '../dto/userSalaryDto';
 
 @Injectable()
 export class UsersService {
@@ -71,9 +72,9 @@ export class UsersService {
     }
   }
 
-  async changeSalary(id: number, salary: number): Promise<User> {
+  async changeSalary(id: number, userSalaryDto: UserSalaryDto): Promise<User> {
     try {
-      return this.usersRepository.changeSalary(id, salary);
+      return this.usersRepository.changeSalary(id, userSalaryDto);
     } catch (err) {
       throw new NotFoundException(`User with ID=${id} not found`);
     }

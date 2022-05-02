@@ -5,6 +5,7 @@ import { User } from '../entity/user';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { dbAuth } from '../auth/preauthMiddleware';
+import { UserSalaryDto } from '../dto/userSalaryDto';
 
 @Injectable()
 export class UserRepository {
@@ -48,10 +49,10 @@ export class UserRepository {
     return this.userRepository.remove(removeUserId);
   }
 
-  async changeSalary(id: number, salary: number): Promise<User> {
+  async changeSalary(id: number, userSalaryDto: UserSalaryDto): Promise<User> {
     const user = await this.userRepository.preload({
       id: id,
-      salary: salary
+      salary: userSalaryDto.salary
     });
     return this.userRepository.save(user);
   }

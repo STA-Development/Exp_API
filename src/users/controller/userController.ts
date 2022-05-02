@@ -13,15 +13,16 @@ import {
   UploadedFile,
   UseInterceptors
 } from '@nestjs/common';
-import { FileInterceptor } from '@nestjs/platform-express';
+import { ApiFile } from '../dto/createPdfDto';
 import { UsersService } from '../service/userService';
 import { CreateUserDto } from '../dto/userCreateDto';
 import { UpdateUserDto } from '../dto/userUpdateDto';
+import { UserSalaryDto } from '../dto/userSalaryDto';
 import { User, UserPivot } from '../entity/user';
 import { AuthGuard } from '../../middlewares/checkJwt';
 import { RolesGuard } from '../../middlewares/checkAdmin';
 import { Token } from '../../middlewares/jwtDecorator';
-import { ApiBearerAuth } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOkResponse } from '@nestjs/swagger';
 import { logger } from '../../logger';
 import { userGetDto } from '../dto/userGetDto';
 
@@ -39,6 +40,7 @@ export class UsersController {
   @UseInterceptors(ClassSerializerInterceptor)
   @UseGuards(AuthGuard)
   @ApiBearerAuth()
+  @ApiOkResponse({ type: CreateUserDto })
   @Get()
   async findAll(): Promise<UserPivot[]> {
     logger.info('Get all users');
@@ -48,6 +50,7 @@ export class UsersController {
   @UseInterceptors(ClassSerializerInterceptor)
   @UseGuards(AuthGuard)
   @ApiBearerAuth()
+  @ApiOkResponse({ type: CreateUserDto })
   @Get('me')
   findOne(@Token() uid: string): Promise<User> {
     return this.usersService.findOne(uid);
@@ -55,6 +58,7 @@ export class UsersController {
 
   @UseInterceptors(ClassSerializerInterceptor)
   @Get(':id')
+  @ApiOkResponse({ type: CreateUserDto })
   async find(@Param('id') id: number): Promise<UserPivot> {
     return userGetDto(await this.usersService.findOneById(id));
   }
@@ -83,9 +87,9 @@ export class UsersController {
   @Patch('avatar')
   @UseGuards(AuthGuard)
   @ApiBearerAuth()
-  @UseInterceptors(FileInterceptor('avatar'))
+  @ApiFile()
   changeUserImg(
-    @UploadedFile() file: Express.Multer.File,
+    @UploadedFile('file') file: Express.Multer.File,
     @Token() uid: string
   ): Promise<User> {
     return this.usersService.uploadImageToCloudinary(file, uid);
@@ -97,10 +101,10 @@ export class UsersController {
   @ApiBearerAuth()
   @Patch(':id/salary')
   changeSalary(
-    @Body() body: { salary: number },
+    @Body() userSalaryDto: UserSalaryDto,
     @Param('id') id: number
   ): Promise<User> {
-    return this.usersService.changeSalary(body.salary, id);
+    return this.usersService.changeSalary(id, userSalaryDto);
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
