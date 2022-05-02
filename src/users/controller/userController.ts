@@ -8,12 +8,13 @@ import {
   Param,
   Post,
   Put,
+  Query,
   UseGuards,
   Patch,
   UploadedFile,
   UseInterceptors
 } from '@nestjs/common';
-import { ApiFile } from '../dto/createPdfDto';
+import { ApiFile } from '../dto/uploadFileDto';
 import { UsersService } from '../service/userService';
 import { CreateUserDto } from '../dto/userCreateDto';
 import { UpdateUserDto } from '../dto/userUpdateDto';
@@ -42,11 +43,16 @@ export class UsersController {
   @UseInterceptors(ClassSerializerInterceptor)
   @UseGuards(AuthGuard)
   @ApiBearerAuth()
-  @ApiOkResponse({ type: GetUserDto })
+  @ApiOkResponse({ type: [GetUserDto] })
   @Get()
-  async findAll(): Promise<UserPivot[]> {
+  async findAll(
+    @Query('limit') limit: number,
+    @Query('page') page: number
+  ): Promise<{ pageCount: number; data: UserPivot[] }> {
     logger.info('Get all users');
-    return (await this.usersService.findAll()).map((user) => user); //TODO dto
+    const users = await this.usersService.findAll(limit, page);
+    const data = users.data.map((user) => userGetDto(user));
+    return { data, pageCount: users.count };
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
@@ -59,6 +65,8 @@ export class UsersController {
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
   @Get(':id')
   @ApiOkResponse({ type: GetUserDto })
   async find(@Param('id') id: number): Promise<UserPivot> {
@@ -110,6 +118,16 @@ export class UsersController {
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
+  @UseGuards(RolesGuard)
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
+  @Patch(':id/disabled')
+  deactivateUser(@Param('id') id: number) {
+    return this.usersService.userDeactivate(id);
+  }
+
+  @UseInterceptors(ClassSerializerInterceptor)
+  @UseGuards(RolesGuard)
   @UseGuards(AuthGuard)
   @ApiBearerAuth()
   @Post('addUser')

@@ -36,8 +36,14 @@ export class UsersService {
     }
   }
 
-  async findAll(): Promise<UserPivot[]> {
-    return await this.usersRepository.findAll();
+  async findAll(
+    limit: number = 10,
+    page: number = 0
+  ): Promise<{ data: User[]; count: number }> {
+    if (limit > 100) {
+      throw new BadRequestException('Pagination limit exceeded');
+    }
+    return this.usersRepository.findAll(limit, page);
   }
 
   async findOneById(id: number): Promise<User> {
@@ -96,6 +102,24 @@ export class UsersService {
       );
     } catch (err) {
       throw new NotFoundException(`file is not found`);
+    }
+  }
+
+  async userDeactivate(id: number) {
+    try {
+      const user = await this.usersRepository.findOneById(id);
+      const authUser = await dbAuth.getUser(user.authUid);
+      if (authUser.disabled) {
+        await dbAuth.updateUser(user.authUid, {
+          disabled: false
+        });
+      } else {
+        await dbAuth.updateUser(user.authUid, {
+          disabled: true
+        });
+      }
+    } catch (err) {
+      throw new NotFoundException(`User with ID=${id} not found`);
     }
   }
 
