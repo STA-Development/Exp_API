@@ -8,22 +8,26 @@ import {
   Param,
   Post,
   Put,
+  Query,
   UseGuards,
   Patch,
   UploadedFile,
-  UseInterceptors,
-} from '@nestjs/common'
-import {FileInterceptor} from '@nestjs/platform-express'
+  UseInterceptors
+} from '@nestjs/common';
 import {ApiBearerAuth} from '@nestjs/swagger'
-import {UsersService} from '../service/userService'
-import {CreateUserDto} from '../dto/userCreateDto'
-import {UpdateUserDto} from '../dto/userUpdateDto'
-import {User, UserDto} from '../entity/user'
-import {AuthGuard} from '../../middlewares/checkJwt'
-import {RolesGuard } from '../../middlewares/checkAdmin';
-import {Token} from '../../middlewares/jwtDecorator'
-import {logger} from '../../logger'
-import {userGetDto} from '../dto/userGetDto'
+import { ApiFile } from '../dto/createPdfDto';
+import { UsersService } from '../service/userService';
+import { CreateUserDto } from '../dto/userCreateDto';
+import { UpdateUserDto } from '../dto/userUpdateDto';
+import { User, UserDto } from '../entity/user';
+import { UserSalaryDto } from '../dto/userSalaryDto';
+import { AuthGuard } from '../../middlewares/checkJwt';
+import { RolesGuard } from '../../middlewares/checkAdmin';
+import { Token } from '../../middlewares/jwtDecorator';
+import { ApiBearerAuth, ApiOkResponse } from '@nestjs/swagger';
+import { logger } from '../../logger';
+import { userGetDto } from '../dto/userGetDto';
+
 @Controller('users')
 export class UsersController {
   @Inject()
@@ -38,24 +42,33 @@ export class UsersController {
   @UseInterceptors(ClassSerializerInterceptor)
   @UseGuards(AuthGuard)
   @ApiBearerAuth()
+  @ApiOkResponse({ type: CreateUserDto })
   @Get()
-  async findAll(): Promise<UserDto[]> {
-    logger.info('Get all users')
-    return (await this.usersService.findAll()).map((user) => userGetDto(user))
-  }
-
-  @UseInterceptors(ClassSerializerInterceptor)
-  @Get(':id')
-  async find(@Param('id') id: number): Promise<UserDto> {
-    return userGetDto(await this.usersService.findOneById(id))
+  async findAll(
+    @Query('limit') limit: number,
+    @Query('page') page: number
+  ): Promise<{ pageCount: number; data: UserPivot[] }> {
+    logger.info('Get all users');
+    const users = await this.usersService.findAll(limit, page);
+    const data = users.data.map((user) => userGetDto(user));
+    return { data, pageCount: users.count };
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
   @UseGuards(AuthGuard)
   @ApiBearerAuth()
+  @ApiOkResponse({ type: CreateUserDto })
   @Get('me')
   findOne(@Token() uid: string): Promise<User> {
     return this.usersService.findOne(uid)
+    return this.usersService.findOne(uid);
+  }
+
+  @UseInterceptors(ClassSerializerInterceptor)
+  @Get(':id')
+  @ApiOkResponse({ type: CreateUserDto })
+  async find(@Param('id') id: number): Promise<UserPivot> {
+    return userGetDto(await this.usersService.findOneById(id));
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
@@ -79,8 +92,8 @@ export class UsersController {
   @Patch('avatar')
   @UseGuards(AuthGuard)
   @ApiBearerAuth()
-  @UseInterceptors(FileInterceptor('avatar'))
-  changeUserImg(@UploadedFile() file: Express.Multer.File, @Token() uid: string): Promise<User> {
+  @ApiFile()
+  changeUserImg(@UploadedFile('file') file: Express.Multer.File, @Token() uid: string): Promise<User> {
     return this.usersService.uploadImageToCloudinary(file, uid)
   }
 
@@ -90,10 +103,10 @@ export class UsersController {
   @ApiBearerAuth()
   @Patch(':id/salary')
   changeSalary(
-    @Body() body: {salary: number},
+    @Body() userSalaryDto: UserSalaryDto,
     @Param('id') id: number,
   ): Promise<User> {
-    return this.usersService.changeSalary(body.salary, id)
+    return this.usersService.changeSalary(id, userSalaryDto)
   }
 
   @UseInterceptors(ClassSerializerInterceptor)

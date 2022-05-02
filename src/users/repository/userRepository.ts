@@ -1,10 +1,11 @@
-import {Injectable} from '@nestjs/common'
-import {InjectRepository} from '@nestjs/typeorm'
-import {Repository} from 'typeorm'
-import {CreateUserDto} from '../dto/userCreateDto'
-import {UpdateUserDto} from '../dto/userUpdateDto'
-import {User} from '../entity/user'
-import {dbAuth} from '../auth/preauthMiddleware'
+import { Injectable } from '@nestjs/common';
+import { CreateUserDto } from '../dto/userCreateDto';
+import { UpdateUserDto } from '../dto/userUpdateDto';
+import { User } from '../entity/user';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { dbAuth } from '../auth/preauthMiddleware';
+import { UserSalaryDto } from '../dto/userSalaryDto';
 
 @Injectable()
 export class UserRepository {
@@ -16,10 +17,18 @@ export class UserRepository {
     return this.userRepository.save(user)
   }
 
-  findAll(): Promise<User[]> {
-    return this.userRepository.find({
-      relations: ['userSubCriteria', 'userSubCriteria.event'],
-    })
+  async findAll(
+      limit: number,
+      page: number
+  ): Promise<{ data: User[]; count: number }> {
+    const builder = this.userRepository.createQueryBuilder('user');
+    const total = await builder.getCount();
+    const pages = Math.ceil(total / limit);
+    const data = await this.userRepository.find({
+      relations: ['userSubCriteria', 'userSubCriteria.event'],      take: limit,
+      skip: (page - 1) * limit
+    });
+    return { data, count: pages };
   }
 
   findOneById(id: number): Promise<User> {
@@ -50,10 +59,10 @@ export class UserRepository {
     return this.userRepository.remove(removeUserId)
   }
 
-  async changeSalary(id: number, salary: number): Promise<User> {
+  async changeSalary(id: number, userSalaryDto: UserSalaryDto): Promise<User> {
     const user = await this.userRepository.preload({
       id: id,
-      salary: salary
+      salary: userSalaryDto.salary
     });
     return this.userRepository.save(user);
   }

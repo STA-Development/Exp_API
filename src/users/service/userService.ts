@@ -1,13 +1,15 @@
-import {BadRequestException, NotFoundException, Inject, Injectable} from '@nestjs/common'
-import {Repository} from 'typeorm'
-import {InjectRepository} from '@nestjs/typeorm'
-import {CloudinaryService} from '../../cloudinary/cloudinaryService'
-import {dbAuth} from '../auth/preauthMiddleware'
-import {UserRepository} from '../repository/userRepository'
-import {logger} from '../../logger'
-import {CreateUserDto} from '../dto/userCreateDto'
-import {UpdateUserDto} from '../dto/userUpdateDto'
-import {User} from '../entity/user'
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
+import { CreateUserDto } from '../dto/userCreateDto';
+import { UpdateUserDto } from '../dto/userUpdateDto';
+import { User, UserDto } from '../entity/user';
+import { logger } from '../../logger';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
+import { CloudinaryService } from '../../cloudinary/cloudinaryService';
+import { dbAuth } from '../auth/preauthMiddleware';
+import { NotFoundException } from '@nestjs/common';
+import { UserRepository } from '../repository/userRepository';
+import { UserSalaryDto } from '../dto/userSalaryDto';
 
 @Injectable()
 export class UsersService {
@@ -33,8 +35,17 @@ export class UsersService {
     }
   }
 
-  findAll(): Promise<User[]> {
-    return this.usersRepository.findAll()
+  async findAll(
+    limit: number = 10,
+    page: number = 0
+  ): Promise<{ data: User[]; count: number }> {
+    if (limit > 100) {
+      throw {
+        statusCode: 400,
+        message: 'Pagination limit exceeded'
+      };
+    }
+    return this.usersRepository.findAll(limit, page);
   }
 
   async findOneById(id: number): Promise<User> {
@@ -76,9 +87,9 @@ export class UsersService {
     }
   }
 
-  async changeSalary(id: number, salary: number): Promise<User> {
+  async changeSalary(id: number, userSalaryDto: UserSalaryDto): Promise<User> {
     try {
-      return this.usersRepository.changeSalary(id, salary);
+      return this.usersRepository.changeSalary(id, userSalaryDto);
     } catch (err) {
       throw new NotFoundException(`User with ID=${id} not found`);
     }
