@@ -8,6 +8,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
   UseGuards,
   Patch,
   UploadedFile,
@@ -42,9 +43,14 @@ export class UsersController {
   @ApiBearerAuth()
   @ApiOkResponse({ type: CreateUserDto })
   @Get()
-  async findAll(): Promise<UserPivot[]> {
+  async findAll(
+    @Query('limit') limit: number,
+    @Query('page') page: number
+  ): Promise<{ pageCount: number; data: UserPivot[] }> {
     logger.info('Get all users');
-    return (await this.usersService.findAll()).map((user) => user); //TODO dto
+    const users = await this.usersService.findAll(limit, page);
+    const data = users.data.map((user) => userGetDto(user));
+    return { data, pageCount: users.count };
   }
 
   @UseInterceptors(ClassSerializerInterceptor)

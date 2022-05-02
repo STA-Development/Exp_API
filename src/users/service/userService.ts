@@ -35,8 +35,17 @@ export class UsersService {
     }
   }
 
-  async findAll(): Promise<UserPivot[]> {
-    return await this.usersRepository.findAll();
+  async findAll(
+    limit: number = 10,
+    page: number = 0
+  ): Promise<{ data: User[]; count: number }> {
+    if (limit > 100) {
+      throw {
+        statusCode: 400,
+        message: 'Pagination limit exceeded'
+      };
+    }
+    return this.usersRepository.findAll(limit, page);
   }
 
   async findOneById(id: number): Promise<User> {
