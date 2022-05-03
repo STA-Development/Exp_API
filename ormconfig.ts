@@ -11,6 +11,5 @@ export default {
   entities: ['src/**/entity/**/*.ts'],
   synchronize: true,
   factories: ['src/seeding/factory/*.ts'],
-  seeds: ['src/seeding/seed/*.ts'],
-  socketPath: '/Applications/MAMP/tmp/mysql/mysql.sock'
+  seeds: ['src/seeding/seed/*.ts']
 };
