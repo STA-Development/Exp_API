@@ -17,6 +17,7 @@ export const userGetDto = (user: User): UserPivot => {
     salary: user.salary,
     avatar: user.avatar,
     avatarPublicId: user.avatarPublicId,
+    position: user.position,
     events: user.events
   };
 };

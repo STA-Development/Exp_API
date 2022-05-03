@@ -36,7 +36,7 @@ export class User implements IUser {
   })
   pivot: Pivot[];
 
-  @Column()
+  @Column({ default: null })
   authUid: string;
 
   @Column({ default: false })
@@ -50,6 +50,9 @@ export class User implements IUser {
 
   @Column({ default: null })
   avatarPublicId: string;
+
+  @Column({ default: null })
+  position: string;
 
   @ManyToMany(() => Event, (events) => events.users)
   events: Event[];
@@ -65,6 +68,7 @@ export class UserPivot {
   salary: number;
   rating: number;
   avatar: string;
+  position: string;
   avatarPublicId: string;
   performerType: string;
   pivot: PivotDto[];
