@@ -9,7 +9,6 @@ import {UserRepository} from '../repository/userRepository'
 import {UserSubCriteria} from '../../events/entity/userSubCriteria'
 import {CloudinaryProvider} from '../../cloudinary/cloudinaryProvider'
 import {CloudinaryService} from '../../cloudinary/cloudinaryService'
-import {logger} from '../../logger' //
 import {EventEvaluator} from '../../events/entity/eventEvaluator'
 import {EventEvaluatee} from '../../events/entity/eventEvaluatee'
 
@@ -27,7 +26,6 @@ import {EventEvaluatee} from '../../events/entity/eventEvaluatee'
       autoLoadEntities: true,
       synchronize: true,
       keepConnectionAlive: true,
-      //socketPath: '/Applications/MAMP/tmp/mysql/mysql.sock',
     }),
 
     JwtModule.register({}),

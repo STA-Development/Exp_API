@@ -21,7 +21,6 @@ import {UserSubCriteria} from '../entity/userSubCriteria'
       autoLoadEntities: true,
       synchronize: true,
       logging: false,
-      //socketPath: '/Applications/MAMP/tmp/mysql/mysql.sock',
     }),
   ],
   controllers: [RatingController],

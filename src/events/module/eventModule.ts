@@ -40,7 +40,6 @@ import {SubCriteria} from '../entity/subCriteria'
       database: process.env.DB_DATABASE,
       autoLoadEntities: true,
       synchronize: true,
-      //socketPath: '/Applications/MAMP/tmp/mysql/mysql.sock',
     }),
     JwtModule.register({
       secret: 'secret',

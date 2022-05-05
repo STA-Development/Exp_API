@@ -24,7 +24,6 @@ import {SubCriteriaRepository} from '../repository/subCriteriaRepository'
       autoLoadEntities: true,
       synchronize: true,
       logging: false,
-      //socketPath: '/Applications/MAMP/tmp/mysql/mysql.sock',
     }),
   ],
   controllers: [CriteriaController],

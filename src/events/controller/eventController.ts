@@ -77,7 +77,7 @@ export class EventsController {
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
-  @Get(':eventId/evaluatee-criteria-rating/:evaluateeId') // TODO naming
+  @Get(':eventId/evaluatee-criteria-rating/:evaluateeId') // todo bad naming
   getUserCriteriaRating(
     @Param('eventId') eventId: number,
     @Param('evaluateeId') evaluateeId: number,

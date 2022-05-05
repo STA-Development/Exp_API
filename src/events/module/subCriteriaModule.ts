@@ -24,7 +24,6 @@ import {CriteriaService} from '../service/criteriaService'
       autoLoadEntities: true,
       synchronize: true,
       logging: false,
-      //socketPath: '/Applications/MAMP/tmp/mysql/mysql.sock',
     }),
   ],
   controllers: [SubCriteriaController],
