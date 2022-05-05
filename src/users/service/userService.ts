@@ -65,14 +65,14 @@ export class UsersService {
     if (!user) {
       throw new NotFoundException(`User with ID=${id} not found`);
     }
-    dbAuth.updateUser(user.authUid, { email: updateUserDto.email });
+    await dbAuth.updateUser(user.authUid, { email: updateUserDto.email });
     return user;
   }
 
   async remove(id: number): Promise<User> {
     try {
       const user = await this.usersRepository.findOneById(id);
-      dbAuth.deleteUser(user.authUid);
+      await dbAuth.deleteUser(user.authUid);
       return await this.usersRepository.remove(id);
     } catch (err) {
       throw {
