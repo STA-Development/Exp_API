@@ -23,9 +23,8 @@ import {SubCriteriaRepository} from '../repository/subCriteriaRepository'
       database: process.env.DB_DATABASE,
       autoLoadEntities: true,
       synchronize: true,
-      logging: false,
-      socketPath: '/Applications/MAMP/tmp/mysql/mysql.sock',
-    }),
+      logging: false
+    })
   ],
   controllers: [CriteriaController],
   providers: [CriteriaService, CriteriaRepository, SubCriteriaRepository],

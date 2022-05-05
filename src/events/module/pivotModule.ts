@@ -22,9 +22,8 @@ import {User} from '../../users/entity/user'
       database: process.env.DB_DATABASE,
       autoLoadEntities: true,
       synchronize: false,
-      logging: false,
-      socketPath: '/Applications/MAMP/tmp/mysql/mysql.sock',
-    }),
-  ],
+      logging: false
+    })
+  ]
 })
 export class CriteriaModule {}

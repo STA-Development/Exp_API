@@ -28,8 +28,7 @@ import { logger } from '../../logger';
       database: process.env.DB_DATABASE,
       autoLoadEntities: true,
       synchronize: true,
-      keepConnectionAlive: true,
-      socketPath: '/Applications/MAMP/tmp/mysql/mysql.sock',
+      keepConnectionAlive: true
     }),
 
     JwtModule.register({}),

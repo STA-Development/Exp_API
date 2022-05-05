@@ -36,9 +36,8 @@ import {EventEvaluatee} from '../entity/eventEvaluatee'
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
       autoLoadEntities: true,
-      synchronize: true,
-      socketPath: '/Applications/MAMP/tmp/mysql/mysql.sock',
-    }),
+      synchronize: true
+    })
   ],
   controllers: [EventsController],
   providers: [

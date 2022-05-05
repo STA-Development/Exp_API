@@ -20,9 +20,8 @@ import {UserSubCriteria} from '../entity/userSubCriteria'
       database: process.env.DB_DATABASE,
       autoLoadEntities: true,
       synchronize: true,
-      logging: false,
-      socketPath: '/Applications/MAMP/tmp/mysql/mysql.sock',
-    }),
+      logging: false
+    })
   ],
   controllers: [RatingController],
   providers: [RatingService, RatingRepository],

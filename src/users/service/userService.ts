@@ -10,6 +10,7 @@ import { dbAuth } from '../auth/preauthMiddleware';
 import { NotFoundException } from '@nestjs/common';
 import { UserRepository } from '../repository/userRepository';
 import { UserSalaryDto } from '../dto/userSalaryDto';
+import { AddUserDto } from '../dto/addUserDto';
 
 @Injectable()
 export class UsersService {
@@ -40,10 +41,7 @@ export class UsersService {
     page: number = 0
   ): Promise<{ data: User[]; count: number }> {
     if (limit > 100) {
-      throw {
-        statusCode: 400,
-        message: 'Pagination limit exceeded'
-      };
+      throw new BadRequestException('Pagination limit exceeded');
     }
     return this.usersRepository.findAll(limit, page);
   }
@@ -128,6 +126,15 @@ export class UsersService {
       }
     } catch (err) {
       throw new NotFoundException(`User with ID=${id} not found`);
+    }
+  }
+
+  async addUser(addUserDto: AddUserDto): Promise<User> {
+    try {
+      addUserDto.avatar = process.env.AVATAR_URL;
+      return await this.usersRepository.addUser(addUserDto);
+    } catch (err) {
+      throw new BadRequestException(`Method Not Allowed`);
     }
   }
 }

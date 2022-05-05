@@ -15,7 +15,7 @@ import {
   UseInterceptors
 } from '@nestjs/common';
 import {ApiBearerAuth} from '@nestjs/swagger'
-import { ApiFile } from '../dto/createPdfDto';
+import { ApiFile } from '../dto/uploadFileDto';
 import { UsersService } from '../service/userService';
 import { CreateUserDto } from '../dto/userCreateDto';
 import { UpdateUserDto } from '../dto/userUpdateDto';
@@ -27,6 +27,8 @@ import { Token } from '../../middlewares/jwtDecorator';
 import { ApiBearerAuth, ApiOkResponse } from '@nestjs/swagger';
 import { logger } from '../../logger';
 import { userGetDto } from '../dto/userGetDto';
+import { AddUserDto } from '../dto/addUserDto';
+import { GetUserDto } from '../dto/getUsersDto';
 
 @Controller('users')
 export class UsersController {
@@ -42,7 +44,7 @@ export class UsersController {
   @UseInterceptors(ClassSerializerInterceptor)
   @UseGuards(AuthGuard)
   @ApiBearerAuth()
-  @ApiOkResponse({ type: CreateUserDto })
+  @ApiOkResponse({ type: [GetUserDto] })
   @Get()
   async findAll(
     @Query('limit') limit: number,
@@ -57,7 +59,7 @@ export class UsersController {
   @UseInterceptors(ClassSerializerInterceptor)
   @UseGuards(AuthGuard)
   @ApiBearerAuth()
-  @ApiOkResponse({ type: CreateUserDto })
+  @ApiOkResponse({ type: GetUserDto })
   @Get('me')
   findOne(@Token() uid: string): Promise<User> {
     return this.usersService.findOne(uid)
@@ -65,8 +67,10 @@ export class UsersController {
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
   @Get(':id')
-  @ApiOkResponse({ type: CreateUserDto })
+  @ApiOkResponse({ type: GetUserDto })
   async find(@Param('id') id: number): Promise<UserPivot> {
     return userGetDto(await this.usersService.findOneById(id));
   }
@@ -116,5 +120,14 @@ export class UsersController {
   @Patch(':id/disabled')
   deactivateUser(@Param('id') id: number) {
     return this.usersService.userDeactivate(id);
+  }
+
+  @UseInterceptors(ClassSerializerInterceptor)
+  @UseGuards(RolesGuard)
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
+  @Post('addUser')
+  async addUser(@Body() addUserDto: AddUserDto): Promise<User> {
+    return this.usersService.addUser(addUserDto);
   }
 }
