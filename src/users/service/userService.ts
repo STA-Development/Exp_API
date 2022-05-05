@@ -70,6 +70,8 @@ export class UsersService {
 
   async remove(id: number): Promise<User> {
     try {
+      const user = await this.usersRepository.findOneById(id);
+      dbAuth.deleteUser(user.authUid);
       return await this.usersRepository.remove(id);
     } catch (err) {
       throw {
