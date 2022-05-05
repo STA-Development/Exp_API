@@ -7,6 +7,8 @@ import {SubCriteria} from '../entity/subCriteria'
 import {SubCriteriaRepository} from '../repository/subCriteriaRepository'
 import {UserSubCriteria} from '../entity/userSubCriteria'
 import {Criteria} from '../entity/criteria'
+import {CriteriaRepository} from '../repository/criteriaRepository'
+import {CriteriaService} from '../service/criteriaService'
 
 @Module({
   imports: [
@@ -22,10 +24,10 @@ import {Criteria} from '../entity/criteria'
       autoLoadEntities: true,
       synchronize: true,
       logging: false,
-      socketPath: '/Applications/MAMP/tmp/mysql/mysql.sock',
+      //socketPath: '/Applications/MAMP/tmp/mysql/mysql.sock',
     }),
   ],
   controllers: [SubCriteriaController],
-  providers: [SubCriteriaService, SubCriteriaRepository],
+  providers: [SubCriteriaService, SubCriteriaRepository, CriteriaService, CriteriaRepository],
 })
 export class SubCriteriaModule {}

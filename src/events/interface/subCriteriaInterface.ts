@@ -6,5 +6,5 @@ export interface ISubCriteria {
   name: string
   result: boolean
   userSubCriteria: UserSubCriteria[]
-  criterias: Criteria[]
+  criteria: Criteria
 }

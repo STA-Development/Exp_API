@@ -10,6 +10,7 @@ export class AuthGuard implements CanActivate {
     try {
       const decodedIdToken = await admin.auth().verifyIdToken(token)
       res.locals.userUid = decodedIdToken.uid
+
       return true
     } catch (error) {
       return false

@@ -3,8 +3,7 @@ import {ValidationPipe} from '@nestjs/common'
 import {DocumentBuilder, SwaggerModule} from '@nestjs/swagger'
 import {EventsModule} from './events/module/eventAppModule'
 import {UserModule} from './users/module/userModule'
-
-async function bootstrap() {
+;(async () => {
   const eventApp = await NestFactory.create(EventsModule)
   const eventConfig = new DocumentBuilder()
     .setTitle('Events')
@@ -40,5 +39,4 @@ async function bootstrap() {
   )
 
   await userApp.listen(3000)
-}
-bootstrap()
+})()

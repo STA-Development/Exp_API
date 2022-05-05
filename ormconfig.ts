@@ -12,5 +12,5 @@ export default {
   synchronize: true,
   factories: ['src/seeding/factory/*.ts'],
   seeds: ['src/seeding/seed/*.ts'],
-  socketPath: '/Applications/MAMP/tmp/mysql/mysql.sock'
-};
+  //socketPath: '/Applications/MAMP/tmp/mysql/mysql.sock',
+}

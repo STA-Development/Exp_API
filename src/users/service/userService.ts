@@ -1,8 +1,7 @@
-import {BadRequestException, NotFoundException, Inject, Injectable} from '@nestjs/common'
+import {NotFoundException, Inject, Injectable} from '@nestjs/common'
 import {Repository} from 'typeorm'
 import {InjectRepository} from '@nestjs/typeorm'
 import {CloudinaryService} from '../../cloudinary/cloudinaryService'
-import {dbAuth} from '../auth/preauthMiddleware'
 import {UserRepository} from '../repository/userRepository'
 import {logger} from '../../logger'
 import {CreateUserDto} from '../dto/userCreateDto'
@@ -18,20 +17,6 @@ export class UsersService {
 
   @Inject()
   usersRepository: UserRepository
-
-  async create(createUserDto: CreateUserDto): Promise<User> {
-    try {
-      const auth = await dbAuth.createUser({
-        email: createUserDto.email,
-        password: createUserDto.password,
-      })
-      createUserDto.authUid = auth.uid
-      createUserDto.avatar = process.env.AVATAR_URL
-      return await this.usersRepository.create(createUserDto)
-    } catch (err) {
-      throw new BadRequestException(`Method Not Allowed`)
-    }
-  }
 
   findAll(): Promise<User[]> {
     return this.usersRepository.findAll()
@@ -55,6 +40,10 @@ export class UsersService {
       logger.error(`User with ID=${authUid} not found ${error}`)
     }
     return user
+  }
+
+  create(createUserDto: CreateUserDto): Promise<User> {
+    return this.usersRepository.create(createUserDto)
   }
 
   async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {

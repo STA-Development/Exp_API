@@ -5,7 +5,6 @@ export const criteriaGetDto = (criteria: Criteria): CriteriaDto => ({
   id: criteria.id,
   name: criteria.name,
   criteria: criteria.criteria,
-  rating: criteria.rating,
   subCriteria:
     criteria?.subCriteria &&
     criteria.subCriteria.map((subCriteria) => subCriteriaGetDto(subCriteria)),

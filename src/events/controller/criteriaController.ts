@@ -15,7 +15,6 @@ import {CreateCriteriaDto} from '../dto/criteriaCreateDto'
 import {UpdateCriteriaDto} from '../dto/criteriaUpdateDto'
 import {Criteria, CriteriaDto} from '../entity/criteria'
 import {criteriaGetDto} from '../dto/criteriaGetDto'
-import {elementIdDto} from '../dto/elementIdDto'
 
 @Controller('criteria')
 export class CriteriaController {
@@ -23,12 +22,12 @@ export class CriteriaController {
   criteriaService: CriteriaService
 
   @UseInterceptors(ClassSerializerInterceptor)
-  @Put(':id/subcriteria')
+  @Put(':criteriaId/subcriteria')
   addSubCriteria(
-    @Param('id') criteriaId: number,
-    @Body() criteriaRef: elementIdDto,
+    @Param('criteriaId') criteriaId: number,
+    @Body() subCriteriaRef: number,
   ): Promise<Criteria> {
-    return this.criteriaService.addSubCriteria(criteriaId, criteriaRef)
+    return this.criteriaService.addSubCriteria(criteriaId, subCriteriaRef)
   }
 
   @UseInterceptors(ClassSerializerInterceptor)

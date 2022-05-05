@@ -10,22 +10,40 @@ import {
   UseInterceptors,
   ClassSerializerInterceptor,
   Req,
+  UseGuards,
 } from '@nestjs/common'
 import {Request} from 'express'
+import {JwtService} from '@nestjs/jwt'
+import {JwtPayload} from 'jsonwebtoken'
+import * as jwt from 'jsonwebtoken'
 import {EventsService} from '../service/eventService'
 import {CreateEventDto} from '../dto/eventCreateDto'
 import {UpdateEventDto} from '../dto/eventUpdateDto'
 import {Event, EventDto} from '../entity/event'
 import {eventGetDto} from '../dto/eventGetDto'
-import {elementIdDto} from '../dto/elementIdDto'
 import {User} from '../../users/entity/user'
 import {IEventSearch} from '../interface/eventSearchInterface'
 import {ISubCriteriaRef} from '../interface/subCriteriaRefInterface'
+import {sendEmail} from '../../utils/sendEmail'
+import {IEvaluationResult} from '../interface/evaluationResultInterface'
+import {ISubmission} from '../interface/submissionInterface'
+import {IEventProgress} from '../interface/eventProgress'
+import {INotEvaluated} from '../interface/notEvaluatedEvaluators'
+import {logger} from '../../logger'
 
 @Controller('events')
 export class EventsController {
   @Inject()
   eventsService: EventsService
+
+  @Inject()
+  jwtService: JwtService
+
+  @UseInterceptors(ClassSerializerInterceptor)
+  @Get()
+  async findAll(): Promise<EventDto[]> {
+    return (await this.eventsService.findAll()).map((event) => eventGetDto(event))
+  }
 
   @UseInterceptors(ClassSerializerInterceptor)
   @Get('search')
@@ -41,15 +59,45 @@ export class EventsController {
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
-  @Get()
-  async findAll(): Promise<EventDto[]> {
-    return (await this.eventsService.findAll()).map((event) => eventGetDto(event))
+  @Get(':id/progress')
+  getEventProgress(@Param('id') eventId: number): Promise<IEventProgress> {
+    return this.eventsService.getEventProgress(eventId)
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
-  @Get(':id/userRating')
+  @Get(':id/not-evaluated')
+  getNotEvaluatedEvaluators(@Param('id') eventId: number): Promise<INotEvaluated[]> {
+    return this.eventsService.getNotEvaluatedEvaluators(eventId)
+  }
+
+  @UseInterceptors(ClassSerializerInterceptor)
+  @Get(':id/user-rating')
   getUserRating(@Param('id') eventId: number): Promise<User[]> {
     return this.eventsService.getUserRating(eventId)
+  }
+
+  @UseInterceptors(ClassSerializerInterceptor)
+  @Get(':eventId/evaluatee-criteria-rating/:evaluateeId') // TODO naming
+  getUserCriteriaRating(
+    @Param('eventId') eventId: number,
+    @Param('evaluateeId') evaluateeId: number,
+  ): Promise<User[]> {
+    return this.eventsService.getUserCriteriaRating(eventId, evaluateeId)
+  }
+
+  @UseInterceptors(ClassSerializerInterceptor)
+  @Get(':id/submissions/:submissionId')
+  getSubmissionByEvaluatorId(
+    @Param('id') eventId: number,
+    @Param('submissionId') evaluatorId: number,
+  ): Promise<ISubmission[]> {
+    return this.eventsService.getSubmissionByEvaluatorId(eventId, evaluatorId)
+  }
+
+  @UseInterceptors(ClassSerializerInterceptor)
+  @Get(':eventId/submissions')
+  getSubmissions(@Param('eventId') eventId: number): Promise<ISubmission[]> {
+    return this.eventsService.getSubmissions(eventId)
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
@@ -65,15 +113,32 @@ export class EventsController {
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
+  @Post(':id/invitation')
+  async EvaluationInvitation(
+    @Param('id') eventId: number,
+    @Body() invitation: {email: string},
+  ): Promise<string> {
+    const evaluator = await this.eventsService.findByEmail(invitation.email, eventId)
+    const InvitationToken = await this.jwtService.signAsync(
+      {evaluatorId: evaluator.id, eventId: eventId},
+      {secret: process.env.JWT_ACCESS_KEY, expiresIn: '1m'},
+    )
+
+    const link = `http://localhost:3030/events/invitation/?code=${InvitationToken}`
+    await sendEmail(invitation.email, link)
+    return InvitationToken
+  }
+
+  @UseInterceptors(ClassSerializerInterceptor)
   @Put(':id/rating')
-  addRating(@Param('id') eventId: number, @Body() ratingRef: elementIdDto): Promise<Event> {
-    return this.eventsService.addRating(eventId, ratingRef)
+  addRating(@Param('id') eventId: number, @Body() ratingId: number): Promise<Event> {
+    return this.eventsService.addRating(eventId, ratingId)
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
   @Put(':id/criteria')
-  addCriteria(@Param('id') eventId: number, @Body() criteriaRef: elementIdDto): Promise<Event> {
-    return this.eventsService.addCriteria(eventId, criteriaRef)
+  addCriteria(@Param('id') eventId: number, @Body() criteriaId: number): Promise<Event> {
+    return this.eventsService.addCriteria(eventId, criteriaId)
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
@@ -87,14 +152,34 @@ export class EventsController {
 
   @UseInterceptors(ClassSerializerInterceptor)
   @Put(':id/evaluator')
-  addEvaluators(@Param('id') eventId: number, @Body() userRef: elementIdDto): void {
-    this.eventsService.addEvaluators(eventId, userRef)
+  addEvaluators(@Param('id') eventId: number, @Body() userId: number): void {
+    this.eventsService.addEvaluators(eventId, userId)
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
   @Put(':id/evaluatee')
-  addEvaluatees(@Param('id') eventId: number, @Body() userRef: elementIdDto): void {
-    this.eventsService.addEvaluatees(eventId, userRef)
+  addEvaluatees(@Param('id') eventId: number, @Body() userId: number): void {
+    this.eventsService.addEvaluatees(eventId, userId)
+  }
+
+  @UseInterceptors(ClassSerializerInterceptor)
+  @Put('evaluation')
+  async EvalutaionResult(@Body() evaluationResult: IEvaluationResult): Promise<string> {
+    try {
+      const jwtPayload: JwtPayload | string = jwt.verify(
+        evaluationResult.token,
+        process.env.JWT_ACCESS_KEY,
+      )
+      if (typeof jwtPayload !== 'string') {
+        await this.eventsService.setRating(
+          jwtPayload.evaluatorId,
+          jwtPayload.eventId,
+          evaluationResult,
+        )
+      }
+    } catch (error) {
+      return error
+    }
   }
 
   @UseInterceptors(ClassSerializerInterceptor)

@@ -1,4 +1,4 @@
 export interface ISubCriteriaRef {
-  subCriteriaId: number[] // []
+  subCriteriaId: number[]
   userId: number
 }

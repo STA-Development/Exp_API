@@ -2,7 +2,7 @@ import {Event, EventDto} from '../entity/event'
 import {criteriaGetDto} from './criteriaGetDto'
 import {ratingGetDto} from './ratingGetDto'
 import {userGetDto} from '../../users/dto/userGetDto'
-import {eventEvaluatorGetDto} from './EventEvaluatorGetDto'
+import {eventEvaluatorGetDto} from './eventEvaluatorGetDto'
 
 export const eventGetDto = (event: Event): EventDto => ({
   id: event.id,

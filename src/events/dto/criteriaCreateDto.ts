@@ -1,4 +1,4 @@
-import {IsString, IsBoolean, IsNumber} from 'class-validator'
+import {IsString, IsBoolean} from 'class-validator'
 
 export class CreateCriteriaDto {
   @IsString()
@@ -6,7 +6,4 @@ export class CreateCriteriaDto {
 
   @IsBoolean()
   readonly criteria: boolean
-
-  @IsNumber()
-  readonly rating: number
 }
