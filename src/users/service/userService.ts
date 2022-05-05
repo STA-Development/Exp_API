@@ -57,16 +57,21 @@ export class UsersService {
   }
 
   async findOne(authUid: string): Promise<User> {
-    return this.usersRepository.findOne(authUid);
+    try {
+      return this.usersRepository.findOne(authUid);
+    } catch (err) {
+      throw new NotFoundException(`User with ID=${authUid} not found`);
+    }
   }
 
   async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
-    const user = await this.usersRepository.update(id, updateUserDto);
-    if (!user) {
+    try {
+      const user = await this.usersRepository.update(id, updateUserDto);
+      await dbAuth.updateUser(user.authUid, { email: updateUserDto.email });
+      return user;
+    } catch (err) {
       throw new NotFoundException(`User with ID=${id} not found`);
     }
-    await dbAuth.updateUser(user.authUid, { email: updateUserDto.email });
-    return user;
   }
 
   async remove(id: number): Promise<User> {
