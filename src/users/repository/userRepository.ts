@@ -57,7 +57,6 @@ export class UserRepository {
 
   async remove(id: number): Promise<User> {
     const removeUserId = await this.userRepository.findOne(id);
-    await dbAuth.deleteUser(removeUserId.authUid);
     return this.userRepository.remove(removeUserId);
   }
 
