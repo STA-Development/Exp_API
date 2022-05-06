@@ -1,8 +1,8 @@
-import { IsString, IsEmail, IsNumber } from 'class-validator';
+import { IsString, IsEmail, IsNumber, IsOptional } from 'class-validator';
 import { User } from '../entity/user';
 import { ApiProperty } from '@nestjs/swagger';
 
-export class UpdateUserDto extends User {
+export class AddUserDto extends User {
   readonly id: number;
 
   @ApiProperty()
@@ -24,4 +24,7 @@ export class UpdateUserDto extends User {
   @ApiProperty()
   @IsString()
   position: string;
+
+  @IsOptional()
+  avatar: string;
 }

@@ -23,7 +23,7 @@ import {CriteriaService} from '../service/criteriaService'
       database: process.env.DB_DATABASE,
       autoLoadEntities: true,
       synchronize: true,
-      logging: false,
+      logging: false
     }),
   ],
   controllers: [SubCriteriaController],

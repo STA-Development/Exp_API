@@ -23,7 +23,7 @@ import {SubCriteriaRepository} from '../repository/subCriteriaRepository'
       database: process.env.DB_DATABASE,
       autoLoadEntities: true,
       synchronize: true,
-      logging: false,
+      logging: false
     }),
   ],
   controllers: [CriteriaController],

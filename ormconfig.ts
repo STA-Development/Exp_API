@@ -11,5 +11,5 @@ export default {
   entities: ['src/**/entity/**/*.ts'],
   synchronize: true,
   factories: ['src/seeding/factory/*.ts'],
-  seeds: ['src/seeding/seed/*.ts'],
+  seeds: ['src/seeding/seed/*.ts']
 }
