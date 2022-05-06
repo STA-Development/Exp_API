@@ -14,7 +14,6 @@ import {
   UploadedFile,
   UseInterceptors
 } from '@nestjs/common';
-import {ApiBearerAuth} from '@nestjs/swagger'
 import { ApiFile } from '../dto/uploadFileDto';
 import { UsersService } from '../service/userService';
 import { CreateUserDto } from '../dto/userCreateDto';
@@ -49,7 +48,7 @@ export class UsersController {
   async findAll(
     @Query('limit') limit: number,
     @Query('page') page: number
-  ): Promise<{ pageCount: number; data: UserPivot[] }> {
+  ): Promise<{ pageCount: number; data: UserDto[] }> {
     logger.info('Get all users');
     const users = await this.usersService.findAll(limit, page);
     const data = users.data.map((user) => userGetDto(user));
@@ -71,7 +70,7 @@ export class UsersController {
   @ApiBearerAuth()
   @Get(':id')
   @ApiOkResponse({ type: GetUserDto })
-  async find(@Param('id') id: number): Promise<UserPivot> {
+  async find(@Param('id') id: number): Promise<UserDto> {
     return userGetDto(await this.usersService.findOneById(id));
   }
 
