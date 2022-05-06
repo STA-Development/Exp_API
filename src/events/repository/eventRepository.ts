@@ -114,11 +114,11 @@ export class EventsRepository {
       .createQueryBuilder()
       .where({eventId: eventId, evaluatorId: evaluatorId})
       .select(
-        'evaluatorId, evaluator.firstname AS evaluatorFirstName, evaluator.lastname AS evaluatorLastName',
+        'evaluatorId, evaluator.firstname AS evaluatorFirstName, evaluator.lastname AS evaluatorLastName, evaluator.position as evaluatorPosition',
       )
       .addSelect(
-        'evaluateeId, evaluatee.firstname AS evaluateeFirstName, evaluatee.lastname AS evaluateeLastName',
-      ) //TODO add position
+        'evaluateeId, evaluatee.firstname AS evaluateeFirstName, evaluatee.lastname AS evaluateeLastName, evaluatee.position as evaluateePosition',
+      )
       .leftJoin(User, 'evaluator', 'evaluator.id = evaluatorId')
       .leftJoin(User, 'evaluatee', 'evaluatee.id = evaluateeId')
       .groupBy('evaluateeId ')
@@ -157,11 +157,11 @@ export class EventsRepository {
       .createQueryBuilder()
       .where({eventId: eventId})
       .select(
-        'evaluatorId, evaluator.firstname AS evaluatorFirstName, evaluator.lastname AS evaluatorLastName',
+        'evaluatorId, evaluator.firstname AS evaluatorFirstName, evaluator.lastname AS evaluatorLastName, evaluator.position as evaluatorPosition',
       )
       .addSelect(
-        'evaluateeId, evaluatee.firstname AS evaluateeFirstName, evaluatee.lastname AS evaluateeLastName',
-      ) // TODO add position
+        'evaluateeId, evaluatee.firstname AS evaluateeFirstName, evaluatee.lastname AS evaluateeLastName, evaluatee.position as evaluateePosition',
+      )
       .leftJoin(User, 'evaluator', 'evaluator.id = evaluatorId')
       .leftJoin(User, 'evaluatee', 'evaluatee.id = evaluateeId')
       .groupBy('evaluatorId')

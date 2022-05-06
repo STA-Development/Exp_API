@@ -16,8 +16,10 @@ export const getSubmissions = (
       eventTitle: eventTitle,
       evaluateeFirstName: submissionModels[i].evaluateeFirstName,
       evaluateeLastName: submissionModels[i].evaluateeLastName,
+      evaluateePosition: submissionModels[i].evaluateePosition,
       evaluatorFirstName: submissionModels[i].evaluatorFirstName,
       evaluatorLastName: submissionModels[i].evaluatorLastName,
+      evaluatorPosition: submissionModels[i].evaluatorPosition,
       submissionState: submissionState,
     }
     submissions.push(submission)

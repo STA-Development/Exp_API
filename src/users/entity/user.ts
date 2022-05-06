@@ -50,7 +50,10 @@ export class User implements IUser {
   @Column({ default: null })
   position: string;
 
-  @ManyToMany(() => Event, (events) => events.users)
+  @ManyToMany(() => Event, (events) => events.users, {
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE',
+    createForeignKeyConstraints: false,})
   events: Event[]
 
   @OneToMany(() => EventEvaluator, (eventEvaluator) => eventEvaluator.event, {

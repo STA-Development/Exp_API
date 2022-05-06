@@ -5,5 +5,5 @@ export const ratingGetDto = (rating: Rating): RatingDto => ({
   from: rating.from,
   to: rating.to,
   isSelected: rating.isSelected,
-  events: rating.events, // todo dto
+  events: rating.events,
 })

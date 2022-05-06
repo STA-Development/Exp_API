@@ -26,7 +26,6 @@ export class UserRepository {
     const total = await builder.getCount();
     const pages = Math.ceil(total / limit);
     const data = await this.userRepository.find({
-      relations: ['userSubCriteria', 'userSubCriteria.subCriteria'], // todo relations
       take: limit,
       skip: (page - 1) * limit
     });
@@ -35,14 +34,12 @@ export class UserRepository {
 
   findOneById(id: number): Promise<User> {
     return this.userRepository.findOne({
-      relations: ['userSubCriteria', 'userSubCriteria.subCriteria'],
       where: { id }
     });
   }
 
   findOne(uid: string): Promise<User> {
     return this.userRepository.findOne({
-      relations: ['userSubCriteria', 'userSubCriteria.subCriteria'],
       where: { authUid: uid }
     });
   }

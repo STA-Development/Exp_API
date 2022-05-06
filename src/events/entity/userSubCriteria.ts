@@ -18,7 +18,7 @@ export class UserSubCriteria implements IUserSubCriteria {
   @PrimaryColumn()
   criteriaId: number
 
-  @PrimaryColumn()
+  @PrimaryColumn({default: 0})
   userId: number
 
   @PrimaryColumn()
@@ -30,7 +30,7 @@ export class UserSubCriteria implements IUserSubCriteria {
   @PrimaryColumn()
   subCriteriaId: number
 
-  @PrimaryColumn()
+  @PrimaryColumn({default: 0})
   ratingId: number
 
   @Column()

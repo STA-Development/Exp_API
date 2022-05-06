@@ -1,15 +1,15 @@
 import {
   IsString,
   IsEmail,
+  IsNumber,
   IsOptional,
-  IsEmpty,IsEnum
+  IsEmpty, IsEnum
 } from 'class-validator';
 import { User } from '../entity/user';
 import { Event } from '../../events/entity/event';
 import { ApiProperty } from '@nestjs/swagger';
-import {PerformerType} from '../interface/userInterface'
+import {PerformerType} from "../interface/userInterface";
 
-// TODO: salary and something else is not used
 export class CreateUserDto extends User {
   readonly id: number;
 

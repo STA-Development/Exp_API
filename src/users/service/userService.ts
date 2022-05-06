@@ -95,10 +95,10 @@ export class UsersService {
       }
       const cloudinaryRes = await this.cloudinary.uploadImage(file);
       return this.usersRepository.uploadImage(
-          uid,
-          cloudinaryRes.public_id,
-          cloudinaryRes.url,
-          user.id
+        uid,
+        cloudinaryRes.public_id,
+        cloudinaryRes.url,
+        user.id
       );
     } catch (err) {
       throw new NotFoundException(`file is not found`);
@@ -132,4 +132,3 @@ export class UsersService {
     }
   }
 }
-

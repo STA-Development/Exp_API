@@ -1,7 +1,7 @@
 import {Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToMany} from 'typeorm'
 import {IRating} from '../interface/ratingInterface'
 import {UserSubCriteria} from './userSubCriteria'
-import {Event} from './event'
+import {Event, EventDto} from './event'
 
 @Entity()
 export class Rating implements IRating {
@@ -41,5 +41,5 @@ export class RatingDto {
 
   isSelected: boolean
 
-  events: Event[]
+  events: EventDto[]
 }

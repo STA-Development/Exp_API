@@ -15,15 +15,11 @@ import {CreateCriteriaDto} from '../dto/criteriaCreateDto'
 import {UpdateCriteriaDto} from '../dto/criteriaUpdateDto'
 import {Criteria, CriteriaDto} from '../entity/criteria'
 import {criteriaGetDto} from '../dto/criteriaGetDto'
-import {SubCriteriaRepository} from "../repository/subCriteriaRepository";
 
 @Controller('criteria')
 export class CriteriaController {
   @Inject()
   criteriaService: CriteriaService
-
-  @Inject()
-  subCriteriaRepository: SubCriteriaRepository //todo remove after test
 
   @UseInterceptors(ClassSerializerInterceptor)
   @Put(':criteriaId/subcriteria')
@@ -37,7 +33,6 @@ export class CriteriaController {
   @UseInterceptors(ClassSerializerInterceptor)
   @Get()
   async findAll(): Promise<CriteriaDto[]> {
-  //  console.log(await this.subCriteriaRepository.findAll())
     return (await this.criteriaService.findAll()).map((criteria) =>
        criteriaGetDto(criteria)
     )
