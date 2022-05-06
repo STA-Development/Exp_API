@@ -6,7 +6,6 @@ import {Event, EventDto} from '../entity/event'
 import {EventsRepository} from '../repository/eventRepository'
 import {logger} from '../../logger'
 import {User} from '../../users/entity/user'
-import {elementIdDto} from '../dto/elementIdDto'
 import {RatingRepository} from '../repository/ratingRepository'
 import {CriteriaRepository} from '../repository/criteriaRepository'
 import {UserRepository} from '../../users/repository/userRepository'
@@ -36,8 +35,8 @@ export class EventsService {
     return this.eventsRepository.getUserRating(eventId)
   }
 
-  async addRating(eventId: number, ratingRef: elementIdDto) {
-    const rating = await this.ratingRepository.findOneById(ratingRef.id)
+  async addRating(eventId: number, ratingId: number) {
+    const rating = await this.ratingRepository.findOneById(ratingId)
     const event = await this.eventsRepository.findOneById(eventId)
     if (!isUpcomingEvent(event))
       throw new HttpException(
@@ -52,8 +51,8 @@ export class EventsService {
     return this.eventsRepository.addElement(event)
   }
 
-  async addCriteria(eventId: number, criteriaRef: elementIdDto) {
-    const criteria = await this.criteriaRepository.findOneById(criteriaRef.id)
+  async addCriteria(eventId: number, criteriaId: number) {
+    const criteria = await this.criteriaRepository.findOneById(criteriaId)
     const event = await this.eventsRepository.findOneById(eventId)
     if (!isUpcomingEvent(event))
       throw new HttpException(
@@ -71,12 +70,12 @@ export class EventsService {
     await this.eventsRepository.addSubCriteria(Id, idRef)
   }
 
-  addEvaluators(Id: number, idRef: elementIdDto) {
-    return this.eventsRepository.addEvaluators(Id, idRef)
+  addEvaluators(eventId: number, userId: number) {
+    return this.eventsRepository.addEvaluators(eventId, userId)
   }
 
-  addEvaluatees(Id: number, idRef: elementIdDto) {
-    return this.eventsRepository.addEvaluatees(Id, idRef)
+  addEvaluatees(eventId: number, userId: number) {
+    return this.eventsRepository.addEvaluatees(eventId, userId)
   }
 
   findAll(): Promise<Event[]> {

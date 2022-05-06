@@ -17,7 +17,6 @@ import {CreateEventDto} from '../dto/eventCreateDto'
 import {UpdateEventDto} from '../dto/eventUpdateDto'
 import {Event, EventDto} from '../entity/event'
 import {eventGetDto} from '../dto/eventGetDto'
-import {elementIdDto} from '../dto/elementIdDto'
 import {User} from '../../users/entity/user'
 import {IEventSearch} from '../interface/eventSearchInterface'
 import {ISubCriteriaRef} from '../interface/subCriteriaRefInterface'
@@ -66,14 +65,14 @@ export class EventsController {
 
   @UseInterceptors(ClassSerializerInterceptor)
   @Put(':id/rating')
-  addRating(@Param('id') eventId: number, @Body() ratingRef: elementIdDto): Promise<Event> {
-    return this.eventsService.addRating(eventId, ratingRef)
+  addRating(@Param('id') eventId: number, @Body() ratingId: number): Promise<Event> {
+    return this.eventsService.addRating(eventId, ratingId)
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
   @Put(':id/criteria')
-  addCriteria(@Param('id') eventId: number, @Body() criteriaRef: elementIdDto): Promise<Event> {
-    return this.eventsService.addCriteria(eventId, criteriaRef)
+  addCriteria(@Param('id') eventId: number, @Body() criteriaId: number): Promise<Event> {
+    return this.eventsService.addCriteria(eventId, criteriaId)
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
@@ -87,14 +86,14 @@ export class EventsController {
 
   @UseInterceptors(ClassSerializerInterceptor)
   @Put(':id/evaluator')
-  addEvaluators(@Param('id') eventId: number, @Body() userRef: elementIdDto): void {
-    this.eventsService.addEvaluators(eventId, userRef)
+  addEvaluators(@Param('id') eventId: number, @Body() userId: number): void {
+    this.eventsService.addEvaluators(eventId, userId)
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
   @Put(':id/evaluatee')
-  addEvaluatees(@Param('id') eventId: number, @Body() userRef: elementIdDto): void {
-    this.eventsService.addEvaluatees(eventId, userRef)
+  addEvaluatees(@Param('id') eventId: number, @Body() userId: number): void {
+    this.eventsService.addEvaluatees(eventId, userId)
   }
 
   @UseInterceptors(ClassSerializerInterceptor)

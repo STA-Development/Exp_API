@@ -10,7 +10,6 @@ import {UserSubCriteria} from '../entity/userSubCriteria'
 import {User} from '../../users/entity/user'
 import {SubCriteria} from '../entity/subCriteria'
 import {Rating} from '../entity/rating'
-import {elementIdDto} from '../dto/elementIdDto'
 import {EventEvaluator} from '../entity/eventEvaluator'
 import {logger} from '../../logger'
 import {EventEvaluatee} from '../entity/eventEvaluatee'
@@ -137,7 +136,7 @@ export class EventsRepository {
     return users
   }
 
-  async addEvaluators(Id: number, idRef: elementIdDto) {
+  async addEvaluators(Id: number, userId: number) {
     if (!isUpcomingEvent(await this.eventRepository.findOne(Id))) {
       throw new HttpException(
         {
@@ -157,21 +156,21 @@ export class EventsRepository {
       ? (await eventEvaluatorRepository
           .createQueryBuilder()
           .where({eventId: Id})
-          .andWhere({userId: idRef.id})
+          .andWhere({userId: userId})
           .getOne())
         ? logger.info('data already exists')
         : await eventEvaluatorRepository
             .createQueryBuilder()
             .insert()
             .values({
-              userId: idRef.id,
+              userId: userId,
               eventId,
             })
             .execute()
       : logger.error("couldn't find event")
   }
 
-  async addEvaluatees(Id: number, idRef: elementIdDto) {
+  async addEvaluatees(Id: number, userId: number) {
     if (!isUpcomingEvent(await this.eventRepository.findOne(Id))) {
       throw new HttpException(
         {
@@ -191,14 +190,14 @@ export class EventsRepository {
       ? (await eventEvaluateeRepository
           .createQueryBuilder()
           .where({eventId: Id})
-          .andWhere({userId: idRef.id})
+          .andWhere({userId: userId})
           .getOne())
         ? logger.info('data already exists')
         : await eventEvaluateeRepository
             .createQueryBuilder()
             .insert()
             .values({
-              userId: idRef.id,
+              userId: userId,
               eventId,
             })
             .execute()
