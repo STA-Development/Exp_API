@@ -5,5 +5,5 @@ export const subCriteriaGetDto = (subCriteria: SubCriteria): SubCriteriaDto => (
   id: subCriteria.id,
   name: subCriteria.name,
   result: subCriteria.result,
-  criteria: subCriteria.criteria,
+  criteria: subCriteria.criteria, // todo dto
 })

@@ -47,6 +47,9 @@ export class User implements IUser {
   @Column({default: null})
   avatarPublicId: string
 
+  @Column({ default: null })
+  position: string;
+
   @ManyToMany(() => Event, (events) => events.users)
   events: Event[]
 
@@ -83,6 +86,8 @@ export class UserDto {
   rating: number
 
   avatar: string
+
+  position: string;
 
   avatarPublicId: string
 

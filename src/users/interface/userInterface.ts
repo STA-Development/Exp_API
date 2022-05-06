@@ -14,11 +14,13 @@ export interface IUser {
   lastName: string
   email: string
   rating: number
+  authUid: string
   performerType: string
   userSubCriteria: UserSubCriteria[]
   isAdmin: boolean
   salary: number
   avatar: string
+  position: string
   avatarPublicId: string
   events: Event[]
 }
