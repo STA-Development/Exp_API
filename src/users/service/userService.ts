@@ -57,11 +57,7 @@ export class UsersService {
   }
 
   async findOne(authUid: string): Promise<User> {
-    try {
-      return this.usersRepository.findOne(authUid);
-    } catch (err) {
-      throw new NotFoundException(`User with ID=${authUid} not found`);
-    }
+    return this.usersRepository.findOne(authUid);
   }
 
   async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
