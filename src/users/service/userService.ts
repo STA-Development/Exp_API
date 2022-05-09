@@ -57,16 +57,20 @@ export class UsersService {
   }
 
   async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
-    const user = await this.usersRepository.update(id, updateUserDto)
-    if (!user) {
-      throw new NotFoundException(`User with ID=${id} not found`)
+    try {
+      const user = await this.usersRepository.update(id, updateUserDto);
+      await dbAuth.updateUser(user.authUid, { email: updateUserDto.email });
+      return user;
+    } catch (err) {
+      throw new NotFoundException(`User with ID=${id} not found`);
     }
-    return user
   }
 
   async remove(id: number): Promise<User> {
     try {
-      return await this.usersRepository.remove(id)
+      const user = await this.usersRepository.findOneById(id);
+      await dbAuth.deleteUser(user.authUid);
+      return await this.usersRepository.remove(id);
     } catch (err) {
       throw {
         statusCode: 404,
