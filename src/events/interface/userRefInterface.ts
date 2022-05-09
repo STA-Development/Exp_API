@@ -1,3 +1,3 @@
 export interface IUserRef {
-    id: number;
+  id: number
 }

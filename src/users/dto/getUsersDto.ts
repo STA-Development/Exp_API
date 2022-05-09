@@ -1,5 +1,4 @@
 import { User } from '../entity/user';
-import { Pivot } from '../../events/entity/pivot';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class GetUserDto extends User {
@@ -39,6 +38,4 @@ export class GetUserDto extends User {
   @ApiProperty()
   position: string;
 
-  @ApiProperty()
-  pivot: Pivot[];
 }
