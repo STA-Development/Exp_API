@@ -1,3 +1,4 @@
+import {ApiProperty} from '@nestjs/swagger'
 import {Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToOne} from 'typeorm'
 import {ISubCriteria} from '../interface/subCriteriaInterface'
 import {UserSubCriteria} from './userSubCriteria'
@@ -30,10 +31,13 @@ export class SubCriteria implements ISubCriteria {
 }
 
 export class SubCriteriaDto {
+  @ApiProperty()
   id: number
 
+  @ApiProperty()
   name: string
 
+  @ApiProperty()
   result: boolean
 
   criteria: CriteriaDto

@@ -1,3 +1,4 @@
+import {ApiProperty} from '@nestjs/swagger'
 import {Entity, PrimaryGeneratedColumn, PrimaryColumn, ManyToOne, Column} from 'typeorm'
 import {Event, EventDto} from './event'
 import {Criteria, CriteriaDto} from './criteria'
@@ -94,13 +95,18 @@ export class UserSubCriteria implements IUserSubCriteria {
 }
 
 export class UserSubCriteriaDto implements IUserSubCriteriaGetDto {
+  @ApiProperty()
   criteria: CriteriaDto
 
+  @ApiProperty()
   event: EventDto
 
+  @ApiProperty()
   rating: RatingDto
 
+  @ApiProperty()
   subCriteria: SubCriteriaDto
 
+  @ApiProperty()
   user: UserDto
 }

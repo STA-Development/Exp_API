@@ -9,6 +9,7 @@ import {
   Inject,
   UseInterceptors,
   ClassSerializerInterceptor,
+  Patch,
 } from '@nestjs/common'
 import {CriteriaService} from '../service/criteriaService'
 import {CreateCriteriaDto} from '../dto/criteriaCreateDto'
@@ -33,9 +34,7 @@ export class CriteriaController {
   @UseInterceptors(ClassSerializerInterceptor)
   @Get()
   async findAll(): Promise<CriteriaDto[]> {
-    return (await this.criteriaService.findAll()).map((criteria) =>
-       criteriaGetDto(criteria)
-    )
+    return (await this.criteriaService.findAll()).map((criteria) => criteriaGetDto(criteria))
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
@@ -52,7 +51,7 @@ export class CriteriaController {
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
-  @Put(':id')
+  @Patch(':id')
   update(@Param('id') id: number, @Body() updateCriteriaDto: UpdateCriteriaDto): Promise<Criteria> {
     return this.criteriaService.update(id, updateCriteriaDto)
   }

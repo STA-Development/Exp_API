@@ -1,4 +1,5 @@
 import {Entity, Column, PrimaryGeneratedColumn, ManyToMany, OneToMany} from 'typeorm'
+import {ApiProperty} from '@nestjs/swagger'
 import {IUser, PerformerType} from '../interface/userInterface'
 import {Event, EventDto} from '../../events/entity/event'
 import {UserSubCriteria, UserSubCriteriaDto} from '../../events/entity/userSubCriteria'
@@ -47,13 +48,14 @@ export class User implements IUser {
   @Column({default: null})
   avatarPublicId: string
 
-  @Column({ default: null })
-  position: string;
+  @Column({default: null})
+  position: string
 
   @ManyToMany(() => Event, (events) => events.users, {
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
-    createForeignKeyConstraints: false,})
+    createForeignKeyConstraints: false,
+  })
   events: Event[]
 
   @OneToMany(() => EventEvaluator, (eventEvaluator) => eventEvaluator.event, {
@@ -72,28 +74,40 @@ export class User implements IUser {
 }
 
 export class UserDto {
+  @ApiProperty()
   id: number
 
+  @ApiProperty()
   firstName: string
 
+  @ApiProperty()
   lastName: string
 
+  @ApiProperty()
   email: string
 
+  @ApiProperty()
   isAdmin: boolean
 
+  @ApiProperty()
   authUid: string
 
+  @ApiProperty()
   salary: number
 
+  @ApiProperty()
   rating: number
 
+  @ApiProperty()
   avatar: string
 
-  position: string;
+  @ApiProperty()
+  position: string
 
+  @ApiProperty()
   avatarPublicId: string
 
+  @ApiProperty()
   performerType: string
 
   userSubCriteria: UserSubCriteriaDto[]

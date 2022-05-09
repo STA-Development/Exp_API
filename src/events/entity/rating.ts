@@ -1,4 +1,5 @@
 import {Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToMany} from 'typeorm'
+import {ApiProperty} from '@nestjs/swagger'
 import {IRating} from '../interface/ratingInterface'
 import {UserSubCriteria} from './userSubCriteria'
 import {Event, EventDto} from './event'
@@ -33,12 +34,16 @@ export class Rating implements IRating {
 }
 
 export class RatingDto {
+  @ApiProperty()
   id: number
 
+  @ApiProperty()
   from: number
 
+  @ApiProperty()
   to: number
 
+  @ApiProperty()
   isSelected: boolean
 
   events: EventDto[]

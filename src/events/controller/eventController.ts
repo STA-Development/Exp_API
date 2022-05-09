@@ -5,6 +5,7 @@ import {
   Param,
   Delete,
   Put,
+  Patch,
   Inject,
   Controller,
   UseInterceptors,
@@ -76,7 +77,7 @@ export class EventsController {
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
-  @Get(':eventId/evaluatee-criteria-rating/:evaluateeId') // todo bad naming
+  @Get(':eventId/evaluatee-criteria-rating/:evaluateeId')
   getUserCriteriaRating(
     @Param('eventId') eventId: number,
     @Param('evaluateeId') evaluateeId: number,
@@ -129,19 +130,19 @@ export class EventsController {
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
-  @Put(':id/rating')
+  @Patch(':id/rating')
   addRating(@Param('id') eventId: number, @Body() ratingId: number): Promise<Event> {
     return this.eventsService.addRating(eventId, ratingId)
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
-  @Put(':id/criteria')
+  @Patch(':id/criteria')
   addCriteria(@Param('id') eventId: number, @Body() criteriaId: number): Promise<Event> {
     return this.eventsService.addCriteria(eventId, criteriaId)
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
-  @Put(':id/subCriteria')
+  @Patch(':id/subCriteria')
   addSubCriteria(
     @Param('id') eventId: number,
     @Body() criteriaRef: ISubCriteriaRef,
@@ -150,13 +151,13 @@ export class EventsController {
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
-  @Put(':id/evaluator')
+  @Patch(':id/evaluator')
   addEvaluators(@Param('id') eventId: number, @Body() userId: number): void {
     this.eventsService.addEvaluators(eventId, userId)
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
-  @Put(':id/evaluatee')
+  @Patch(':id/evaluatee')
   addEvaluatees(@Param('id') eventId: number, @Body() userId: number): void {
     this.eventsService.addEvaluatees(eventId, userId)
   }

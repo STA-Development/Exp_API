@@ -1,27 +1,27 @@
-import { IsString, IsEmail, IsNumber } from 'class-validator';
-import { User } from '../entity/user';
-import { ApiProperty } from '@nestjs/swagger';
+import {ApiProperty} from '@nestjs/swagger'
+import {IsString, IsEmail, IsNumber} from 'class-validator'
+import {User} from '../entity/user'
 
 export class UpdateUserDto extends User {
-  readonly id: number;
+  readonly id: number
 
   @ApiProperty()
   @IsString()
-  firstName: string;
+  firstName: string
 
   @ApiProperty()
   @IsString()
-  lastName: string;
+  lastName: string
 
   @ApiProperty()
   @IsEmail()
-  email: string;
+  email: string
 
   @ApiProperty()
   @IsNumber()
-  salary: number;
+  salary: number
 
   @ApiProperty()
   @IsString()
-  position: string;
+  position: string
 }
