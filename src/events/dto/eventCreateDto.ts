@@ -6,32 +6,32 @@ import {
   IsOptional,
   IsNumber,
   Min,
-  Max
-} from 'class-validator';
+  Max,
+  IsEmpty,
+} from 'class-validator'
 
-import { Period } from '../interface/eventInterface';
-import { Pivot } from '../entity/pivot';
+import {Period} from '../interface/eventInterface'
+import {Rating} from '../entity/rating'
 
 export class CreateEventDto {
   @IsString()
-  readonly title: string;
+  readonly title: string
 
   @IsInt()
   @Min(0)
   @Max(100)
-  readonly bonus: number;
+  readonly bonus: number
 
   @IsEnum(Period)
-  readonly timePeriod: Period;
-
-  @IsOptional()
-  pivot: Pivot[];
+  readonly timePeriod: Period
 
   @IsDate()
   @IsOptional()
-  createdAt: Date;
+  createdAt: Date
 
   @IsNumber()
-  endsAt: Date;
+  endsAt: Date
 
+  @IsEmpty()
+  rating: Rating[]
 }

@@ -1,299 +1,271 @@
-import { Injectable } from '@nestjs/common';
-import { CreateEventDto } from '../dto/eventCreateDto';
-import { UpdateEventDto } from '../dto/eventUpdateDto';
-import { Event } from '../entity/event';
-import { InjectRepository } from '@nestjs/typeorm';
-import { getRepository, LessThan, MoreThan, Repository } from 'typeorm';
-import { Period } from '../interface/eventInterface';
-import * as dayjs from 'dayjs';
-import { IUserRef } from '../interface/userRefInterface';
-import { Pivot } from '../entity/pivot';
-import { logger } from '../../logger';
-import { ISubCriteriaRef } from '../interface/subCriteriaRefInterface';
-import { User } from '../../users/entity/user';
-import { SubCriteria } from '../entity/subCriteria';
+import {HttpException, HttpStatus, Injectable} from '@nestjs/common'
+import {InjectRepository} from '@nestjs/typeorm'
+import {getRepository, LessThan, MoreThan, Repository} from 'typeorm'
+import * as dayjs from 'dayjs'
+import {CreateEventDto} from '../dto/eventCreateDto'
+import {UpdateEventDto} from '../dto/eventUpdateDto'
+import {Event, EventDto} from '../entity/event'
+import {Period} from '../interface/eventInterface'
+import {UserSubCriteria} from '../entity/userSubCriteria'
+import {User} from '../../users/entity/user'
+import {SubCriteria} from '../entity/subCriteria'
+import {Rating} from '../entity/rating'
+import {EventEvaluator} from '../entity/eventEvaluator'
+import {logger} from '../../logger'
+import {EventEvaluatee} from '../entity/eventEvaluatee'
+import {ISubCriteriaRef} from '../interface/subCriteriaRefInterface'
+import {isUpcomingEvent} from '../../utils/checkEventDate'
 
 @Injectable()
 export class EventsRepository {
   @InjectRepository(Event)
-  eventRepository: Repository<Event>;
+  eventRepository: Repository<Event>
 
-  async ongoing(): Promise<Event[]> {
+  @InjectRepository(User)
+  userRepository: Repository<User>
+
+  @InjectRepository(Rating)
+  ratingRepository: Repository<Rating>
+
+  async getOngoingEvents(): Promise<Event[]> {
     return this.eventRepository
       .createQueryBuilder('event')
       .where({
-        createdAt: LessThan(dayjs().toDate())
+        createdAt: LessThan(dayjs().toDate()),
       })
       .andWhere({
-        endsAt: MoreThan(dayjs().toDate())
+        endsAt: MoreThan(dayjs().toDate()),
       })
-      .getMany();
-  }
-
-  async getUserRating(Id: number): Promise<User[]> {
-    const usersRating = await getRepository(Pivot)
-      .createQueryBuilder()
-      .where({ eventId: Id })
-      .select(['userId, pivot.id'])
-      .addSelect(['COUNT(userId) AS rating'])
-      .leftJoin(User, 'user', 'pivot.userId = user.id')
-      .leftJoin(
-        SubCriteria,
-        'subCriteria',
-        'subCriteria.id = pivot.subCriteriaId'
-      )
-      .where('subCriteria.result = 1')
-      .groupBy('userId')
-      .execute();
-
-    const users = await getRepository(User).find();
-    users.map((user, index) => {
-      return {
-        ...user,
-        rating:
-          user.id == usersRating[index]?.userId
-            ? (user.rating = Number(usersRating[index].rating))
-            : user.rating
-      };
-    });
-    return users;
-  }
-
-  async addRating(Id: number, idRef: IUserRef) {
-    const pivotRepository = await getRepository(Pivot);
-    const currentPivot = await pivotRepository.findOne({
-      order: { id: 'DESC' },
-      where: { eventId: Id }
-    });
-    const { eventId, criteriaId, subCriteriaId, userId } = currentPivot
-      ? currentPivot
-      : { eventId: 0, criteriaId: 0, subCriteriaId: 0, userId: 0 };
-    (await pivotRepository.createQueryBuilder().where({ eventId: Id }).getOne())
-      ? (await pivotRepository
-          .createQueryBuilder()
-          .where({ eventId: Id })
-          .andWhere({ ratingId: idRef.id })
-          .getOne())
-        ? logger.info('data already exists')
-        : await pivotRepository
-            .createQueryBuilder()
-            .insert()
-            .values({
-              ratingId: idRef.id,
-              eventId: eventId,
-              criteriaId: criteriaId,
-              subCriteriaId: subCriteriaId,
-              userId: userId
-            })
-            .execute()
-      : await pivotRepository.save({
-          eventId: Id,
-          ratingId: idRef.id,
-          criteriaId,
-          subCriteriaId,
-          userId
-        });
-  }
-
-  async addCriteria(Id: number, idRef: IUserRef) {
-    const pivotRepository = await getRepository(Pivot);
-    const currentPivot = await pivotRepository.findOne({
-      order: { id: 'DESC' },
-      where: { eventId: Id }
-    });
-    const { eventId, ratingId, subCriteriaId, userId } = currentPivot
-      ? currentPivot
-      : { eventId: 0, ratingId: 0, subCriteriaId: 0, userId: 0 };
-    (await pivotRepository.createQueryBuilder().where({ eventId: Id }).getOne())
-      ? (await pivotRepository
-          .createQueryBuilder()
-          .where({ eventId: Id })
-          .andWhere({ criteriaId: idRef.id })
-          .getOne())
-        ? logger.info('data already exists')
-        : await pivotRepository
-            .createQueryBuilder()
-            .insert()
-            .values({
-              criteriaId: idRef.id,
-              eventId: eventId,
-              ratingId: ratingId,
-              subCriteriaId: subCriteriaId,
-              userId: userId
-            })
-            .execute()
-      : await pivotRepository.save({
-          eventId: Id,
-          criteriaId: idRef.id,
-          ratingId,
-          subCriteriaId,
-          userId
-        });
+      .getMany()
   }
 
   async addSubCriteria(Id: number, idRef: ISubCriteriaRef) {
-    const pivotRepository = await getRepository(Pivot);
-    const currentPivot = await pivotRepository.findOne({
-      order: { id: 'DESC' },
-      where: { eventId: Id, userId: idRef.userId }
-    });
-    const { eventId, criteriaId, ratingId, userId } = currentPivot
-      ? currentPivot
-      : { eventId: 0, criteriaId: 0, ratingId: 0, userId: 0 };
-    (await pivotRepository.createQueryBuilder().where({ eventId: Id }).getOne())
-      ? (await pivotRepository
-          .createQueryBuilder()
-          .where({ eventId: Id })
-          .andWhere({ userId: idRef.userId })
-          .andWhere({ subCriteriaId: idRef.subCriteriaId })
-          .getOne())
-        ? logger.info('data already exists')
-        : await pivotRepository
-            .createQueryBuilder()
-            .insert()
-            .values({
-              subCriteriaId: idRef.subCriteriaId,
-              eventId: eventId,
-              criteriaId: criteriaId,
-              ratingId: ratingId,
-              userId: userId
-            })
-            .execute()
-      : await pivotRepository.save({
-          eventId: Id,
-          subCriteriaId: idRef.subCriteriaId,
-          userId: idRef.userId,
-          criteriaId,
-          ratingId
-        });
+    const userSubCriteriaRepository = await getRepository(UserSubCriteria)
+    const userSubCriteria = await userSubCriteriaRepository.findOne({
+      order: {id: 'DESC'},
+      where: {eventId: Id},
+    })
+
+    const {eventId, criteriaId, ratingId, userId} = userSubCriteria || {
+      eventId: 0,
+      criteriaId: 0,
+      ratingId: 0,
+      userId: 0,
+    }
+
+    const userSubCriterias = []
+    for (let i = 0; i < idRef.subCriteriaId.length; i++) {
+      const userSubCriteria = new UserSubCriteria()
+      userSubCriteria.subCriteriaId = idRef.subCriteriaId[i]
+      userSubCriteria.eventId = Id
+      userSubCriteria.criteriaId = criteriaId
+      userSubCriteria.ratingId = ratingId
+      userSubCriteria.userId = idRef.userId
+      !(await userSubCriteriaRepository.findOne(userSubCriteria))
+        ? userSubCriterias.push(userSubCriteria)
+        : logger.info('data already exists')
+    }
+
+    if (await userSubCriteriaRepository.createQueryBuilder().where({eventId: Id}).getOne())
+      await userSubCriteriaRepository
+        .createQueryBuilder()
+        .insert()
+        .values(userSubCriterias)
+        .execute()
+    else
+      throw new HttpException(
+        {
+          status: HttpStatus.BAD_REQUEST,
+          error: 'Cannot make changes in event',
+        },
+        HttpStatus.BAD_REQUEST,
+      )
   }
 
-  async addUsers(Id: number, idRef: IUserRef) {
-    const pivotRepository = await getRepository(Pivot);
-    const currentPivot = await pivotRepository.findOne({
-      order: { id: 'DESC' },
-      where: { eventId: Id }
-    });
-    const { eventId, criteriaId, subCriteriaId, ratingId } = currentPivot
-      ? currentPivot
-      : { eventId: 0, criteriaId: 0, subCriteriaId: 0, ratingId: 0 };
-    (await pivotRepository.createQueryBuilder().where({ eventId: Id }).getOne())
-      ? (await pivotRepository
+  async getUserRating(Id: number): Promise<User[]> {
+    const usersRating = await getRepository(UserSubCriteria)
+      .createQueryBuilder()
+      .where({eventId: Id})
+      .select(['userSubCriteria.userId, userSubCriteria.id'])
+      .addSelect(['COUNT(userSubCriteria.userId) AS rating'])
+      .leftJoin(User, 'user', 'userSubCriteria.userId = user.id')
+      .leftJoin(SubCriteria, 'subCriteria', 'subCriteria.id = userSubCriteria.subCriteriaId')
+      .leftJoin(EventEvaluatee, 'eventEvaluatee', 'eventEvaluatee.userId = userSubCriteria.userId')
+      .where('subCriteria.result = 1')
+      .andWhere('userSubCriteria.userId = eventEvaluatee.userId')
+      .groupBy('userSubCriteria.userId')
+      .execute()
+
+    const userSubCriteria = await getRepository(UserSubCriteria)
+      .createQueryBuilder()
+      .where({eventId: Id})
+      .select(['userId, userSubCriteria.id'])
+      .addSelect(['COUNT(userId) AS rating'])
+      .leftJoin(User, 'user', 'userSubCriteria.userId = user.id')
+      .leftJoin(SubCriteria, 'subCriteria', 'subCriteria.id = userSubCriteria.subCriteriaId')
+      .where('subCriteria.result = true OR subCriteria.result = false')
+      .groupBy('userId')
+      .getRawMany()
+
+    const currentEvent = await this.findOneById(Id)
+    let rankingScale = 10
+    currentEvent.rating?.map((rating) => {
+      rating.isSelected ? (rankingScale = rating.to) : rankingScale
+      return rankingScale
+    })
+
+    const users = await getRepository(User).find()
+    function setRating(user) {
+      for (let i = 0; i < usersRating.length; i++) {
+        if (user.id === usersRating[i].userId) {
+          return (
+            ((((usersRating[i].rating * currentEvent.bonus ? currentEvent.bonus / 100 : 1) /
+              userSubCriteria[i].rating) *
+              100) /
+              rankingScale) *
+            100
+          ).toFixed(5)
+        }
+      }
+    }
+
+    users.forEach((user) => {
+      user.rating = Number(setRating(user)) ? Number(setRating(user)) : 0
+    })
+
+    return users
+  }
+
+  async addEvaluators(Id: number, userId: number) {
+    if (!isUpcomingEvent(await this.eventRepository.findOne(Id))) {
+      throw new HttpException(
+        {
+          status: HttpStatus.BAD_REQUEST,
+          error: 'Cannot make changes in event',
+        },
+        HttpStatus.BAD_REQUEST,
+      )
+    }
+    const eventEvaluatorRepository = await getRepository(EventEvaluator)
+    const currentPivot = await eventEvaluatorRepository.findOne({
+      order: {id: 'DESC'},
+      where: {eventId: Id},
+    })
+    const {eventId} = currentPivot || {eventId: 0}
+    ;(await eventEvaluatorRepository.createQueryBuilder().where({eventId: Id}).getOne())
+      ? (await eventEvaluatorRepository
           .createQueryBuilder()
-          .where({ eventId: Id })
-          .andWhere({ userId: idRef.id })
+          .where({eventId: Id})
+          .andWhere({userId: userId})
           .getOne())
         ? logger.info('data already exists')
-        : await pivotRepository
+        : await eventEvaluatorRepository
             .createQueryBuilder()
             .insert()
             .values({
-              userId: idRef.id,
-              eventId: eventId,
-              criteriaId: criteriaId,
-              subCriteriaId: subCriteriaId,
-              ratingId: ratingId
+              userId: userId,
+              eventId,
             })
             .execute()
-      : await pivotRepository.save({
-          eventId: Id,
-          userId: idRef.id,
-          criteriaId,
-          subCriteriaId,
-          ratingId
-        });
+      : logger.error("couldn't find event")
   }
+
+  async addEvaluatees(Id: number, userId: number) {
+    if (!isUpcomingEvent(await this.eventRepository.findOne(Id))) {
+      throw new HttpException(
+        {
+          status: HttpStatus.BAD_REQUEST,
+          error: 'Cannot make changes in event',
+        },
+        HttpStatus.BAD_REQUEST,
+      )
+    }
+    const eventEvaluateeRepository = await getRepository(EventEvaluatee)
+    const currentPivot = await eventEvaluateeRepository.findOne({
+      order: {id: 'DESC'},
+      where: {eventId: Id},
+    })
+    const {eventId} = currentPivot || {eventId: 0}
+    ;(await eventEvaluateeRepository.createQueryBuilder().where({eventId: Id}).getOne())
+      ? (await eventEvaluateeRepository
+          .createQueryBuilder()
+          .where({eventId: Id})
+          .andWhere({userId: userId})
+          .getOne())
+        ? logger.info('data already exists')
+        : await eventEvaluateeRepository
+            .createQueryBuilder()
+            .insert()
+            .values({
+              userId: userId,
+              eventId,
+            })
+            .execute()
+      : logger.error("couldn't find event")
+  }
+
   addElement(event: Event) {
-    return this.eventRepository.save(event);
-  }
-  findAll(): Promise<Event[]> {
-    return this.eventRepository.find({
-      relations: [
-        'pivot',
-        'pivot.criteria',
-        'pivot.subCriteria',
-        'pivot.rating',
-        'pivot.user'
-      ]
-    });
+    return this.eventRepository.save(event)
   }
 
-  findAllByTitle(title: string): Promise<Event[]> {
+  async findAll(): Promise<Event[]> {
     return this.eventRepository.find({
       relations: [
-        'pivot',
-        'pivot.criteria',
-        'pivot.subCriteria',
-        'pivot.rating',
-        'pivot.user'
+        'criteria',
+        'rating',
+        'eventEvaluator',
+        'eventEvaluator.user',
+        'eventEvaluatee',
+        'eventEvaluatee.user',
       ],
-      where: { title: title }
-    });
+    })
   }
 
   async findOneById(id: number): Promise<Event> {
-    let event;
-    event = await this.eventRepository.findOne(id, {
-      relations: [
-        'pivot',
-        'pivot.criteria',
-        'pivot.subCriteria',
-        'pivot.rating',
-        'pivot.user'
-      ]
-    });
-
-    return event;
+    return this.eventRepository.findOne(id, {
+      relations: ['criteria', 'rating', 'users'],
+    })
   }
 
-  async findOneByTitle(title: string): Promise<Event> {
-    const event = await this.eventRepository.findOne({
-      relations: [
-        'pivot',
-        'pivot.criteria',
-        'pivot.subCriteria',
-        'pivot.rating',
-        'pivot.user'
-      ],
-      where: { title: title }
-    });
-
-    return event;
+  async findAllByTitle(title: string): Promise<Event[]> {
+    return this.eventRepository
+      .createQueryBuilder('event')
+      .where('event.title like :title', {title: `%${title}%`})
+      .getMany()
   }
 
-  async findOneByTimePeriod(timePeriod: Period): Promise<Event> {
-    const event = await this.eventRepository.findOne({
-      relations: [
-        'pivot',
-        'pivot.criteria',
-        'pivot.subCriteria',
-        'pivot.rating',
-        'pivot.user'
-      ],
-      where: { timePeriod: timePeriod }
-    });
-
-    return event;
+  async findAllByBonus(bonus: number): Promise<Event[]> {
+    return this.eventRepository
+      .createQueryBuilder('event')
+      .where('event.bonus like :bonus', {bonus: `%${bonus}%`})
+      .getMany()
   }
 
-  async create(createEventDto: CreateEventDto): Promise<Event> {
-    return this.eventRepository.save(createEventDto);
+  async findAllByTimePeriod(timePeriod: Period): Promise<Event[]> {
+    return this.eventRepository
+      .createQueryBuilder('event')
+      .where('event.timePeriod like :timePeriod', {
+        timePeriod: `%${timePeriod}%`,
+      })
+      .getMany()
   }
 
-  async update(
-    eventId: number,
-    updateEventDto: UpdateEventDto
-  ): Promise<Event> {
+  async create(createEventDto: CreateEventDto): Promise<EventDto> {
+    createEventDto.rating = await this.ratingRepository.find({take: 3})
+    return this.eventRepository.save(createEventDto)
+  }
+
+  async update(eventId: number, updateEventDto: UpdateEventDto): Promise<Event> {
     const event = await this.eventRepository.preload({
       id: eventId,
-      ...updateEventDto
-    });
+      ...updateEventDto,
+    })
 
-    return this.eventRepository.save(event);
+    return this.eventRepository.save(event)
   }
 
   async remove(id: number): Promise<Event> {
-    const event = await this.findOneById(id);
-    return this.eventRepository.remove(event);
+    const event = await this.findOneById(id)
+    return this.eventRepository.remove(event)
   }
 }

@@ -1,14 +1,10 @@
-import { IsString, IsBoolean, IsOptional } from 'class-validator';
-import { SubCriteria } from '../entity/subCriteria';
-import { Pivot } from '../entity/pivot';
+import {IsString, IsBoolean} from 'class-validator'
+import {SubCriteria} from '../entity/subCriteria'
 
 export class CreateSubCriteriaDto extends SubCriteria {
   @IsString()
-  readonly name: string;
+  readonly name: string
 
   @IsBoolean()
-  readonly result: boolean;
-
-  @IsOptional()
-  pivot: Pivot[];
+  readonly result: boolean
 }

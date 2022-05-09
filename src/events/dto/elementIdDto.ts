@@ -1,7 +1,7 @@
-import { IsInt } from 'class-validator';
-import { IIdRefDto } from '../interface/idRefInterface';
+import {IsInt} from 'class-validator'
+import {IElementIdDto} from '../interface/idRefInterface'
 
-export class elementIdDto implements IIdRefDto {
+export class elementIdDto implements IElementIdDto {
   @IsInt()
-  readonly id: number;
+  readonly id: number
 }
