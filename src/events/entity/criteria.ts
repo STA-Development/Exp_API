@@ -1,62 +1,58 @@
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  OneToMany,
-  ManyToMany,
-  JoinTable
-} from 'typeorm';
-import { ICriteria } from '../interface/criteriaInterface';
-import { Pivot, PivotDto } from './pivot';
-import { Event } from './event';
-import { SubCriteria } from './subCriteria';
+import {Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToMany, JoinTable} from 'typeorm'
+import {ICriteria} from '../interface/criteriaInterface'
+import {UserSubCriteria} from './userSubCriteria'
+import {Event} from './event'
+import {SubCriteria, SubCriteriaDto} from './subCriteria'
 
 @Entity()
 export class Criteria implements ICriteria {
   @PrimaryGeneratedColumn()
-  id: number;
+  id: number
 
   @Column()
-  name: string;
+  name: string
 
   @Column()
-  criteria: boolean;
+  criteria: boolean
 
   @Column()
-  rating: number;
+  rating: number
 
-  @OneToMany(() => Pivot, (pivot) => pivot.criteria, {
+  @OneToMany(() => UserSubCriteria, (userSubCriteria) => userSubCriteria.criteria, {
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
-    createForeignKeyConstraints: false
+    createForeignKeyConstraints: false,
   })
-  pivot: Pivot[];
+  userSubCriteria: UserSubCriteria[]
 
   @ManyToMany(() => Event, (event) => event.criteria, {
-    // onUpdate: 'CASCADE',
-    // onDelete: 'CASCADE',
-    // createForeignKeyConstraints: false
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE',
+    createForeignKeyConstraints: false,
   })
-  events: Event[];
+  events: Event[]
 
-  @ManyToMany(() => SubCriteria, (subCriteria) => subCriteria.criteria, {
-    // onUpdate: 'CASCADE',
-    // onDelete: 'CASCADE',
-    // createForeignKeyConstraints: false
-    cascade: true
+  @ManyToMany(() => SubCriteria, (subCriteria) => subCriteria.criterias, {
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE',
+    createForeignKeyConstraints: false,
   })
-  // @JoinTable({
-  //   name: 'criteria_subCriteria',
-  //   joinColumn: { name: 'subCriteriaId' },
-  //   inverseJoinColumn: { name: 'criteriaId' }
-  // })
-  subCriteria: SubCriteria[];
+  @JoinTable({
+    name: 'criteria_subcriteria',
+    joinColumn: {name: 'subCriteriaId'},
+    inverseJoinColumn: {name: 'criteriaId'},
+  })
+  subCriteria: SubCriteria[]
 }
 
-export class CriteriaPivotDto {
-  id: number;
-  name: string;
-  criteria: boolean;
-  rating: number;
-  pivot: PivotDto[];
+export class CriteriaDto {
+  id: number
+
+  name: string
+
+  criteria: boolean
+
+  rating: number
+
+  subCriteria: SubCriteriaDto[]
 }

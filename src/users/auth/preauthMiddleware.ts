@@ -1,4 +1,4 @@
-import * as admin from 'firebase-admin';
+import * as admin from 'firebase-admin'
 
 const firebaseConfig = {
   type: process.env.FB_TYPE,
@@ -10,11 +10,11 @@ const firebaseConfig = {
   authUri: process.env.FB_AUTH_URI,
   tokenUri: process.env.FB_TOKEN_URI,
   authProviderX509CertUrl: process.env.FB_AUTH_PROVIDER,
-  clientC509CertUrl: process.env.FB_CLIENT_URL
-};
+  clientC509CertUrl: process.env.FB_CLIENT_URL,
+}
 
 admin.initializeApp({
   credential: admin.credential.cert(firebaseConfig),
-  databaseURL: process.env.FB_DB_URL
-});
-export const dbAuth = admin.auth();
+  databaseURL: process.env.FB_DB_URL,
+})
+export const dbAuth = admin.auth()

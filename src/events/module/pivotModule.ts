@@ -1,24 +1,17 @@
-import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { ConfigModule } from '@nestjs/config';
-import { Criteria } from '../entity/criteria';
-import { Pivot } from '../entity/pivot';
-import { Event } from '../entity/event';
-import { Rating } from '../entity/rating';
-import { SubCriteria } from '../entity/subCriteria';
-import { User } from '../../users/entity/user';
+import {Module} from '@nestjs/common'
+import {TypeOrmModule} from '@nestjs/typeorm'
+import {ConfigModule} from '@nestjs/config'
+import {Criteria} from '../entity/criteria'
+import {UserSubCriteria} from '../entity/userSubCriteria'
+import {Event} from '../entity/event'
+import {Rating} from '../entity/rating'
+import {SubCriteria} from '../entity/subCriteria'
+import {User} from '../../users/entity/user'
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    TypeOrmModule.forFeature([
-      Pivot,
-      Criteria,
-      Event,
-      Rating,
-      SubCriteria,
-      User
-    ]),
+    TypeOrmModule.forFeature([UserSubCriteria, Criteria, Event, Rating, SubCriteria, User]),
     TypeOrmModule.forRoot({
       keepConnectionAlive: true,
       type: 'mysql',
