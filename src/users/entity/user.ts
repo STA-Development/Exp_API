@@ -36,7 +36,7 @@ export class User implements IUser {
   })
   pivot: Pivot[];
 
-  @Column({ default: null })
+  @Column()
   authUid: string;
 
   @Column({ default: false })

@@ -133,6 +133,10 @@ export class UsersService {
 
   async addUser(addUserDto: AddUserDto): Promise<User> {
     try {
+      const auth = await dbAuth.createUser({
+        email: addUserDto.email
+      });
+      addUserDto.authUid = auth.uid;
       addUserDto.avatar = process.env.AVATAR_URL;
       return await this.usersRepository.addUser(addUserDto);
     } catch (err) {
