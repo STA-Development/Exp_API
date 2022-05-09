@@ -10,7 +10,7 @@ import {RatingRepository} from '../repository/ratingRepository'
 import {CriteriaRepository} from '../repository/criteriaRepository'
 import {UserRepository} from '../../users/repository/userRepository'
 import {IEventSearch} from '../interface/eventSearchInterface'
-import {ISubCriteriaRef} from '../interface/subCriteriaRefInterface'
+import {EventSubCriteriaUpdateDto} from '../dto/eventSubCriteriaUpdateDto'
 import {isUpcomingEvent} from '../../utils/checkEventDate'
 import {IEvaluationResult} from '../interface/evaluationResultInterface'
 import {ISubmission} from '../interface/submissionInterface'
@@ -90,7 +90,7 @@ export class EventsService {
     return this.eventsRepository.addElement(event)
   }
 
-  async addSubCriteria(Id: number, idRef: ISubCriteriaRef): Promise<void> {
+  async addSubCriteria(Id: number, idRef: EventSubCriteriaUpdateDto): Promise<void> {
     await this.eventsRepository.addSubCriteria(Id, idRef)
   }
 

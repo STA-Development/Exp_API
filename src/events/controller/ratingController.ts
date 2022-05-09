@@ -10,6 +10,7 @@ import {
   Put,
   UseInterceptors,
 } from '@nestjs/common'
+import {ApiOkResponse} from '@nestjs/swagger'
 import {RatingService} from '../service/ratingService'
 import {CreateRatingDto} from '../dto/ratingCreateDto'
 import {Rating, RatingDto} from '../entity/rating'
@@ -28,12 +29,14 @@ export class RatingController {
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
+  @ApiOkResponse({type: [RatingDto]})
   @Get()
   async findAll(): Promise<RatingDto[]> {
     return (await this.ratingService.findAll()).map((rating) => ratingGetDto(rating))
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
+  @ApiOkResponse({type: [RatingDto]})
   @Get(':id')
   async findOneById(@Param('id') id: number): Promise<RatingDto> {
     return ratingGetDto(await this.ratingService.findOneById(id))

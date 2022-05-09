@@ -10,6 +10,7 @@ import {
   UseInterceptors,
   ClassSerializerInterceptor,
 } from '@nestjs/common'
+import {ApiOkResponse} from '@nestjs/swagger'
 import {SubCriteriaService} from '../service/subCriteriaService'
 import {CreateSubCriteriaDto} from '../dto/subCriteriaCreateDto'
 import {UpdateSubCriteriaDto} from '../dto/subCriteriaUpdateDto'
@@ -34,12 +35,14 @@ export class SubCriteriaController {
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
+  @ApiOkResponse({type: [SubCriteriaDto]})
   @Get()
   findAll(): Promise<SubCriteriaDto[]> {
     return this.subCriteriaService.findAll()
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
+  @ApiOkResponse({type: [SubCriteriaDto]})
   @Get(':id')
   async findOneById(@Param('id') id: number): Promise<SubCriteriaDto> {
     return subCriteriaGetDto(await this.subCriteriaService.findOneById(id))

@@ -1,4 +1,12 @@
-import {PartialType} from '@nestjs/mapped-types'
-import {CreateCriteriaDto} from './criteriaCreateDto'
+import {ApiProperty, ApiPropertyOptional} from '@nestjs/swagger'
+import {IsBoolean, IsString} from 'class-validator'
 
-export class UpdateCriteriaDto extends PartialType(CreateCriteriaDto) {}
+export class UpdateCriteriaDto {
+  @ApiPropertyOptional()
+  @IsString()
+  readonly name: string
+
+  @ApiProperty()
+  @IsBoolean()
+  readonly criteria: boolean
+}

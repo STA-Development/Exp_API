@@ -3,7 +3,6 @@ import {ApiProperty} from '@nestjs/swagger'
 import {Period} from '../interface/eventInterface'
 import {Rating} from '../entity/rating'
 
-
 export class CreateEventDto {
   @ApiProperty()
   @IsString()

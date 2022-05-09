@@ -12,7 +12,7 @@ import {Rating} from '../entity/rating'
 import {EventEvaluator} from '../entity/eventEvaluator'
 import {logger} from '../../logger'
 import {EventEvaluatee} from '../entity/eventEvaluatee'
-import {ISubCriteriaRef} from '../interface/subCriteriaRefInterface'
+import {EventSubCriteriaUpdateDto} from '../dto/eventSubCriteriaUpdateDto'
 import {isUpcomingEvent} from '../../utils/checkEventDate'
 import {IEvaluationResult} from '../interface/evaluationResultInterface'
 import {IUserSubCriteriaResult} from '../interface/userSubCriteriaResultInterface'
@@ -49,7 +49,7 @@ export class EventsRepository {
       .getMany()
   }
 
-  async addSubCriteria(id: number, idRef: ISubCriteriaRef) {
+  async addSubCriteria(id: number, idRef: EventSubCriteriaUpdateDto) {
     const userSubCriteriaRepository = await getRepository(UserSubCriteria)
     const userSubCriteria = await userSubCriteriaRepository.findOne({
       order: {id: 'DESC'},
