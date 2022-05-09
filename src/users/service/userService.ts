@@ -1,7 +1,7 @@
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { CreateUserDto } from '../dto/userCreateDto';
 import { UpdateUserDto } from '../dto/userUpdateDto';
-import { User, UserPivot } from '../entity/user';
+import { User, UserDto } from '../entity/user';
 import { logger } from '../../logger';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -16,23 +16,23 @@ import { AddUserDto } from '../dto/addUserDto';
 export class UsersService {
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
-    private cloudinary: CloudinaryService
+    private cloudinary: CloudinaryService,
   ) {}
 
   @Inject()
-  usersRepository: UserRepository;
+  usersRepository: UserRepository
 
   async create(createUserDto: CreateUserDto): Promise<User> {
     try {
       const auth = await dbAuth.createUser({
         email: createUserDto.email,
-        password: createUserDto.password
-      });
-      createUserDto.authUid = auth.uid;
-      createUserDto.avatar = process.env.AVATAR_URL;
-      return await this.usersRepository.create(createUserDto);
+        password: createUserDto.password,
+      })
+      createUserDto.authUid = auth.uid
+      createUserDto.avatar = process.env.AVATAR_URL
+      return await this.usersRepository.create(createUserDto)
     } catch (err) {
-      throw new BadRequestException(`Method Not Allowed`);
+      throw new BadRequestException(`Method Not Allowed`)
     }
   }
 
@@ -47,17 +47,23 @@ export class UsersService {
   }
 
   async findOneById(id: number): Promise<User> {
-    let user;
+    let user
     try {
-      user = await this.usersRepository.findOneById(id);
+      user = await this.usersRepository.findOneById(id)
     } catch (error) {
-      logger.error(`User with ID=${id} not found` + error);
+      logger.error(`User with ID=${id} not found ${error}`)
     }
-    return user;
+    return user
   }
 
   async findOne(authUid: string): Promise<User> {
-    return this.usersRepository.findOne(authUid);
+    let user
+    try {
+      user = await this.usersRepository.findOne(authUid)
+    } catch (error) {
+      logger.error(`User with ID=${authUid} not found ${error}`)
+    }
+    return user
   }
 
   async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
@@ -93,19 +99,19 @@ export class UsersService {
 
   async uploadImageToCloudinary(file: Express.Multer.File, uid: string) {
     try {
-      const user = await this.usersRepository.findOne(uid);
+      const user = await this.usersRepository.findOne(uid)
       if (user.avatarPublicId) {
-        await this.cloudinary.deleteImg(user.avatarPublicId);
+        await this.cloudinary.deleteImg(user.avatarPublicId)
       }
-      const cloudinaryRes = await this.cloudinary.uploadImage(file);
+      const cloudinaryRes = await this.cloudinary.uploadImage(file)
       return this.usersRepository.uploadImage(
         uid,
         cloudinaryRes.public_id,
         cloudinaryRes.url,
-        user.id
-      );
+        user.id,
+      )
     } catch (err) {
-      throw new NotFoundException(`file is not found`);
+      throw new NotFoundException(`file is not found`)
     }
   }
 

@@ -1,16 +1,16 @@
-import { Module } from '@nestjs/common';
-import { RatingController } from '../controller/ratingController';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { ConfigModule } from '@nestjs/config';
-import { RatingRepository } from '../repository/ratingRepository';
-import { RatingService } from '../service/ratingService';
-import { Rating } from '../entity/rating';
-import { Pivot } from '../entity/pivot';
+import {Module} from '@nestjs/common'
+import {TypeOrmModule} from '@nestjs/typeorm'
+import {ConfigModule} from '@nestjs/config'
+import {RatingController} from '../controller/ratingController'
+import {RatingRepository} from '../repository/ratingRepository'
+import {RatingService} from '../service/ratingService'
+import {Rating} from '../entity/rating'
+import {UserSubCriteria} from '../entity/userSubCriteria'
 
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    TypeOrmModule.forFeature([Rating, Pivot]),
+    TypeOrmModule.forFeature([Rating, UserSubCriteria]),
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: process.env.DB_HOST,
@@ -24,6 +24,6 @@ import { Pivot } from '../entity/pivot';
     })
   ],
   controllers: [RatingController],
-  providers: [RatingService, RatingRepository]
+  providers: [RatingService, RatingRepository],
 })
 export class RatingModule {}

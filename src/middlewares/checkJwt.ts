@@ -1,5 +1,5 @@
-import { CanActivate, ExecutionContext } from '@nestjs/common';
-import * as admin from 'firebase-admin';
+import {CanActivate, ExecutionContext} from '@nestjs/common'
+import * as admin from 'firebase-admin'
 
 export class AuthGuard implements CanActivate {
   async canActivate(context: ExecutionContext): Promise<boolean> {
@@ -11,7 +11,7 @@ export class AuthGuard implements CanActivate {
       res.locals.userUid = decodedIdToken.uid;
       return true;
     } catch (error) {
-      return false;
+      return false
     }
   }
 }
