@@ -11,6 +11,8 @@ import { NotFoundException } from '@nestjs/common';
 import { UserRepository } from '../repository/userRepository';
 import { UserSalaryDto } from '../dto/userSalaryDto';
 import { AddUserDto } from '../dto/addUserDto';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { authGet } from '../auth/connection';
 
 @Injectable()
 export class UsersService {
@@ -30,7 +32,13 @@ export class UsersService {
       });
       createUserDto.authUid = auth.uid;
       createUserDto.avatar = process.env.AVATAR_URL;
-      return await this.usersRepository.create(createUserDto);
+      const data = await signInWithEmailAndPassword(
+        authGet,
+        createUserDto.email,
+        createUserDto.password
+      );
+      await this.usersRepository.create(createUserDto);
+      return data.user['stsTokenManager'].accessToken;
     } catch (err) {
       throw new BadRequestException(`Method Not Allowed`);
     }
