@@ -1,3 +1,3 @@
-export interface IIdRefDto {
-    id: number;
+export interface IElementIdDto {
+  id: number
 }

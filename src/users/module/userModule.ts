@@ -1,14 +1,16 @@
+import {UserSubCriteria} from '../../events/entity/userSubCriteria'
+import {EventEvaluator} from '../../events/entity/eventEvaluator'
+import {EventEvaluatee} from '../../events/entity/eventEvaluatee'
 import { UsersController } from '../controller/userController';
 import { PdfController } from '../controller/pdfController';
 import { UsersService } from '../service/userService';
 import { PdfService } from '../service/pdfService';
-import { TypeOrmModule } from '@nestjs/typeorm';
+
 import { ConfigModule } from '@nestjs/config';
 import { User } from '../entity/user';
 import { UserRepository } from '../repository/userRepository';
 import { JwtModule } from '@nestjs/jwt';
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
-import { Pivot } from '../../events/entity/pivot';
 import { CloudinaryProvider } from '../../cloudinary/cloudinaryProvider';
 import { CloudinaryService } from '../../cloudinary/cloudinaryService';
 import { logger } from '../../logger';
@@ -16,7 +18,7 @@ import { logger } from '../../logger';
 @Module({
   imports: [
     ConfigModule.forRoot(),
-    TypeOrmModule.forFeature([User, Pivot]),
+    TypeOrmModule.forFeature([User, UserSubCriteria, EventEvaluator, EventEvaluatee]),
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: process.env.DB_HOST,
@@ -29,19 +31,15 @@ import { logger } from '../../logger';
       keepConnectionAlive: true
     }),
 
-    JwtModule.register({})
+    JwtModule.register({}),
   ],
   controllers: [UsersController, PdfController],
-  providers: [
-    UsersService,
-    UserRepository,
-    CloudinaryService,
-    CloudinaryProvider,
+  providers: [UsersService, UserRepository, CloudinaryService, CloudinaryProvider,
     PdfService
-  ]
+  ],
 })
 export class UserModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(logger).forRoutes(UsersController);
+    consumer.apply(logger).forRoutes(UsersController)
   }
 }
