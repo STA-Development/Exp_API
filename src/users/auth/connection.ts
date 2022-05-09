@@ -2,7 +2,7 @@ import { initializeApp } from 'firebase/app';
 import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 
-const firebaseConfigd = {
+const firebaseConfig = {
   apiKey: process.env.FB_API_KEY,
   authDomain: process.env.FB_AUTH_DOMAIN,
   projectId: process.env.FB_PROJECT_ID,
@@ -11,6 +11,6 @@ const firebaseConfigd = {
   appId: process.env.FB_APP_ID
 };
 
-const app = initializeApp(firebaseConfigd);
+const app = initializeApp(firebaseConfig);
 export const authGet = getAuth();
 export const db = getFirestore(app);
