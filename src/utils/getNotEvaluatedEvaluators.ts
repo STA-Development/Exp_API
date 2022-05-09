@@ -1,5 +1,9 @@
 import * as dayjs from 'dayjs'
 import {INotEvaluated} from '../events/interface/notEvaluatedEvaluators'
+import * as relativeTime from 'dayjs/plugin/relativeTime'
+dayjs.extend(relativeTime)
+import * as duration from 'dayjs/plugin/duration'
+dayjs.extend(duration)
 
 export const getNotEvaluatedEvaluators = (evaluationPairs): INotEvaluated[] => {
   const notEvaluatedEvaluatees: INotEvaluated[] = []

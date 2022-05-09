@@ -1,18 +1,18 @@
-import { UsersController } from '../controller/userController';
-import { UsersService } from '../service/userService';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { ConfigModule } from '@nestjs/config';
-import { User } from '../entity/user';
-import { UserRepository } from '../repository/userRepository';
-import { JwtModule } from '@nestjs/jwt';
-import { Module } from '@nestjs/common';
-import { CloudinaryProvider } from '../../cloudinary/cloudinaryProvider';
-import { CloudinaryService } from '../../cloudinary/cloudinaryService';
+import {UsersController} from '../controller/userController'
+import {UsersService} from '../service/userService'
+import {TypeOrmModule} from '@nestjs/typeorm'
+import {ConfigModule} from '@nestjs/config'
+import {User} from '../entity/user'
+import {UserRepository} from '../repository/userRepository'
+import {JwtModule} from '@nestjs/jwt'
+import {Module} from '@nestjs/common'
+import {CloudinaryProvider} from '../../cloudinary/cloudinaryProvider'
+import {CloudinaryService} from '../../cloudinary/cloudinaryService'
 import {UserSubCriteria} from '../../events/entity/userSubCriteria'
 import {EventEvaluator} from '../../events/entity/eventEvaluator'
 import {EventEvaluatee} from '../../events/entity/eventEvaluatee'
-import {PdfController} from "../controller/pdfController";
-import {PdfService} from "../service/pdfService";
+import {PdfController} from '../controller/pdfController'
+import {PdfService} from '../service/pdfService'
 
 @Module({
   imports: [
@@ -27,14 +27,12 @@ import {PdfService} from "../service/pdfService";
       database: process.env.DB_DATABASE,
       autoLoadEntities: true,
       synchronize: true,
-      keepConnectionAlive: true
+      keepConnectionAlive: true,
     }),
 
     JwtModule.register({}),
   ],
   controllers: [UsersController, PdfController],
-  providers: [UsersService, UserRepository, CloudinaryService, CloudinaryProvider,
-    PdfService
-  ],
+  providers: [UsersService, UserRepository, CloudinaryService, CloudinaryProvider, PdfService],
 })
 export class UserModule {}

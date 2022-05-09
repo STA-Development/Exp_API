@@ -5,26 +5,23 @@ import {CreateUserDto} from '../dto/userCreateDto'
 import {UpdateUserDto} from '../dto/userUpdateDto'
 import {User} from '../entity/user'
 import {dbAuth} from '../auth/preauthMiddleware'
-import { UserSalaryDto } from '../dto/userSalaryDto';
-import { AddUserDto } from '../dto/addUserDto';
+import {UserSalaryDto} from '../dto/userSalaryDto'
+import {AddUserDto} from '../dto/addUserDto'
 
 @Injectable()
 export class UserRepository {
   @InjectRepository(User)
   userRepository: Repository<User>
 
-  async findAll(
-    limit: number,
-    page: number
-  ): Promise<{ data: User[]; count: number }> {
-    const builder = this.userRepository.createQueryBuilder('user');
-    const total = await builder.getCount();
-    const pages = Math.ceil(total / limit);
+  async findAll(limit: number, page: number): Promise<{data: User[]; count: number}> {
+    const builder = this.userRepository.createQueryBuilder('user')
+    const total = await builder.getCount()
+    const pages = Math.ceil(total / limit)
     const data = await this.userRepository.find({
       take: limit,
-      skip: (page - 1) * limit
-    });
-    return { data, count: pages };
+      skip: (page - 1) * limit,
+    })
+    return {data, count: pages}
   }
 
   findOneById(id: number): Promise<User> {
@@ -60,9 +57,9 @@ export class UserRepository {
   async changeSalary(id: number, userSalaryDto: UserSalaryDto): Promise<User> {
     const user = await this.userRepository.preload({
       id: id,
-      salary: userSalaryDto.salary
-    });
-    return this.userRepository.save(user);
+      salary: userSalaryDto.salary,
+    })
+    return this.userRepository.save(user)
   }
 
   async uploadImage(uid: string, publicId: string, url: string, id: number): Promise<User> {
@@ -75,7 +72,7 @@ export class UserRepository {
   }
 
   async addUser(addUserDto: AddUserDto): Promise<User> {
-    const user = await this.userRepository.create(addUserDto);
-    return this.userRepository.save(user);
+    const user = await this.userRepository.create(addUserDto)
+    return this.userRepository.save(user)
   }
 }
