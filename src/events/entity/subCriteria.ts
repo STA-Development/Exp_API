@@ -1,4 +1,4 @@
-import {Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToMany} from 'typeorm'
+import {Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToOne} from 'typeorm'
 import {ISubCriteria} from '../interface/subCriteriaInterface'
 import {UserSubCriteria} from './userSubCriteria'
 import {Criteria, CriteriaDto} from './criteria'
@@ -21,12 +21,12 @@ export class SubCriteria implements ISubCriteria {
   })
   userSubCriteria: UserSubCriteria[]
 
-  @ManyToMany(() => Criteria, (criteria) => criteria.subCriteria, {
+  @ManyToOne(() => Criteria, (criteria) => criteria.subCriteria, {
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
     createForeignKeyConstraints: false,
   })
-  criterias: Criteria[]
+  criteria: Criteria
 }
 
 export class SubCriteriaDto {
@@ -36,5 +36,5 @@ export class SubCriteriaDto {
 
   result: boolean
 
-  criterias: CriteriaDto[]
+  criteria: CriteriaDto
 }

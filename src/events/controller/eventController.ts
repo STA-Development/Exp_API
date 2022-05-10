@@ -10,8 +10,12 @@ import {
   UseInterceptors,
   ClassSerializerInterceptor,
   Req,
+  UseGuards,
 } from '@nestjs/common'
 import {Request} from 'express'
+import {JwtService} from '@nestjs/jwt'
+import {JwtPayload} from 'jsonwebtoken'
+import * as jwt from 'jsonwebtoken'
 import {EventsService} from '../service/eventService'
 import {CreateEventDto} from '../dto/eventCreateDto'
 import {UpdateEventDto} from '../dto/eventUpdateDto'
@@ -20,11 +24,25 @@ import {eventGetDto} from '../dto/eventGetDto'
 import {User} from '../../users/entity/user'
 import {IEventSearch} from '../interface/eventSearchInterface'
 import {ISubCriteriaRef} from '../interface/subCriteriaRefInterface'
+import {sendEvaluationEmail} from '../../utils/sendEvaluationMail'
+import {IEvaluationResult} from '../interface/evaluationResultInterface'
+import {ISubmission} from '../interface/submissionInterface'
+import {IEventProgress} from '../interface/eventProgress'
+import {INotEvaluated} from '../interface/notEvaluatedEvaluators'
 
 @Controller('events')
 export class EventsController {
   @Inject()
   eventsService: EventsService
+
+  @Inject()
+  jwtService: JwtService
+
+  @UseInterceptors(ClassSerializerInterceptor)
+  @Get()
+  async findAll(): Promise<EventDto[]> {
+    return (await this.eventsService.findAll()).map((event) => eventGetDto(event))
+  }
 
   @UseInterceptors(ClassSerializerInterceptor)
   @Get('search')
@@ -40,15 +58,45 @@ export class EventsController {
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
-  @Get()
-  async findAll(): Promise<EventDto[]> {
-    return (await this.eventsService.findAll()).map((event) => eventGetDto(event))
+  @Get(':id/progress')
+  getEventProgress(@Param('id') eventId: number): Promise<IEventProgress> {
+    return this.eventsService.getEventProgress(eventId)
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
-  @Get(':id/userRating')
+  @Get(':id/not-evaluated')
+  getNotEvaluatedEvaluators(@Param('id') eventId: number): Promise<INotEvaluated[]> {
+    return this.eventsService.getNotEvaluatedEvaluators(eventId)
+  }
+
+  @UseInterceptors(ClassSerializerInterceptor)
+  @Get(':id/user-rating')
   getUserRating(@Param('id') eventId: number): Promise<User[]> {
     return this.eventsService.getUserRating(eventId)
+  }
+
+  @UseInterceptors(ClassSerializerInterceptor)
+  @Get(':eventId/evaluatee/:evaluateeId/criteria-rating')
+  getUserCriteriaRating(
+    @Param('eventId') eventId: number,
+    @Param('evaluateeId') evaluateeId: number,
+  ): Promise<User[]> {
+    return this.eventsService.getUserCriteriaRating(eventId, evaluateeId)
+  }
+
+  @UseInterceptors(ClassSerializerInterceptor)
+  @Get(':id/submissions/:submissionId')
+  getSubmissionByEvaluatorId(
+    @Param('id') eventId: number,
+    @Param('submissionId') evaluatorId: number,
+  ): Promise<ISubmission[]> {
+    return this.eventsService.getSubmissionByEvaluatorId(eventId, evaluatorId)
+  }
+
+  @UseInterceptors(ClassSerializerInterceptor)
+  @Get(':eventId/submissions')
+  getSubmissions(@Param('eventId') eventId: number): Promise<ISubmission[]> {
+    return this.eventsService.getSubmissions(eventId)
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
@@ -61,6 +109,23 @@ export class EventsController {
   @Post()
   create(@Body() createEventDto: CreateEventDto): Promise<EventDto> {
     return this.eventsService.create(createEventDto)
+  }
+
+  @UseInterceptors(ClassSerializerInterceptor)
+  @Post(':id/invitation')
+  async evaluationInvitation(
+    @Param('id') eventId: number,
+    @Body() invitation: {email: string},
+  ): Promise<string> {
+    const evaluator = await this.eventsService.findByEmail(invitation.email, eventId)
+    const invitationToken = await this.jwtService.signAsync(
+      {evaluatorId: evaluator.id, eventId: eventId},
+      {secret: process.env.JWT_ACCESS_KEY, expiresIn: '1m'},
+    )
+
+    const link = `http://${process.env.HOST}:${process.env.PORT}/${process.env.SWAGGER_PATH}#/invitation/?code=${invitationToken}`
+    await sendEvaluationEmail(invitation.email, link)
+    return invitationToken
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
@@ -86,14 +151,34 @@ export class EventsController {
 
   @UseInterceptors(ClassSerializerInterceptor)
   @Put(':id/evaluator')
-  addEvaluators(@Param('id') eventId: number, @Body() userId: number): void {
-    this.eventsService.addEvaluators(eventId, userId)
+  async addEvaluators(@Param('id') eventId: number, @Body() userId: number): Promise<void> {
+    await this.eventsService.addEvaluators(eventId, userId)
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
   @Put(':id/evaluatee')
-  addEvaluatees(@Param('id') eventId: number, @Body() userId: number): void {
-    this.eventsService.addEvaluatees(eventId, userId)
+  async addEvaluatees(@Param('id') eventId: number, @Body() userId: number): Promise<void> {
+    await this.eventsService.addEvaluatees(eventId, userId)
+  }
+
+  @UseInterceptors(ClassSerializerInterceptor)
+  @Put('evaluation')
+  async evaluationResult(@Body() evaluationResult: IEvaluationResult): Promise<string> {
+    try {
+      const jwtPayload: JwtPayload | string = jwt.verify(
+        evaluationResult.token,
+        process.env.JWT_ACCESS_KEY,
+      )
+      if (typeof jwtPayload !== 'string') {
+        await this.eventsService.setRating(
+          jwtPayload.evaluatorId,
+          jwtPayload.eventId,
+          evaluationResult,
+        )
+      }
+    } catch (error) {
+      return error
+    }
   }
 
   @UseInterceptors(ClassSerializerInterceptor)

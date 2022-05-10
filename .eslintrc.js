@@ -18,10 +18,18 @@ module.exports = {
     'prettier',
   ],
   rules: {
+    'max-params': ['error', {max: 3}],
+    'max-lines': ['error', {max: 550, skipBlankLines: true, skipComments: true}],
+    'max-lines-per-function': ['error', {max: 120, skipBlankLines: true, skipComments: true}],
+    complexity: ['error', 20],
+    '@typescript-eslint/no-explicit-any': 'error',
+    '@typescript-eslint/no-unused-vars': [
+      'error',
+      {argsIgnorePattern: '^_', ignoreRestSiblings: true},
+    ],
     'disable-next-line': [0, {extensions: ['.js', '.ts']}],
     'import/extensions': [1, {extensions: ['.js', '.ts']}], // There is no need for each import statement highlight the file's extension
     'consistent-return': 0, // In application it requires to put return at the end of the arrow function which in the majority places will cause an issue.
-    'no-use-before-define': 'off', // While using JSX in our component we have to import React (that's what linter suggests), in contrast we are getting error if we don't use this rule.
     'no-throw-literal': 0, // No Need for this kind of thing because you can easily throw and Error As object - For example we are getting that kind of responses from BE
     'no-shadow': 'off', // This One is disabled because rule have no support for ts, but at the bottom we have enabled @typescript-eslint/no-shadow instead of
     '@typescript-eslint/no-shadow': 'error',

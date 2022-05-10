@@ -12,22 +12,22 @@ import {
   UseGuards,
   Patch,
   UploadedFile,
-  UseInterceptors
-} from '@nestjs/common';
-import { ApiFile } from '../dto/uploadFileDto';
-import { UsersService } from '../service/userService';
-import { CreateUserDto } from '../dto/userCreateDto';
-import { UpdateUserDto } from '../dto/userUpdateDto';
-import { User, UserDto } from '../entity/user';
-import { UserSalaryDto } from '../dto/userSalaryDto';
-import { AuthGuard } from '../../middlewares/checkJwt';
-import { RolesGuard } from '../../middlewares/checkAdmin';
-import { Token } from '../../middlewares/jwtDecorator';
-import { ApiBearerAuth, ApiOkResponse } from '@nestjs/swagger';
-import { logger } from '../../logger';
-import { userGetDto } from '../dto/userGetDto';
-import { AddUserDto } from '../dto/addUserDto';
-import { GetUserDto } from '../dto/getUsersDto';
+  UseInterceptors,
+} from '@nestjs/common'
+import {ApiBearerAuth, ApiOkResponse} from '@nestjs/swagger'
+import {UsersService} from '../service/userService'
+import {CreateUserDto} from '../dto/userCreateDto'
+import {UpdateUserDto} from '../dto/userUpdateDto'
+import {User, UserDto} from '../entity/user'
+import {AuthGuard} from '../../middlewares/checkJwt'
+import {Token} from '../../middlewares/jwtDecorator'
+import {logger} from '../../logger'
+import {userGetDto} from '../dto/userGetDto'
+import {ApiFile} from '../dto/uploadFileDto'
+import {UserSalaryDto} from '../dto/userSalaryDto'
+import {RolesGuard} from '../../middlewares/checkAdmin'
+import {AddUserDto} from '../dto/addUserDto'
+import {GetUserDto} from '../dto/getUsersDto'
 
 @Controller('users')
 export class UsersController {
@@ -35,43 +35,42 @@ export class UsersController {
   usersService: UsersService
 
   @UseInterceptors(ClassSerializerInterceptor)
-  @Post()
-  create(@Body() createUserDto: CreateUserDto): Promise<User> {
-    return this.usersService.create(createUserDto)
-  }
-
-  @UseInterceptors(ClassSerializerInterceptor)
   @UseGuards(AuthGuard)
   @ApiBearerAuth()
-  @ApiOkResponse({ type: [GetUserDto] })
+  @ApiOkResponse({type: [GetUserDto]})
   @Get()
   async findAll(
     @Query('limit') limit: number,
-    @Query('page') page: number
-  ): Promise<{ pageCount: number; data: UserDto[] }> {
-    logger.info('Get all users');
-    const users = await this.usersService.findAll(limit, page);
-    const data = users.data.map((user) => userGetDto(user));
-    return { data, pageCount: users.count };
+    @Query('page') page: number,
+  ): Promise<{pageCount: number; data: UserDto[]}> {
+    logger.info('Get all users')
+    const users = await this.usersService.findAll(limit, page)
+    const data = users.data.map((user) => userGetDto(user))
+    return {data, pageCount: users.count}
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
   @UseGuards(AuthGuard)
   @ApiBearerAuth()
-  @ApiOkResponse({ type: GetUserDto })
+  @ApiOkResponse({type: GetUserDto})
   @Get('me')
-  findOne(@Token() uid: string): Promise<User> {
+  findOne(@Token() uid: string): Promise<UserDto> {
     return this.usersService.findOne(uid)
-    return this.usersService.findOne(uid);
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
   @UseGuards(AuthGuard)
   @ApiBearerAuth()
   @Get(':id')
-  @ApiOkResponse({ type: GetUserDto })
+  @ApiOkResponse({type: GetUserDto})
   async find(@Param('id') id: number): Promise<UserDto> {
-    return userGetDto(await this.usersService.findOneById(id));
+    return userGetDto(await this.usersService.findOneById(id))
+  }
+
+  @UseInterceptors(ClassSerializerInterceptor)
+  @Post()
+  create(@Body() createUserDto: CreateUserDto): Promise<User> {
+    return this.usersService.create(createUserDto)
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
@@ -96,7 +95,10 @@ export class UsersController {
   @UseGuards(AuthGuard)
   @ApiBearerAuth()
   @ApiFile()
-  changeUserImg(@UploadedFile('file') file: Express.Multer.File, @Token() uid: string): Promise<User> {
+  changeUserImg(
+    @UploadedFile('file') file: Express.Multer.File,
+    @Token() uid: string,
+  ): Promise<User> {
     return this.usersService.uploadImageToCloudinary(file, uid)
   }
 
@@ -105,10 +107,7 @@ export class UsersController {
   @UseGuards(AuthGuard)
   @ApiBearerAuth()
   @Patch(':id/salary')
-  changeSalary(
-    @Body() userSalaryDto: UserSalaryDto,
-    @Param('id') id: number,
-  ): Promise<User> {
+  changeSalary(@Body() userSalaryDto: UserSalaryDto, @Param('id') id: number): Promise<User> {
     return this.usersService.changeSalary(id, userSalaryDto)
   }
 
@@ -118,7 +117,7 @@ export class UsersController {
   @ApiBearerAuth()
   @Patch(':id/disabled')
   deactivateUser(@Param('id') id: number) {
-    return this.usersService.userDeactivate(id);
+    return this.usersService.userDeactivate(id)
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
@@ -127,6 +126,6 @@ export class UsersController {
   @ApiBearerAuth()
   @Post('addUser')
   async addUser(@Body() addUserDto: AddUserDto): Promise<User> {
-    return this.usersService.addUser(addUserDto);
+    return this.usersService.addUser(addUserDto)
   }
 }

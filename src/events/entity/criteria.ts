@@ -1,4 +1,4 @@
-import {Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToMany, JoinTable} from 'typeorm'
+import {Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToMany} from 'typeorm'
 import {ICriteria} from '../interface/criteriaInterface'
 import {UserSubCriteria} from './userSubCriteria'
 import {Event} from './event'
@@ -15,9 +15,6 @@ export class Criteria implements ICriteria {
   @Column()
   criteria: boolean
 
-  @Column()
-  rating: number
-
   @OneToMany(() => UserSubCriteria, (userSubCriteria) => userSubCriteria.criteria, {
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
@@ -32,15 +29,10 @@ export class Criteria implements ICriteria {
   })
   events: Event[]
 
-  @ManyToMany(() => SubCriteria, (subCriteria) => subCriteria.criterias, {
+  @OneToMany(() => SubCriteria, (subCriteria) => subCriteria.criteria, {
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
     createForeignKeyConstraints: false,
-  })
-  @JoinTable({
-    name: 'criteria_subcriteria',
-    joinColumn: {name: 'subCriteriaId'},
-    inverseJoinColumn: {name: 'criteriaId'},
   })
   subCriteria: SubCriteria[]
 }
@@ -51,8 +43,6 @@ export class CriteriaDto {
   name: string
 
   criteria: boolean
-
-  rating: number
 
   subCriteria: SubCriteriaDto[]
 }

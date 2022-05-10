@@ -9,16 +9,15 @@ export class SubCriteriaService {
   @Inject()
   subCriteriaRepository: SubCriteriaRepository
 
-  async create(createSubCriteriaDto: CreateSubCriteriaDto) {
-    const subCriteria = await this.subCriteriaRepository.create(createSubCriteriaDto)
-    return this.subCriteriaRepository.create(subCriteria)
+  create(createSubCriteriaDto: CreateSubCriteriaDto) {
+    return this.subCriteriaRepository.create(createSubCriteriaDto)
   }
 
-  async findAll(): Promise<SubCriteria[]> {
+  findAll(): Promise<SubCriteria[]> {
     return this.subCriteriaRepository.findAll()
   }
 
-  async findOneById(id: number): Promise<SubCriteria> {
+  findOneById(id: number): Promise<SubCriteria> {
     return this.subCriteriaRepository.findOneById(id)
   }
 
