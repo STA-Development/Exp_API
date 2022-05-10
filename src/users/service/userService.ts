@@ -1,21 +1,16 @@
-import {
-  BadRequestException,
-  Inject,
-  Injectable,
-  UnauthorizedException
-} from '@nestjs/common';
-import { CreateUserDto } from '../dto/userCreateDto';
-import { UpdateUserDto } from '../dto/userUpdateDto';
-import { User, UserDto } from '../entity/user';
-import { logger } from '../../logger';
-import { Repository } from 'typeorm';
-import { InjectRepository } from '@nestjs/typeorm';
-import { CloudinaryService } from '../../cloudinary/cloudinaryService';
-import { dbAuth } from '../auth/preauthMiddleware';
-import { NotFoundException } from '@nestjs/common';
-import { UserRepository } from '../repository/userRepository';
-import { UserSalaryDto } from '../dto/userSalaryDto';
-import { AddUserDto } from '../dto/addUserDto';
+import {BadRequestException, Inject, Injectable, UnauthorizedException} from '@nestjs/common'
+import {CreateUserDto} from '../dto/userCreateDto'
+import {UpdateUserDto} from '../dto/userUpdateDto'
+import {User} from '../entity/user'
+import {logger} from '../../logger'
+import {Repository} from 'typeorm'
+import {InjectRepository} from '@nestjs/typeorm'
+import {CloudinaryService} from '../../cloudinary/cloudinaryService'
+import {dbAuth} from '../auth/preauthMiddleware'
+import {NotFoundException} from '@nestjs/common'
+import {UserRepository} from '../repository/userRepository'
+import {UserSalaryDto} from '../dto/userSalaryDto'
+import {AddUserDto} from '../dto/addUserDto'
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { authGet } from '../auth/connection';
 import { UserSignInDto } from '../dto/userSignInDto';
@@ -50,14 +45,11 @@ export class UsersService {
     }
   }
 
-  async findAll(
-    limit: number = 10,
-    page: number = 0
-  ): Promise<{ data: User[]; count: number }> {
+  async findAll(limit = 10, page = 0): Promise<{data: User[]; count: number}> {
     if (limit > 100) {
-      throw new BadRequestException('Pagination limit exceeded');
+      throw new BadRequestException('Pagination limit exceeded')
     }
-    return this.usersRepository.findAll(limit, page);
+    return this.usersRepository.findAll(limit, page)
   }
 
   async findOneById(id: number): Promise<User> {
@@ -71,43 +63,41 @@ export class UsersService {
   }
 
   async findOne(authUid: string): Promise<User> {
-    let user
     try {
-      user = await this.usersRepository.findOne(authUid)
-    } catch (error) {
-      logger.error(`User with ID=${authUid} not found ${error}`)
+      return this.usersRepository.findOne(authUid)
+    } catch (err) {
+      throw new NotFoundException(`User with ID=${authUid} not found`)
     }
-    return user
   }
 
   async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
     try {
-      const user = await this.usersRepository.update(id, updateUserDto);
-      await dbAuth.updateUser(user.authUid, { email: updateUserDto.email });
-      return user;
+      const user = await this.usersRepository.update(id, updateUserDto)
+      await dbAuth.updateUser(user.authUid, {email: updateUserDto.email})
+      return user
     } catch (err) {
-      throw new NotFoundException(`User with ID=${id} not found`);
+      throw new NotFoundException(`User with ID=${id} not found`)
     }
   }
 
   async remove(id: number): Promise<User> {
     try {
-      const user = await this.usersRepository.findOneById(id);
-      await dbAuth.deleteUser(user.authUid);
-      return await this.usersRepository.remove(id);
+      const user = await this.usersRepository.findOneById(id)
+      await dbAuth.deleteUser(user.authUid)
+      return await this.usersRepository.remove(id)
     } catch (err) {
       throw {
         statusCode: 404,
-        message: `User with ID=${id} not found`
-      };
+        message: `User with ID=${id} not found`,
+      }
     }
   }
 
   async changeSalary(id: number, userSalaryDto: UserSalaryDto): Promise<User> {
     try {
-      return this.usersRepository.changeSalary(id, userSalaryDto);
+      return this.usersRepository.changeSalary(id, userSalaryDto)
     } catch (err) {
-      throw new NotFoundException(`User with ID=${id} not found`);
+      throw new NotFoundException(`User with ID=${id} not found`)
     }
   }
 
@@ -131,28 +121,32 @@ export class UsersService {
 
   async userDeactivate(id: number) {
     try {
-      const user = await this.usersRepository.findOneById(id);
-      const authUser = await dbAuth.getUser(user.authUid);
+      const user = await this.usersRepository.findOneById(id)
+      const authUser = await dbAuth.getUser(user.authUid)
       if (authUser.disabled) {
         await dbAuth.updateUser(user.authUid, {
-          disabled: false
-        });
+          disabled: false,
+        })
       } else {
         await dbAuth.updateUser(user.authUid, {
-          disabled: true
-        });
+          disabled: true,
+        })
       }
     } catch (err) {
-      throw new NotFoundException(`User with ID=${id} not found`);
+      throw new NotFoundException(`User with ID=${id} not found`)
     }
   }
 
   async addUser(addUserDto: AddUserDto): Promise<User> {
     try {
-      addUserDto.avatar = process.env.AVATAR_URL;
-      return await this.usersRepository.addUser(addUserDto);
+      const auth = await dbAuth.createUser({
+        email: addUserDto.email,
+      })
+      addUserDto.authUid = auth.uid
+      addUserDto.avatar = process.env.AVATAR_URL
+      return await this.usersRepository.addUser(addUserDto)
     } catch (err) {
-      throw new BadRequestException(`Method Not Allowed`);
+      throw new BadRequestException(`Method Not Allowed`)
     }
   }
 

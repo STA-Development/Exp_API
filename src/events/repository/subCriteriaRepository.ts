@@ -4,27 +4,31 @@ import {Repository} from 'typeorm'
 import {CreateSubCriteriaDto} from '../dto/subCriteriaCreateDto'
 import {UpdateSubCriteriaDto} from '../dto/subCriteriaUpdateDto'
 import {SubCriteria} from '../entity/subCriteria'
+import {Criteria} from '../entity/criteria'
 
 @Injectable()
 export class SubCriteriaRepository {
   @InjectRepository(SubCriteria)
   subCriteriaRepository: Repository<SubCriteria>
 
+  @InjectRepository(Criteria)
+  criteriaRepository: Repository<Criteria>
+
   findAll(): Promise<SubCriteria[]> {
     return this.subCriteriaRepository.find({
-      relations: ['criterias'],
+      relations: ['criteria'],
     })
   }
 
   async findOneById(id: number): Promise<SubCriteria> {
     const subCriteria = await this.subCriteriaRepository.findOne(id, {
-      relations: ['criterias'],
+      relations: ['criteria'],
     })
     return subCriteria
   }
 
   create(createSubCriteriaDto: CreateSubCriteriaDto): Promise<SubCriteria> {
-    return this.subCriteriaRepository.save(this.subCriteriaRepository.create(createSubCriteriaDto))
+    return this.subCriteriaRepository.save(createSubCriteriaDto)
   }
 
   async update(eventId: number, updateSubCriteriaDto: UpdateSubCriteriaDto): Promise<SubCriteria> {
@@ -37,7 +41,6 @@ export class SubCriteriaRepository {
   }
 
   async remove(id: number): Promise<SubCriteria> {
-    const subCriteria = await this.findOneById(id)
-    return this.subCriteriaRepository.remove(subCriteria)
+    return this.subCriteriaRepository.remove(await this.findOneById(id))
   }
 }

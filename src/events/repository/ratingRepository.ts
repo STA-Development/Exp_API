@@ -10,7 +10,7 @@ export class RatingRepository {
   @InjectRepository(Rating)
   ratingRepository: Repository<Rating>
 
-  async create(createRatingDto: CreateRatingDto): Promise<Rating> {
+  create(createRatingDto: CreateRatingDto): Promise<Rating> {
     return this.ratingRepository.save(createRatingDto)
   }
 
@@ -18,9 +18,8 @@ export class RatingRepository {
     return this.ratingRepository.find()
   }
 
-  async findOneById(id: number): Promise<Rating> {
-    const rating = await this.ratingRepository.findOne(id)
-    return rating
+  findOneById(id: number): Promise<Rating> {
+    return this.ratingRepository.findOne(id)
   }
 
   async update(eventId: number, updateRatingDto: UpdateRatingDto): Promise<Rating> {
@@ -33,7 +32,6 @@ export class RatingRepository {
   }
 
   async remove(id: number): Promise<Rating> {
-    const rating = await this.findOneById(id)
-    return this.ratingRepository.remove(rating)
+    return this.ratingRepository.remove(await this.findOneById(id))
   }
 }

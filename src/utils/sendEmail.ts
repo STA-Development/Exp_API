@@ -12,7 +12,7 @@ export const sendEmail = async (email: string, link: string) => {
 
   ejs.renderFile(`${__dirname}/emailForm.ejs`, {link}, async (err, data) => {
     await transporter.sendMail({
-      from: process.env.EMAIL,
+      from: process.env.email,
       to: email,
       subject: 'Hello ',
       html: data,

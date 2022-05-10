@@ -7,6 +7,7 @@ import {
   ManyToMany,
   JoinTable,
 } from 'typeorm'
+import {ApiProperty} from '@nestjs/swagger'
 import {IEvent, Period} from '../interface/eventInterface'
 import {UserSubCriteria} from './userSubCriteria'
 import {User, UserDto} from '../../users/entity/user'
@@ -29,11 +30,23 @@ export class Event implements IEvent {
   @Column()
   timePeriod: Period
 
+  @ManyToMany(() => Criteria, (criteria) => criteria.events, {
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE',
+    createForeignKeyConstraints: false,
+    cascade: true,
+  })
+  @JoinTable({
+    name: 'event_criteria',
+    joinColumn: {name: 'eventId'},
+    inverseJoinColumn: {name: 'criteriaId'},
+  })
+  criteria: Criteria[]
+
   @OneToMany(() => UserSubCriteria, (userSubCriteria) => userSubCriteria.event, {
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
     createForeignKeyConstraints: false,
-    eager: true,
   })
   userSubCriteria: UserSubCriteria[]
 
@@ -50,8 +63,8 @@ export class Event implements IEvent {
   })
   @JoinTable({
     name: 'event_user',
-    joinColumn: {name: 'userId'},
-    inverseJoinColumn: {name: 'eventId'},
+    joinColumn: {name: 'eventId'},
+    inverseJoinColumn: {name: 'userId'},
   })
   users: User[]
 
@@ -63,23 +76,10 @@ export class Event implements IEvent {
   })
   @JoinTable({
     name: 'event_rating',
-    joinColumn: {name: 'ratingId'},
-    inverseJoinColumn: {name: 'eventId'},
+    joinColumn: {name: 'eventId'},
+    inverseJoinColumn: {name: 'ratingId'},
   })
   rating: Rating[]
-
-  @ManyToMany(() => Criteria, (criteria) => criteria.events, {
-    onUpdate: 'CASCADE',
-    onDelete: 'CASCADE',
-    createForeignKeyConstraints: false,
-    cascade: true,
-  })
-  @JoinTable({
-    name: 'event_criteria',
-    joinColumn: {name: 'criteriaId'},
-    inverseJoinColumn: {name: 'eventId'},
-  })
-  criteria: Criteria[]
 
   @OneToMany(() => EventEvaluator, (eventEvaluator) => eventEvaluator.user, {
     onUpdate: 'CASCADE',
@@ -96,14 +96,19 @@ export class Event implements IEvent {
   eventEvaluatee: EventEvaluatee[]
 }
 export class EventDto {
+  @ApiProperty()
   id: number
 
+  @ApiProperty()
   title: string
 
+  @ApiProperty()
   bonus: number
 
+  @ApiProperty()
   timePeriod: Period
 
+  @ApiProperty()
   users: UserDto[]
 
   eventEvaluator: EventEvaluatorGetDto[]
@@ -114,7 +119,9 @@ export class EventDto {
 
   rating: RatingDto[]
 
+  @ApiProperty()
   createdAt: Date
 
+  @ApiProperty()
   endsAt: Date
 }

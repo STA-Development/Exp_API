@@ -9,13 +9,14 @@ import {
   Inject,
   UseInterceptors,
   ClassSerializerInterceptor,
+  Patch,
 } from '@nestjs/common'
+import {ApiOkResponse} from '@nestjs/swagger'
 import {CriteriaService} from '../service/criteriaService'
 import {CreateCriteriaDto} from '../dto/criteriaCreateDto'
 import {UpdateCriteriaDto} from '../dto/criteriaUpdateDto'
 import {Criteria, CriteriaDto} from '../entity/criteria'
 import {criteriaGetDto} from '../dto/criteriaGetDto'
-import {elementIdDto} from '../dto/elementIdDto'
 
 @Controller('criteria')
 export class CriteriaController {
@@ -25,19 +26,21 @@ export class CriteriaController {
   @UseInterceptors(ClassSerializerInterceptor)
   @Put(':criteriaId/subcriteria')
   addSubCriteria(
-    @Param('id') criteriaId: number,
-    @Body() subCriteriaId: number,
-  ): Promise<Criteria> {
-    return this.criteriaService.addSubCriteria(criteriaId, subCriteriaId)
+    @Param('criteriaId') criteriaId: number,
+    @Body() subCriteriaRef: number,
+  ): Promise<CriteriaDto> {
+    return this.criteriaService.addSubCriteria(criteriaId, subCriteriaRef)
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
+  @ApiOkResponse({type: [CriteriaDto]})
   @Get()
   async findAll(): Promise<CriteriaDto[]> {
     return (await this.criteriaService.findAll()).map((criteria) => criteriaGetDto(criteria))
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
+  @ApiOkResponse({type: [CriteriaDto]})
   @Get(':id')
   async findOneById(@Param('id') id: number): Promise<CriteriaDto> {
     const criteria = await this.criteriaService.findOneById(id)
@@ -51,7 +54,7 @@ export class CriteriaController {
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
-  @Put(':id')
+  @Patch(':id')
   update(@Param('id') id: number, @Body() updateCriteriaDto: UpdateCriteriaDto): Promise<Criteria> {
     return this.criteriaService.update(id, updateCriteriaDto)
   }

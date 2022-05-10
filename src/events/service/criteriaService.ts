@@ -3,7 +3,6 @@ import {CreateCriteriaDto} from '../dto/criteriaCreateDto'
 import {UpdateCriteriaDto} from '../dto/criteriaUpdateDto'
 import {Criteria} from '../entity/criteria'
 import {CriteriaRepository} from '../repository/criteriaRepository'
-import {elementIdDto} from '../dto/elementIdDto'
 import {SubCriteriaRepository} from '../repository/subCriteriaRepository'
 
 @Injectable()
@@ -14,20 +13,21 @@ export class CriteriaService {
   @Inject()
   subCriteriaRepository: SubCriteriaRepository
 
-  async addSubCriteria(criteriaId: number, subCriteriaId: number) {
-    const subCriteria = await this.subCriteriaRepository.findOneById(subCriteriaId)
+  async addSubCriteria(criteriaId: number, subCriteriaRef: number) {
+    const subCriteria = await this.subCriteriaRepository.findOneById(subCriteriaRef)
     const criteria = await this.criteriaRepository.findOneById(criteriaId)
+
     !criteria?.subCriteria
       ? (criteria.subCriteria = [subCriteria])
       : criteria.subCriteria.push(subCriteria)
     return this.criteriaRepository.addSubCriteria(criteria)
   }
 
-  async create(createCriteriaDto: CreateCriteriaDto) {
+  create(createCriteriaDto: CreateCriteriaDto) {
     return this.criteriaRepository.create(createCriteriaDto)
   }
 
-  async findAll(): Promise<Criteria[]> {
+  findAll(): Promise<Criteria[]> {
     return this.criteriaRepository.findAll()
   }
 

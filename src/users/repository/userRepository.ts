@@ -1,12 +1,11 @@
-import { Injectable } from '@nestjs/common';
-import { CreateUserDto } from '../dto/userCreateDto';
-import { UpdateUserDto } from '../dto/userUpdateDto';
-import { User } from '../entity/user';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { dbAuth } from '../auth/preauthMiddleware';
-import { UserSalaryDto } from '../dto/userSalaryDto';
-import { AddUserDto } from '../dto/addUserDto';
+import {Injectable} from '@nestjs/common'
+import {InjectRepository} from '@nestjs/typeorm'
+import {Repository} from 'typeorm'
+import {CreateUserDto} from '../dto/userCreateDto'
+import {UpdateUserDto} from '../dto/userUpdateDto'
+import {User} from '../entity/user'
+import {UserSalaryDto} from '../dto/userSalaryDto'
+import {AddUserDto} from '../dto/addUserDto'
 
 @Injectable()
 export class UserRepository {
@@ -18,30 +17,25 @@ export class UserRepository {
     return this.userRepository.save(user)
   }
 
-  async findAll(
-      limit: number,
-      page: number
-  ): Promise<{ data: User[]; count: number }> {
-    const builder = this.userRepository.createQueryBuilder('user');
-    const total = await builder.getCount();
-    const pages = Math.ceil(total / limit);
+  async findAll(limit: number, page: number): Promise<{data: User[]; count: number}> {
+    const builder = this.userRepository.createQueryBuilder('user')
+    const total = await builder.getCount()
+    const pages = Math.ceil(total / limit)
     const data = await this.userRepository.find({
-      relations: ['userSubCriteria', 'userSubCriteria.event'],      take: limit,
-      skip: (page - 1) * limit
-    });
-    return { data, count: pages };
+      take: limit,
+      skip: (page - 1) * limit,
+    })
+    return {data, count: pages}
   }
 
   findOneById(id: number): Promise<User> {
     return this.userRepository.findOne({
-      relations: ['userSubCriteria', 'userSubCriteria.event'],
       where: {id},
     })
   }
 
   findOne(uid: string): Promise<User> {
     return this.userRepository.findOne({
-      relations: ['userSubCriteria', 'userSubCriteria.event'],
       where: {authUid: uid},
     })
   }
@@ -56,34 +50,28 @@ export class UserRepository {
 
   async remove(id: number): Promise<User> {
     const removeUserId = await this.userRepository.findOne(id)
-    await dbAuth.deleteUser(removeUserId.authUid)
     return this.userRepository.remove(removeUserId)
   }
 
   async changeSalary(id: number, userSalaryDto: UserSalaryDto): Promise<User> {
     const user = await this.userRepository.preload({
-      id: id,
-      salary: userSalaryDto.salary
-    });
-    return this.userRepository.save(user);
+      id,
+      salary: userSalaryDto.salary,
+    })
+    return this.userRepository.save(user)
   }
 
-  async uploadImage(
-    uid: string,
-    public_id: string,
-    url: string,
-    id: number
-  ): Promise<User> {
+  async uploadImage(uid: string, publicId: string, url: string, id: number): Promise<User> {
     const user = await this.userRepository.preload({
-      id: id,
+      id,
       avatar: url,
-      avatarPublicId: public_id
-    });
-    return this.userRepository.save(user);
+      avatarPublicId: publicId,
+    })
+    return this.userRepository.save(user)
   }
 
   async addUser(addUserDto: AddUserDto): Promise<User> {
-    const user = await this.userRepository.create(addUserDto);
-    return this.userRepository.save(user);
+    const user = await this.userRepository.create(addUserDto)
+    return this.userRepository.save(user)
   }
 }

@@ -1,19 +1,18 @@
+import {Module} from '@nestjs/common'
+import {JwtModule} from '@nestjs/jwt'
+import {TypeOrmModule} from '@nestjs/typeorm'
+import {ConfigModule} from '@nestjs/config'
+import {UsersController} from '../controller/userController'
+import {UsersService} from '../service/userService'
+import {UserRepository} from '../repository/userRepository'
+import {CloudinaryProvider} from '../../cloudinary/cloudinaryProvider'
+import {CloudinaryService} from '../../cloudinary/cloudinaryService'
+import {User} from '../entity/user'
 import {UserSubCriteria} from '../../events/entity/userSubCriteria'
 import {EventEvaluator} from '../../events/entity/eventEvaluator'
 import {EventEvaluatee} from '../../events/entity/eventEvaluatee'
-import { UsersController } from '../controller/userController';
-import { PdfController } from '../controller/pdfController';
-import { UsersService } from '../service/userService';
-import { PdfService } from '../service/pdfService';
-import {TypeOrmModule} from '@nestjs/typeorm';
-import { ConfigModule } from '@nestjs/config';
-import { User } from '../entity/user';
-import { UserRepository } from '../repository/userRepository';
-import { JwtModule } from '@nestjs/jwt';
-import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
-import { CloudinaryProvider } from '../../cloudinary/cloudinaryProvider';
-import { CloudinaryService } from '../../cloudinary/cloudinaryService';
-import { logger } from '../../logger';
+import {PdfController} from '../controller/pdfController'
+import {PdfService} from '../service/pdfService'
 
 @Module({
   imports: [
@@ -28,18 +27,12 @@ import { logger } from '../../logger';
       database: process.env.DB_DATABASE,
       autoLoadEntities: true,
       synchronize: true,
-      keepConnectionAlive: true
+      keepConnectionAlive: true,
     }),
 
     JwtModule.register({}),
   ],
   controllers: [UsersController, PdfController],
-  providers: [UsersService, UserRepository, CloudinaryService, CloudinaryProvider,
-    PdfService
-  ],
+  providers: [UsersService, UserRepository, CloudinaryService, CloudinaryProvider, PdfService],
 })
-export class UserModule implements NestModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer.apply(logger).forRoutes(UsersController)
-  }
-}
+export class UserModule {}

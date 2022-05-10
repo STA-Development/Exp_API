@@ -1,7 +1,8 @@
 import * as dayjs from 'dayjs'
+import * as isBetween from 'dayjs/plugin/isBetween'
 import {Event} from '../events/entity/event'
 
-export const isUpcomingEvent = (event: Event): boolean => {
-  const a = dayjs().toDate()
-  return event.createdAt < a && event.endsAt > a
-}
+dayjs.extend(isBetween)
+
+export const isUpcomingEvent = (event: Event): boolean =>
+  dayjs().isBetween(event.createdAt, event.endsAt)
