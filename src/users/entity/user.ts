@@ -23,7 +23,7 @@ export class User implements IUser {
   rating: number
 
   @Column({default: PerformerType.waitingForEvaluation})
-  performerType: string
+  performerType: PerformerType
 
   @OneToMany(() => UserSubCriteria, (userSubCriteria) => userSubCriteria.user, {
     onUpdate: 'CASCADE',
@@ -32,7 +32,7 @@ export class User implements IUser {
   })
   userSubCriteria: UserSubCriteria[]
 
-  @Column({ default: null })
+  @Column({default: null})
   authUid: string
 
   @Column({default: false})
@@ -47,8 +47,8 @@ export class User implements IUser {
   @Column({default: null})
   avatarPublicId: string
 
-  @Column({ default: null })
-  position: string;
+  @Column({default: null})
+  position: string
 
   @ManyToMany(() => Event, (events) => events.users)
   events: Event[]
@@ -87,7 +87,8 @@ export class UserDto {
 
   avatar: string
 
-  position: string;
+  position: string
+
   avatarPublicId: string
 
   performerType: string

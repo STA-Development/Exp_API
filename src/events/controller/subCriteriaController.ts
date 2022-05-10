@@ -15,24 +15,28 @@ import {CreateSubCriteriaDto} from '../dto/subCriteriaCreateDto'
 import {UpdateSubCriteriaDto} from '../dto/subCriteriaUpdateDto'
 import {SubCriteria, SubCriteriaDto} from '../entity/subCriteria'
 import {subCriteriaGetDto} from '../dto/subCriteriaGetDto'
+import {CriteriaService} from '../service/criteriaService'
 
 @Controller('subCriteria')
 export class SubCriteriaController {
   @Inject()
   subCriteriaService: SubCriteriaService
 
+  @Inject()
+  criteriaService: CriteriaService
+
   @UseInterceptors(ClassSerializerInterceptor)
-  @Post()
-  create(@Body() createCriteriaDto: CreateSubCriteriaDto): Promise<SubCriteria> {
-    return this.subCriteriaService.create(createCriteriaDto)
+  @Post(':id')
+  async create(@Body() createCriteriaDto: CreateSubCriteriaDto): Promise<SubCriteria> {
+    const subCriteria = await this.subCriteriaService.create(createCriteriaDto)
+    await this.criteriaService.addSubCriteria(createCriteriaDto.criteriaId, subCriteria.id)
+    return subCriteria
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
   @Get()
-  async findAll(): Promise<SubCriteriaDto[]> {
-    return (await this.subCriteriaService.findAll()).map((subCriteria) =>
-      subCriteriaGetDto(subCriteria),
-    )
+  findAll(): Promise<SubCriteriaDto[]> {
+    return this.subCriteriaService.findAll()
   }
 
   @UseInterceptors(ClassSerializerInterceptor)

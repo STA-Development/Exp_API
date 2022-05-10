@@ -7,6 +7,8 @@ import {SubCriteria} from '../entity/subCriteria'
 import {SubCriteriaRepository} from '../repository/subCriteriaRepository'
 import {UserSubCriteria} from '../entity/userSubCriteria'
 import {Criteria} from '../entity/criteria'
+import {CriteriaRepository} from '../repository/criteriaRepository'
+import {CriteriaService} from '../service/criteriaService'
 
 @Module({
   imports: [
@@ -21,10 +23,10 @@ import {Criteria} from '../entity/criteria'
       database: process.env.DB_DATABASE,
       autoLoadEntities: true,
       synchronize: true,
-      logging: false
-    })
+      logging: false,
+    }),
   ],
   controllers: [SubCriteriaController],
-  providers: [SubCriteriaService, SubCriteriaRepository],
+  providers: [SubCriteriaService, SubCriteriaRepository, CriteriaService, CriteriaRepository],
 })
 export class SubCriteriaModule {}

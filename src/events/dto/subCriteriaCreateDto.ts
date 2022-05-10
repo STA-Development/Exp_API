@@ -1,4 +1,4 @@
-import {IsString, IsBoolean} from 'class-validator'
+import {IsString, IsBoolean, IsNotEmpty} from 'class-validator'
 import {SubCriteria} from '../entity/subCriteria'
 
 export class CreateSubCriteriaDto extends SubCriteria {
@@ -7,4 +7,7 @@ export class CreateSubCriteriaDto extends SubCriteria {
 
   @IsBoolean()
   readonly result: boolean
+
+  @IsNotEmpty()
+  readonly criteriaId: number
 }

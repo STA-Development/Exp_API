@@ -10,6 +10,7 @@ export interface IUserSubCriteria {
   ratingId: number
   userId: number
   subCriteriaId: number
+  subCriteriaResult: boolean
   event: Event
   criteria: Criteria
   rating: Rating

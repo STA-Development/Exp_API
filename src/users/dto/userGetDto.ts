@@ -18,5 +18,5 @@ export const userGetDto = (user: User): UserDto => ({
   avatar: user.avatar,
   avatarPublicId: user.avatarPublicId,
   position: user.position,
-    events: user?.events && user.events.map((event) => eventGetDto(event)),
+  events: user?.events && user.events.map((event) => eventGetDto(event)),
 })

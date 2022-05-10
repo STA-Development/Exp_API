@@ -1,5 +1,5 @@
 import {Event} from '../../events/entity/event'
-import { UserSubCriteria } from '../../events/entity/userSubCriteria'
+import {UserSubCriteria} from '../../events/entity/userSubCriteria'
 
 export enum PerformerType {
   rockStar = 'Rock Star',
@@ -13,14 +13,13 @@ export interface IUser {
   firstName: string
   lastName: string
   email: string
-  authUid: string
   rating: number
   performerType: string
   userSubCriteria: UserSubCriteria[]
   isAdmin: boolean
   salary: number
   avatar: string
-  position: string;
+  position: string
   avatarPublicId: string
   events: Event[]
 }
