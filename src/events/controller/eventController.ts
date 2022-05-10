@@ -137,7 +137,7 @@ export class EventsController {
   ): Promise<string> {
     const evaluator = await this.eventsService.findByEmail(invitation.email, eventId)
     const invitationToken = await this.jwtService.signAsync(
-      {evaluatorId: evaluator.id, eventId: eventId},
+      {evaluatorId: evaluator.id, eventId},
       {secret: process.env.JWT_ACCESS_KEY, expiresIn: '1m'},
     )
 

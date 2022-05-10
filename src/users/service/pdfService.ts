@@ -7,7 +7,7 @@ import {CreatePdfDto} from '../dto/pdfDto'
 @Injectable()
 export class PdfService {
   async generatePdf(createPdfDto: CreatePdfDto): Promise<fs.ReadStream> {
-    const data = await ejs.renderFile(__dirname + '/../directory/pdfForm.ejs', {
+    const data = await ejs.renderFile(`${__dirname}/../directory/pdfForm.ejs`, {
       ...createPdfDto,
     })
     return new Promise((resolve, reject) => {

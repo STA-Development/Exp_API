@@ -3,7 +3,7 @@ import {InjectRepository} from '@nestjs/typeorm'
 import {Repository} from 'typeorm'
 import {CreateUserDto} from '../dto/userCreateDto'
 import {UpdateUserDto} from '../dto/userUpdateDto'
-import {User} from '../entity/user'
+import {User, UserDto} from '../entity/user'
 import {logger} from '../../logger'
 import {CloudinaryService} from '../../cloudinary/cloudinaryService'
 import {dbAuth} from '../auth/preauthMiddleware'
@@ -15,6 +15,7 @@ import {AddUserDto} from '../dto/addUserDto'
 export class UsersService {
   @InjectRepository(User)
   private readonly userRepository: Repository<User>
+
   private cloudinary: CloudinaryService
 
   @Inject()
@@ -34,37 +35,41 @@ export class UsersService {
     }
   }
 
-  async findAll(limit: number = 10, page: number = 0): Promise<{data: User[]; count: number}> {
+  async findAll(limit = 10, page = 0): Promise<{data: User[]; count: number}> {
     if (limit > 100) {
       throw new BadRequestException('Pagination limit exceeded')
     }
     return this.usersRepository.findAll(limit, page)
   }
 
-  async findOneById(id: number): Promise<User> {
+  async findOneById(id: number): Promise<UserDto> {
     let user
     try {
       user = await this.usersRepository.findOneById(id)
     } catch (error) {
-      logger.error(`User with ID=${id} not found` + error)
+      logger.error(`User with ID=${id} not found ${error}`)
     }
     return user
   }
 
-  async findOne(authUid: string): Promise<User> {
+  async findOne(authUid: string): Promise<UserDto> {
     return this.usersRepository.findOne(authUid)
   }
 
   async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
-    const user = await this.usersRepository.update(id, updateUserDto)
-    if (!user) {
+    try {
+      const user = await this.usersRepository.update(id, updateUserDto)
+      await dbAuth.updateUser(user.authUid, {email: updateUserDto.email})
+      return user
+    } catch (err) {
       throw new NotFoundException(`User with ID=${id} not found`)
     }
-    return user
   }
 
   async remove(id: number): Promise<User> {
     try {
+      const user = await this.usersRepository.findOneById(id)
+      await dbAuth.deleteUser(user.authUid)
       return await this.usersRepository.remove(id)
     } catch (err) {
       throw {

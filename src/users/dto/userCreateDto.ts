@@ -1,7 +1,6 @@
 import {ApiProperty} from '@nestjs/swagger'
-import {IsString, IsEmail, IsOptional, IsEmpty, IsEnum} from 'class-validator'
+import {IsString, IsEmail, IsOptional, IsEnum} from 'class-validator'
 import {User} from '../entity/user'
-import {Event} from '../../events/entity/event'
 import {PerformerType} from '../interface/userInterface'
 
 export class CreateUserDto extends User {
@@ -27,14 +26,12 @@ export class CreateUserDto extends User {
 
   @ApiProperty()
   @IsEmail()
-  readonly email: string
-
-  @IsEmpty()
-  readonly events: Event[]
+  email: string
 
   @IsOptional()
   readonly rating: number
 
   @IsEnum(PerformerType)
+  @IsOptional()
   performerType: PerformerType
 }

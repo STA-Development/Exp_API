@@ -46,7 +46,7 @@ export class EventsRepository {
       .andWhere({
         endsAt: MoreThan(dayjs().toDate()),
       })
-      .getMany() //todo
+      .getMany()
   }
 
   async addSubCriteria(eventId: number, idRef: EventSubCriteriaUpdateDto) {
@@ -175,6 +175,7 @@ export class EventsRepository {
       eventTitle,
     )
   }
+
   async getEventProgress(eventId: number): Promise<IEventProgress> {
     const submissions = await this.getSubmissions(eventId)
 
@@ -300,7 +301,7 @@ export class EventsRepository {
             .createQueryBuilder()
             .insert()
             .values({
-              userId: userId,
+              userId,
               eventId,
             })
             .execute()
@@ -368,9 +369,7 @@ export class EventsRepository {
 
     try {
       await getRepository(EventEvaluator).findOne({where: {userId: user.id, eventId}})
-      {
-        return user
-      }
+      return user
     } catch {
       throw new HttpException(
         {
