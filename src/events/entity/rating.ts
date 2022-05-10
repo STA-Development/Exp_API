@@ -1,47 +1,50 @@
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  OneToMany,
-  ManyToMany
-} from 'typeorm';
-import { IRating } from '../interface/ratingInterface';
-import { Pivot, PivotDto } from './pivot';
-import { Event } from './event';
+import {Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToMany} from 'typeorm'
+import {ApiProperty} from '@nestjs/swagger'
+import {IRating} from '../interface/ratingInterface'
+import {UserSubCriteria} from './userSubCriteria'
+import {Event, EventDto} from './event'
 
 @Entity()
 export class Rating implements IRating {
   @PrimaryGeneratedColumn()
-  id: number;
+  id: number
 
   @Column()
-  from: number;
+  from: number
 
   @Column()
-  to: number;
+  to: number
 
-  @Column({ default: false })
-  isSelected: number;
+  @Column({default: false})
+  isSelected: boolean
 
-  @OneToMany(() => Pivot, (pivot) => pivot.rating, {
+  @OneToMany(() => UserSubCriteria, (userSubCriteria) => userSubCriteria.rating, {
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
-    createForeignKeyConstraints: false
+    createForeignKeyConstraints: false,
   })
-  pivot: Pivot[];
+  userSubCriteria: UserSubCriteria[]
 
   @ManyToMany(() => Event, (event) => event.rating, {
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
-    createForeignKeyConstraints: false
+    createForeignKeyConstraints: false,
   })
-  events: Event[];
+  events: Event[]
 }
 
-export class RatingPivotDto {
-  id: number;
-  from: number;
-  to: number;
-  isSelected: number;
-  pivot: PivotDto[];
+export class RatingDto {
+  @ApiProperty()
+  id: number
+
+  @ApiProperty()
+  from: number
+
+  @ApiProperty()
+  to: number
+
+  @ApiProperty()
+  isSelected: boolean
+
+  events: EventDto[]
 }

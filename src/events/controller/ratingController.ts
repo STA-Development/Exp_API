@@ -9,50 +9,48 @@ import {
   Post,
   Put,
   UseInterceptors,
-} from "@nestjs/common";
-import { RatingService } from "../service/ratingService";
-import { CreateRatingDto } from "../dto/ratingCreateDto";
-import { Rating, RatingPivotDto } from "../entity/rating";
-import { ratingGetDto } from "../dto/ratingGetDto";
-import { UpdateRatingDto } from "../dto/ratingUpdateDto";
+} from '@nestjs/common'
+import {ApiOkResponse} from '@nestjs/swagger'
+import {RatingService} from '../service/ratingService'
+import {CreateRatingDto} from '../dto/ratingCreateDto'
+import {Rating, RatingDto} from '../entity/rating'
+import {ratingGetDto} from '../dto/ratingGetDto'
+import {UpdateRatingDto} from '../dto/ratingUpdateDto'
 
-@Controller("rating")
+@Controller('rating')
 export class RatingController {
   @Inject()
-  ratingService: RatingService;
+  ratingService: RatingService
 
   @UseInterceptors(ClassSerializerInterceptor)
   @Post()
   create(@Body() createRatingDto: CreateRatingDto): Promise<Rating> {
-    return this.ratingService.create(createRatingDto);
+    return this.ratingService.create(createRatingDto)
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
+  @ApiOkResponse({type: [RatingDto]})
   @Get()
-  async findAll(): Promise<RatingPivotDto[]> {
-    return (await this.ratingService.findAll()).map((rating) =>
-      ratingGetDto(rating)
-    );
+  async findAll(): Promise<RatingDto[]> {
+    return (await this.ratingService.findAll()).map((rating) => ratingGetDto(rating))
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
-  @Get(":id")
-  async findOneById(@Param("id") id: number): Promise<RatingPivotDto> {
-    return ratingGetDto(await this.ratingService.findOneById(id));
+  @ApiOkResponse({type: [RatingDto]})
+  @Get(':id')
+  async findOneById(@Param('id') id: number): Promise<RatingDto> {
+    return ratingGetDto(await this.ratingService.findOneById(id))
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
-  @Put(":id")
-  update(
-    @Param("id") id: number,
-    @Body() updateRatingDto: UpdateRatingDto
-  ): Promise<Rating> {
-    return this.ratingService.update(id, updateRatingDto);
+  @Put(':id')
+  update(@Param('id') id: number, @Body() updateRatingDto: UpdateRatingDto): Promise<Rating> {
+    return this.ratingService.update(id, updateRatingDto)
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
-  @Delete(":id")
-  remove(@Param("id") id: number): Promise<Rating> {
-    return this.ratingService.remove(id);
+  @Delete(':id')
+  remove(@Param('id') id: number): Promise<Rating> {
+    return this.ratingService.remove(id)
   }
 }

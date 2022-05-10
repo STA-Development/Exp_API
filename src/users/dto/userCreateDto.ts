@@ -1,49 +1,37 @@
-import {
-  IsString,
-  IsEmail,
-  IsNumber,
-  IsOptional,
-  IsEmpty
-} from 'class-validator';
-import { User } from '../entity/user';
-import { Pivot } from '../../events/entity/pivot';
-import { Event } from '../../events/entity/event';
-import { ApiProperty } from '@nestjs/swagger';
+import {ApiProperty} from '@nestjs/swagger'
+import {IsString, IsEmail, IsOptional, IsEnum} from 'class-validator'
+import {User} from '../entity/user'
+import {PerformerType} from '../interface/userInterface'
 
 export class CreateUserDto extends User {
-  readonly id: number;
+  readonly id: number
 
   @ApiProperty()
   @IsString()
-  firstName: string;
+  firstName: string
 
   @IsOptional()
-  authUid: string;
+  authUid: string
 
   @ApiProperty()
   @IsString()
-  password: string;
+  password: string
 
   @ApiProperty()
   @IsString()
-  lastName: string;
+  lastName: string
 
   @IsOptional()
-  avatar: string;
+  avatar: string
 
   @ApiProperty()
   @IsEmail()
-  readonly email: string;
-
-  @IsEmpty()
-  readonly events: Event[];
+  email: string
 
   @IsOptional()
-  readonly rating: number;
+  readonly rating: number
 
+  @IsEnum(PerformerType)
   @IsOptional()
-  readonly performerType: string;
-
-  @IsOptional()
-  pivot: Pivot[];
+  performerType: PerformerType
 }

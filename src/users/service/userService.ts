@@ -1,7 +1,7 @@
 import { BadRequestException, Inject, Injectable } from '@nestjs/common';
 import { CreateUserDto } from '../dto/userCreateDto';
 import { UpdateUserDto } from '../dto/userUpdateDto';
-import { User, UserPivot } from '../entity/user';
+import { User } from '../entity/user';
 import { logger } from '../../logger';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -18,11 +18,11 @@ import { authGet } from '../auth/connection';
 export class UsersService {
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
-    private cloudinary: CloudinaryService
+    private cloudinary: CloudinaryService,
   ) {}
 
   @Inject()
-  usersRepository: UserRepository;
+  usersRepository: UserRepository
 
   async create(createUserDto: CreateUserDto): Promise<User> {
     try {
@@ -40,111 +40,112 @@ export class UsersService {
       await this.usersRepository.create(createUserDto);
       return data.user['stsTokenManager'].accessToken;
     } catch (err) {
-      throw new BadRequestException(`Method Not Allowed`);
+      throw new BadRequestException(`Method Not Allowed`)
     }
   }
 
-  async findAll(
-    limit: number = 10,
-    page: number = 0
-  ): Promise<{ data: User[]; count: number }> {
+  async findAll(limit = 10, page = 0): Promise<{data: User[]; count: number}> {
     if (limit > 100) {
-      throw new BadRequestException('Pagination limit exceeded');
+      throw new BadRequestException('Pagination limit exceeded')
     }
-    return this.usersRepository.findAll(limit, page);
+    return this.usersRepository.findAll(limit, page)
   }
 
   async findOneById(id: number): Promise<User> {
-    let user;
+    let user
     try {
-      user = await this.usersRepository.findOneById(id);
+      user = await this.usersRepository.findOneById(id)
     } catch (error) {
-      logger.error(`User with ID=${id} not found` + error);
+      logger.error(`User with ID=${id} not found ${error}`)
     }
-    return user;
+    return user
   }
 
   async findOne(authUid: string): Promise<User> {
     try {
-      return this.usersRepository.findOne(authUid);
+      return this.usersRepository.findOne(authUid)
     } catch (err) {
-      throw new NotFoundException(`User with ID=${authUid} not found`);
+      throw new NotFoundException(`User with ID=${authUid} not found`)
     }
   }
 
   async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
     try {
-      const user = await this.usersRepository.update(id, updateUserDto);
-      await dbAuth.updateUser(user.authUid, { email: updateUserDto.email });
-      return user;
+      const user = await this.usersRepository.update(id, updateUserDto)
+      await dbAuth.updateUser(user.authUid, {email: updateUserDto.email})
+      return user
     } catch (err) {
-      throw new NotFoundException(`User with ID=${id} not found`);
+      throw new NotFoundException(`User with ID=${id} not found`)
     }
   }
 
   async remove(id: number): Promise<User> {
     try {
-      const user = await this.usersRepository.findOneById(id);
-      await dbAuth.deleteUser(user.authUid);
-      return await this.usersRepository.remove(id);
+      const user = await this.usersRepository.findOneById(id)
+      await dbAuth.deleteUser(user.authUid)
+      return await this.usersRepository.remove(id)
     } catch (err) {
       throw {
         statusCode: 404,
-        message: `User with ID=${id} not found`
-      };
+        message: `User with ID=${id} not found`,
+      }
     }
   }
 
   async changeSalary(id: number, userSalaryDto: UserSalaryDto): Promise<User> {
     try {
-      return this.usersRepository.changeSalary(id, userSalaryDto);
+      return this.usersRepository.changeSalary(id, userSalaryDto)
     } catch (err) {
-      throw new NotFoundException(`User with ID=${id} not found`);
+      throw new NotFoundException(`User with ID=${id} not found`)
     }
   }
 
   async uploadImageToCloudinary(file: Express.Multer.File, uid: string) {
     try {
-      const user = await this.usersRepository.findOne(uid);
+      const user = await this.usersRepository.findOne(uid)
       if (user.avatarPublicId) {
-        await this.cloudinary.deleteImg(user.avatarPublicId);
+        await this.cloudinary.deleteImg(user.avatarPublicId)
       }
-      const cloudinaryRes = await this.cloudinary.uploadImage(file);
+      const cloudinaryRes = await this.cloudinary.uploadImage(file)
       return this.usersRepository.uploadImage(
         uid,
         cloudinaryRes.public_id,
         cloudinaryRes.url,
-        user.id
-      );
+        user.id,
+      )
     } catch (err) {
-      throw new NotFoundException(`file is not found`);
+      throw new NotFoundException(`file is not found`)
     }
   }
 
   async userDeactivate(id: number) {
     try {
-      const user = await this.usersRepository.findOneById(id);
-      const authUser = await dbAuth.getUser(user.authUid);
+      const user = await this.usersRepository.findOneById(id)
+      const authUser = await dbAuth.getUser(user.authUid)
       if (authUser.disabled) {
         await dbAuth.updateUser(user.authUid, {
-          disabled: false
-        });
+          disabled: false,
+        })
       } else {
         await dbAuth.updateUser(user.authUid, {
-          disabled: true
-        });
+          disabled: true,
+        })
       }
     } catch (err) {
-      throw new NotFoundException(`User with ID=${id} not found`);
+      throw new NotFoundException(`User with ID=${id} not found`)
     }
   }
 
   async addUser(addUserDto: AddUserDto): Promise<User> {
     try {
-      addUserDto.avatar = process.env.AVATAR_URL;
-      return await this.usersRepository.addUser(addUserDto);
+      const auth = await dbAuth.createUser({
+        email: addUserDto.email,
+      })
+      addUserDto.authUid = auth.uid
+      addUserDto.avatar = process.env.AVATAR_URL
+      return await this.usersRepository.addUser(addUserDto)
     } catch (err) {
-      throw new BadRequestException(`Method Not Allowed`);
+      throw new BadRequestException(`Method Not Allowed`)
     }
   }
 }

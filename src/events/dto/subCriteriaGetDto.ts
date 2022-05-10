@@ -1,15 +1,8 @@
-import { SubCriteria, SubCriteriaPivotDto } from '../entity/subCriteria';
-import { pivotGetDto } from './pivotGetDto';
+import {SubCriteria, SubCriteriaDto} from '../entity/subCriteria'
 
-export const subCriteriaGetDto = (
-  subCriteria: SubCriteria
-): SubCriteriaPivotDto => {
-  return {
-    id: subCriteria.id,
-    name: subCriteria.name,
-    result: subCriteria.result,
-    pivot: subCriteria?.pivot?.length
-      ? subCriteria.pivot.map((pivot) => pivotGetDto(pivot))
-      : []
-  };
-};
+export const subCriteriaGetDto = (subCriteria: SubCriteria): SubCriteriaDto => ({
+  id: subCriteria.id,
+  name: subCriteria.name,
+  result: subCriteria.result,
+  criteria: subCriteria.criteria,
+})

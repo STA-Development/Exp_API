@@ -1,62 +1,53 @@
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  OneToMany,
-  ManyToMany,
-  JoinTable
-} from 'typeorm';
-import { ICriteria } from '../interface/criteriaInterface';
-import { Pivot, PivotDto } from './pivot';
-import { Event } from './event';
-import { SubCriteria } from './subCriteria';
+import {Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToMany} from 'typeorm'
+import {ApiProperty} from '@nestjs/swagger'
+import {ICriteria} from '../interface/criteriaInterface'
+import {UserSubCriteria} from './userSubCriteria'
+import {Event} from './event'
+import {SubCriteria, SubCriteriaDto} from './subCriteria'
 
 @Entity()
 export class Criteria implements ICriteria {
   @PrimaryGeneratedColumn()
-  id: number;
+  id: number
 
   @Column()
-  name: string;
+  name: string
 
   @Column()
-  criteria: boolean;
+  criteria: boolean
 
-  @Column()
-  rating: number;
-
-  @OneToMany(() => Pivot, (pivot) => pivot.criteria, {
+  @OneToMany(() => UserSubCriteria, (userSubCriteria) => userSubCriteria.criteria, {
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
-    createForeignKeyConstraints: false
+    createForeignKeyConstraints: false,
   })
-  pivot: Pivot[];
+  userSubCriteria: UserSubCriteria[]
 
   @ManyToMany(() => Event, (event) => event.criteria, {
-    // onUpdate: 'CASCADE',
-    // onDelete: 'CASCADE',
-    // createForeignKeyConstraints: false
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE',
+    createForeignKeyConstraints: false,
   })
-  events: Event[];
+  events: Event[]
 
-  @ManyToMany(() => SubCriteria, (subCriteria) => subCriteria.criteria, {
-    // onUpdate: 'CASCADE',
-    // onDelete: 'CASCADE',
-    // createForeignKeyConstraints: false
-    cascade: true
+  @OneToMany(() => SubCriteria, (subCriteria) => subCriteria.criteria, {
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE',
+    createForeignKeyConstraints: false,
   })
-  // @JoinTable({
-  //   name: 'criteria_subCriteria',
-  //   joinColumn: { name: 'subCriteriaId' },
-  //   inverseJoinColumn: { name: 'criteriaId' }
-  // })
-  subCriteria: SubCriteria[];
+  subCriteria: SubCriteria[]
 }
 
-export class CriteriaPivotDto {
-  id: number;
-  name: string;
-  criteria: boolean;
-  rating: number;
-  pivot: PivotDto[];
+export class CriteriaDto {
+  @ApiProperty()
+  id: number
+
+  @ApiProperty()
+  name: string
+
+  @ApiProperty()
+  criteria: boolean
+
+  @ApiProperty()
+  subCriteria: SubCriteriaDto[]
 }
