@@ -41,7 +41,6 @@ export class CriteriaRepository {
   }
 
   async remove(id: number): Promise<Criteria> {
-    const criteria = await this.findOneById(id)
-    return this.criteriaRepository.remove(criteria)
+    return this.criteriaRepository.remove(await this.findOneById(id))
   }
 }

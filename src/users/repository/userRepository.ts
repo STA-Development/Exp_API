@@ -43,7 +43,7 @@ export class UserRepository {
 
   async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
     const user = await this.userRepository.preload({
-      id: id,
+      id,
       ...updateUserDto,
     })
     return this.userRepository.save(user)
@@ -57,7 +57,7 @@ export class UserRepository {
 
   async changeSalary(id: number, userSalaryDto: UserSalaryDto): Promise<User> {
     const user = await this.userRepository.preload({
-      id: id,
+      id,
       salary: userSalaryDto.salary,
     })
     return this.userRepository.save(user)
@@ -65,7 +65,7 @@ export class UserRepository {
 
   async uploadImage(uid: string, publicId: string, url: string, id: number): Promise<User> {
     const user = await this.userRepository.preload({
-      id: id,
+      id,
       avatar: url,
       avatarPublicId: publicId,
     })

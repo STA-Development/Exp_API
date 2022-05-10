@@ -47,7 +47,6 @@ export class Event implements IEvent {
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
     createForeignKeyConstraints: false,
-    eager: true,
   })
   userSubCriteria: UserSubCriteria[]
 

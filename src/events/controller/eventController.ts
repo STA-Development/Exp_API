@@ -36,6 +36,7 @@ import {UserRatingGetDto} from '../dto/userRatingGetDto'
 import {UserCriteriaRatingGetDto} from '../dto/userCriteriaRatingGetDto'
 import {SubmissionGetDto} from '../dto/submissionGetDto'
 import {InvitationDto} from '../dto/invitationDto'
+import {sendEvaluationEmail} from '../../utils/sendEvaluationMail'
 
 @Controller('events')
 export class EventsController {
@@ -90,7 +91,7 @@ export class EventsController {
 
   @UseInterceptors(ClassSerializerInterceptor)
   @ApiOkResponse({type: [UserCriteriaRatingGetDto]})
-  @Get(':eventId/evaluatee-criteria-rating/:evaluateeId')
+  @Get(':eventId/evaluatee/:evaluateeId/criteria-rating')
   getUserCriteriaRating(
     @Param('eventId') eventId: number,
     @Param('evaluateeId') evaluateeId: number,
@@ -130,19 +131,19 @@ export class EventsController {
 
   @UseInterceptors(ClassSerializerInterceptor)
   @Post(':id/invitation')
-  async EvaluationInvitation(
+  async evaluationInvitation(
     @Param('id') eventId: number,
     @Body() invitation: InvitationDto,
   ): Promise<string> {
     const evaluator = await this.eventsService.findByEmail(invitation.email, eventId)
-    const InvitationToken = await this.jwtService.signAsync(
+    const invitationToken = await this.jwtService.signAsync(
       {evaluatorId: evaluator.id, eventId: eventId},
       {secret: process.env.JWT_ACCESS_KEY, expiresIn: '1m'},
     )
 
-    const link = `http://localhost:3030/events/invitation/?code=${InvitationToken}`
-    await sendEmail(invitation.email, link)
-    return InvitationToken
+    const link = `http://${process.env.HOST}:${process.env.PORT}/${process.env.SWAGGER_PATH}#/invitation/?code=${invitationToken}`
+    await sendEvaluationEmail(invitation.email, link)
+    return invitationToken
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
@@ -168,19 +169,19 @@ export class EventsController {
 
   @UseInterceptors(ClassSerializerInterceptor)
   @Patch(':id/evaluator')
-  addEvaluators(@Param('id') eventId: number, @Body() userId: number): void {
-    this.eventsService.addEvaluators(eventId, userId)
+  async addEvaluators(@Param('id') eventId: number, @Body() userId: number): Promise<void> {
+    await this.eventsService.addEvaluators(eventId, userId)
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
   @Patch(':id/evaluatee')
-  addEvaluatees(@Param('id') eventId: number, @Body() userId: number): void {
-    this.eventsService.addEvaluatees(eventId, userId)
+  async addEvaluatees(@Param('id') eventId: number, @Body() userId: number): Promise<void> {
+    await this.eventsService.addEvaluatees(eventId, userId)
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
   @Put('evaluation')
-  async EvalutaionResult(@Body() evaluationResult: IEvaluationResult): Promise<string> {
+  async evaluationResult(@Body() evaluationResult: IEvaluationResult): Promise<string> {
     try {
       const jwtPayload: JwtPayload | string = jwt.verify(
         evaluationResult.token,
