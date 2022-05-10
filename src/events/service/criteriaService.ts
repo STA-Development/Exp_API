@@ -13,8 +13,8 @@ export class CriteriaService {
   @Inject()
   subCriteriaRepository: SubCriteriaRepository
 
-  async addSubCriteria(criteriaId: number, subCriteriaId: number) {
-    const subCriteria = await this.subCriteriaRepository.findOneById(subCriteriaId)
+  async addSubCriteria(criteriaId: number, subCriteriaRef: number) {
+    const subCriteria = await this.subCriteriaRepository.findOneById(subCriteriaRef)
     const criteria = await this.criteriaRepository.findOneById(criteriaId)
 
     !criteria?.subCriteria

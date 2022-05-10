@@ -35,12 +35,6 @@ export class UsersController {
   usersService: UsersService
 
   @UseInterceptors(ClassSerializerInterceptor)
-  @Post()
-  create(@Body() createUserDto: CreateUserDto): Promise<User> {
-    return this.usersService.create(createUserDto)
-  }
-
-  @UseInterceptors(ClassSerializerInterceptor)
   @UseGuards(AuthGuard)
   @ApiBearerAuth()
   @ApiOkResponse({type: [GetUserDto]})
@@ -60,7 +54,7 @@ export class UsersController {
   @ApiBearerAuth()
   @ApiOkResponse({type: GetUserDto})
   @Get('me')
-  findOne(@Token() uid: string): Promise<User> {
+  findOne(@Token() uid: string): Promise<UserDto> {
     return this.usersService.findOne(uid)
   }
 
@@ -71,6 +65,12 @@ export class UsersController {
   @ApiOkResponse({type: GetUserDto})
   async find(@Param('id') id: number): Promise<UserDto> {
     return userGetDto(await this.usersService.findOneById(id))
+  }
+
+  @UseInterceptors(ClassSerializerInterceptor)
+  @Post()
+  create(@Body() createUserDto: CreateUserDto): Promise<User> {
+    return this.usersService.create(createUserDto)
   }
 
   @UseInterceptors(ClassSerializerInterceptor)

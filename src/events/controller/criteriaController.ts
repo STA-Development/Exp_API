@@ -27,9 +27,9 @@ export class CriteriaController {
   @Put(':criteriaId/subcriteria')
   addSubCriteria(
     @Param('criteriaId') criteriaId: number,
-    @Body() subCriteriaId: number,
+    @Body() subCriteriaRef: number,
   ): Promise<CriteriaDto> {
-    return this.criteriaService.addSubCriteria(criteriaId, subCriteriaId)
+    return this.criteriaService.addSubCriteria(criteriaId, subCriteriaRef)
   }
 
   @UseInterceptors(ClassSerializerInterceptor)

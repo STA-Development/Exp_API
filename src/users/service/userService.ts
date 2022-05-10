@@ -42,7 +42,7 @@ export class UsersService {
     return this.usersRepository.findAll(limit, page)
   }
 
-  async findOneById(id: number): Promise<UserDto> {
+  async findOneById(id: number): Promise<User> {
     let user
     try {
       user = await this.usersRepository.findOneById(id)

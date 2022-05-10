@@ -408,7 +408,7 @@ export class EventsRepository {
       })
       .execute()
     createEventDto.rating = await this.ratingRepository.find({take: 3})
-    return this.eventRepository.save(createEventDto)
+    return null
   }
 
   async update(eventId: number, updateEventDto: UpdateEventDto): Promise<Event> {

@@ -1,5 +1,6 @@
 import {ApiProperty} from '@nestjs/swagger'
 import {User} from '../entity/user'
+import {PerformerType} from '../interface/userInterface'
 
 export class GetUserDto extends User {
   @ApiProperty()
@@ -18,7 +19,7 @@ export class GetUserDto extends User {
   rating: number
 
   @ApiProperty()
-  performerType: string
+  performerType: PerformerType
 
   @ApiProperty()
   authUid: string
