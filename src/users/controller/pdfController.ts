@@ -8,9 +8,9 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common'
+import {ApiBearerAuth} from '@nestjs/swagger'
 import {AuthGuard} from '../../middlewares/checkJwt'
 import {PdfService} from '../service/pdfService'
-import {ApiBearerAuth} from '@nestjs/swagger'
 import {CreatePdfDto} from '../dto/pdfDto'
 import {RolesGuard} from '../../middlewares/checkAdmin'
 

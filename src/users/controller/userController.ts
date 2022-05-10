@@ -14,18 +14,18 @@ import {
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common'
-import {ApiFile} from '../dto/uploadFileDto'
+import {ApiBearerAuth, ApiOkResponse} from '@nestjs/swagger'
 import {UsersService} from '../service/userService'
 import {CreateUserDto} from '../dto/userCreateDto'
 import {UpdateUserDto} from '../dto/userUpdateDto'
-import {UserSalaryDto} from '../dto/userSalaryDto'
 import {User, UserDto} from '../entity/user'
 import {AuthGuard} from '../../middlewares/checkJwt'
-import {RolesGuard} from '../../middlewares/checkAdmin'
 import {Token} from '../../middlewares/jwtDecorator'
-import {ApiBearerAuth, ApiOkResponse} from '@nestjs/swagger'
 import {logger} from '../../logger'
 import {userGetDto} from '../dto/userGetDto'
+import {ApiFile} from '../dto/uploadFileDto'
+import {UserSalaryDto} from '../dto/userSalaryDto'
+import {RolesGuard} from '../../middlewares/checkAdmin'
 import {AddUserDto} from '../dto/addUserDto'
 import {GetUserDto} from '../dto/getUsersDto'
 
@@ -35,12 +35,6 @@ export class UsersController {
   usersService: UsersService
 
   @UseInterceptors(ClassSerializerInterceptor)
-  @Post('create')
-  async create(@Body() createUserDto: CreateUserDto): Promise<User> {
-    return this.usersService.create(createUserDto)
-  }
-
-  @UseInterceptors(ClassSerializerInterceptor)
   @UseGuards(AuthGuard)
   @ApiBearerAuth()
   @ApiOkResponse({type: [GetUserDto]})
@@ -48,11 +42,11 @@ export class UsersController {
   async findAll(
     @Query('limit') limit: number,
     @Query('page') page: number,
-  ): Promise<{pageCount: number; userList: UserDto[]}> {
+  ): Promise<{pageCount: number; data: UserDto[]}> {
     logger.info('Get all users')
     const users = await this.usersService.findAll(limit, page)
-    const userList = users.data.map((user) => userGetDto(user))
-    return {userList, pageCount: users.count}
+    const data = users.data.map((user) => userGetDto(user))
+    return {data, pageCount: users.count}
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
@@ -60,7 +54,7 @@ export class UsersController {
   @ApiBearerAuth()
   @ApiOkResponse({type: GetUserDto})
   @Get('me')
-  findOne(@Token() uid: string): Promise<User> {
+  findOne(@Token() uid: string): Promise<UserDto> {
     return this.usersService.findOne(uid)
   }
 
@@ -71,6 +65,12 @@ export class UsersController {
   @ApiOkResponse({type: GetUserDto})
   async find(@Param('id') id: number): Promise<UserDto> {
     return userGetDto(await this.usersService.findOneById(id))
+  }
+
+  @UseInterceptors(ClassSerializerInterceptor)
+  @Post()
+  create(@Body() createUserDto: CreateUserDto): Promise<User> {
+    return this.usersService.create(createUserDto)
   }
 
   @UseInterceptors(ClassSerializerInterceptor)

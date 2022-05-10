@@ -8,6 +8,8 @@ export interface ISubmission {
   eventTitle: string
   evaluatorFirstName: string
   evaluatorLastName: string
+  evaluatorPosition: string
   evaluateeFirstName: string
   evaluateeLastName: string
+  evaluateePosition: string
 }

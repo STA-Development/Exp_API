@@ -1,9 +1,9 @@
 import {Injectable} from '@nestjs/common'
 import {InjectRepository} from '@nestjs/typeorm'
-import {Repository} from 'typeorm'
 import {CreateUserDto} from '../dto/userCreateDto'
 import {UpdateUserDto} from '../dto/userUpdateDto'
 import {User} from '../entity/user'
+import {Repository} from 'typeorm'
 import {dbAuth} from '../auth/preauthMiddleware'
 import {UserSalaryDto} from '../dto/userSalaryDto'
 import {AddUserDto} from '../dto/addUserDto'
@@ -12,6 +12,11 @@ import {AddUserDto} from '../dto/addUserDto'
 export class UserRepository {
   @InjectRepository(User)
   userRepository: Repository<User>
+
+  async create(createUserDto: CreateUserDto): Promise<User> {
+    const user = await this.userRepository.create(createUserDto)
+    return this.userRepository.save(user)
+  }
 
   async findAll(limit: number, page: number): Promise<{data: User[]; count: number}> {
     const builder = this.userRepository.createQueryBuilder('user')
@@ -33,11 +38,6 @@ export class UserRepository {
       relations: ['userSubCriteria', 'userSubCriteria.subCriteria'],
       where: {authUid: uid},
     })
-  }
-
-  async create(createUserDto: CreateUserDto): Promise<User> {
-    const user = await this.userRepository.create(createUserDto)
-    return this.userRepository.save(user)
   }
 
   async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {

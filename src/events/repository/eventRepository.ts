@@ -105,7 +105,7 @@ export class EventsRepository {
 
     const submissionSubCriteria = await getRepository(UserSubCriteria)
       .createQueryBuilder()
-      .where({eventId: eventId, evaluatorId: evaluatorId})
+      .where({eventId, evaluatorId})
       .select('COUNT(subCriteriaResult) AS count')
       .groupBy('evaluateeId')
       .execute()
@@ -114,11 +114,11 @@ export class EventsRepository {
       .createQueryBuilder()
       .where({eventId: eventId, evaluatorId: evaluatorId})
       .select(
-        'evaluatorId, evaluator.firstname AS evaluatorFirstName, evaluator.lastname AS evaluatorLastName',
+        'evaluatorId, evaluator.firstname AS evaluatorFirstName, evaluator.lastname AS evaluatorLastName, evaluator.position as evaluatorPosition',
       )
       .addSelect(
-        'evaluateeId, evaluatee.firstname AS evaluateeFirstName, evaluatee.lastname AS evaluateeLastName',
-      ) //TODO add position
+        'evaluateeId, evaluatee.firstname AS evaluateeFirstName, evaluatee.lastname AS evaluateeLastName, evaluatee.position as evaluateePosition',
+      )
       .leftJoin(User, 'evaluator', 'evaluator.id = evaluatorId')
       .leftJoin(User, 'evaluatee', 'evaluatee.id = evaluateeId')
       .groupBy('evaluateeId ')
@@ -147,7 +147,7 @@ export class EventsRepository {
 
     const submissionSubCriteria = await getRepository(UserSubCriteria)
       .createQueryBuilder()
-      .where({eventId: eventId})
+      .where({eventId})
       .select('COUNT(subCriteriaResult) AS count')
       .groupBy('evaluateeId')
       .addGroupBy('evaluatorId')
@@ -157,11 +157,11 @@ export class EventsRepository {
       .createQueryBuilder()
       .where({eventId: eventId})
       .select(
-        'evaluatorId, evaluator.firstname AS evaluatorFirstName, evaluator.lastname AS evaluatorLastName',
+        'evaluatorId, evaluator.firstname AS evaluatorFirstName, evaluator.lastname AS evaluatorLastName, evaluator.position as evaluatorPosition',
       )
       .addSelect(
-        'evaluateeId, evaluatee.firstname AS evaluateeFirstName, evaluatee.lastname AS evaluateeLastName',
-      ) // TODO add position
+        'evaluateeId, evaluatee.firstname AS evaluateeFirstName, evaluatee.lastname AS evaluateeLastName, evaluatee.position as evaluateePosition',
+      )
       .leftJoin(User, 'evaluator', 'evaluator.id = evaluatorId')
       .leftJoin(User, 'evaluatee', 'evaluatee.id = evaluateeId')
       .groupBy('evaluatorId')
@@ -177,6 +177,7 @@ export class EventsRepository {
       eventTitle,
     )
   }
+
   async getEventProgress(eventId: number): Promise<IEventProgress> {
     const submissions = await this.getSubmissions(eventId)
 
@@ -201,7 +202,7 @@ export class EventsRepository {
   async getNotEvaluatedEvaluators(eventId: number): Promise<INotEvaluated[]> {
     const evaluationPairs = await getRepository(UserSubCriteria)
       .createQueryBuilder()
-      .where({eventId: eventId})
+      .where({eventId})
       .select('evaluatorId, evaluateeId, eventId')
       .groupBy('evaluatorId, evaluateeId')
       .select(
@@ -218,7 +219,7 @@ export class EventsRepository {
   async getUserRating(eventId: number): Promise<User[]> {
     const usersRating = await getRepository(UserSubCriteria)
       .createQueryBuilder()
-      .where({eventId: eventId})
+      .where({eventId})
       .select(['evaluateeId, eventId'])
       .addSelect(['COUNT(evaluateeId) AS rating'])
       .andWhere('subCriteriaResult = true')
@@ -227,7 +228,7 @@ export class EventsRepository {
 
     const userSubCriteria = await getRepository(UserSubCriteria)
       .createQueryBuilder()
-      .where({eventId: eventId})
+      .where({eventId})
       .select(['evaluateeId, eventId'])
       .addSelect(['COUNT(evaluateeId) AS rating'])
       .groupBy('evaluateeId')
@@ -250,7 +251,7 @@ export class EventsRepository {
 
     const evaluatees = await getRepository(UserSubCriteria)
       .createQueryBuilder()
-      .where({eventId: eventId})
+      .where({eventId})
       .select('evaluateeId,user.rating')
       .leftJoin(User, 'user', 'evaluateeId = user.id')
       .andWhere('evaluateeId  = user.id')
@@ -269,8 +270,8 @@ export class EventsRepository {
   async getUserCriteriaRating(eventId: number, evaluateeId: number) {
     const usersCriteriaRating = await getRepository(UserSubCriteria)
       .createQueryBuilder()
-      .where({eventId: eventId})
-      .andWhere({evaluateeId: evaluateeId})
+      .where({eventId})
+      .andWhere({evaluateeId})
       .select('user.firstName, user.lastName')
       .addSelect(['evaluateeId, eventId,COUNT(criteriaId) as criteriaRating'])
       .leftJoin(User, 'user', 'user.id = evaluateeId')
@@ -292,18 +293,18 @@ export class EventsRepository {
       )
     }
     const eventEvaluatorRepository = await getRepository(EventEvaluator)
-    ;(await eventEvaluatorRepository.createQueryBuilder().where({eventId: eventId}).getOne())
+    ;(await eventEvaluatorRepository.createQueryBuilder().where({eventId}).getOne())
       ? (await eventEvaluatorRepository
           .createQueryBuilder()
-          .where({eventId: eventId})
-          .andWhere({userId: userId})
+          .where({eventId})
+          .andWhere({userId})
           .getOne())
         ? logger.info('data already exists')
         : await eventEvaluatorRepository
             .createQueryBuilder()
             .insert()
             .values({
-              userId: userId,
+              userId,
               eventId,
             })
             .execute()
@@ -322,18 +323,18 @@ export class EventsRepository {
     }
     const eventEvaluateeRepository = await getRepository(EventEvaluatee)
 
-    ;(await eventEvaluateeRepository.createQueryBuilder().where({eventId: eventId}).getOne())
+    ;(await eventEvaluateeRepository.createQueryBuilder().where({eventId}).getOne())
       ? (await eventEvaluateeRepository
           .createQueryBuilder()
-          .where({eventId: eventId})
-          .andWhere({userId: userId})
+          .where({eventId})
+          .andWhere({userId})
           .getOne())
         ? logger.info('data already exists')
         : await eventEvaluateeRepository
             .createQueryBuilder()
             .insert()
             .values({
-              userId: userId,
+              userId,
               eventId,
             })
             .execute()
@@ -366,14 +367,12 @@ export class EventsRepository {
 
   async findByEmail(email: string, eventId: number): Promise<User> {
     const user = await this.userRepository.findOne({
-      where: {email: email},
+      where: {email},
     })
 
     try {
       await getRepository(EventEvaluator).findOne({where: {userId: user.id, eventId}})
-      {
-        return user
-      }
+      return user
     } catch {
       throw new HttpException(
         {
@@ -441,7 +440,7 @@ export class EventsRepository {
 
     if (
       (await getRepository(EventEvaluatee).findOne({
-        where: {userId: evaluationResult.evaluateeId, eventId: eventId},
+        where: {userId: evaluationResult.evaluateeId, eventId},
       })) === undefined
     ) {
       throw new HttpException(
@@ -480,8 +479,8 @@ export class EventsRepository {
         userSubCriteria.subCriteriaResult = value
         if (
           !(await getRepository(UserSubCriteria).findOne({
-            eventId: eventId,
-            evaluatorId: evaluatorId,
+            eventId,
+            evaluatorId,
             evaluateeId: evaluationResult.evaluateeId,
           }))
         ) {
@@ -492,8 +491,8 @@ export class EventsRepository {
             .delete()
             .from(UserSubCriteria)
             .where({
-              eventId: eventId,
-              evaluatorId: evaluatorId,
+              eventId,
+              evaluatorId,
               evaluateeId: evaluationResult.evaluateeId,
             })
             .execute()

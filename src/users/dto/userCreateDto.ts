@@ -29,5 +29,6 @@ export class CreateUserDto extends User {
   email: string
 
   @IsEnum(PerformerType)
+  @IsOptional()
   performerType: PerformerType
 }

@@ -75,7 +75,7 @@ export class EventsService {
     return this.eventsRepository.addElement(event)
   }
 
-  async addCriteria(eventId: number, criteriaId: number): Promise<Event> {
+  async addCriteria(eventId: number, criteriaId: number) {
     const criteria = await this.criteriaRepository.findOneById(criteriaId)
     const event = await this.eventsRepository.findOneById(eventId)
     if (!isUpcomingEvent(event))

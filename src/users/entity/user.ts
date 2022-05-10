@@ -23,7 +23,7 @@ export class User implements IUser {
   rating: number
 
   @Column({default: PerformerType.waitingForEvaluation})
-  performerType: string
+  performerType: PerformerType
 
   @OneToMany(() => UserSubCriteria, (userSubCriteria) => userSubCriteria.user, {
     onUpdate: 'CASCADE',
@@ -88,6 +88,7 @@ export class UserDto {
   avatar: string
 
   position: string
+
   avatarPublicId: string
 
   performerType: string

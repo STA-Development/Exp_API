@@ -24,11 +24,11 @@ import {eventGetDto} from '../dto/eventGetDto'
 import {User} from '../../users/entity/user'
 import {IEventSearch} from '../interface/eventSearchInterface'
 import {ISubCriteriaRef} from '../interface/subCriteriaRefInterface'
+import {sendEvaluationEmail} from '../../utils/sendEvaluationMail'
 import {IEvaluationResult} from '../interface/evaluationResultInterface'
 import {ISubmission} from '../interface/submissionInterface'
 import {IEventProgress} from '../interface/eventProgress'
 import {INotEvaluated} from '../interface/notEvaluatedEvaluators'
-import {sendEvaluationEmail} from '../../utils/sendEvaluationMail'
 
 @Controller('events')
 export class EventsController {
@@ -76,7 +76,7 @@ export class EventsController {
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
-  @Get(':eventId/evaluatee-criteria-rating/:evaluateeId') // todo bad naming
+  @Get(':eventId/evaluatee/:evaluateeId/criteria-rating')
   getUserCriteriaRating(
     @Param('eventId') eventId: number,
     @Param('evaluateeId') evaluateeId: number,
@@ -123,7 +123,7 @@ export class EventsController {
       {secret: process.env.JWT_ACCESS_KEY, expiresIn: '1m'},
     )
 
-    const link = `http://${process.env.HOST}:${process.env.PORT}/${process.env.SWAGGER_PATH}#/invitation/?code=${invitationToken}` //todo
+    const link = `http://${process.env.HOST}:${process.env.PORT}/${process.env.SWAGGER_PATH}#/invitation/?code=${invitationToken}`
     await sendEvaluationEmail(invitation.email, link)
     return invitationToken
   }
@@ -163,7 +163,7 @@ export class EventsController {
 
   @UseInterceptors(ClassSerializerInterceptor)
   @Put('evaluation')
-  async evalutaionResult(@Body() evaluationResult: IEvaluationResult): Promise<string> {
+  async evaluationResult(@Body() evaluationResult: IEvaluationResult): Promise<string> {
     try {
       const jwtPayload: JwtPayload | string = jwt.verify(
         evaluationResult.token,

@@ -15,7 +15,7 @@ export class PdfService {
         width: '860px',
         height: '640px',
       }
-      pdf.create(data, options).toStream(function (err, stream) {
+      pdf.create(data, options).toStream((err, stream) => {
         if (err) {
           reject(err)
         } else {

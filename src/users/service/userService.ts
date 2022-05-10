@@ -1,23 +1,21 @@
-import {BadRequestException, Inject, Injectable} from '@nestjs/common'
-import {CreateUserDto} from '../dto/userCreateDto'
-import {UpdateUserDto} from '../dto/userUpdateDto'
-import {User} from '../entity/user'
-import {logger} from '../../logger'
+import {BadRequestException, NotFoundException, Inject, Injectable} from '@nestjs/common'
 import {Repository} from 'typeorm'
 import {InjectRepository} from '@nestjs/typeorm'
+import {CreateUserDto} from '../dto/userCreateDto'
+import {UpdateUserDto} from '../dto/userUpdateDto'
+import {User, UserDto} from '../entity/user'
+import {logger} from '../../logger'
 import {CloudinaryService} from '../../cloudinary/cloudinaryService'
 import {dbAuth} from '../auth/preauthMiddleware'
-import {NotFoundException} from '@nestjs/common'
 import {UserRepository} from '../repository/userRepository'
 import {UserSalaryDto} from '../dto/userSalaryDto'
 import {AddUserDto} from '../dto/addUserDto'
 
 @Injectable()
 export class UsersService {
-  constructor(
-    @InjectRepository(User) private readonly userRepository: Repository<User>,
-    private cloudinary: CloudinaryService,
-  ) {}
+  @InjectRepository(User)
+  private readonly userRepository: Repository<User>
+  private cloudinary: CloudinaryService
 
   @Inject()
   usersRepository: UserRepository
@@ -48,25 +46,35 @@ export class UsersService {
     try {
       user = await this.usersRepository.findOneById(id)
     } catch (error) {
-      logger.error(`User with ID=${id} not found` + error)
+      logger.error(`User with ID=${id} not found ${error}`)
     }
     return user
   }
 
-  async findOne(authUid: string): Promise<User> {
-    return this.usersRepository.findOne(authUid)
+  async findOne(authUid: string): Promise<UserDto> {
+    let user
+    try {
+      user = await this.usersRepository.findOne(authUid)
+    } catch (error) {
+      logger.error(`User with ID=${authUid} not found ${error}`)
+    }
+    return user
   }
 
   async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
-    const user = await this.usersRepository.update(id, updateUserDto)
-    if (!user) {
+    try {
+      const user = await this.usersRepository.update(id, updateUserDto)
+      await dbAuth.updateUser(user.authUid, {email: updateUserDto.email})
+      return user
+    } catch (err) {
       throw new NotFoundException(`User with ID=${id} not found`)
     }
-    return user
   }
 
   async remove(id: number): Promise<User> {
     try {
+      const user = await this.usersRepository.findOneById(id)
+      await dbAuth.deleteUser(user.authUid)
       return await this.usersRepository.remove(id)
     } catch (err) {
       throw {
