@@ -23,7 +23,6 @@ export class UserRepository {
     const total = await builder.getCount()
     const pages = Math.ceil(total / limit)
     const data = await this.userRepository.find({
-      relations: ['userSubCriteria', 'userSubCriteria.event'],
       take: limit,
       skip: (page - 1) * limit,
     })
