@@ -1,46 +1,37 @@
-import { Injectable } from '@nestjs/common';
-import { CreateRatingDto } from '../dto/ratingCreateDto';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { Rating } from '../entity/rating';
-import { UpdateRatingDto } from '../dto/ratingUpdateDto';
+import {Injectable} from '@nestjs/common'
+import {InjectRepository} from '@nestjs/typeorm'
+import {Repository} from 'typeorm'
+import {CreateRatingDto} from '../dto/ratingCreateDto'
+import {Rating} from '../entity/rating'
+import {UpdateRatingDto} from '../dto/ratingUpdateDto'
 
 @Injectable()
 export class RatingRepository {
   @InjectRepository(Rating)
-  ratingRepository: Repository<Rating>;
+  ratingRepository: Repository<Rating>
 
-  async create(createRatingDto: CreateRatingDto): Promise<Rating> {
-    return this.ratingRepository.save(
-      await this.ratingRepository.create(createRatingDto)
-    );
+  create(createRatingDto: CreateRatingDto): Promise<Rating> {
+    return this.ratingRepository.save(createRatingDto)
   }
 
   findAll(): Promise<Rating[]> {
-    return this.ratingRepository.find({ relations: ['pivot', 'pivot.event'] });
+    return this.ratingRepository.find()
   }
 
-  async findOneById(id: number): Promise<Rating> {
-    const rating = await this.ratingRepository.findOne(id, {
-      relations: ['pivot', 'pivot.event']
-    });
-    return rating;
+  findOneById(id: number): Promise<Rating> {
+    return this.ratingRepository.findOne(id)
   }
 
-  async update(
-    eventId: number,
-    updateRatingDto: UpdateRatingDto
-  ): Promise<Rating> {
+  async update(eventId: number, updateRatingDto: UpdateRatingDto): Promise<Rating> {
     const rating = await this.ratingRepository.preload({
       id: eventId,
-      ...updateRatingDto
-    });
+      ...updateRatingDto,
+    })
 
-    return this.ratingRepository.save(rating);
+    return this.ratingRepository.save(rating)
   }
 
   async remove(id: number): Promise<Rating> {
-    const rating = await this.findOneById(id);
-    return this.ratingRepository.remove(rating);
+    return this.ratingRepository.remove(await this.findOneById(id))
   }
 }
