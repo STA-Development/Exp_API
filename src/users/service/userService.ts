@@ -1,22 +1,23 @@
-import {BadRequestException, Inject, Injectable, NotFoundException} from '@nestjs/common'
-import {InjectRepository} from '@nestjs/typeorm'
-import {Repository} from 'typeorm'
+import {BadRequestException, Inject, Injectable} from '@nestjs/common'
 import {CreateUserDto} from '../dto/userCreateDto'
 import {UpdateUserDto} from '../dto/userUpdateDto'
-import {User, UserDto} from '../entity/user'
+import {User} from '../entity/user'
 import {logger} from '../../logger'
+import {Repository} from 'typeorm'
+import {InjectRepository} from '@nestjs/typeorm'
 import {CloudinaryService} from '../../cloudinary/cloudinaryService'
 import {dbAuth} from '../auth/preauthMiddleware'
+import {NotFoundException} from '@nestjs/common'
 import {UserRepository} from '../repository/userRepository'
 import {UserSalaryDto} from '../dto/userSalaryDto'
 import {AddUserDto} from '../dto/addUserDto'
 
 @Injectable()
 export class UsersService {
-  @InjectRepository(User)
-  private readonly userRepository: Repository<User>
-
-  private cloudinary: CloudinaryService
+  constructor(
+    @InjectRepository(User) private readonly userRepository: Repository<User>,
+    private cloudinary: CloudinaryService,
+  ) {}
 
   @Inject()
   usersRepository: UserRepository
@@ -52,8 +53,12 @@ export class UsersService {
     return user
   }
 
-  async findOne(authUid: string): Promise<UserDto> {
-    return this.usersRepository.findOne(authUid)
+  async findOne(authUid: string): Promise<User> {
+    try {
+      return this.usersRepository.findOne(authUid)
+    } catch (err) {
+      throw new NotFoundException(`User with ID=${authUid} not found`)
+    }
   }
 
   async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
@@ -125,6 +130,10 @@ export class UsersService {
 
   async addUser(addUserDto: AddUserDto): Promise<User> {
     try {
+      const auth = await dbAuth.createUser({
+        email: addUserDto.email,
+      })
+      addUserDto.authUid = auth.uid
       addUserDto.avatar = process.env.AVATAR_URL
       return await this.usersRepository.addUser(addUserDto)
     } catch (err) {
