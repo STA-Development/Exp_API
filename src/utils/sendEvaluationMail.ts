@@ -9,7 +9,7 @@ export const sendEvaluationEmail = async (email: string, link: string) => {
       pass: process.env.EMAIL_PASS,
     },
   })
-  ejs.renderFile('src/forms/emailForm.ejs', {link: link}, async (err, invitationForm) => {
+  ejs.renderFile('src/forms/emailForm.ejs', {link}, async (err, invitationForm) => {
     await transporter.sendMail({
       from: process.env.EMAIL,
       to: email,

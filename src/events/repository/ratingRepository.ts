@@ -32,7 +32,6 @@ export class RatingRepository {
   }
 
   async remove(id: number): Promise<Rating> {
-    const rating = await this.findOneById(id)
-    return this.ratingRepository.remove(rating)
+    return this.ratingRepository.remove(await this.findOneById(id))
   }
 }

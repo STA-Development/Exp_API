@@ -7,6 +7,7 @@ import {
   ManyToMany,
   JoinTable,
 } from 'typeorm'
+import {ApiProperty} from '@nestjs/swagger'
 import {IEvent, Period} from '../interface/eventInterface'
 import {UserSubCriteria} from './userSubCriteria'
 import {User, UserDto} from '../../users/entity/user'
@@ -46,7 +47,6 @@ export class Event implements IEvent {
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
     createForeignKeyConstraints: false,
-    eager: true,
   })
   userSubCriteria: UserSubCriteria[]
 
@@ -96,14 +96,19 @@ export class Event implements IEvent {
   eventEvaluatee: EventEvaluatee[]
 }
 export class EventDto {
+  @ApiProperty()
   id: number
 
+  @ApiProperty()
   title: string
 
+  @ApiProperty()
   bonus: number
 
+  @ApiProperty()
   timePeriod: Period
 
+  @ApiProperty()
   users: UserDto[]
 
   eventEvaluator: EventEvaluatorGetDto[]
@@ -114,7 +119,9 @@ export class EventDto {
 
   rating: RatingDto[]
 
+  @ApiProperty()
   createdAt: Date
 
+  @ApiProperty()
   endsAt: Date
 }

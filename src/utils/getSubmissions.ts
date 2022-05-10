@@ -13,14 +13,14 @@ export const getSubmissions = (
       ? (submissionState = SubmissionState.completed)
       : (submissionState = SubmissionState.partiallyCompleted)
     const submission: ISubmission = {
-      eventTitle: eventTitle,
+      eventTitle,
       evaluateeFirstName: submissionModels[i].evaluateeFirstName,
       evaluateeLastName: submissionModels[i].evaluateeLastName,
       evaluateePosition: submissionModels[i].evaluateePosition,
       evaluatorFirstName: submissionModels[i].evaluatorFirstName,
       evaluatorLastName: submissionModels[i].evaluatorLastName,
       evaluatorPosition: submissionModels[i].evaluatorPosition,
-      submissionState: submissionState,
+      submissionState,
     }
     submissions.push(submission)
   }

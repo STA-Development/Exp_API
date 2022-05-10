@@ -34,7 +34,6 @@ module.exports = {
     'no-shadow': 'off', // This One is disabled because rule have no support for ts, but at the bottom we have enabled @typescript-eslint/no-shadow instead of
     '@typescript-eslint/no-shadow': 'error',
     'filenames/match-regex': 1,
-    '@typescript-eslint/no-unused-vars': ['error'],
     'import/no-cycle': 0,
     '@typescript-eslint/naming-convention': [
       'error',

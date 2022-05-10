@@ -14,6 +14,7 @@ export interface IUser {
   lastName: string
   email: string
   rating: number
+  authUid: string
   performerType: string
   userSubCriteria: UserSubCriteria[]
   isAdmin: boolean

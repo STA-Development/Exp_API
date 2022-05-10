@@ -1,6 +1,6 @@
+import {ApiProperty} from '@nestjs/swagger'
 import {IsString, IsEmail, IsNumber, IsOptional} from 'class-validator'
 import {User} from '../entity/user'
-import {ApiProperty} from '@nestjs/swagger'
 
 export class AddUserDto extends User {
   readonly id: number

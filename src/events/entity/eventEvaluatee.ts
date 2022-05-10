@@ -1,4 +1,5 @@
 import {Entity, PrimaryGeneratedColumn, PrimaryColumn, ManyToOne, OneToMany} from 'typeorm'
+import {ApiProperty} from '@nestjs/swagger'
 import {Event, EventDto} from './event'
 import {User, UserDto} from '../../users/entity/user'
 import {IEventEvaluatee} from '../interface/eventEvaluateeInterface'
@@ -41,7 +42,9 @@ export class EventEvaluatee implements IEventEvaluatee {
 }
 
 export class EventEvaluateeGetDto implements IEventEvaluateeGetDto {
+  @ApiProperty()
   event: EventDto
 
+  @ApiProperty()
   user: UserDto
 }

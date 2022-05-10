@@ -3,8 +3,9 @@ import {ValidationPipe} from '@nestjs/common'
 import {DocumentBuilder, SwaggerModule} from '@nestjs/swagger'
 import {EventsModule} from './events/module/eventAppModule'
 import {UserModule} from './users/module/userModule'
+
 ;(async () => {
-  const eventApp = await NestFactory.create(EventsModule, {cors: true})
+  const eventApp = await NestFactory.create(EventsModule)
   const eventConfig = new DocumentBuilder()
     .setTitle('Events')
     .setDescription('The events API description')
@@ -21,7 +22,7 @@ import {UserModule} from './users/module/userModule'
   )
   await eventApp.listen(3030)
 
-  const userApp = await NestFactory.create(UserModule, {cors: true})
+  const userApp = await NestFactory.create(UserModule)
   const userConfig = new DocumentBuilder()
     .setTitle('Users')
     .setDescription('The users API description')

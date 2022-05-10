@@ -1,6 +1,6 @@
-import {BadRequestException, NotFoundException, Inject, Injectable} from '@nestjs/common'
-import {Repository} from 'typeorm'
+import {BadRequestException, Inject, Injectable, NotFoundException} from '@nestjs/common'
 import {InjectRepository} from '@nestjs/typeorm'
+import {Repository} from 'typeorm'
 import {CreateUserDto} from '../dto/userCreateDto'
 import {UpdateUserDto} from '../dto/userUpdateDto'
 import {User, UserDto} from '../entity/user'
@@ -15,6 +15,7 @@ import {AddUserDto} from '../dto/addUserDto'
 export class UsersService {
   @InjectRepository(User)
   private readonly userRepository: Repository<User>
+
   private cloudinary: CloudinaryService
 
   @Inject()
@@ -34,7 +35,7 @@ export class UsersService {
     }
   }
 
-  async findAll(limit: number = 10, page: number = 0): Promise<{data: User[]; count: number}> {
+  async findAll(limit = 10, page = 0): Promise<{data: User[]; count: number}> {
     if (limit > 100) {
       throw new BadRequestException('Pagination limit exceeded')
     }
@@ -52,13 +53,7 @@ export class UsersService {
   }
 
   async findOne(authUid: string): Promise<UserDto> {
-    let user
-    try {
-      user = await this.usersRepository.findOne(authUid)
-    } catch (error) {
-      logger.error(`User with ID=${authUid} not found ${error}`)
-    }
-    return user
+    return this.usersRepository.findOne(authUid)
   }
 
   async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {

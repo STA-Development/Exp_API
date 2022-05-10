@@ -1,4 +1,5 @@
 import {Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToMany} from 'typeorm'
+import {ApiProperty} from '@nestjs/swagger'
 import {ICriteria} from '../interface/criteriaInterface'
 import {UserSubCriteria} from './userSubCriteria'
 import {Event} from './event'
@@ -38,11 +39,15 @@ export class Criteria implements ICriteria {
 }
 
 export class CriteriaDto {
+  @ApiProperty()
   id: number
 
+  @ApiProperty()
   name: string
 
+  @ApiProperty()
   criteria: boolean
 
+  @ApiProperty()
   subCriteria: SubCriteriaDto[]
 }

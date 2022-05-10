@@ -1,9 +1,9 @@
 import {Injectable} from '@nestjs/common'
 import {InjectRepository} from '@nestjs/typeorm'
+import {Repository} from 'typeorm'
 import {CreateUserDto} from '../dto/userCreateDto'
 import {UpdateUserDto} from '../dto/userUpdateDto'
 import {User} from '../entity/user'
-import {Repository} from 'typeorm'
 import {dbAuth} from '../auth/preauthMiddleware'
 import {UserSalaryDto} from '../dto/userSalaryDto'
 import {AddUserDto} from '../dto/addUserDto'
@@ -30,12 +30,13 @@ export class UserRepository {
   }
 
   findOneById(id: number): Promise<User> {
-    return this.userRepository.findOne(id)
+    return this.userRepository.findOne({
+      where: {id},
+    })
   }
 
   findOne(uid: string): Promise<User> {
     return this.userRepository.findOne({
-      relations: ['userSubCriteria', 'userSubCriteria.subCriteria'],
       where: {authUid: uid},
     })
   }
@@ -56,7 +57,7 @@ export class UserRepository {
 
   async changeSalary(id: number, userSalaryDto: UserSalaryDto): Promise<User> {
     const user = await this.userRepository.preload({
-      id: id,
+      id,
       salary: userSalaryDto.salary,
     })
     return this.userRepository.save(user)

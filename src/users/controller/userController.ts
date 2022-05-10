@@ -15,17 +15,17 @@ import {
   UseInterceptors,
 } from '@nestjs/common'
 import {ApiBearerAuth, ApiOkResponse} from '@nestjs/swagger'
+import {ApiFile} from '../dto/uploadFileDto'
 import {UsersService} from '../service/userService'
 import {CreateUserDto} from '../dto/userCreateDto'
 import {UpdateUserDto} from '../dto/userUpdateDto'
+import {UserSalaryDto} from '../dto/userSalaryDto'
 import {User, UserDto} from '../entity/user'
 import {AuthGuard} from '../../middlewares/checkJwt'
+import {RolesGuard} from '../../middlewares/checkAdmin'
 import {Token} from '../../middlewares/jwtDecorator'
 import {logger} from '../../logger'
 import {userGetDto} from '../dto/userGetDto'
-import {ApiFile} from '../dto/uploadFileDto'
-import {UserSalaryDto} from '../dto/userSalaryDto'
-import {RolesGuard} from '../../middlewares/checkAdmin'
 import {AddUserDto} from '../dto/addUserDto'
 import {GetUserDto} from '../dto/getUsersDto'
 
@@ -42,11 +42,11 @@ export class UsersController {
   async findAll(
     @Query('limit') limit: number,
     @Query('page') page: number,
-  ): Promise<{pageCount: number; data: UserDto[]}> {
+  ): Promise<{pageCount: number; userList: UserDto[]}> {
     logger.info('Get all users')
     const users = await this.usersService.findAll(limit, page)
-    const data = users.data.map((user) => userGetDto(user))
-    return {data, pageCount: users.count}
+    const userList = users.data.map((user) => userGetDto(user))
+    return {userList, pageCount: users.count}
   }
 
   @UseInterceptors(ClassSerializerInterceptor)

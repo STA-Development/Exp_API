@@ -30,8 +30,9 @@ export const getNotEvaluatedEvaluators = (evaluationPairs): INotEvaluated[] => {
   return notEvaluatedEvaluatees.filter(
     (notEvaluated, index) =>
       index ===
-      notEvaluatedEvaluatees.findIndex((notEvaluatedEvaluatee) => {
-        return JSON.stringify(notEvaluatedEvaluatee) === JSON.stringify(notEvaluated)
-      }),
+      notEvaluatedEvaluatees.findIndex(
+        (notEvaluatedEvaluatee) =>
+          JSON.stringify(notEvaluatedEvaluatee) === JSON.stringify(notEvaluated),
+      ),
   )
 }

@@ -12,7 +12,7 @@ import {Rating} from '../entity/rating'
 import {EventEvaluator} from '../entity/eventEvaluator'
 import {logger} from '../../logger'
 import {EventEvaluatee} from '../entity/eventEvaluatee'
-import {ISubCriteriaRef} from '../interface/subCriteriaRefInterface'
+import {EventSubCriteriaUpdateDto} from '../dto/eventSubCriteriaUpdateDto'
 import {isUpcomingEvent} from '../../utils/checkEventDate'
 import {IEvaluationResult} from '../interface/evaluationResultInterface'
 import {IUserSubCriteriaResult} from '../interface/userSubCriteriaResultInterface'
@@ -49,25 +49,22 @@ export class EventsRepository {
       .getMany()
   }
 
-  async addSubCriteria(id: number, idRef: ISubCriteriaRef) {
+  async addSubCriteria(eventId: number, idRef: EventSubCriteriaUpdateDto) {
     const userSubCriteriaRepository = await getRepository(UserSubCriteria)
     const userSubCriteria = await userSubCriteriaRepository.findOne({
       order: {id: 'DESC'},
-      where: {eventId: id},
+      where: {eventId},
     })
 
     const {ratingId} = userSubCriteria || {
-      eventId: 0,
-      criteriaId: 0,
       ratingId: 0,
-      userId: 0,
     }
 
     const userSubCriterias = []
     for (let i = 0; i < idRef.subCriteriaId.length; i++) {
       const userSubCriteria = new UserSubCriteria()
       userSubCriteria.subCriteriaId = idRef.subCriteriaId[i]
-      userSubCriteria.eventId = id
+      userSubCriteria.eventId = eventId
       userSubCriteria.criteriaId = (
         await this.subCriteriaRepository.findOneById(idRef.subCriteriaId[i])
       ).criteria.id
@@ -78,7 +75,7 @@ export class EventsRepository {
         : logger.info('data already exists')
     }
 
-    if (await userSubCriteriaRepository.createQueryBuilder().where({eventId: id}).getOne())
+    if (await userSubCriteriaRepository.createQueryBuilder().where({eventId}).getOne())
       await userSubCriteriaRepository
         .createQueryBuilder()
         .insert()
@@ -98,6 +95,7 @@ export class EventsRepository {
     const currentEvent = await this.eventRepository.findOne(eventId, {
       relations: ['criteria', 'criteria.subCriteria'],
     })
+
     let eventSubCriteriaCount = 0
     currentEvent.criteria?.forEach((criteria) => {
       eventSubCriteriaCount += criteria.subCriteria.length
@@ -112,7 +110,7 @@ export class EventsRepository {
 
     const submissionModels = await getRepository(UserSubCriteria)
       .createQueryBuilder()
-      .where({eventId: eventId, evaluatorId: evaluatorId})
+      .where({eventId, evaluatorId})
       .select(
         'evaluatorId, evaluator.firstname AS evaluatorFirstName, evaluator.lastname AS evaluatorLastName, evaluator.position as evaluatorPosition',
       )
@@ -155,7 +153,7 @@ export class EventsRepository {
 
     const submissionModels = await getRepository(UserSubCriteria)
       .createQueryBuilder()
-      .where({eventId: eventId})
+      .where({eventId})
       .select(
         'evaluatorId, evaluator.firstname AS evaluatorFirstName, evaluator.lastname AS evaluatorLastName, evaluator.position as evaluatorPosition',
       )
@@ -234,12 +232,11 @@ export class EventsRepository {
       .groupBy('evaluateeId')
       .getRawMany()
 
-    const currentEvent = await this.eventRepository.findOne(eventId)
+    const currentEvent = await this.eventRepository.findOne(eventId, {relations: ['rating']})
     let rankingScale = 10
-    currentEvent.rating?.map((rating) => {
-      rating.isSelected ? (rankingScale = rating.to) : rankingScale
-      return rankingScale
-    })
+    currentEvent.rating?.forEach((rating) =>
+      rating.isSelected ? (rankingScale = rating.to) : rankingScale,
+    )
 
     function setRating(user) {
       for (let i = 0; i < usersRating.length; i++) {
@@ -510,7 +507,6 @@ export class EventsRepository {
   }
 
   async remove(id: number): Promise<Event> {
-    const event = await this.findOneById(id)
-    return this.eventRepository.remove(event)
+    return this.eventRepository.remove(await this.findOneById(id))
   }
 }
