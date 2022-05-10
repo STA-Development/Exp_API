@@ -1,16 +1,18 @@
-import {BadRequestException, Inject, Injectable} from '@nestjs/common'
-import {CreateUserDto} from '../dto/userCreateDto'
-import {UpdateUserDto} from '../dto/userUpdateDto'
-import {User} from '../entity/user'
-import {logger} from '../../logger'
-import {Repository} from 'typeorm'
-import {InjectRepository} from '@nestjs/typeorm'
-import {CloudinaryService} from '../../cloudinary/cloudinaryService'
-import {dbAuth} from '../auth/preauthMiddleware'
-import {NotFoundException} from '@nestjs/common'
-import {UserRepository} from '../repository/userRepository'
-import {UserSalaryDto} from '../dto/userSalaryDto'
-import {AddUserDto} from '../dto/addUserDto'
+import { BadRequestException, Inject, Injectable } from '@nestjs/common';
+import { CreateUserDto } from '../dto/userCreateDto';
+import { UpdateUserDto } from '../dto/userUpdateDto';
+import { User } from '../entity/user';
+import { logger } from '../../logger';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
+import { CloudinaryService } from '../../cloudinary/cloudinaryService';
+import { dbAuth } from '../auth/preauthMiddleware';
+import { NotFoundException } from '@nestjs/common';
+import { UserRepository } from '../repository/userRepository';
+import { UserSalaryDto } from '../dto/userSalaryDto';
+import { AddUserDto } from '../dto/addUserDto';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { authGet } from '../auth/connection';
 
 @Injectable()
 export class UsersService {
@@ -26,11 +28,17 @@ export class UsersService {
     try {
       const auth = await dbAuth.createUser({
         email: createUserDto.email,
-        password: createUserDto.password,
-      })
-      createUserDto.authUid = auth.uid
-      createUserDto.avatar = process.env.AVATAR_URL
-      return await this.usersRepository.create(createUserDto)
+        password: createUserDto.password
+      });
+      createUserDto.authUid = auth.uid;
+      createUserDto.avatar = process.env.AVATAR_URL;
+      const data = await signInWithEmailAndPassword(
+        authGet,
+        createUserDto.email,
+        createUserDto.password
+      );
+      await this.usersRepository.create(createUserDto);
+      return data.user['stsTokenManager'].accessToken;
     } catch (err) {
       throw new BadRequestException(`Method Not Allowed`)
     }
