@@ -48,7 +48,7 @@ export class UsersService {
     try {
       user = await this.usersRepository.findOneById(id)
     } catch (error) {
-      logger.error(`User with ID=${id} not found` + error)
+      logger.error(`User with ID=${id} not found ${error}`)
     }
     return user
   }
