@@ -5,7 +5,7 @@ import { UsersController } from '../controller/userController';
 import { PdfController } from '../controller/pdfController';
 import { UsersService } from '../service/userService';
 import { PdfService } from '../service/pdfService';
-
+import {TypeOrmModule} from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { User } from '../entity/user';
 import { UserRepository } from '../repository/userRepository';
