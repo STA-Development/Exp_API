@@ -28,6 +28,7 @@ import {logger} from '../../logger'
 import {userGetDto} from '../dto/userGetDto'
 import {AddUserDto} from '../dto/addUserDto'
 import {GetUserDto} from '../dto/getUsersDto'
+import { UserSignInDto } from '../dto/userSignInDto';
 
 @Controller('users')
 export class UsersController {
@@ -127,5 +128,11 @@ export class UsersController {
   @Post('addUser')
   async addUser(@Body() addUserDto: AddUserDto): Promise<User> {
     return this.usersService.addUser(addUserDto)
+  }
+
+  @UseInterceptors(ClassSerializerInterceptor)
+  @Post('signIn')
+  async signIn(@Body() userSignInDto: UserSignInDto): Promise<User> {
+    return this.usersService.signIn(userSignInDto);
   }
 }

@@ -4,7 +4,6 @@ import {Repository} from 'typeorm'
 import {CreateUserDto} from '../dto/userCreateDto'
 import {UpdateUserDto} from '../dto/userUpdateDto'
 import {User} from '../entity/user'
-import {dbAuth} from '../auth/preauthMiddleware'
 import {UserSalaryDto} from '../dto/userSalaryDto'
 import {AddUserDto} from '../dto/addUserDto'
 
@@ -51,7 +50,6 @@ export class UserRepository {
 
   async remove(id: number): Promise<User> {
     const removeUserId = await this.userRepository.findOne(id)
-    await dbAuth.deleteUser(removeUserId.authUid)
     return this.userRepository.remove(removeUserId)
   }
 

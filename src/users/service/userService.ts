@@ -1,18 +1,19 @@
-import { BadRequestException, Inject, Injectable } from '@nestjs/common';
-import { CreateUserDto } from '../dto/userCreateDto';
-import { UpdateUserDto } from '../dto/userUpdateDto';
-import { User } from '../entity/user';
-import { logger } from '../../logger';
-import { Repository } from 'typeorm';
-import { InjectRepository } from '@nestjs/typeorm';
-import { CloudinaryService } from '../../cloudinary/cloudinaryService';
-import { dbAuth } from '../auth/preauthMiddleware';
-import { NotFoundException } from '@nestjs/common';
-import { UserRepository } from '../repository/userRepository';
-import { UserSalaryDto } from '../dto/userSalaryDto';
-import { AddUserDto } from '../dto/addUserDto';
+import {BadRequestException, Inject, Injectable, UnauthorizedException} from '@nestjs/common'
+import {CreateUserDto} from '../dto/userCreateDto'
+import {UpdateUserDto} from '../dto/userUpdateDto'
+import {User} from '../entity/user'
+import {logger} from '../../logger'
+import {Repository} from 'typeorm'
+import {InjectRepository} from '@nestjs/typeorm'
+import {CloudinaryService} from '../../cloudinary/cloudinaryService'
+import {dbAuth} from '../auth/preauthMiddleware'
+import {NotFoundException} from '@nestjs/common'
+import {UserRepository} from '../repository/userRepository'
+import {UserSalaryDto} from '../dto/userSalaryDto'
+import {AddUserDto} from '../dto/addUserDto'
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { authGet } from '../auth/connection';
+import { UserSignInDto } from '../dto/userSignInDto';
 
 @Injectable()
 export class UsersService {
@@ -146,6 +147,21 @@ export class UsersService {
       return await this.usersRepository.addUser(addUserDto)
     } catch (err) {
       throw new BadRequestException(`Method Not Allowed`)
+    }
+  }
+
+  async signIn(userSignInDto: UserSignInDto): Promise<User> {
+    try {
+      const data = await signInWithEmailAndPassword(
+        authGet,
+        userSignInDto.email,
+        userSignInDto.password
+      );
+      return data.user['stsTokenManager'].accessToken;
+    } catch (err) {
+      throw new UnauthorizedException(
+        `Login Failed: Your user email or password is incorrect`
+      );
     }
   }
 }
