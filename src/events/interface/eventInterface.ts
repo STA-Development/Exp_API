@@ -17,5 +17,6 @@ export interface IEvent {
   criteria: Criteria[];
   timePeriod: Period;
   createdAt: Date;
+  startsAt: Date;
   endsAt: Date;
 }

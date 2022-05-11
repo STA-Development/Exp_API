@@ -58,7 +58,10 @@ export class Event implements IEvent {
   @CreateDateColumn({ type: 'timestamp' })
   createdAt: Date;
 
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  @Column({ type: 'timestamp' })
+  startsAt: Date;
+
+  @Column({ type: 'timestamp' })
   endsAt: Date;
 
   @ManyToMany(() => User, (user) => user.events, {
@@ -125,6 +128,9 @@ export class EventDto {
 
   @ApiProperty()
   createdAt: Date;
+
+  @ApiProperty()
+  startsAt: Date;
 
   @ApiProperty()
   endsAt: Date;

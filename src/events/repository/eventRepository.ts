@@ -41,12 +41,12 @@ export class EventsRepository {
     return this.eventRepository
       .createQueryBuilder()
       .where({
-        createdAt: LessThan(dayjs().toDate())
+        startsAt: LessThan(dayjs().toDate())
       })
       .andWhere({
         endsAt: MoreThan(dayjs().toDate())
       })
-      .getMany(); //tod optimize
+      .getMany();
   }
 
   async addSubCriteria(eventId: number, idRef: EventSubCriteriaUpdateDto) {
@@ -199,7 +199,7 @@ export class EventsRepository {
         ((completedSubmissionCount / submissions.length) * 100).toFixed(1)
       ),
       title: currentEvent.title,
-      startDate: currentEvent.createdAt,
+      startDate: currentEvent.startsAt,
       endDate: currentEvent.endsAt
     };
   }
