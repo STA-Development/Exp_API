@@ -1,18 +1,21 @@
-import {ApiProperty} from '@nestjs/swagger'
+import { ApiProperty } from '@nestjs/swagger';
 
 export class UserCriteriaRatingGetDto {
   @ApiProperty()
-  readonly firstName: string
+  readonly firstName: string;
 
   @ApiProperty()
-  readonly lastName: string
+  readonly lastName: string;
 
   @ApiProperty()
-  readonly evaluateeId: number
+  readonly position: string;
 
   @ApiProperty()
-  readonly eventId: number
+  readonly evaluateeId: number;
 
   @ApiProperty()
-  readonly criteriaRating: number
+  readonly eventId: number;
+
+  @ApiProperty()
+  readonly criteriaRating: number;
 }

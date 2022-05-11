@@ -1,11 +1,11 @@
-import {Module} from '@nestjs/common'
-import {TypeOrmModule} from '@nestjs/typeorm'
-import {ConfigModule} from '@nestjs/config'
-import {RatingController} from '../controller/ratingController'
-import {RatingRepository} from '../repository/ratingRepository'
-import {RatingService} from '../service/ratingService'
-import {Rating} from '../entity/rating'
-import {UserSubCriteria} from '../entity/userSubCriteria'
+import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { ConfigModule } from '@nestjs/config';
+import { RatingController } from '../controller/ratingController';
+import { RatingRepository } from '../repository/ratingRepository';
+import { RatingService } from '../service/ratingService';
+import { Rating } from '../entity/rating';
+import { UserSubCriteria } from '../entity/userSubCriteria';
 
 @Module({
   imports: [
@@ -20,10 +20,10 @@ import {UserSubCriteria} from '../entity/userSubCriteria'
       database: process.env.DB_DATABASE,
       autoLoadEntities: true,
       synchronize: true,
-      logging: false,
-    }),
+      logging: false
+    })
   ],
   controllers: [RatingController],
-  providers: [RatingService, RatingRepository],
+  providers: [RatingService, RatingRepository]
 })
 export class RatingModule {}

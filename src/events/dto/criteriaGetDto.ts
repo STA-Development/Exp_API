@@ -1,5 +1,5 @@
-import {Criteria, CriteriaDto} from '../entity/criteria'
-import {subCriteriaGetDto} from './subCriteriaGetDto'
+import { Criteria, CriteriaDto } from '../entity/criteria';
+import { subCriteriaGetDto } from './subCriteriaGetDto';
 
 export const criteriaGetDto = (criteria: Criteria): CriteriaDto => ({
   id: criteria.id,
@@ -7,5 +7,5 @@ export const criteriaGetDto = (criteria: Criteria): CriteriaDto => ({
   criteria: criteria.criteria,
   subCriteria:
     criteria?.subCriteria &&
-    criteria.subCriteria.map((subCriteria) => subCriteriaGetDto(subCriteria)),
-})
+    criteria.subCriteria.map((subCriteria) => subCriteriaGetDto(subCriteria))
+});

@@ -1,8 +1,10 @@
-import {SubCriteria, SubCriteriaDto} from '../entity/subCriteria'
+import { SubCriteria, SubCriteriaDto } from '../entity/subCriteria';
 
-export const subCriteriaGetDto = (subCriteria: SubCriteria): SubCriteriaDto => ({
+export const subCriteriaGetDto = (
+  subCriteria: SubCriteria
+): SubCriteriaDto => ({
   id: subCriteria.id,
   name: subCriteria.name,
   result: subCriteria.result,
-  criteria: subCriteria.criteria,
-})
+  criteria: subCriteria.criteria
+});

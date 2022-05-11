@@ -1,12 +1,12 @@
-import {IsString, IsBoolean} from 'class-validator'
-import {ApiProperty} from '@nestjs/swagger'
+import { IsString, IsBoolean } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateCriteriaDto {
   @ApiProperty()
   @IsString()
-  readonly name: string
+  readonly name: string;
 
   @ApiProperty()
   @IsBoolean()
-  readonly criteria: boolean
+  readonly criteria: boolean;
 }

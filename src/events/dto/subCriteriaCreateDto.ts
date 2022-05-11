@@ -1,17 +1,17 @@
-import {IsString, IsBoolean, IsNotEmpty} from 'class-validator'
-import {ApiProperty} from '@nestjs/swagger'
-import {SubCriteria} from '../entity/subCriteria'
+import { IsString, IsBoolean, IsNotEmpty } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
+import { SubCriteria } from '../entity/subCriteria';
 
 export class CreateSubCriteriaDto extends SubCriteria {
   @ApiProperty()
   @IsString()
-  readonly name: string
+  readonly name: string;
 
   @ApiProperty()
   @IsBoolean()
-  readonly result: boolean
+  readonly result: boolean;
 
   @ApiProperty()
   @IsNotEmpty()
-  readonly criteriaId: number
+  readonly criteriaId: number;
 }

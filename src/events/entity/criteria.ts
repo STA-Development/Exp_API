@@ -1,53 +1,62 @@
-import {Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToMany} from 'typeorm'
-import {ApiProperty} from '@nestjs/swagger'
-import {ICriteria} from '../interface/criteriaInterface'
-import {UserSubCriteria} from './userSubCriteria'
-import {Event} from './event'
-import {SubCriteria, SubCriteriaDto} from './subCriteria'
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  ManyToMany
+} from 'typeorm';
+import { ApiProperty } from '@nestjs/swagger';
+import { ICriteria } from '../interface/criteriaInterface';
+import { UserSubCriteria } from './userSubCriteria';
+import { Event } from './event';
+import { SubCriteria, SubCriteriaDto } from './subCriteria';
 
 @Entity()
 export class Criteria implements ICriteria {
   @PrimaryGeneratedColumn()
-  id: number
+  id: number;
 
   @Column()
-  name: string
+  name: string;
 
   @Column()
-  criteria: boolean
+  criteria: boolean;
 
-  @OneToMany(() => UserSubCriteria, (userSubCriteria) => userSubCriteria.criteria, {
-    onUpdate: 'CASCADE',
-    onDelete: 'CASCADE',
-    createForeignKeyConstraints: false,
-  })
-  userSubCriteria: UserSubCriteria[]
+  @OneToMany(
+    () => UserSubCriteria,
+    (userSubCriteria) => userSubCriteria.criteria,
+    {
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE',
+      createForeignKeyConstraints: false
+    }
+  )
+  userSubCriteria: UserSubCriteria[];
 
   @ManyToMany(() => Event, (event) => event.criteria, {
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
-    createForeignKeyConstraints: false,
+    createForeignKeyConstraints: false
   })
-  events: Event[]
+  events: Event[];
 
   @OneToMany(() => SubCriteria, (subCriteria) => subCriteria.criteria, {
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
-    createForeignKeyConstraints: false,
+    createForeignKeyConstraints: false
   })
-  subCriteria: SubCriteria[]
+  subCriteria: SubCriteria[];
 }
 
 export class CriteriaDto {
   @ApiProperty()
-  id: number
+  id: number;
 
   @ApiProperty()
-  name: string
+  name: string;
 
   @ApiProperty()
-  criteria: boolean
+  criteria: boolean;
 
-  @ApiProperty()
-  subCriteria: SubCriteriaDto[]
+  subCriteria: SubCriteriaDto[];
 }
