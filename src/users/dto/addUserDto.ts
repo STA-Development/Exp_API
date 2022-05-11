@@ -26,5 +26,8 @@ export class AddUserDto extends User {
   position: string;
 
   @IsOptional()
+  authUid: string;
+
+  @IsOptional()
   avatar: string;
 }

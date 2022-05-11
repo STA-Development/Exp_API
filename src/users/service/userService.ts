@@ -1,20 +1,19 @@
-import {
-  BadRequestException,
-  Inject,
-  Injectable,
-  NotFoundException
-} from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { CreateUserDto } from '../dto/userCreateDto';
-import { UpdateUserDto } from '../dto/userUpdateDto';
-import { User, UserDto } from '../entity/user';
-import { logger } from '../../logger';
-import { CloudinaryService } from '../../cloudinary/cloudinaryService';
-import { dbAuth } from '../auth/preauthMiddleware';
-import { UserRepository } from '../repository/userRepository';
-import { UserSalaryDto } from '../dto/userSalaryDto';
-import { AddUserDto } from '../dto/addUserDto';
+import {BadRequestException, Inject, Injectable, UnauthorizedException} from '@nestjs/common'
+import {CreateUserDto} from '../dto/userCreateDto'
+import {UpdateUserDto} from '../dto/userUpdateDto'
+import {User} from '../entity/user'
+import {logger} from '../../logger'
+import {Repository} from 'typeorm'
+import {InjectRepository} from '@nestjs/typeorm'
+import {CloudinaryService} from '../../cloudinary/cloudinaryService'
+import {dbAuth} from '../auth/preauthMiddleware'
+import {NotFoundException} from '@nestjs/common'
+import {UserRepository} from '../repository/userRepository'
+import {UserSalaryDto} from '../dto/userSalaryDto'
+import {AddUserDto} from '../dto/addUserDto'
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { authGet } from '../auth/connection';
+import { UserSignInDto } from '../dto/userSignInDto';
 
 @Injectable()
 export class UsersService {
@@ -34,7 +33,13 @@ export class UsersService {
       });
       createUserDto.authUid = auth.uid;
       createUserDto.avatar = process.env.AVATAR_URL;
-      return await this.usersRepository.create(createUserDto);
+      const data = await signInWithEmailAndPassword(
+        authGet,
+        createUserDto.email,
+        createUserDto.password
+      );
+      await this.usersRepository.create(createUserDto);
+      return data.user['stsTokenManager'].accessToken;
     } catch (err) {
       throw new BadRequestException(`Method Not Allowed`);
     }
@@ -60,8 +65,12 @@ export class UsersService {
     return user;
   }
 
-  async findOne(authUid: string): Promise<UserDto> {
-    return this.usersRepository.findOne(authUid);
+  async findOne(authUid: string): Promise<User> {
+    try {
+      return this.usersRepository.findOne(authUid)
+    } catch (err) {
+      throw new NotFoundException(`User with ID=${authUid} not found`)
+    }
   }
 
   async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
@@ -133,10 +142,29 @@ export class UsersService {
 
   async addUser(addUserDto: AddUserDto): Promise<User> {
     try {
+      const auth = await dbAuth.createUser({
+        email: addUserDto.email,
+      })
+      addUserDto.authUid = auth.uid
       addUserDto.avatar = process.env.AVATAR_URL;
       return await this.usersRepository.addUser(addUserDto);
     } catch (err) {
       throw new BadRequestException(`Method Not Allowed`);
+    }
+  }
+
+  async signIn(userSignInDto: UserSignInDto): Promise<User> {
+    try {
+      const data = await signInWithEmailAndPassword(
+        authGet,
+        userSignInDto.email,
+        userSignInDto.password
+      );
+      return data.user['stsTokenManager'].accessToken;
+    } catch (err) {
+      throw new UnauthorizedException(
+        `Login Failed: Your user email or password is incorrect`
+      );
     }
   }
 }
