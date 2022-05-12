@@ -1,27 +1,28 @@
-import {HttpException, HttpStatus, Inject, Injectable} from '@nestjs/common'
-import {InjectRepository} from '@nestjs/typeorm'
-import {getRepository, LessThan, MoreThan, Like, Repository} from 'typeorm'
-import * as dayjs from 'dayjs'
-import {CreateEventDto} from '../dto/eventCreateDto'
-import {UpdateEventDto} from '../dto/eventUpdateDto'
-import {Event, EventDto} from '../entity/event'
-import {Period} from '../interface/eventInterface'
-import {UserSubCriteria} from '../entity/userSubCriteria'
-import {User} from '../../users/entity/user'
-import {Rating} from '../entity/rating'
-import {EventEvaluator} from '../entity/eventEvaluator'
-import {logger} from '../../logger'
-import {EventEvaluatee} from '../entity/eventEvaluatee'
-import {EventSubCriteriaUpdateDto} from '../dto/eventSubCriteriaUpdateDto'
-import {isUpcomingEvent} from '../../utils/checkEventDate'
-import {IEvaluationResult} from '../interface/evaluationResultInterface'
-import {IUserSubCriteriaResult} from '../interface/userSubCriteriaResultInterface'
-import {ISubmission, SubmissionState} from '../interface/submissionInterface'
-import {getSubmissions} from '../../utils/getSubmissions'
-import {IEventProgress} from '../interface/eventProgress'
-import {getNotEvaluatedEvaluators} from '../../utils/getNotEvaluatedEvaluators'
-import {SubCriteriaRepository} from './subCriteriaRepository'
-import {INotEvaluated} from '../interface/notEvaluatedEvaluators'
+import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { getRepository, LessThan, MoreThan, Like, Repository } from 'typeorm';
+import * as dayjs from 'dayjs';
+import { CreateEventDto } from '../dto/eventCreateDto';
+import { UpdateEventDto } from '../dto/eventUpdateDto';
+import { Event, EventDto } from '../entity/event';
+import { Period } from '../interface/eventInterface';
+import { UserSubCriteria } from '../entity/userSubCriteria';
+import { User } from '../../users/entity/user';
+import { Rating } from '../entity/rating';
+import { EventEvaluator } from '../entity/eventEvaluator';
+import { logger } from '../../logger';
+import { EventEvaluatee } from '../entity/eventEvaluatee';
+import { EventSubCriteriaUpdateDto } from '../dto/eventSubCriteriaUpdateDto';
+import { isUpcomingEvent } from '../../utils/checkEventDate';
+import { IEvaluationResult } from '../interface/evaluationResultInterface';
+import { IUserSubCriteriaResult } from '../interface/userSubCriteriaResultInterface';
+import { ISubmission, SubmissionState } from '../interface/submissionInterface';
+import { getSubmissions } from '../../utils/getSubmissions';
+import { IEventProgress } from '../interface/eventProgress';
+import { getNotEvaluatedEvaluators } from '../../utils/getNotEvaluatedEvaluators';
+import { SubCriteriaRepository } from './subCriteriaRepository';
+import { INotEvaluated } from '../interface/notEvaluatedEvaluators';
+import { Criteria } from '../entity/criteria';
 
 @Injectable()
 export class EventsRepository {
@@ -33,6 +34,9 @@ export class EventsRepository {
 
   @InjectRepository(Rating)
   ratingRepository: Repository<Rating>
+
+  @InjectRepository(Criteria)
+  criteriaRepository: Repository<Criteria>;
 
   @Inject()
   subCriteriaRepository: SubCriteriaRepository
@@ -265,18 +269,34 @@ export class EventsRepository {
   }
 
   async getUserCriteriaRating(eventId: number, evaluateeId: number) {
-    const usersCriteriaRating = await getRepository(UserSubCriteria)
+    const criteriaRatings = await getRepository(UserSubCriteria)
       .createQueryBuilder()
-      .where({eventId})
-      .andWhere({evaluateeId})
-      .select('user.firstName, user.lastName')
-      .addSelect(['evaluateeId, eventId,COUNT(criteriaId) as criteriaRating'])
+      .where({ eventId })
+      .andWhere({ evaluateeId })
+      .select('user.firstName, user.lastName, user.position')
+      .addSelect(['evaluateeId, eventId,COUNT(criteriaId) as rating'])
       .leftJoin(User, 'user', 'user.id = evaluateeId')
       .andWhere('subCriteriaResult = true')
       .groupBy('criteriaId')
-      .execute()
+      .execute();
 
-    return usersCriteriaRating
+    const subCriteriaCount = await getRepository(UserSubCriteria)
+      .createQueryBuilder()
+      .where({ eventId })
+      .andWhere({ evaluateeId })
+      .select('criteriaId, COUNT(criteriaId) as rating')
+      .leftJoin(User, 'user', 'user.id = evaluateeId')
+      .groupBy('criteriaId')
+      .execute();
+
+    return Promise.all(
+      criteriaRatings.map(async (criteriaRating, index) => {
+        return {
+          ...criteriaRating,
+          rating: criteriaRating?.rating / subCriteriaCount[index]?.rating
+        };
+      })
+    );
   }
 
   async addEvaluators(eventId: number, userId: number): Promise<void> {
