@@ -5,7 +5,6 @@ import {
   LessThan,
   MoreThan,
   Like,
-  Between,
   Repository
 } from 'typeorm';
 import * as dayjs from 'dayjs';
@@ -300,7 +299,9 @@ export class EventsRepository {
       .where({ eventId })
       .andWhere({ evaluateeId })
       .select('user.firstName, user.lastName, user.position')
-      .addSelect(['evaluateeId, eventId,COUNT(criteriaId) as criteriaRating'])
+      .addSelect([
+        'evaluateeId, eventId,((COUNT(criteriaId))) as criteriaRating,COUNT(*)'
+      ])
       .leftJoin(User, 'user', 'user.id = evaluateeId')
       .andWhere('subCriteriaResult = true')
       .groupBy('criteriaId')
