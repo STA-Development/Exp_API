@@ -28,6 +28,8 @@ import { IEventProgress } from '../interface/eventProgress';
 import { getNotEvaluatedEvaluators } from '../../utils/getNotEvaluatedEvaluators';
 import { SubCriteriaRepository } from './subCriteriaRepository';
 import { INotEvaluated } from '../interface/notEvaluatedEvaluators';
+import { Criteria } from '../entity/criteria';
+import { last } from 'rxjs';
 
 @Injectable()
 export class EventsRepository {
