@@ -1,15 +1,15 @@
-import {ApiProperty} from '@nestjs/swagger'
+import { ApiProperty } from '@nestjs/swagger';
 
 export class EventProgressGetDto {
   @ApiProperty()
-  readonly progressPercentage: number
+  readonly progressPercentage: number;
 
   @ApiProperty()
-  readonly title: string
+  readonly title: string;
 
   @ApiProperty()
-  readonly stertDate: Date
+  readonly stertDate: Date;
 
   @ApiProperty()
-  readonly endDate: Date
+  readonly endDate: Date;
 }

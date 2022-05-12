@@ -9,59 +9,64 @@ import {
   Inject,
   UseInterceptors,
   ClassSerializerInterceptor,
-  Patch,
-} from '@nestjs/common'
-import {ApiOkResponse} from '@nestjs/swagger'
-import {CriteriaService} from '../service/criteriaService'
-import {CreateCriteriaDto} from '../dto/criteriaCreateDto'
-import {UpdateCriteriaDto} from '../dto/criteriaUpdateDto'
-import {Criteria, CriteriaDto} from '../entity/criteria'
-import {criteriaGetDto} from '../dto/criteriaGetDto'
+  Patch
+} from '@nestjs/common';
+import { ApiOkResponse } from '@nestjs/swagger';
+import { CriteriaService } from '../service/criteriaService';
+import { CreateCriteriaDto } from '../dto/criteriaCreateDto';
+import { UpdateCriteriaDto } from '../dto/criteriaUpdateDto';
+import { Criteria, CriteriaDto } from '../entity/criteria';
+import { criteriaGetDto } from '../dto/criteriaGetDto';
 
 @Controller('criteria')
 export class CriteriaController {
   @Inject()
-  criteriaService: CriteriaService
+  criteriaService: CriteriaService;
 
   @UseInterceptors(ClassSerializerInterceptor)
   @Put(':criteriaId/subcriteria')
   addSubCriteria(
     @Param('criteriaId') criteriaId: number,
-    @Body() subCriteriaRef: number,
+    @Body() subCriteriaRef: number
   ): Promise<CriteriaDto> {
-    return this.criteriaService.addSubCriteria(criteriaId, subCriteriaRef)
+    return this.criteriaService.addSubCriteria(criteriaId, subCriteriaRef);
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
-  @ApiOkResponse({type: [CriteriaDto]})
+  @ApiOkResponse({ type: [CriteriaDto] })
   @Get()
   async findAll(): Promise<CriteriaDto[]> {
-    return (await this.criteriaService.findAll()).map((criteria) => criteriaGetDto(criteria))
+    return (await this.criteriaService.findAll()).map((criteria) =>
+      criteriaGetDto(criteria)
+    );
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
-  @ApiOkResponse({type: [CriteriaDto]})
+  @ApiOkResponse({ type: [CriteriaDto] })
   @Get(':id')
   async findOneById(@Param('id') id: number): Promise<CriteriaDto> {
-    const criteria = await this.criteriaService.findOneById(id)
-    return criteriaGetDto(criteria)
+    const criteria = await this.criteriaService.findOneById(id);
+    return criteriaGetDto(criteria);
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
   @Post()
   create(@Body() createCriteriaDto: CreateCriteriaDto): Promise<Criteria> {
-    return this.criteriaService.create(createCriteriaDto)
+    return this.criteriaService.create(createCriteriaDto);
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
   @Patch(':id')
-  update(@Param('id') id: number, @Body() updateCriteriaDto: UpdateCriteriaDto): Promise<Criteria> {
-    return this.criteriaService.update(id, updateCriteriaDto)
+  update(
+    @Param('id') id: number,
+    @Body() updateCriteriaDto: UpdateCriteriaDto
+  ): Promise<Criteria> {
+    return this.criteriaService.update(id, updateCriteriaDto);
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
   @Delete(':id')
   remove(@Param('id') id: number): Promise<Criteria> {
-    return this.criteriaService.remove(id)
+    return this.criteriaService.remove(id);
   }
 }

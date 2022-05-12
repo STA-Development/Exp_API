@@ -1,112 +1,122 @@
-import {ApiProperty} from '@nestjs/swagger'
-import {Entity, PrimaryGeneratedColumn, PrimaryColumn, ManyToOne, Column} from 'typeorm'
-import {Event, EventDto} from './event'
-import {Criteria, CriteriaDto} from './criteria'
-import {IUserSubCriteria} from '../interface/userSubCriteriaInterface'
-import {Rating, RatingDto} from './rating'
-import {SubCriteria, SubCriteriaDto} from './subCriteria'
-import {User, UserDto} from '../../users/entity/user'
-import {IUserSubCriteriaGetDto} from '../interface/userSubCriteriaGetDtoInterface'
+import { ApiProperty } from '@nestjs/swagger';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  PrimaryColumn,
+  ManyToOne,
+  Column
+} from 'typeorm';
+import { Event, EventDto } from './event';
+import { Criteria, CriteriaDto } from './criteria';
+import { IUserSubCriteria } from '../interface/userSubCriteriaInterface';
+import { Rating, RatingDto } from './rating';
+import { SubCriteria, SubCriteriaDto } from './subCriteria';
+import { User, UserDto } from '../../users/entity/user';
+import { IUserSubCriteriaGetDto } from '../interface/userSubCriteriaGetDtoInterface';
 
 @Entity()
 export class UserSubCriteria implements IUserSubCriteria {
   @PrimaryGeneratedColumn()
-  id: number
+  id: number;
 
   @PrimaryColumn()
-  eventId: number
+  eventId: number;
 
   @PrimaryColumn()
-  criteriaId: number
+  criteriaId: number;
 
-  @PrimaryColumn({default: 0})
-  userId: number
-
-  @PrimaryColumn()
-  evaluatorId: number
+  @PrimaryColumn({ default: 0 })
+  userId: number;
 
   @PrimaryColumn()
-  evaluateeId: number
+  evaluatorId: number;
 
   @PrimaryColumn()
-  subCriteriaId: number
+  evaluateeId: number;
 
-  @PrimaryColumn({default: 0})
-  ratingId: number
+  @PrimaryColumn()
+  subCriteriaId: number;
+
+  @PrimaryColumn({ default: 0 })
+  ratingId: number;
 
   @Column()
-  subCriteriaResult: boolean
+  subCriteriaPoints: number;
 
   @ManyToOne(() => Criteria, (criteria: Criteria) => criteria.userSubCriteria, {
     cascade: true,
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
-    createForeignKeyConstraints: false,
+    createForeignKeyConstraints: false
   })
-  criteria: Criteria
+  criteria: Criteria;
 
   @ManyToOne(() => User, (user: User) => user.userSubCriteria, {
     cascade: true,
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
-    createForeignKeyConstraints: false,
+    createForeignKeyConstraints: false
   })
-  user: User
+  user: User;
 
   @ManyToOne(() => User, (user: User) => user.userSubCriteria, {
     cascade: true,
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
-    createForeignKeyConstraints: false,
+    createForeignKeyConstraints: false
   })
-  evaluator: User
+  evaluator: User;
 
   @ManyToOne(() => User, (user: User) => user.userSubCriteria, {
     cascade: true,
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
-    createForeignKeyConstraints: false,
+    createForeignKeyConstraints: false
   })
-  evaluatee: User
+  evaluatee: User;
 
   @ManyToOne(() => Rating, (rating: Rating) => rating.userSubCriteria, {
     cascade: true,
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
-    createForeignKeyConstraints: false,
+    createForeignKeyConstraints: false
   })
-  rating: Rating
+  rating: Rating;
 
-  @ManyToOne(() => SubCriteria, (subCriteria: SubCriteria) => subCriteria.userSubCriteria, {
-    cascade: true,
-    onUpdate: 'CASCADE',
-    onDelete: 'CASCADE',
-    createForeignKeyConstraints: false,
-  })
-  subCriteria: SubCriteria
+  @ManyToOne(
+    () => SubCriteria,
+    (subCriteria: SubCriteria) => subCriteria.userSubCriteria,
+    {
+      cascade: true,
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE',
+      createForeignKeyConstraints: false
+    }
+  )
+  subCriteria: SubCriteria;
 
   @ManyToOne(() => Event, (event: Event) => event.userSubCriteria, {
     cascade: true,
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
-    createForeignKeyConstraints: false,
+    createForeignKeyConstraints: false
   })
-  event: Event
+  event: Event;
 }
 
 export class UserSubCriteriaDto implements IUserSubCriteriaGetDto {
   @ApiProperty()
-  criteria: CriteriaDto
+  criteria: CriteriaDto;
+
+  @ApiProperty() //todo maybe we must add subCriteria points too
+  event: EventDto;
 
   @ApiProperty()
-  event: EventDto
+  rating: RatingDto;
 
   @ApiProperty()
-  rating: RatingDto
+  subCriteria: SubCriteriaDto;
 
   @ApiProperty()
-  subCriteria: SubCriteriaDto
-
-  @ApiProperty()
-  user: UserDto
+  user: UserDto;
 }

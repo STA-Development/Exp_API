@@ -1,44 +1,60 @@
-import {ApiProperty} from '@nestjs/swagger'
-import {Entity, Column, PrimaryGeneratedColumn, OneToMany, ManyToOne} from 'typeorm'
-import {ISubCriteria} from '../interface/subCriteriaInterface'
-import {UserSubCriteria} from './userSubCriteria'
-import {Criteria, CriteriaDto} from './criteria'
+import { ApiProperty } from '@nestjs/swagger';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  ManyToOne
+} from 'typeorm';
+import { ISubCriteria } from '../interface/subCriteriaInterface';
+import { UserSubCriteria } from './userSubCriteria';
+import { Criteria, CriteriaDto } from './criteria';
 
 @Entity()
 export class SubCriteria implements ISubCriteria {
   @PrimaryGeneratedColumn()
-  id: number
+  id: number;
 
   @Column()
-  name: string
+  name: string;
 
   @Column()
-  result: boolean
+  result: boolean;
 
-  @OneToMany(() => UserSubCriteria, (userSubCriteria) => userSubCriteria.subCriteria, {
-    onUpdate: 'CASCADE',
-    onDelete: 'CASCADE',
-    createForeignKeyConstraints: false,
-  })
-  userSubCriteria: UserSubCriteria[]
+  @Column()
+  point: number;
+
+  @OneToMany(
+    () => UserSubCriteria,
+    (userSubCriteria) => userSubCriteria.subCriteria,
+    {
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE',
+      createForeignKeyConstraints: false
+    }
+  )
+  userSubCriteria: UserSubCriteria[];
 
   @ManyToOne(() => Criteria, (criteria) => criteria.subCriteria, {
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
-    createForeignKeyConstraints: false,
+    createForeignKeyConstraints: false
   })
-  criteria: Criteria
+  criteria: Criteria;
 }
 
 export class SubCriteriaDto {
   @ApiProperty()
-  id: number
+  id: number;
 
   @ApiProperty()
-  name: string
+  name: string;
 
   @ApiProperty()
-  result: boolean
+  result: boolean;
 
-  criteria: CriteriaDto
+  @ApiProperty()
+  point: number;
+
+  criteria: CriteriaDto;
 }

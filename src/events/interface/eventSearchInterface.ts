@@ -1,7 +1,7 @@
-import {Period} from './eventInterface'
+import { Period } from './eventInterface';
 
 export interface IEventSearch {
-  title?: string
-  bonus?: number
-  period?: Period
+  title?: string;
+  bonus?: number;
+  period?: Period;
 }

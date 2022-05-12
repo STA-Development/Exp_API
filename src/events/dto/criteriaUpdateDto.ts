@@ -1,12 +1,12 @@
-import {ApiProperty, ApiPropertyOptional} from '@nestjs/swagger'
-import {IsBoolean, IsString} from 'class-validator'
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { IsBoolean, IsString } from 'class-validator';
 
 export class UpdateCriteriaDto {
   @ApiPropertyOptional()
   @IsString()
-  readonly name: string
+  readonly name: string;
 
   @ApiProperty()
   @IsBoolean()
-  readonly criteria: boolean
+  readonly criteria: boolean;
 }

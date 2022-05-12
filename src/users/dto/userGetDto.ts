@@ -1,6 +1,6 @@
-import {User, UserDto} from '../entity/user'
-import {userSubCriteriaGetDto} from '../../events/dto/userSubCriteriaGetDto'
-import {eventGetDto} from '../../events/dto/eventGetDto'
+import { User, UserDto } from '../entity/user';
+import { userSubCriteriaGetDto } from '../../events/dto/userSubCriteriaGetDto';
+import { eventGetDto } from '../../events/dto/eventGetDto';
 
 export const userGetDto = (user: User): UserDto => ({
   id: user.id,
@@ -12,11 +12,13 @@ export const userGetDto = (user: User): UserDto => ({
   authUid: user.authUid,
   userSubCriteria:
     user?.userSubCriteria &&
-    user.userSubCriteria.map((userSubCriteria) => userSubCriteriaGetDto(userSubCriteria)),
+    user.userSubCriteria.map((userSubCriteria) =>
+      userSubCriteriaGetDto(userSubCriteria)
+    ),
   isAdmin: user.isAdmin,
   salary: user.salary,
   avatar: user.avatar,
   position: user.position,
   avatarPublicId: user.avatarPublicId,
-  events: user?.events && user.events.map((event) => eventGetDto(event)),
-})
+  events: user?.events && user.events.map((event) => eventGetDto(event))
+});

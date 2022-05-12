@@ -1,37 +1,37 @@
-import {ApiProperty} from '@nestjs/swagger'
-import {IsString, IsEmail, IsOptional, IsEnum} from 'class-validator'
-import {User} from '../entity/user'
-import {PerformerType} from '../interface/userInterface'
+import { ApiProperty } from '@nestjs/swagger';
+import { IsString, IsEmail, IsOptional, IsEnum } from 'class-validator';
+import { User } from '../entity/user';
+import { PerformerType } from '../interface/userInterface';
 
 export class CreateUserDto extends User {
-  readonly id: number
+  readonly id: number;
 
   @ApiProperty()
   @IsString()
-  firstName: string
+  firstName: string;
 
   @IsOptional()
-  authUid: string
+  authUid: string;
 
   @ApiProperty()
   @IsString()
-  password: string
+  password: string;
 
   @ApiProperty()
   @IsString()
-  lastName: string
+  lastName: string;
 
   @IsOptional()
-  avatar: string
+  avatar: string;
 
   @ApiProperty()
   @IsEmail()
-  email: string
+  email: string;
 
   @IsOptional()
-  readonly rating: number
+  readonly rating: number;
 
   @IsEnum(PerformerType)
   @IsOptional()
-  performerType: PerformerType
+  performerType: PerformerType;
 }
