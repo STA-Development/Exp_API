@@ -1,12 +1,6 @@
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import {
-  getRepository,
-  LessThan,
-  MoreThan,
-  Like,
-  Repository
-} from 'typeorm';
+import { getRepository, LessThan, MoreThan, Like, Repository } from 'typeorm';
 import * as dayjs from 'dayjs';
 import { CreateEventDto } from '../dto/eventCreateDto';
 import { UpdateEventDto } from '../dto/eventUpdateDto';
