@@ -22,10 +22,10 @@ import { UserSignInDto } from '../dto/userSignInDto';
 
 @Injectable()
 export class UsersService {
-  constructor(
-    @InjectRepository(User) private readonly userRepository: Repository<User>,
-    private cloudinary: CloudinaryService
-  ) {}
+  @InjectRepository(User)
+  private readonly userRepository: Repository<User>;
+
+  private cloudinary: CloudinaryService;
 
   @Inject()
   usersRepository: UserRepository;

@@ -22,7 +22,6 @@ import { IEventProgress } from '../interface/eventProgress';
 import { getNotEvaluatedEvaluators } from '../../utils/getNotEvaluatedEvaluators';
 import { SubCriteriaRepository } from './subCriteriaRepository';
 import { INotEvaluated } from '../interface/notEvaluatedEvaluators';
-import { Criteria } from '../entity/criteria';
 
 @Injectable()
 export class EventsRepository {
@@ -50,7 +49,7 @@ export class EventsRepository {
       .andWhere({
         endsAt: MoreThan(dayjs().toDate())
       })
-      .getMany();
+      .getMany()
   }
 
   async addSubCriteria(eventId: number, idRef: EventSubCriteriaUpdateDto) {
@@ -198,7 +197,7 @@ export class EventsRepository {
         : completedSubmissionCount
     );
     const currentEvent = await this.eventRepository.findOne(eventId);
-    const eventProgress: IEventProgress = {
+    return {
       progressPercentage: Number(
         ((completedSubmissionCount / submissions.length) * 100).toFixed(1)
       ),
@@ -206,7 +205,6 @@ export class EventsRepository {
       startDate: currentEvent.createdAt,
       endDate: currentEvent.endsAt
     };
-    return eventProgress;
   }
 
   async getNotEvaluatedEvaluators(eventId: number): Promise<INotEvaluated[]> {
@@ -259,13 +257,15 @@ export class EventsRepository {
       rating.isSelected ? (rankingScale = rating.to) : rankingScale
     );
 
-    function setRating(user) {
+    function setRating(user: UserSubCriteria): number {
       for (let i = 0; i < usersRating.length; i++) {
         if (user.evaluateeId === usersRating[i].evaluateeId) {
-          return (
-            (usersRating[i].rating / userSubCriteria[i]?.rating) *
-            rankingScale
-          ).toFixed(1);
+          return Number(
+            (// todo check
+              (usersRating[i].rating / userSubCriteria[i]?.rating) *
+              rankingScale
+            ).toFixed(1)
+          );
         }
       }
     }
@@ -280,7 +280,7 @@ export class EventsRepository {
       .execute();
 
     evaluatees.forEach((user) => {
-      user.rating = Number(setRating(user)) ? Number(setRating(user)) : 0;
+      user.rating = setRating(user) ?? 0;
     });
 
     return evaluatees.sort(
@@ -476,7 +476,7 @@ export class EventsRepository {
       })
       .execute();
     createEventDto.rating = await this.ratingRepository.find({ take: 3 });
-    return null;
+    return this.eventRepository.save(createEventDto);
   }
 
   async update(

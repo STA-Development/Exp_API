@@ -11,8 +11,11 @@ export class UserCriteriaRatingGetDto {
   readonly evaluateeId: number;
 
   @ApiProperty()
+  readonly position: string;
+
+  @ApiProperty()
   readonly eventId: number;
 
   @ApiProperty()
-  readonly criteriaRating: number; //todo
+  readonly criteriaRating: number;
 }

@@ -5,15 +5,13 @@ import {
   ManyToOne,
   OneToMany
 } from 'typeorm';
-import { ApiProperty } from '@nestjs/swagger';
-import { Event, EventDto } from './event';
-import { User, UserDto } from '../../users/entity/user';
-import { IEventEvaluatee } from '../interface/eventEvaluateeInterface';
-import { IEventEvaluateeGetDto } from '../interface/eventEvaluateeGetDtoInterface';
+import { Event } from './event';
+import { User } from '../../users/entity/user';
 import { UserSubCriteria } from './userSubCriteria';
+import { IEventParticipant } from '../interface/eventParticipantInterface';
 
 @Entity()
-export class EventEvaluatee implements IEventEvaluatee {
+export class EventEvaluatee implements IEventParticipant {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -49,12 +47,4 @@ export class EventEvaluatee implements IEventEvaluatee {
     }
   )
   userSubCriteria: UserSubCriteria[];
-}
-
-export class EventEvaluateeGetDto implements IEventEvaluateeGetDto {
-  @ApiProperty()
-  event: EventDto;
-
-  @ApiProperty()
-  user: UserDto;
 }

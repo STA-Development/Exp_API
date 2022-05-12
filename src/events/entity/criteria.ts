@@ -58,6 +58,5 @@ export class CriteriaDto {
   @ApiProperty()
   criteria: boolean;
 
-  @ApiProperty()
   subCriteria: SubCriteriaDto[];
 }

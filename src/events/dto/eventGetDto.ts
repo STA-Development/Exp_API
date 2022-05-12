@@ -2,7 +2,7 @@ import { Event, EventDto } from '../entity/event';
 import { criteriaGetDto } from './criteriaGetDto';
 import { ratingGetDto } from './ratingGetDto';
 import { userGetDto } from '../../users/dto/userGetDto';
-import { eventEvaluatorGetDto } from './eventEvaluatorGetDto';
+import { eventParticipantGetDto } from './eventParticipantGetDto';
 
 export const eventGetDto = (event: Event): EventDto => ({
   id: event.id,
@@ -12,12 +12,12 @@ export const eventGetDto = (event: Event): EventDto => ({
   eventEvaluator:
     event.eventEvaluator &&
     event.eventEvaluator.map((eventEvaluator) =>
-      eventEvaluatorGetDto(eventEvaluator)
+      eventParticipantGetDto(eventEvaluator)
     ),
   eventEvaluatee:
     event.eventEvaluatee &&
     event.eventEvaluatee.map((eventEvaluatee) =>
-      eventEvaluatorGetDto(eventEvaluatee)
+      eventParticipantGetDto(eventEvaluatee)
     ),
   criteria:
     event.criteria &&

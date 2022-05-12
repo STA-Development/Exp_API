@@ -17,6 +17,7 @@ import { EventEvaluator } from '../entity/eventEvaluator';
 import { EventEvaluatee } from '../entity/eventEvaluatee';
 import { SubCriteriaRepository } from '../repository/subCriteriaRepository';
 import { SubCriteria } from '../entity/subCriteria';
+import { IsKeyValueValidate } from '../../utils/keyValueValidation';
 
 @Module({
   imports: [
@@ -42,8 +43,8 @@ import { SubCriteria } from '../entity/subCriteria';
       synchronize: true
     }),
     JwtModule.register({
-      secret: 'secret',
-      signOptions: { expiresIn: '1d' }
+      secret: process.env.JWT_ACCESS_KEY,
+      signOptions: { expiresIn: process.env.JWT_MODULE_KEY_EXPIRES_IN }
     })
   ],
   controllers: [EventsController],
@@ -54,6 +55,7 @@ import { SubCriteria } from '../entity/subCriteria';
     CriteriaRepository,
     SubCriteriaRepository,
     RatingRepository
+    IsKeyValueValidate
   ]
 })
 export class EventModule {}

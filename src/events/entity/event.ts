@@ -13,8 +13,9 @@ import { UserSubCriteria } from './userSubCriteria';
 import { User, UserDto } from '../../users/entity/user';
 import { Rating, RatingDto } from './rating';
 import { Criteria, CriteriaDto } from './criteria';
-import { EventEvaluator, EventEvaluatorGetDto } from './eventEvaluator';
-import { EventEvaluatee, EventEvaluateeGetDto } from './eventEvaluatee';
+import { EventEvaluator } from './eventEvaluator';
+import { EventEvaluatee } from './eventEvaluatee';
+import { EventParticipantResponseDto } from '../dto/eventParticipantResponseDto';
 
 @Entity()
 export class Event implements IEvent {
@@ -44,13 +45,13 @@ export class Event implements IEvent {
   criteria: Criteria[];
 
   @OneToMany(
-    () => UserSubCriteria,
-    (userSubCriteria) => userSubCriteria.event,
-    {
-      onUpdate: 'CASCADE',
-      onDelete: 'CASCADE',
-      createForeignKeyConstraints: false
-    }
+      () => UserSubCriteria,
+      (userSubCriteria) => userSubCriteria.event,
+      {
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+        createForeignKeyConstraints: false
+      }
   )
   userSubCriteria: UserSubCriteria[];
 
@@ -112,12 +113,11 @@ export class EventDto {
   @ApiProperty()
   timePeriod: Period;
 
-  @ApiProperty()
   users: UserDto[];
 
-  eventEvaluator: EventEvaluatorGetDto[];
+  eventEvaluator: EventParticipantResponseDto[];
 
-  eventEvaluatee: EventEvaluateeGetDto[];
+  eventEvaluatee: EventParticipantResponseDto[];
 
   criteria: CriteriaDto[];
 

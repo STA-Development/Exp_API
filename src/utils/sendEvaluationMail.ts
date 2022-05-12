@@ -1,7 +1,16 @@
 import * as nodemailer from 'nodemailer';
 import * as ejs from 'ejs';
 
-export const sendEvaluationEmail = async (email: string, link: string) => {
+export enum EjsFormSubjects {
+  startEvaluation = 'Start evaluation',
+  getCertificate = 'Get Certificate'
+}
+
+export const sendEvaluationEmail = async (
+  email: string,
+  link: string,
+  startEvaluation: EjsFormSubjects
+) => {
   const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
@@ -10,13 +19,13 @@ export const sendEvaluationEmail = async (email: string, link: string) => {
     }
   });
   ejs.renderFile(
-    'src/forms/emailForm.ejs',
-    { link },
-    async (err, invitationForm) => {
+    'src/templates/emailForm.ejs',
+    { link ,
+   startEvaluation }, async (err, invitationForm) => {
       await transporter.sendMail({
         from: process.env.EMAIL,
         to: email,
-        subject: 'Hello',
+        subject: startEvaluation,
         html: invitationForm
       });
     }

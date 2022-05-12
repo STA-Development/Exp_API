@@ -16,6 +16,7 @@ import { IEvaluationResult } from '../interface/evaluationResultInterface';
 import { ISubmission } from '../interface/submissionInterface';
 import { IEventProgress } from '../interface/eventProgress';
 import { INotEvaluated } from '../interface/notEvaluatedEvaluators';
+import { UserCriteriaRatingGetDto } from '../dto/userCriteriaRatingGetDto';
 
 @Injectable()
 export class EventsService {
@@ -47,7 +48,10 @@ export class EventsService {
     return this.eventsRepository.getUserRating(eventId);
   }
 
-  getUserCriteriaRating(eventId: number, evaluateeId: number): Promise<User[]> {
+  getUserCriteriaRating(
+    eventId: number,
+    evaluateeId: number
+  ): Promise<UserCriteriaRatingGetDto[]> {
     return this.eventsRepository.getUserCriteriaRating(eventId, evaluateeId);
   }
 

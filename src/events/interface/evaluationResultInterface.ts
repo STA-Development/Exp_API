@@ -1,7 +1,6 @@
-export interface IEvaluationResult {
-  results: {
-    [key: number]: number;
-  };
+import { IEstimation } from './estimationInterface';
+
+export interface IEvaluationResult extends IEstimation {
   evaluateeId: number;
-  token: string;
+  token: string; // todo IEstimation
 }
