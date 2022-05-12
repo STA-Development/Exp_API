@@ -28,6 +28,10 @@ export class CreateEventDto {
 
   @ApiProperty()
   @IsNumber()
+  startsAt: Date;
+
+  @ApiProperty()
+  @IsNumber()
   endsAt: Date;
 
   @ApiProperty()

@@ -150,7 +150,10 @@ export class EventsService {
 
   create(createEventDto: CreateEventDto): Promise<EventDto> {
     try {
-      createEventDto.endsAt = dayjs()
+      createEventDto.startsAt = dayjs()
+        .add(Number(createEventDto.startsAt), 'day')
+        .toDate();
+      createEventDto.endsAt = dayjs(createEventDto.startsAt)
         .add(Number(createEventDto.endsAt), 'day')
         .toDate();
     } catch (error) {

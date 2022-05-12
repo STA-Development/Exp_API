@@ -10,9 +10,9 @@ import {
   Controller,
   UseInterceptors,
   ClassSerializerInterceptor,
-  Req,
+  Req
 } from '@nestjs/common';
-import { ApiOkResponse } from '@nestjs/swagger';
+import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { Request } from 'express';
 import { JwtService } from '@nestjs/jwt';
 import { JwtPayload } from 'jsonwebtoken';
@@ -25,7 +25,6 @@ import { eventGetDto } from '../dto/eventGetDto';
 import { User } from '../../users/entity/user';
 import { IEventSearch } from '../interface/eventSearchInterface';
 import { EventSubCriteriaUpdateDto } from '../dto/eventSubCriteriaUpdateDto';
-import { ISubmission } from '../interface/submissionInterface';
 import { IEventProgress } from '../interface/eventProgress';
 import { INotEvaluated } from '../interface/notEvaluatedEvaluators';
 import { EventProgressGetDto } from '../dto/eventProgressGetDto';
@@ -41,6 +40,7 @@ import {
 import { EvaluationResultRequestDto } from '../dto/evaluationResultRequestDto';
 import { ElementDto } from '../dto/elementDto';
 
+@ApiTags('event')
 @Controller('events')
 export class EventsController {
   @Inject()
@@ -143,7 +143,7 @@ export class EventsController {
   @UseInterceptors(ClassSerializerInterceptor)
   @Post(':id/invitation')
   async evaluationInvitation(
-    @Param('id') eventId: number,
+    @Param('eventId') eventId: number,
     @Body() invitation: InvitationDto
   ): Promise<string> {
     const evaluator = await this.eventsService.findByEmail(
@@ -164,7 +164,7 @@ export class EventsController {
   @UseInterceptors(ClassSerializerInterceptor)
   @Patch(':id/rating')
   addRating(
-    @Param('id') eventId: number,
+    @Param('eventId') eventId: number,
     @Body() ratingRef: ElementDto
   ): Promise<Event> {
     return this.eventsService.addRating(eventId, ratingRef.id);
@@ -173,7 +173,7 @@ export class EventsController {
   @UseInterceptors(ClassSerializerInterceptor)
   @Patch(':id/criteria')
   addCriteria(
-    @Param('id') eventId: number,
+    @Param('eventId') eventId: number,
     @Body() criteriaRef: ElementDto
   ): Promise<Event> {
     return this.eventsService.addCriteria(eventId, criteriaRef.id);
@@ -182,7 +182,7 @@ export class EventsController {
   @UseInterceptors(ClassSerializerInterceptor)
   @Patch(':id/subCriteria')
   addSubCriteria(
-    @Param('id') eventId: number,
+    @Param('eventId') eventId: number,
     @Body() criteriaRef: EventSubCriteriaUpdateDto
   ): Promise<void> {
     return this.eventsService.addSubCriteria(eventId, criteriaRef);
@@ -191,7 +191,7 @@ export class EventsController {
   @UseInterceptors(ClassSerializerInterceptor)
   @Patch(':id/evaluator')
   async addEvaluators(
-    @Param('id') eventId: number,
+    @Param('eventId') eventId: number,
     @Body() userRef: ElementDto
   ): Promise<void> {
     await this.eventsService.addEvaluators(eventId, userRef.id);
@@ -200,7 +200,7 @@ export class EventsController {
   @UseInterceptors(ClassSerializerInterceptor)
   @Patch(':id/evaluatee')
   async addEvaluatees(
-    @Param('id') eventId: number,
+    @Param('eventId') eventId: number,
     @Body() userRef: ElementDto
   ): Promise<void> {
     await this.eventsService.addEvaluatees(eventId, userRef.id);

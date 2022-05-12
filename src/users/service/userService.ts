@@ -2,23 +2,23 @@ import {
   BadRequestException,
   Inject,
   Injectable,
-  UnauthorizedException
+  UnauthorizedException,
+  NotFoundException
 } from '@nestjs/common';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { CloudinaryService } from '../../cloudinary/cloudinaryService';
+import { dbAuth } from '../auth/preauthMiddleware';
+import { UserRepository } from '../repository/userRepository';
+import { UserSalaryDto } from '../dto/userSalaryDto';
+import { AddUserDto } from '../dto/addUserDto';
+import { authGet } from '../auth/connection';
+import { UserSignInDto } from '../dto/userSignInDto';
 import { CreateUserDto } from '../dto/userCreateDto';
 import { UpdateUserDto } from '../dto/userUpdateDto';
 import { User } from '../entity/user';
 import { logger } from '../../logger';
-import { Repository } from 'typeorm';
-import { InjectRepository } from '@nestjs/typeorm';
-import { CloudinaryService } from '../../cloudinary/cloudinaryService';
-import { dbAuth } from '../auth/preauthMiddleware';
-import { NotFoundException } from '@nestjs/common';
-import { UserRepository } from '../repository/userRepository';
-import { UserSalaryDto } from '../dto/userSalaryDto';
-import { AddUserDto } from '../dto/addUserDto';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { authGet } from '../auth/connection';
-import { UserSignInDto } from '../dto/userSignInDto';
 
 @Injectable()
 export class UsersService {

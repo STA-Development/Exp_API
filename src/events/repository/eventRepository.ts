@@ -1,6 +1,12 @@
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { getRepository, LessThan, MoreThan, Like, Repository } from 'typeorm';
+import {
+  getRepository,
+  LessThan,
+  MoreThan,
+  Like,
+  Repository
+} from 'typeorm';
 import * as dayjs from 'dayjs';
 import { CreateEventDto } from '../dto/eventCreateDto';
 import { UpdateEventDto } from '../dto/eventUpdateDto';
@@ -44,12 +50,12 @@ export class EventsRepository {
     return this.eventRepository
       .createQueryBuilder()
       .where({
-        createdAt: LessThan(dayjs().toDate())
+        startsAt: LessThan(dayjs().toDate())
       })
       .andWhere({
         endsAt: MoreThan(dayjs().toDate())
       })
-      .getMany()
+      .getMany();
   }
 
   async addSubCriteria(eventId: number, idRef: EventSubCriteriaUpdateDto) {
@@ -202,7 +208,7 @@ export class EventsRepository {
         ((completedSubmissionCount / submissions.length) * 100).toFixed(1)
       ),
       title: currentEvent.title,
-      startDate: currentEvent.createdAt,
+      startDate: currentEvent.startsAt,
       endDate: currentEvent.endsAt
     };
   }
@@ -444,11 +450,12 @@ export class EventsRepository {
   }
 
   async create(createEventDto: CreateEventDto): Promise<EventDto> {
+    const event = await this.eventRepository.save(createEventDto);
     await getRepository(EventEvaluatee)
       .createQueryBuilder()
       .insert()
       .values({
-        eventId: (await this.eventRepository.save(createEventDto)).id,
+        eventId: event.id,
         userId: 0
       })
       .execute();
@@ -456,7 +463,7 @@ export class EventsRepository {
       .createQueryBuilder()
       .insert()
       .values({
-        eventId: (await this.eventRepository.save(createEventDto)).id,
+        eventId: event.id,
         userId: 0
       })
       .execute();
@@ -465,7 +472,7 @@ export class EventsRepository {
       .insert()
       .into(UserSubCriteria)
       .values({
-        eventId: (await this.eventRepository.save(createEventDto)).id,
+        eventId: event.id,
         criteriaId: 0,
         evaluateeId: 0,
         evaluatorId: 0,
@@ -476,7 +483,7 @@ export class EventsRepository {
       })
       .execute();
     createEventDto.rating = await this.ratingRepository.find({ take: 3 });
-    return this.eventRepository.save(createEventDto);
+    return event;
   }
 
   async update(

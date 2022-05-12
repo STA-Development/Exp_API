@@ -16,6 +16,10 @@ export class UpdateEventDto {
 
   @ApiProperty()
   @IsNumber()
+  startsAt: Date;
+
+  @ApiProperty()
+  @IsNumber()
   endsAt: Date;
 
   @ApiProperty()

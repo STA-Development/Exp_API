@@ -25,5 +25,6 @@ export const eventGetDto = (event: Event): EventDto => ({
   rating: event?.rating && event.rating.map((rating) => ratingGetDto(rating)),
   timePeriod: event.timePeriod,
   createdAt: event.createdAt,
+  startsAt: event.startsAt,
   endsAt: event.endsAt
 });

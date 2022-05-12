@@ -10,13 +10,14 @@ import {
   Put,
   UseInterceptors
 } from '@nestjs/common';
-import { ApiOkResponse } from '@nestjs/swagger';
+import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { RatingService } from '../service/ratingService';
 import { CreateRatingDto } from '../dto/ratingCreateDto';
 import { Rating, RatingDto } from '../entity/rating';
 import { ratingGetDto } from '../dto/ratingGetDto';
 import { UpdateRatingDto } from '../dto/ratingUpdateDto';
 
+@ApiTags('rating')
 @Controller('rating')
 export class RatingController {
   @Inject()
