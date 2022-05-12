@@ -1,13 +1,6 @@
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import {
-  getRepository,
-  LessThan,
-  MoreThan,
-  Like,
-  Between,
-  Repository
-} from 'typeorm';
+import { getRepository, LessThan, MoreThan, Like, Repository } from 'typeorm';
 import * as dayjs from 'dayjs';
 import { CreateEventDto } from '../dto/eventCreateDto';
 import { UpdateEventDto } from '../dto/eventUpdateDto';
@@ -29,6 +22,8 @@ import { IEventProgress } from '../interface/eventProgress';
 import { getNotEvaluatedEvaluators } from '../../utils/getNotEvaluatedEvaluators';
 import { SubCriteriaRepository } from './subCriteriaRepository';
 import { INotEvaluated } from '../interface/notEvaluatedEvaluators';
+import { Criteria } from '../entity/criteria';
+import { last } from 'rxjs';
 
 @Injectable()
 export class EventsRepository {
@@ -40,6 +35,9 @@ export class EventsRepository {
 
   @InjectRepository(Rating)
   ratingRepository: Repository<Rating>;
+
+  @InjectRepository(Criteria)
+  criteriaRepository: Repository<Criteria>;
 
   @Inject()
   subCriteriaRepository: SubCriteriaRepository;
@@ -295,18 +293,34 @@ export class EventsRepository {
   }
 
   async getUserCriteriaRating(eventId: number, evaluateeId: number) {
-    const usersCriteriaRating = await getRepository(UserSubCriteria)
+    const criteriaRatings = await getRepository(UserSubCriteria)
       .createQueryBuilder()
       .where({ eventId })
       .andWhere({ evaluateeId })
-      .select('user.firstName, user.lastName, user.position')
-      .addSelect(['evaluateeId, eventId,COUNT(criteriaId) as criteriaRating'])
+      .select('user.firstName, user.lastName, user.position, criteriaId')
+      .addSelect(['evaluateeId, eventId,COUNT(criteriaId) as rating'])
       .leftJoin(User, 'user', 'user.id = evaluateeId')
       .andWhere('subCriteriaResult = true')
       .groupBy('criteriaId')
       .execute();
 
-    return usersCriteriaRating;
+    const subCriteriaCount = await getRepository(UserSubCriteria)
+      .createQueryBuilder()
+      .where({ eventId })
+      .andWhere({ evaluateeId })
+      .select('criteriaId, COUNT(criteriaId) as rating')
+      .leftJoin(User, 'user', 'user.id = evaluateeId')
+      .groupBy('criteriaId')
+      .execute();
+
+    return Promise.all(
+      criteriaRatings.map(async (criteriaRating, index) => {
+        return {
+          ...criteriaRating,
+          rating: criteriaRating?.rating / subCriteriaCount[index]?.rating
+        };
+      })
+    );
   }
 
   async addEvaluators(eventId: number, userId: number): Promise<void> {
