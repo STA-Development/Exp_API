@@ -12,24 +12,25 @@ import {
   UseGuards,
   Patch,
   UploadedFile,
-  UseInterceptors,
-} from '@nestjs/common'
-import {ApiBearerAuth, ApiOkResponse} from '@nestjs/swagger'
-import {ApiFile} from '../dto/uploadFileDto'
-import {UsersService} from '../service/userService'
-import {CreateUserDto} from '../dto/userCreateDto'
-import {UpdateUserDto} from '../dto/userUpdateDto'
-import {UserSalaryDto} from '../dto/userSalaryDto'
-import {User, UserDto} from '../entity/user'
-import {AuthGuard} from '../../middlewares/checkJwt'
-import {RolesGuard} from '../../middlewares/checkAdmin'
-import {Token} from '../../middlewares/jwtDecorator'
-import {logger} from '../../logger'
-import {userGetDto} from '../dto/userGetDto'
-import {AddUserDto} from '../dto/addUserDto'
-import {GetUserDto} from '../dto/getUsersDto'
+  UseInterceptors
+} from '@nestjs/common';
+import { ApiBearerAuth, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { ApiFile } from '../dto/uploadFileDto';
+import { UsersService } from '../service/userService';
+import { CreateUserDto } from '../dto/userCreateDto';
+import { UpdateUserDto } from '../dto/userUpdateDto';
+import { UserSalaryDto } from '../dto/userSalaryDto';
+import { User, UserDto } from '../entity/user';
+import { AuthGuard } from '../../middlewares/checkJwt';
+import { RolesGuard } from '../../middlewares/checkAdmin';
+import { Token } from '../../middlewares/jwtDecorator';
+import { logger } from '../../logger';
+import { userGetDto } from '../dto/userGetDto';
+import { AddUserDto } from '../dto/addUserDto';
+import { GetUserDto } from '../dto/getUsersDto';
 import { UserSignInDto } from '../dto/userSignInDto';
 
+@ApiTags('users')
 @Controller('users')
 export class UsersController {
   @Inject()

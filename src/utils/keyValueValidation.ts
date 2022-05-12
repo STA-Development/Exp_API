@@ -9,9 +9,9 @@ import { IEstimation } from '../events/interface/estimationInterface';
 @Injectable()
 @ValidatorConstraint({ async: true })
 export class IsKeyValueValidate implements ValidatorConstraintInterface {
-  async validate(columnValue: IEstimation, args: ValidationArguments) {
+  async validate(columnValue: IEstimation) {
     let isValidate = true;
-    console.log(columnValue);
+
     Object.keys(columnValue).forEach((key) => {
       if (Number.isNaN(Number(key)) || typeof columnValue[key] !== 'boolean')
         isValidate = false;

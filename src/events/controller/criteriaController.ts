@@ -11,7 +11,7 @@ import {
   ClassSerializerInterceptor,
   Patch
 } from '@nestjs/common';
-import { ApiOkResponse } from '@nestjs/swagger';
+import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { CriteriaService } from '../service/criteriaService';
 import { CreateCriteriaDto } from '../dto/criteriaCreateDto';
 import { UpdateCriteriaDto } from '../dto/criteriaUpdateDto';
@@ -19,6 +19,7 @@ import { Criteria, CriteriaDto } from '../entity/criteria';
 import { criteriaGetDto } from '../dto/criteriaGetDto';
 import { ElementDto } from '../dto/elementDto';
 
+@ApiTags('criteria')
 @Controller('criteria')
 export class CriteriaController {
   @Inject()

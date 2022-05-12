@@ -1,11 +1,11 @@
-import {Injectable} from '@nestjs/common'
-import {InjectRepository} from '@nestjs/typeorm'
-import {Repository} from 'typeorm'
-import {CreateUserDto} from '../dto/userCreateDto'
-import {UpdateUserDto} from '../dto/userUpdateDto'
-import {User} from '../entity/user'
-import {UserSalaryDto} from '../dto/userSalaryDto'
-import {AddUserDto} from '../dto/addUserDto'
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { CreateUserDto } from '../dto/userCreateDto';
+import { UpdateUserDto } from '../dto/userUpdateDto';
+import { User } from '../entity/user';
+import { UserSalaryDto } from '../dto/userSalaryDto';
+import { AddUserDto } from '../dto/addUserDto';
 
 @Injectable()
 export class UserRepository {
@@ -52,8 +52,8 @@ export class UserRepository {
   }
 
   async remove(id: number): Promise<User> {
-    const removeUserId = await this.userRepository.findOne(id)
-    return this.userRepository.remove(removeUserId)
+    const removeUserId = await this.userRepository.findOne(id);
+    return this.userRepository.remove(removeUserId);
   }
 
   async changeSalary(id: number, userSalaryDto: UserSalaryDto): Promise<User> {

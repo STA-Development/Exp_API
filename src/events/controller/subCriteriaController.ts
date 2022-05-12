@@ -10,7 +10,7 @@ import {
   UseInterceptors,
   ClassSerializerInterceptor
 } from '@nestjs/common';
-import { ApiOkResponse } from '@nestjs/swagger';
+import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { SubCriteriaService } from '../service/subCriteriaService';
 import { CreateSubCriteriaDto } from '../dto/subCriteriaCreateDto';
 import { UpdateSubCriteriaDto } from '../dto/subCriteriaUpdateDto';
@@ -18,6 +18,7 @@ import { SubCriteria, SubCriteriaDto } from '../entity/subCriteria';
 import { subCriteriaGetDto } from '../dto/subCriteriaGetDto';
 import { CriteriaService } from '../service/criteriaService';
 
+@ApiTags('subCriteria')
 @Controller('subCriteria')
 export class SubCriteriaController {
   @Inject()

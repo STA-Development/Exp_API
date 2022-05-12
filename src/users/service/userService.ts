@@ -1,19 +1,24 @@
-import {BadRequestException, Inject, Injectable, UnauthorizedException} from '@nestjs/common'
-import {CreateUserDto} from '../dto/userCreateDto'
-import {UpdateUserDto} from '../dto/userUpdateDto'
-import {User} from '../entity/user'
-import {logger} from '../../logger'
-import {Repository} from 'typeorm'
-import {InjectRepository} from '@nestjs/typeorm'
-import {CloudinaryService} from '../../cloudinary/cloudinaryService'
-import {dbAuth} from '../auth/preauthMiddleware'
-import {NotFoundException} from '@nestjs/common'
-import {UserRepository} from '../repository/userRepository'
-import {UserSalaryDto} from '../dto/userSalaryDto'
-import {AddUserDto} from '../dto/addUserDto'
+import {
+  BadRequestException,
+  Inject,
+  Injectable,
+  UnauthorizedException,
+  NotFoundException
+} from '@nestjs/common';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
 import { signInWithEmailAndPassword } from 'firebase/auth';
+import { CloudinaryService } from '../../cloudinary/cloudinaryService';
+import { dbAuth } from '../auth/preauthMiddleware';
+import { UserRepository } from '../repository/userRepository';
+import { UserSalaryDto } from '../dto/userSalaryDto';
+import { AddUserDto } from '../dto/addUserDto';
 import { authGet } from '../auth/connection';
 import { UserSignInDto } from '../dto/userSignInDto';
+import { CreateUserDto } from '../dto/userCreateDto';
+import { UpdateUserDto } from '../dto/userUpdateDto';
+import { User } from '../entity/user';
+import { logger } from '../../logger';
 
 @Injectable()
 export class UsersService {
@@ -67,9 +72,9 @@ export class UsersService {
 
   async findOne(authUid: string): Promise<User> {
     try {
-      return this.usersRepository.findOne(authUid)
+      return this.usersRepository.findOne(authUid);
     } catch (err) {
-      throw new NotFoundException(`User with ID=${authUid} not found`)
+      throw new NotFoundException(`User with ID=${authUid} not found`);
     }
   }
 
@@ -143,9 +148,9 @@ export class UsersService {
   async addUser(addUserDto: AddUserDto): Promise<User> {
     try {
       const auth = await dbAuth.createUser({
-        email: addUserDto.email,
-      })
-      addUserDto.authUid = auth.uid
+        email: addUserDto.email
+      });
+      addUserDto.authUid = auth.uid;
       addUserDto.avatar = process.env.AVATAR_URL;
       return await this.usersRepository.addUser(addUserDto);
     } catch (err) {
