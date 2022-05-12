@@ -108,7 +108,7 @@ export class UserSubCriteriaDto implements IUserSubCriteriaGetDto {
   @ApiProperty()
   criteria: CriteriaDto;
 
-  @ApiProperty() //todo maybe we must add subCriteria points too
+  @ApiProperty()
   event: EventDto;
 
   @ApiProperty()

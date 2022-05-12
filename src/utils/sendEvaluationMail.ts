@@ -20,8 +20,8 @@ export const sendEvaluationEmail = async (
   });
   ejs.renderFile(
     'src/forms/emailForm.ejs',
-    { link ,
-   startEvaluation }, async (err, invitationForm) => {
+    { link, startEvaluation },
+    async (err, invitationForm) => {
       await transporter.sendMail({
         from: process.env.EMAIL,
         to: email,

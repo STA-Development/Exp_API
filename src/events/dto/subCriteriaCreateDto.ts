@@ -8,6 +8,7 @@ import {
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { SubCriteria } from '../entity/subCriteria';
+import { DtoLimitations } from '../../enums/dtoLimitations';
 
 export class CreateSubCriteriaDto extends SubCriteria {
   @ApiProperty()
@@ -20,8 +21,8 @@ export class CreateSubCriteriaDto extends SubCriteria {
 
   @ApiProperty()
   @IsInt()
-  @Min(1)
-  @Max(10)
+  @Min(DtoLimitations.subCriteriaPointMin)
+  @Max(DtoLimitations.subCriteriaPointMax)
   point: number;
 
   @ApiProperty()

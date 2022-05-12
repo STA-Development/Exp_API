@@ -8,7 +8,7 @@ import {
   JoinTable
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
-import { IEvent, Period } from '../interface/eventInterface';
+import { IEvent } from '../interface/eventInterface';
 import { UserSubCriteria } from './userSubCriteria';
 import { User, UserDto } from '../../users/entity/user';
 import { Rating, RatingDto } from './rating';
@@ -16,6 +16,7 @@ import { Criteria, CriteriaDto } from './criteria';
 import { EventEvaluator } from './eventEvaluator';
 import { EventEvaluatee } from './eventEvaluatee';
 import { EventParticipantResponseDto } from '../dto/eventParticipantResponseDto';
+import { Period } from '../../enums/eventPeriod';
 
 @Entity()
 export class Event implements IEvent {
@@ -45,13 +46,13 @@ export class Event implements IEvent {
   criteria: Criteria[];
 
   @OneToMany(
-      () => UserSubCriteria,
-      (userSubCriteria) => userSubCriteria.event,
-      {
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE',
-        createForeignKeyConstraints: false
-      }
+    () => UserSubCriteria,
+    (userSubCriteria) => userSubCriteria.event,
+    {
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE',
+      createForeignKeyConstraints: false
+    }
   )
   userSubCriteria: UserSubCriteria[];
 

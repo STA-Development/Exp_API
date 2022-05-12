@@ -6,7 +6,7 @@ import {
   OneToMany
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
-import { IUser, PerformerType } from '../interface/userInterface';
+import { IUser } from '../interface/userInterface';
 import { Event, EventDto } from '../../events/entity/event';
 import {
   UserSubCriteria,
@@ -14,6 +14,7 @@ import {
 } from '../../events/entity/userSubCriteria';
 import { EventEvaluator } from '../../events/entity/eventEvaluator';
 import { EventEvaluatee } from '../../events/entity/eventEvaluatee';
+import { PerformerType } from '../../enums/performerType';
 
 @Entity()
 export class User implements IUser {

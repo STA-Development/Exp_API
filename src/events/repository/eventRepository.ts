@@ -1,17 +1,10 @@
 import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import {
-  getRepository,
-  LessThan,
-  MoreThan,
-  Like,
-  Repository
-} from 'typeorm';
+import { getRepository, LessThan, MoreThan, Like, Repository } from 'typeorm';
 import * as dayjs from 'dayjs';
 import { CreateEventDto } from '../dto/eventCreateDto';
 import { UpdateEventDto } from '../dto/eventUpdateDto';
 import { Event, EventDto } from '../entity/event';
-import { Period } from '../interface/eventInterface';
 import { UserSubCriteria } from '../entity/userSubCriteria';
 import { User } from '../../users/entity/user';
 import { Rating } from '../entity/rating';
@@ -22,14 +15,16 @@ import { EventSubCriteriaUpdateDto } from '../dto/eventSubCriteriaUpdateDto';
 import { isUpcomingEvent } from '../../utils/checkEventDate';
 import { IEvaluationResult } from '../interface/evaluationResultInterface';
 import { IUserSubCriteriaResult } from '../interface/userSubCriteriaResultInterface';
-import { ISubmission, SubmissionState } from '../interface/submissionInterface';
+import { ISubmission } from '../interface/submissionInterface';
 import { getSubmissions } from '../../utils/getSubmissions';
 import { IEventProgress } from '../interface/eventProgress';
 import { getNotEvaluatedEvaluators } from '../../utils/getNotEvaluatedEvaluators';
 import { SubCriteriaRepository } from './subCriteriaRepository';
 import { INotEvaluated } from '../interface/notEvaluatedEvaluators';
 import { Criteria } from '../entity/criteria';
-import { last } from 'rxjs';
+import { DtoLimitations } from '../../enums/dtoLimitations';
+import { SubmissionState } from '../../enums/subMissionState';
+import { Period } from '../../enums/eventPeriod';
 
 @Injectable()
 export class EventsRepository {
@@ -248,15 +243,15 @@ export class EventsRepository {
       .addSelect(['SUM(subCriteriaPoints) AS rating'])
       .groupBy('evaluateeId')
       .getRawMany();
-    console.log(usersRating);
+
     const userSubCriteria = await getRepository(UserSubCriteria)
       .createQueryBuilder()
       .where({ eventId })
       .select(['evaluateeId, eventId'])
-      .addSelect(['COUNT(subCriteriaPoints) * 10 AS rating']) // todo remove hardcoded 10
+      .addSelect(['COUNT(subCriteriaPoints) AS rating']) // todo remove hardcoded 10
       .groupBy('evaluateeId')
       .getRawMany();
-    console.log(userSubCriteria);
+
     const currentEvent = await this.eventRepository.findOne(eventId, {
       relations: ['rating']
     });
@@ -269,8 +264,9 @@ export class EventsRepository {
       for (let i = 0; i < usersRating.length; i++) {
         if (user.evaluateeId === usersRating[i].evaluateeId) {
           return Number(
-            (// todo check
+            (
               (usersRating[i].rating / userSubCriteria[i]?.rating) *
+              DtoLimitations.subCriteriaPointMax *
               rankingScale
             ).toFixed(1)
           );
@@ -305,7 +301,6 @@ export class EventsRepository {
       .select('user.firstName, user.lastName, user.position, criteriaId')
       .addSelect(['evaluateeId, eventId,SUM(subCriteriaPoints) as rating'])
       .leftJoin(User, 'user', 'user.id = evaluateeId')
-      //.andWhere('subCriteriaResult = true')
       .groupBy('criteriaId')
       .execute();
 
@@ -326,17 +321,15 @@ export class EventsRepository {
       rating.isSelected ? (rankingScale = rating.to) : rankingScale
     );
 
-    return Promise.all(
-      criteriaRatings.map(async (criteriaRating, index) => {
-        return {
-          ...criteriaRating,
-          rating: (
-            (criteriaRating?.rating / subCriteriaCount[index]?.rating) *
-            rankingScale
-          ).toFixed(1)
-        };
-      })
-    );
+    return criteriaRatings.map((criteriaRating, index) => {
+      return {
+        ...criteriaRating,
+        rating: (
+          (criteriaRating?.rating / subCriteriaCount[index]?.rating) *
+          rankingScale
+        ).toFixed(1)
+      };
+    });
   }
 
   async addEvaluators(eventId: number, userId: number): Promise<void> {
@@ -530,7 +523,7 @@ export class EventsRepository {
     }
     const userSubCriteriaResults: IUserSubCriteriaResult[] = [];
     let isSubCriteria: boolean;
-    console.log(JSON.stringify(evaluationResult, null, 2));
+
     for (const [key, value] of Object.entries(evaluationResult.results)) {
       isSubCriteria = false;
       (
@@ -546,7 +539,6 @@ export class EventsRepository {
       });
 
       if (isSubCriteria) {
-        console.log(234234);
         const userSubCriteria = new UserSubCriteria();
         userSubCriteria.subCriteriaId = Number(key);
         userSubCriteria.eventId = eventId;
@@ -579,7 +571,7 @@ export class EventsRepository {
         }
       }
     }
-    console.log(userSubCriteriaResults);
+
     await getRepository(UserSubCriteria)
       .createQueryBuilder()
       .insert()

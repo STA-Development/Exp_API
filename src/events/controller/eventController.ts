@@ -141,7 +141,7 @@ export class EventsController {
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
-  @Post(':id/invitation')
+  @Post(':eventId/invitation')
   async evaluationInvitation(
     @Param('eventId') eventId: number,
     @Body() invitation: InvitationDto
@@ -152,7 +152,10 @@ export class EventsController {
     );
     const invitationToken = await this.jwtService.signAsync(
       { evaluatorId: evaluator.id, eventId },
-      { secret: process.env.JWT_ACCESS_KEY, expiresIn: process.env.JWT_INVITATION_KEY_EXPIRES_IN }
+      {
+        secret: process.env.JWT_ACCESS_KEY,
+        expiresIn: process.env.JWT_INVITATION_KEY_EXPIRES_IN
+      }
     );
 
     const startEvaluation = EjsFormSubjects.startEvaluation;
@@ -162,7 +165,7 @@ export class EventsController {
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
-  @Patch(':id/rating')
+  @Patch(':eventId/rating')
   addRating(
     @Param('eventId') eventId: number,
     @Body() ratingRef: ElementDto
@@ -171,7 +174,7 @@ export class EventsController {
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
-  @Patch(':id/criteria')
+  @Patch(':eventId/criteria')
   addCriteria(
     @Param('eventId') eventId: number,
     @Body() criteriaRef: ElementDto
@@ -180,7 +183,7 @@ export class EventsController {
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
-  @Patch(':id/subCriteria')
+  @Patch(':eventId/subCriteria')
   addSubCriteria(
     @Param('eventId') eventId: number,
     @Body() criteriaRef: EventSubCriteriaUpdateDto
@@ -189,7 +192,7 @@ export class EventsController {
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
-  @Patch(':id/evaluator')
+  @Patch(':eventId/evaluator')
   async addEvaluators(
     @Param('eventId') eventId: number,
     @Body() userRef: ElementDto
@@ -198,7 +201,7 @@ export class EventsController {
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
-  @Patch(':id/evaluatee')
+  @Patch(':eventId/evaluatee')
   async addEvaluatees(
     @Param('eventId') eventId: number,
     @Body() userRef: ElementDto

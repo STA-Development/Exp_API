@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { ISubmission,SubmissionState } from '../interface/submissionInterface';
+import { ISubmission } from '../interface/submissionInterface';
+import { SubmissionState } from '../../enums/subMissionState';
 
 export class SubmissionGetDto implements ISubmission {
   @ApiProperty()

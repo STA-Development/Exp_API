@@ -54,7 +54,7 @@ import { IsKeyValueValidate } from '../../utils/keyValueValidation';
     UserRepository,
     CriteriaRepository,
     SubCriteriaRepository,
-    RatingRepository
+    RatingRepository,
     IsKeyValueValidate
   ]
 })

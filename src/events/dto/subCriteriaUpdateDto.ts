@@ -8,6 +8,7 @@ import {
   Min
 } from 'class-validator';
 import { SubCriteria } from '../entity/subCriteria';
+import { DtoLimitations } from '../../enums/dtoLimitations';
 
 export class UpdateSubCriteriaDto extends SubCriteria {
   @ApiPropertyOptional()
@@ -20,8 +21,8 @@ export class UpdateSubCriteriaDto extends SubCriteria {
 
   @ApiProperty()
   @IsInt()
-  @Min(1)
-  @Max(10)
+  @Min(DtoLimitations.subCriteriaPointMin)
+  @Max(DtoLimitations.subCriteriaPointMax)
   point: number;
 
   @ApiProperty()

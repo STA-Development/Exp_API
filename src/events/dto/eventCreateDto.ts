@@ -8,8 +8,9 @@ import {
   IsEmpty
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
-import { Period } from '../interface/eventInterface';
 import { Rating } from '../entity/rating';
+import { DtoLimitations } from '../../enums/dtoLimitations';
+import { Period } from '../../enums/eventPeriod';
 
 export class CreateEventDto {
   @ApiProperty()
@@ -18,8 +19,8 @@ export class CreateEventDto {
 
   @ApiProperty()
   @IsInt()
-  @Min(0)
-  @Max(100)
+  @Min(DtoLimitations.eventBonusMin)
+  @Max(DtoLimitations.eventBonusMax)
   readonly bonus: number;
 
   @ApiProperty()

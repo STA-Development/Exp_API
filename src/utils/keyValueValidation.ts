@@ -13,15 +13,16 @@ export class IsKeyValueValidate implements ValidatorConstraintInterface {
     let isValidate = true;
 
     Object.keys(columnValue).forEach((key) => {
-      if (Number.isNaN(Number(key)) || typeof columnValue[key] !== 'boolean')
+      if (typeof key !== 'number' || typeof columnValue[key] !== 'number')
         isValidate = false;
     });
     return isValidate;
   }
+
   defaultMessage(args: ValidationArguments) {
     for (const [key, value] of Object.entries(args.value)) {
-      if (Number.isNaN(Number(key))) return 'must be a number';
-      if (typeof value !== 'boolean') return 'must be a boolean';
+      if (typeof key !== 'number') return 'must be a number';
+      if (typeof value !== 'number') return 'must be a number';
     }
   }
 }

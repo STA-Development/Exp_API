@@ -10,7 +10,7 @@ export class EvaluationResultRequestDto implements IEvaluationResult {
   })
   @Validate(IsKeyValueValidate)
   results: {
-    [key: number]: boolean;
+    [key: number]: number;
   };
 
   @ApiProperty()

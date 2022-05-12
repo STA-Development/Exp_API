@@ -1,13 +1,6 @@
 import { User } from '../../users/entity/user';
 import { Criteria } from '../entity/criteria';
-
-export enum Period {
-  never = 'never',
-  monthly = 'monthly',
-  quarterly = 'quarterly',
-  sixMonths = 'sixMonths',
-  annually = 'annually'
-}
+import { Period } from '../../enums/eventPeriod';
 
 export interface IEvent {
   id: number;

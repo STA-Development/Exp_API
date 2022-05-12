@@ -1,5 +1,5 @@
 export interface IEstimation {
   results: {
-    [key: number]: boolean;
+    [key: number]: number;
   };
 }

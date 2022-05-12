@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsString, IsEmail, IsOptional, IsEnum } from 'class-validator';
 import { User } from '../entity/user';
-import { PerformerType } from '../interface/userInterface';
+import { PerformerType } from '../../enums/performerType';
 
 export class CreateUserDto extends User {
   readonly id: number;

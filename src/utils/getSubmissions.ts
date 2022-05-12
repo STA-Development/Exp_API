@@ -1,7 +1,5 @@
-import {
-  ISubmission,
-  SubmissionState
-} from '../events/interface/submissionInterface';
+import { ISubmission } from '../events/interface/submissionInterface';
+import { SubmissionState } from '../enums/subMissionState';
 
 export const getSubmissions = (
   submissionModels: ISubmission[],
