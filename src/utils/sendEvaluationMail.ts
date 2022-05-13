@@ -1,20 +1,33 @@
-import * as nodemailer from 'nodemailer'
-import * as ejs from 'ejs'
+import * as nodemailer from 'nodemailer';
+import * as ejs from 'ejs';
 
-export const sendEvaluationEmail = async (email: string, link: string) => {
+export enum EjsFormSubjects {
+  startEvaluation = 'Start evaluation',
+  getCertificate = 'Get Certificate'
+}
+
+export const sendEvaluationEmail = async (
+  email: string,
+  link: string,
+  startEvaluation: EjsFormSubjects
+) => {
   const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-      user: process.env.email,
-      pass: process.env.EMAIL_PASS,
-    },
-  })
-  ejs.renderFile('src/forms/emailForm.ejs', {link}, async (err, invitationForm) => {
-    await transporter.sendMail({
-      from: process.env.EMAIL,
-      to: email,
-      subject: 'Hello',
-      html: invitationForm,
-    })
-  })
-}
+      user: process.env.EMAIL,
+      pass: process.env.EMAIL_PASS
+    }
+  });
+  ejs.renderFile(
+    'src/forms/emailForm.ejs',
+    { link, startEvaluation },
+    async (err, invitationForm) => {
+      await transporter.sendMail({
+        from: process.env.EMAIL,
+        to: email,
+        subject: startEvaluation,
+        html: invitationForm
+      });
+    }
+  );
+};

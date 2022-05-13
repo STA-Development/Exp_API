@@ -1,15 +1,12 @@
-export enum SubmissionState {
-  completed = 'Completed',
-  partiallyCompleted = 'Partially Completed',
-}
+import { SubmissionState } from '../../enums/subMissionState';
 
 export interface ISubmission {
-  submissionState: SubmissionState
-  eventTitle: string
-  evaluatorFirstName: string
-  evaluatorLastName: string
-  evaluatorPosition: string
-  evaluateeFirstName: string
-  evaluateeLastName: string
-  evaluateePosition: string
+  submissionState: SubmissionState;
+  eventTitle: string;
+  evaluatorFirstName: string;
+  evaluatorLastName: string;
+  evaluatorPosition: string;
+  evaluateeFirstName: string;
+  evaluateeLastName: string;
+  evaluateePosition: string;
 }

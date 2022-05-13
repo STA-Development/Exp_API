@@ -1,22 +1,23 @@
-import {Module} from '@nestjs/common'
-import {TypeOrmModule} from '@nestjs/typeorm'
-import {ConfigModule} from '@nestjs/config'
-import {JwtModule} from '@nestjs/jwt'
-import {EventsController} from '../controller/eventController'
-import {EventsService} from '../service/eventService'
-import {Event} from '../entity/event'
-import {EventsRepository} from '../repository/eventRepository'
-import {User} from '../../users/entity/user'
-import {UserRepository} from '../../users/repository/userRepository'
-import {CriteriaRepository} from '../repository/criteriaRepository'
-import {Criteria} from '../entity/criteria'
-import {Rating} from '../entity/rating'
-import {RatingRepository} from '../repository/ratingRepository'
-import {UserSubCriteria} from '../entity/userSubCriteria'
-import {EventEvaluator} from '../entity/eventEvaluator'
-import {EventEvaluatee} from '../entity/eventEvaluatee'
-import {SubCriteriaRepository} from '../repository/subCriteriaRepository'
-import {SubCriteria} from '../entity/subCriteria'
+import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { ConfigModule } from '@nestjs/config';
+import { JwtModule } from '@nestjs/jwt';
+import { EventsController } from '../controller/eventController';
+import { EventsService } from '../service/eventService';
+import { Event } from '../entity/event';
+import { EventsRepository } from '../repository/eventRepository';
+import { User } from '../../users/entity/user';
+import { UserRepository } from '../../users/repository/userRepository';
+import { CriteriaRepository } from '../repository/criteriaRepository';
+import { Criteria } from '../entity/criteria';
+import { Rating } from '../entity/rating';
+import { RatingRepository } from '../repository/ratingRepository';
+import { UserSubCriteria } from '../entity/userSubCriteria';
+import { EventEvaluator } from '../entity/eventEvaluator';
+import { EventEvaluatee } from '../entity/eventEvaluatee';
+import { SubCriteriaRepository } from '../repository/subCriteriaRepository';
+import { SubCriteria } from '../entity/subCriteria';
+import { IsKeyValueValidate } from '../../utils/keyValueValidation';
 
 @Module({
   imports: [
@@ -29,7 +30,7 @@ import {SubCriteria} from '../entity/subCriteria'
       SubCriteria,
       UserSubCriteria,
       EventEvaluator,
-      EventEvaluatee,
+      EventEvaluatee
     ]),
     TypeOrmModule.forRoot({
       type: 'mysql',
@@ -39,12 +40,12 @@ import {SubCriteria} from '../entity/subCriteria'
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE,
       autoLoadEntities: true,
-      synchronize: true,
+      synchronize: true
     }),
     JwtModule.register({
-      secret: 'secret',
-      signOptions: {expiresIn: '1d'},
-    }),
+      secret: process.env.JWT_ACCESS_KEY,
+      signOptions: { expiresIn: process.env.JWT_MODULE_KEY_EXPIRES_IN }
+    })
   ],
   controllers: [EventsController],
   providers: [
@@ -54,6 +55,7 @@ import {SubCriteria} from '../entity/subCriteria'
     CriteriaRepository,
     SubCriteriaRepository,
     RatingRepository,
-  ],
+    IsKeyValueValidate
+  ]
 })
 export class EventModule {}

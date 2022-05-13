@@ -1,28 +1,29 @@
-import {ApiProperty} from '@nestjs/swagger'
-import {SubmissionState} from '../interface/submissionInterface'
+import { ApiProperty } from '@nestjs/swagger';
+import { ISubmission } from '../interface/submissionInterface';
+import { SubmissionState } from '../../enums/subMissionState';
 
-export class SubmissionGetDto {
+export class SubmissionGetDto implements ISubmission {
   @ApiProperty()
-  readonly eventTitle: string
-
-  @ApiProperty()
-  readonly evaluateeFirstName: string
+  readonly eventTitle: string;
 
   @ApiProperty()
-  readonly evaluateeLastName: number
+  readonly evaluateeFirstName: string;
 
   @ApiProperty()
-  readonly evaluateePosition: number
+  readonly evaluateeLastName: string;
 
   @ApiProperty()
-  readonly evaluatorFirstName: string
+  readonly evaluateePosition: string;
 
   @ApiProperty()
-  readonly evaluatorLastName: number
+  readonly evaluatorFirstName: string;
 
   @ApiProperty()
-  readonly evaluatorPosition: number
+  readonly evaluatorLastName: string;
 
-  @ApiProperty({enum: SubmissionState, enumName: 'submissionState'})
-  readonly submissionState: SubmissionState
+  @ApiProperty()
+  readonly evaluatorPosition: string;
+
+  @ApiProperty({ enum: SubmissionState, enumName: 'submissionState' })
+  readonly submissionState: SubmissionState;
 }

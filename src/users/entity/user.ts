@@ -1,116 +1,126 @@
-import {Entity, Column, PrimaryGeneratedColumn, ManyToMany, OneToMany} from 'typeorm'
-import {ApiProperty} from '@nestjs/swagger'
-import {IUser, PerformerType} from '../interface/userInterface'
-import {Event, EventDto} from '../../events/entity/event'
-import {UserSubCriteria, UserSubCriteriaDto} from '../../events/entity/userSubCriteria'
-import {EventEvaluator} from '../../events/entity/eventEvaluator'
-import {EventEvaluatee} from '../../events/entity/eventEvaluatee'
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToMany,
+  OneToMany
+} from 'typeorm';
+import { ApiProperty } from '@nestjs/swagger';
+import { IUser } from '../interface/userInterface';
+import { Event, EventDto } from '../../events/entity/event';
+import {
+  UserSubCriteria,
+  UserSubCriteriaDto
+} from '../../events/entity/userSubCriteria';
+import { EventEvaluator } from '../../events/entity/eventEvaluator';
+import { EventEvaluatee } from '../../events/entity/eventEvaluatee';
+import { PerformerType } from '../../enums/performerType';
 
 @Entity()
 export class User implements IUser {
   @PrimaryGeneratedColumn()
-  id: number
+  id: number;
 
   @Column()
-  firstName: string
+  firstName: string;
 
   @Column()
-  lastName: string
+  lastName: string;
 
-  @Column({unique: true})
-  email: string
+  @Column({ unique: true })
+  email: string;
 
-  @Column({default: 0})
-  rating: number
+  @Column({ default: 0 })
+  rating: number;
 
-  @Column({default: PerformerType.waitingForEvaluation})
-  performerType: PerformerType
+  @Column({ default: PerformerType.waitingForEvaluation })
+  performerType: PerformerType;
 
   @OneToMany(() => UserSubCriteria, (userSubCriteria) => userSubCriteria.user, {
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
-    createForeignKeyConstraints: false,
+    createForeignKeyConstraints: false
   })
-  userSubCriteria: UserSubCriteria[]
+  userSubCriteria: UserSubCriteria[];
 
   @Column()
-  authUid: string
+  authUid: string;
 
-  @Column({default: false})
-  isAdmin: boolean
+  @Column({ default: false })
+  isAdmin: boolean;
 
-  @Column({default: 60000})
-  salary: number
+  @Column({ default: 60000 })
+  salary: number;
 
   @Column()
-  avatar: string
+  avatar: string;
 
-  @Column({default: null})
-  avatarPublicId: string
+  @Column({ default: null })
+  avatarPublicId: string;
 
-  @Column({default: null})
-  position: string
+  @Column({ default: null })
+  position: string;
 
   @ManyToMany(() => Event, (events) => events.users, {
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
-    createForeignKeyConstraints: false,
+    createForeignKeyConstraints: false
   })
-  events: Event[]
+  events: Event[];
 
   @OneToMany(() => EventEvaluator, (eventEvaluator) => eventEvaluator.event, {
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
-    createForeignKeyConstraints: false,
+    createForeignKeyConstraints: false
   })
-  eventEvaluator: EventEvaluator[]
+  eventEvaluator: EventEvaluator[];
 
   @OneToMany(() => EventEvaluatee, (eventEvaluatee) => eventEvaluatee.event, {
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
-    createForeignKeyConstraints: false,
+    createForeignKeyConstraints: false
   })
-  eventEvaluatee: EventEvaluatee[]
+  eventEvaluatee: EventEvaluatee[];
 }
 
 export class UserDto {
   @ApiProperty()
-  id: number
+  id: number;
 
   @ApiProperty()
-  firstName: string
+  firstName: string;
 
   @ApiProperty()
-  lastName: string
+  lastName: string;
 
   @ApiProperty()
-  email: string
+  email: string;
 
   @ApiProperty()
-  isAdmin: boolean
+  isAdmin: boolean;
 
   @ApiProperty()
-  authUid: string
+  authUid: string;
 
   @ApiProperty()
-  salary: number
+  salary: number;
 
   @ApiProperty()
-  rating: number
+  rating: number;
 
   @ApiProperty()
-  avatar: string
+  avatar: string;
 
   @ApiProperty()
-  position: string
+  position: string;
 
   @ApiProperty()
-  avatarPublicId: string
+  avatarPublicId: string;
 
   @ApiProperty()
-  performerType: PerformerType
+  performerType: PerformerType;
 
-  userSubCriteria: UserSubCriteriaDto[]
+  userSubCriteria: UserSubCriteriaDto[];
 
-  events: EventDto[]
+  events: EventDto[];
 }

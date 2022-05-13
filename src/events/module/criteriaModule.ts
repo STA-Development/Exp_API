@@ -1,13 +1,13 @@
-import {Module} from '@nestjs/common'
-import {TypeOrmModule} from '@nestjs/typeorm'
-import {ConfigModule} from '@nestjs/config'
-import {CriteriaController} from '../controller/criteriaController'
-import {Criteria} from '../entity/criteria'
-import {CriteriaRepository} from '../repository/criteriaRepository'
-import {CriteriaService} from '../service/criteriaService'
-import {UserSubCriteria} from '../entity/userSubCriteria'
-import {SubCriteria} from '../entity/subCriteria'
-import {SubCriteriaRepository} from '../repository/subCriteriaRepository'
+import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { ConfigModule } from '@nestjs/config';
+import { CriteriaController } from '../controller/criteriaController';
+import { Criteria } from '../entity/criteria';
+import { CriteriaRepository } from '../repository/criteriaRepository';
+import { CriteriaService } from '../service/criteriaService';
+import { UserSubCriteria } from '../entity/userSubCriteria';
+import { SubCriteria } from '../entity/subCriteria';
+import { SubCriteriaRepository } from '../repository/subCriteriaRepository';
 
 @Module({
   imports: [
@@ -23,10 +23,10 @@ import {SubCriteriaRepository} from '../repository/subCriteriaRepository'
       database: process.env.DB_DATABASE,
       autoLoadEntities: true,
       synchronize: true,
-      logging: false,
-    }),
+      logging: false
+    })
   ],
   controllers: [CriteriaController],
-  providers: [CriteriaService, CriteriaRepository, SubCriteriaRepository],
+  providers: [CriteriaService, CriteriaRepository, SubCriteriaRepository]
 })
 export class CriteriaModule {}

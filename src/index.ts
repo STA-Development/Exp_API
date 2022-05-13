@@ -10,7 +10,6 @@ async function bootstrap() {
     .setTitle('Events')
     .setDescription('The events API description')
     .setVersion('1.0')
-    .addTag('events')
     .build();
   const eventDocument = SwaggerModule.createDocument(eventApp, eventConfig);
   SwaggerModule.setup('swaggerEvents', eventApp, eventDocument);
@@ -27,7 +26,6 @@ async function bootstrap() {
     .setTitle('Users')
     .setDescription('The users API description')
     .setVersion('1.0')
-    .addTag('users')
     .addBearerAuth({ in: 'header', type: 'http' })
     .build();
   const document = SwaggerModule.createDocument(userApp, userConfig);

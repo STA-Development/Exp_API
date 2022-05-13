@@ -5,123 +5,134 @@ import {
   CreateDateColumn,
   OneToMany,
   ManyToMany,
-  JoinTable,
-} from 'typeorm'
-import {ApiProperty} from '@nestjs/swagger'
-import {IEvent, Period} from '../interface/eventInterface'
-import {UserSubCriteria} from './userSubCriteria'
-import {User, UserDto} from '../../users/entity/user'
-import {Rating, RatingDto} from './rating'
-import {Criteria, CriteriaDto} from './criteria'
-import {EventEvaluator, EventEvaluatorGetDto} from './eventEvaluator'
-import {EventEvaluatee, EventEvaluateeGetDto} from './eventEvaluatee'
+  JoinTable
+} from 'typeorm';
+import { ApiProperty } from '@nestjs/swagger';
+import { IEvent } from '../interface/eventInterface';
+import { UserSubCriteria } from './userSubCriteria';
+import { User, UserDto } from '../../users/entity/user';
+import { Rating, RatingDto } from './rating';
+import { Criteria, CriteriaDto } from './criteria';
+import { EventEvaluator } from './eventEvaluator';
+import { EventEvaluatee } from './eventEvaluatee';
+import { EventParticipantResponseDto } from '../dto/eventParticipantResponseDto';
+import { Period } from '../../enums/eventPeriod';
 
 @Entity()
 export class Event implements IEvent {
   @PrimaryGeneratedColumn()
-  id: number
+  id: number;
 
   @Column()
-  title: string
+  title: string;
 
   @Column()
-  bonus: number
+  bonus: number;
 
   @Column()
-  timePeriod: Period
+  timePeriod: Period;
 
   @ManyToMany(() => Criteria, (criteria) => criteria.events, {
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
     createForeignKeyConstraints: false,
-    cascade: true,
+    cascade: true
   })
   @JoinTable({
     name: 'event_criteria',
-    joinColumn: {name: 'eventId'},
-    inverseJoinColumn: {name: 'criteriaId'},
+    joinColumn: { name: 'eventId' },
+    inverseJoinColumn: { name: 'criteriaId' }
   })
-  criteria: Criteria[]
+  criteria: Criteria[];
 
-  @OneToMany(() => UserSubCriteria, (userSubCriteria) => userSubCriteria.event, {
-    onUpdate: 'CASCADE',
-    onDelete: 'CASCADE',
-    createForeignKeyConstraints: false,
-  })
-  userSubCriteria: UserSubCriteria[]
+  @OneToMany(
+    () => UserSubCriteria,
+    (userSubCriteria) => userSubCriteria.event,
+    {
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE',
+      createForeignKeyConstraints: false
+    }
+  )
+  userSubCriteria: UserSubCriteria[];
 
-  @CreateDateColumn({type: 'timestamp'})
-  createdAt: Date
+  @CreateDateColumn({ type: 'timestamp' })
+  createdAt: Date;
 
-  @Column({type: 'timestamp', default: () => 'CURRENT_TIMESTAMP'})
-  endsAt: Date
+  @Column({ type: 'timestamp' })
+  startsAt: Date;
+
+  @Column({ type: 'timestamp' })
+  endsAt: Date;
 
   @ManyToMany(() => User, (user) => user.events, {
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
-    createForeignKeyConstraints: false,
+    createForeignKeyConstraints: false
   })
   @JoinTable({
     name: 'event_user',
-    joinColumn: {name: 'eventId'},
-    inverseJoinColumn: {name: 'userId'},
+    joinColumn: { name: 'eventId' },
+    inverseJoinColumn: { name: 'userId' }
   })
-  users: User[]
+  users: User[];
 
   @ManyToMany(() => Rating, (rating) => rating.events, {
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
     createForeignKeyConstraints: false,
-    cascade: true,
+    cascade: true
   })
   @JoinTable({
     name: 'event_rating',
-    joinColumn: {name: 'eventId'},
-    inverseJoinColumn: {name: 'ratingId'},
+    joinColumn: { name: 'eventId' },
+    inverseJoinColumn: { name: 'ratingId' }
   })
-  rating: Rating[]
+  rating: Rating[];
 
   @OneToMany(() => EventEvaluator, (eventEvaluator) => eventEvaluator.user, {
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
-    createForeignKeyConstraints: false,
+    createForeignKeyConstraints: false
   })
-  eventEvaluator: EventEvaluator[]
+  eventEvaluator: EventEvaluator[];
 
   @OneToMany(() => EventEvaluatee, (eventEvaluatee) => eventEvaluatee.user, {
     onUpdate: 'CASCADE',
     onDelete: 'CASCADE',
-    createForeignKeyConstraints: false,
+    createForeignKeyConstraints: false
   })
-  eventEvaluatee: EventEvaluatee[]
+  eventEvaluatee: EventEvaluatee[];
 }
 export class EventDto {
   @ApiProperty()
-  id: number
+  id: number;
 
   @ApiProperty()
-  title: string
+  title: string;
 
   @ApiProperty()
-  bonus: number
+  bonus: number;
 
   @ApiProperty()
-  timePeriod: Period
+  timePeriod: Period;
+
+  users: UserDto[];
+
+  eventEvaluator: EventParticipantResponseDto[];
+
+  eventEvaluatee: EventParticipantResponseDto[];
+
+  criteria: CriteriaDto[];
+
+  rating: RatingDto[];
 
   @ApiProperty()
-  users: UserDto[]
-
-  eventEvaluator: EventEvaluatorGetDto[]
-
-  eventEvaluatee: EventEvaluateeGetDto[]
-
-  criteria: CriteriaDto[]
-
-  rating: RatingDto[]
+  createdAt: Date;
 
   @ApiProperty()
-  createdAt: Date
+  startsAt: Date;
 
   @ApiProperty()
-  endsAt: Date
+  endsAt: Date;
 }

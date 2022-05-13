@@ -1,41 +1,41 @@
-import {ApiProperty} from '@nestjs/swagger'
-import {User} from '../entity/user'
-import {PerformerType} from '../interface/userInterface'
+import { ApiProperty } from '@nestjs/swagger';
+import { User } from '../entity/user';
+import { PerformerType } from '../../enums/performerType';
 
 export class GetUserDto extends User {
   @ApiProperty()
-  id: number
+  id: number;
 
   @ApiProperty()
-  firstName: string
+  firstName: string;
 
   @ApiProperty()
-  lastName: string
+  lastName: string;
 
   @ApiProperty()
-  email: string
+  email: string;
 
   @ApiProperty()
-  rating: number
+  rating: number;
 
   @ApiProperty()
-  performerType: PerformerType
+  performerType: PerformerType;
 
   @ApiProperty()
-  authUid: string
+  authUid: string;
 
   @ApiProperty()
-  isAdmin: boolean
+  isAdmin: boolean;
 
   @ApiProperty()
-  salary: number
+  salary: number;
 
   @ApiProperty()
-  avatar: string
+  avatar: string;
 
   @ApiProperty()
-  avatarPublicId: string
+  avatarPublicId: string;
 
   @ApiProperty()
-  position: string
+  position: string;
 }

@@ -1,17 +1,18 @@
-import {ISubmission, SubmissionState} from '../events/interface/submissionInterface'
+import { ISubmission } from '../events/interface/submissionInterface';
+import { SubmissionState } from '../enums/subMissionState';
 
 export const getSubmissions = (
   submissionModels: ISubmission[],
   submissionSubCriteria,
   eventSubCriteriaCount,
-  eventTitle,
+  eventTitle
 ): ISubmission[] => {
-  const submissions: ISubmission[] = []
+  const submissions: ISubmission[] = [];
   for (let i = 0; i < submissionModels.length; i++) {
-    let submissionState
+    let submissionState;
     eventSubCriteriaCount / submissionSubCriteria[i].count === 1
       ? (submissionState = SubmissionState.completed)
-      : (submissionState = SubmissionState.partiallyCompleted)
+      : (submissionState = SubmissionState.partiallyCompleted);
     const submission: ISubmission = {
       eventTitle,
       evaluateeFirstName: submissionModels[i].evaluateeFirstName,
@@ -20,9 +21,9 @@ export const getSubmissions = (
       evaluatorFirstName: submissionModels[i].evaluatorFirstName,
       evaluatorLastName: submissionModels[i].evaluatorLastName,
       evaluatorPosition: submissionModels[i].evaluatorPosition,
-      submissionState,
-    }
-    submissions.push(submission)
+      submissionState
+    };
+    submissions.push(submission);
   }
-  return submissions
-}
+  return submissions;
+};
