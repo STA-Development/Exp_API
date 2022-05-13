@@ -181,6 +181,7 @@ export class EventsController {
   @UseInterceptors(ClassSerializerInterceptor)
   @Put('evaluation')
   async evaluationResult(@Body() evaluationResult: IEvaluationResult): Promise<string> {
+    console.log("how many commits we have?")
     try {
       const jwtPayload: JwtPayload | string = jwt.verify(
         evaluationResult.token,
