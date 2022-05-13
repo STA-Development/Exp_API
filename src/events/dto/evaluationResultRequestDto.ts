@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IEvaluationResult } from '../interface/evaluationResultInterface';
 import { IsInt, IsString, Validate } from 'class-validator';
+import { IEvaluationResult } from '../interface/evaluationResultInterface';
 import { IsKeyValueValidate } from '../../utils/keyValueValidation';
 
 export class EvaluationResultRequestDto implements IEvaluationResult {

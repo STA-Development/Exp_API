@@ -39,6 +39,7 @@ import {
 } from '../../utils/sendEvaluationMail';
 import { EvaluationResultRequestDto } from '../dto/evaluationResultRequestDto';
 import { ElementDto } from '../dto/elementDto';
+import { PerformanceReportGetDto } from '../dto/performanceReportGetDto';
 
 @ApiTags('event')
 @Controller('events')
@@ -128,10 +129,23 @@ export class EventsController {
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
+  @ApiOkResponse({ type: [PerformanceReportGetDto] })
+  @Get(':eventId/performance-report/:evaluateeId')
+  getPerformanceReportByEvaluateeId(
+    @Param('eventId') eventId: number,
+    @Param('evaluateeId') evaluateeId: number
+  ): Promise<PerformanceReportGetDto[]> {
+    return this.eventsService.getPerformanceReportByEvaluateeId(
+      eventId,
+      evaluateeId
+    );
+  }
+
+  @UseInterceptors(ClassSerializerInterceptor)
   @ApiOkResponse({ type: [EventDto] })
   @Get(':id')
   async findOneById(@Param('id') id: number): Promise<EventDto> {
-    return eventGetDto(await this.eventsService.findOneById(id));
+    return eventGetDto(await this.eventsService.findOneById(id)); // todo some fields are undefined
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
@@ -157,8 +171,7 @@ export class EventsController {
         expiresIn: process.env.JWT_INVITATION_KEY_EXPIRES_IN
       }
     );
-
-    const startEvaluation = EjsFormSubjects.startEvaluation;
+    const { startEvaluation } = EjsFormSubjects;
     const link = `http://${process.env.HOST}:${process.env.PORT}/${process.env.SWAGGER_PATH}#/invitation/?code=${invitationToken}`;
     await sendEvaluationEmail(invitation.email, link, startEvaluation);
     return invitationToken;
@@ -180,6 +193,15 @@ export class EventsController {
     @Body() criteriaRef: ElementDto
   ): Promise<Event> {
     return this.eventsService.addCriteria(eventId, criteriaRef.id);
+  }
+
+  @UseInterceptors(ClassSerializerInterceptor)
+  @Delete(':eventId/criteria')
+  removeCriteria(
+    @Param('eventId') eventId: number,
+    @Body() criteriaRef: ElementDto
+  ): Promise<Event> {
+    return this.eventsService.removeCriteria(eventId, criteriaRef.id);
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
