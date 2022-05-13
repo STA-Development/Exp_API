@@ -39,7 +39,7 @@ import {
 } from '../../utils/sendEvaluationMail';
 import { EvaluationResultRequestDto } from '../dto/evaluationResultRequestDto';
 import { ElementDto } from '../dto/elementDto';
-import { PerformanceReportGetDto } from '../dto/performanceReportGetDto';
+import {PerformanceReportGetDto} from "../dto/performanceReportGetDto";
 
 @ApiTags('event')
 @Controller('events')

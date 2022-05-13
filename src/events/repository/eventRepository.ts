@@ -216,7 +216,7 @@ export class EventsRepository {
       .addGroupBy('evaluatorId')
       .addGroupBy('evaluateeId')
       .execute();
-    console.log(criteriaRatings);
+
     const criteriaMaxPoints = await getRepository(UserSubCriteria)
       .createQueryBuilder()
       .where({ eventId })
@@ -225,7 +225,7 @@ export class EventsRepository {
       .leftJoin(User, 'user', 'user.id = evaluateeId')
       .groupBy('criteriaId')
       .execute();
-    console.log(criteriaMaxPoints);
+
     const currentEvent = await this.eventRepository.findOne(eventId, {
       relations: ['rating']
     });
