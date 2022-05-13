@@ -145,7 +145,7 @@ export class EventsController {
   @ApiOkResponse({ type: [EventDto] })
   @Get(':id')
   async findOneById(@Param('id') id: number): Promise<EventDto> {
-    return eventGetDto(await this.eventsService.findOneById(id)); // todo some fields are undefined
+    return eventGetDto(await this.eventsService.findOneById(id));
   }
 
   @UseInterceptors(ClassSerializerInterceptor)

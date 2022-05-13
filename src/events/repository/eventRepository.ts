@@ -216,7 +216,7 @@ export class EventsRepository {
       .addGroupBy('evaluatorId')
       .addGroupBy('evaluateeId')
       .execute();
-    console.log(criteriaRatings);
+
     const criteriaMaxPoints = await getRepository(UserSubCriteria)
       .createQueryBuilder()
       .where({ eventId })
@@ -225,7 +225,7 @@ export class EventsRepository {
       .leftJoin(User, 'user', 'user.id = evaluateeId')
       .groupBy('criteriaId')
       .execute();
-    console.log(criteriaMaxPoints);
+
     const currentEvent = await this.eventRepository.findOne(eventId, {
       relations: ['rating']
     });
@@ -246,46 +246,6 @@ export class EventsRepository {
         ).toFixed(1)
       };
     });
-
-    //
-    // const currentEvent = await this.eventRepository.findOne(eventId, {
-    //   relations: ['criteria', 'criteria.subCriteria']
-    // });
-    // let eventSubCriteriaCount = 0;
-    // currentEvent.criteria?.forEach((criteria) => {
-    //   eventSubCriteriaCount += criteria.subCriteria.length;
-    // });
-    //
-    // const submissionSubCriteria = await getRepository(UserSubCriteria)
-    //     .createQueryBuilder()
-    //     .where({ eventId, evaluateeId })
-    //     .select('COUNT(subCriteriaPoints) AS count')
-    //     .groupBy('evaluatorId')
-    //     .execute();
-    //
-    // const submissionModels = await getRepository(UserSubCriteria)
-    //     .createQueryBuilder()
-    //     .where({ eventId, evaluateeId })
-    //     .select(
-    //         'evaluatorId, evaluator.firstname AS evaluatorFirstName, evaluator.lastname AS evaluatorLastName, evaluator.position as evaluatorPosition'
-    //     )
-    //     .addSelect(
-    //         'evaluateeId, evaluatee.firstname AS evaluateeFirstName, evaluatee.lastname AS evaluateeLastName, evaluatee.position as evaluateePosition'
-    //     )
-    //     .leftJoin(User, 'evaluator', 'evaluator.id = evaluatorId')
-    //     .leftJoin(User, 'evaluatee', 'evaluatee.id = evaluateeId')
-    //     .groupBy('evaluateeId ')
-    //     .addGroupBy('evaluatorId')
-    //     .execute();
-    //
-    // const eventTitle = (await getRepository(Event).findOne(eventId)).title;
-    //
-    // return getSubmissions(
-    //     submissionModels,
-    //     submissionSubCriteria,
-    //     eventSubCriteriaCount,
-    //     eventTitle
-    // );
   }
 
   async getEventProgress(eventId: number): Promise<IEventProgress> {
