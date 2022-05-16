@@ -39,6 +39,7 @@ import {
 } from '../../utils/sendEvaluationMail';
 import { EvaluationResultRequestDto } from '../dto/evaluationResultRequestDto';
 import { ElementDto } from '../dto/elementDto';
+import { UserPerformerTypeGetDto } from "../dto/userPerformerTypeGetDto";
 
 @ApiTags('event')
 @Controller('events')
@@ -94,8 +95,15 @@ export class EventsController {
   @UseInterceptors(ClassSerializerInterceptor)
   @ApiOkResponse({ type: [UserRatingGetDto] })
   @Get(':id/user-rating')
-  getUserRating(@Param('id') eventId: number): Promise<User[]> {
+  getUserRating(@Param('id') eventId: number): Promise<UserRatingGetDto[]> {
     return this.eventsService.getUserRating(eventId);
+  }
+
+  @UseInterceptors(ClassSerializerInterceptor)
+  @ApiOkResponse({ type: [UserPerformerTypeGetDto] })
+  @Get(':id/user/performer-type')
+  getUserPerformerType(@Param('id') eventId: number): Promise<UserPerformerTypeGetDto[]> {
+    return this.eventsService.getUserPerformerType(eventId);
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
