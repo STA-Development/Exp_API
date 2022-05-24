@@ -300,10 +300,11 @@ export class EventsRepository {
   async getUserPerformerType(eventId: number): Promise<UserPerformerTypeGetDto[]> {
     const userRating = await this.getUserRating(eventId)
     const userPerformerType : UserPerformerTypeGetDto[] = []
-    userRating.map((userRating, index) => {
-      userPerformerType[index] = {evaluateeId: userRating.evaluateeId,
-        performerType: ratingConverter(userRating.rating)};
-    })
+    userRating.map((userRating, index) =>
+        userPerformerType[index] = {
+          evaluateeId: userRating.evaluateeId,
+          performerType: ratingConverter(userRating.rating)
+        })
 
   return userPerformerType
   }

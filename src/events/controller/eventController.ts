@@ -22,7 +22,6 @@ import { CreateEventDto } from '../dto/eventCreateDto';
 import { UpdateEventDto } from '../dto/eventUpdateDto';
 import { Event, EventDto } from '../entity/event';
 import { eventGetDto } from '../dto/eventGetDto';
-import { User } from '../../users/entity/user';
 import { IEventSearch } from '../interface/eventSearchInterface';
 import { EventSubCriteriaUpdateDto } from '../dto/eventSubCriteriaUpdateDto';
 import { IEventProgress } from '../interface/eventProgress';
