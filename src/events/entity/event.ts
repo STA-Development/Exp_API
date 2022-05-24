@@ -136,3 +136,12 @@ export class EventDto {
   @ApiProperty()
   endsAt: Date;
 }
+
+export class EventTitleAndIdDto {
+  @ApiProperty()
+  id: number;
+
+  @ApiProperty()
+  title: string;
+
+}

@@ -39,7 +39,7 @@ export class EventsService {
     return this.eventsRepository.getOngoingEvents();
   }
 
-  getAllEventsProgress() /* : Promise<IEventProgress[]> */ {
+  getAllEventsProgress(): Promise<IEventProgress[]> {
     return this.eventsRepository.getAllEventsProgress();
   }
 
