@@ -61,13 +61,11 @@ export class UsersService {
   }
 
   async findOneById(id: number): Promise<User> {
-    let user;
     try {
-      user = await this.usersRepository.findOneById(id);
+      return await this.usersRepository.findOneById(id);
     } catch (error) {
-      logger.error(`User with ID=${id} not found ${error}`);
+      throw new NotFoundException(`User with ID=${id} not found`);
     }
-    return user;
   }
 
   async findOne(authUid: string): Promise<User> {
