@@ -17,6 +17,7 @@ import { ISubmission } from '../interface/submissionInterface';
 import { IEventProgress } from '../interface/eventProgress';
 import { INotEvaluated } from '../interface/notEvaluatedEvaluators';
 import { UserCriteriaRatingGetDto } from '../dto/userCriteriaRatingGetDto';
+import { PerformanceReportGetDto } from '../dto/performanceReportGetDto';
 
 @Injectable()
 export class EventsService {
@@ -69,9 +70,21 @@ export class EventsService {
     return this.eventsRepository.getSubmissions(eventId);
   }
 
+  getPerformanceReportByEvaluateeId(
+    eventId: number,
+    evaluateeId: number
+  ): Promise<PerformanceReportGetDto[]> {
+    return this.eventsRepository.getPerformanceReportByEvaluateeId(
+      eventId,
+      evaluateeId
+    );
+  }
+
   async addRating(eventId: number, ratingId: number): Promise<Event> {
     const rating = await this.ratingRepository.findOneById(ratingId);
-    const event = await this.eventsRepository.findOneById(eventId);
+    const event = await this.eventsRepository.findOneWithRatingRelationById(
+      eventId
+    );
     if (!isUpcomingEvent(event))
       throw new HttpException(
         {
@@ -87,7 +100,9 @@ export class EventsService {
 
   async addCriteria(eventId: number, criteriaId: number): Promise<Event> {
     const criteria = await this.criteriaRepository.findOneById(criteriaId);
-    const event = await this.eventsRepository.findOneById(eventId);
+    const event = await this.eventsRepository.findOneWithCriteriaRelationById(
+      eventId
+    );
     if (!isUpcomingEvent(event))
       throw new HttpException(
         {
@@ -99,7 +114,20 @@ export class EventsService {
     !event.criteria
       ? (event.criteria = [criteria])
       : event.criteria.push(criteria);
+
     return this.eventsRepository.addElement(event);
+  }
+
+  async removeCriteria(eventId: number, criteriaId: number): Promise<Event> {
+    const event = await this.eventsRepository.findOneWithCriteriaRelationById(
+      eventId
+    );
+
+    const criteriaIndex = event.criteria.findIndex((criteria) => {
+      return criteria.id === criteriaId;
+    });
+    event.criteria.splice(criteriaIndex, 1);
+    return this.eventsRepository.removeElement(event);
   }
 
   async addSubCriteria(

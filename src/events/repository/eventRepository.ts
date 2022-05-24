@@ -25,6 +25,7 @@ import { Criteria } from '../entity/criteria';
 import { DtoLimitations } from '../../enums/dtoLimitations';
 import { SubmissionState } from '../../enums/subMissionState';
 import { Period } from '../../enums/eventPeriod';
+import { PerformanceReportGetDto } from '../dto/performanceReportGetDto';
 
 @Injectable()
 export class EventsRepository {
@@ -190,6 +191,63 @@ export class EventsRepository {
     );
   }
 
+  async getPerformanceReportByEvaluateeId(
+    eventId: number,
+    evaluateeId: number
+  ): Promise<PerformanceReportGetDto[]> {
+    const criteriaRatings = await getRepository(UserSubCriteria)
+      .createQueryBuilder()
+      .where({ eventId })
+      .andWhere({ evaluateeId })
+      .select([
+        'event.title, event.startsAt, criteria.name, SUM(subCriteriaPoints) as rating, evaluatee.performerType, criteriaId'
+      ])
+      .addSelect(
+        'evaluatee.firstname AS evaluateeFirstName, evaluatee.lastname AS evaluateeLastName, evaluatee.position as evaluateePosition'
+      )
+      .addSelect(
+        'evaluator.firstname AS evaluatorFirstName, evaluator.lastname AS evaluatorLastName, evaluator.position as evaluatorPosition'
+      )
+      .leftJoin(User, 'evaluator', 'evaluator.id = evaluatorId')
+      .leftJoin(User, 'evaluatee', 'evaluatee.id = evaluateeId')
+      .leftJoin(Criteria, 'criteria', 'criteria.id = criteriaId')
+      .leftJoin(Event, 'event', 'event.id = eventId')
+      .groupBy('criteriaId')
+      .addGroupBy('evaluatorId')
+      .addGroupBy('evaluateeId')
+      .execute();
+
+    const criteriaMaxPoints = await getRepository(UserSubCriteria)
+      .createQueryBuilder()
+      .where({ eventId })
+      .andWhere({ evaluateeId })
+      .select('criteriaId, COUNT(subCriteriaPoints) as rating')
+      .leftJoin(User, 'user', 'user.id = evaluateeId')
+      .groupBy('criteriaId')
+      .execute();
+
+    const currentEvent = await this.eventRepository.findOne(eventId, {
+      relations: ['rating']
+    });
+    let rankingScale = 10;
+    currentEvent.rating?.forEach((rating) =>
+      rating.isSelected ? (rankingScale = rating.to) : rankingScale
+    );
+    return criteriaRatings.map((criteriaRating) => {
+      return {
+        ...criteriaRating,
+        rating: (
+          (criteriaRating?.rating /
+            (criteriaMaxPoints.find(
+              (object) => object.criteriaId === criteriaRating.criteriaId
+            ).rating *
+              DtoLimitations.subCriteriaPointMax)) *
+          rankingScale
+        ).toFixed(1)
+      };
+    });
+  }
+
   async getEventProgress(eventId: number): Promise<IEventProgress> {
     const submissions = await this.getSubmissions(eventId);
 
@@ -248,7 +306,7 @@ export class EventsRepository {
       .createQueryBuilder()
       .where({ eventId })
       .select(['evaluateeId, eventId'])
-      .addSelect(['COUNT(subCriteriaPoints) AS rating']) // todo remove hardcoded 10
+      .addSelect(['COUNT(subCriteriaPoints) AS rating'])
       .groupBy('evaluateeId')
       .getRawMany();
 
@@ -401,12 +459,24 @@ export class EventsRepository {
     return this.eventRepository.save(event);
   }
 
+  removeElement(event: Event) {
+    return this.eventRepository.save(event);
+  }
+
   findAll(): Promise<Event[]> {
     return this.eventRepository.find();
   }
 
   findOneById(id: number): Promise<Event> {
     return this.eventRepository.findOne(id);
+  }
+
+  findOneWithRatingRelationById(id: number): Promise<Event> {
+    return this.eventRepository.findOne(id, { relations: ['rating'] });
+  }
+
+  findOneWithCriteriaRelationById(id: number): Promise<Event> {
+    return this.eventRepository.findOne(id, { relations: ['criteria'] });
   }
 
   findByTitle(title: string): Promise<Event[]> {
