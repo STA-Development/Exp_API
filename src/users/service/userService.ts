@@ -22,10 +22,10 @@ import { logger } from '../../logger';
 
 @Injectable()
 export class UsersService {
-  @InjectRepository(User)
-  private readonly userRepository: Repository<User>;
-
-  private cloudinary: CloudinaryService;
+  constructor(
+    @InjectRepository(User) private readonly userRepository: Repository<User>,
+    private cloudinary: CloudinaryService
+  ) {}
 
   @Inject()
   usersRepository: UserRepository;
@@ -170,6 +170,27 @@ export class UsersService {
       throw new UnauthorizedException(
         `Login Failed: Your user email or password is incorrect`
       );
+    }
+  }
+
+  async uploadImageToCloudinaryByAuthUid(
+    file: Express.Multer.File,
+    uid: string
+  ) {
+    try {
+      const user = await this.usersRepository.findOne(uid);
+      if (user.avatarPublicId) {
+        await this.cloudinary.deleteImg(user.avatarPublicId);
+      }
+      const cloudinaryRes = await this.cloudinary.uploadImage(file);
+      return this.usersRepository.uploadImage(
+        uid,
+        cloudinaryRes.public_id,
+        cloudinaryRes.url,
+        user.id
+      );
+    } catch (err) {
+      throw new NotFoundException(`file is not found`);
     }
   }
 }
