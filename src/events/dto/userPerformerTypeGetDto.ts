@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { PerformerType } from "../../enums/performerType";
+import { PerformerType } from '../../enums/performerType';
 
 export class UserPerformerTypeGetDto {
   @ApiProperty()

@@ -25,9 +25,9 @@ import { Criteria } from '../entity/criteria';
 import { DtoLimitations } from '../../enums/dtoLimitations';
 import { SubmissionState } from '../../enums/subMissionState';
 import { Period } from '../../enums/eventPeriod';
-import { UserRatingGetDto } from "../dto/userRatingGetDto";
-import { UserPerformerTypeGetDto } from "../dto/userPerformerTypeGetDto";
-import { ratingConverter } from "../../utils/ratingConverter";
+import { UserRatingGetDto } from '../dto/userRatingGetDto';
+import { UserPerformerTypeGetDto } from '../dto/userPerformerTypeGetDto';
+import { ratingConverter } from '../../utils/ratingConverter';
 import { PerformanceReportGetDto } from '../dto/performanceReportGetDto';
 
 @Injectable()
@@ -251,6 +251,16 @@ export class EventsRepository {
     });
   }
 
+  async getAllEventsProgress(): Promise<IEventProgress[]> {
+    const events = await this.findAll();
+    let eventsProgress = [];
+    for (const event of events) {
+      const index = events.indexOf(event);
+      eventsProgress[index] = await this.getEventProgress(event.id);
+    }
+    return eventsProgress;
+  }
+
   async getEventProgress(eventId: number): Promise<IEventProgress> {
     const submissions = await this.getSubmissions(eventId);
 
@@ -326,8 +336,9 @@ export class EventsRepository {
         if (user.evaluateeId === usersRating[i].evaluateeId) {
           return Number(
             (
-              usersRating[i].rating / (userSubCriteria[i]?.rating *
-              DtoLimitations.subCriteriaPointMax) *
+              (usersRating[i].rating /
+                (userSubCriteria[i]?.rating *
+                  DtoLimitations.subCriteriaPointMax)) *
               rankingScale
             ).toFixed(1)
           );
@@ -354,12 +365,17 @@ export class EventsRepository {
     );
   }
 
-  async getUserPerformerType(eventId: number): Promise<UserPerformerTypeGetDto[]> {
-    const userRating = await this.getUserRating(eventId)
+  async getUserPerformerType(
+    eventId: number
+  ): Promise<UserPerformerTypeGetDto[]> {
+    const userRating = await this.getUserRating(eventId);
 
-    return userRating.map(userRating => {
-      return({evaluateeId:userRating.evaluateeId, performerType: ratingConverter(userRating.rating)})
-    })
+    return userRating.map((userRating) => {
+      return {
+        evaluateeId: userRating.evaluateeId,
+        performerType: ratingConverter(userRating.rating)
+      };
+    });
   }
 
   async getUserCriteriaRating(eventId: number, evaluateeId: number) {
