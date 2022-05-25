@@ -29,6 +29,8 @@ import { UserRatingGetDto } from '../dto/userRatingGetDto';
 import { UserPerformerTypeGetDto } from '../dto/userPerformerTypeGetDto';
 import { ratingConverter } from '../../utils/ratingConverter';
 import { PerformanceReportGetDto } from '../dto/performanceReportGetDto';
+import {MyEventsGetDto} from "../dto/myEventsGetDto";
+import {EventStatus} from "../../enums/eventStatus";
 
 @Injectable()
 export class EventsRepository {
@@ -492,6 +494,23 @@ export class EventsRepository {
 
   findAll(): Promise<Event[]> {
     return this.eventRepository.find();
+  }
+
+  async getMyEvents(): Promise<MyEventsGetDto[]> {
+
+    const events = await this.findAll()
+    let status: EventStatus
+    return events.map((event) => {
+
+      if(isUpcomingEvent(events[0])) status = EventStatus.upcoming
+      else if (events[0].endsAt > dayjs().toDate() && events[0].startsAt < dayjs().toDate()) status = EventStatus.ongoing
+      else status = EventStatus.expired
+      return {
+        status: status,
+        title: event.title,
+        startsAt: event.startsAt
+      };
+    });
   }
 
   findOneById(id: number): Promise<Event> {
