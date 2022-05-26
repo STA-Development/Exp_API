@@ -45,7 +45,6 @@ export class UsersService {
         createUserDto.password
       );
       await this.usersRepository.create(createUserDto);
-      console.log(data.user['stsTokenManager']);
       return data.user['stsTokenManager'];
     } catch (err) {
       throw new BadRequestException(`Method Not Allowed`);
