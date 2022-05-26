@@ -39,9 +39,9 @@ import { EvaluationResultRequestDto } from '../dto/evaluationResultRequestDto';
 import { ElementDto } from '../dto/elementDto';
 import { PerformanceReportGetDto } from '../dto/performanceReportGetDto';
 import { UserPerformerTypeGetDto } from '../dto/userPerformerTypeGetDto';
-import {eventTitleAndIdGetDto} from "../dto/eventTitleAndIdGetDto";
-import {EventSearchDto} from "../dto/eventSearchDto";
-import {MyEventsGetDto} from "../dto/myEventsGetDto";
+import { eventTitleAndIdGetDto } from '../dto/eventTitleAndIdGetDto';
+import { EventSearchDto } from '../dto/eventSearchDto';
+import { MyEventsGetDto } from '../dto/myEventsGetDto';
 
 @ApiTags('event')
 @Controller('events')
@@ -65,8 +65,8 @@ export class EventsController {
   @ApiOkResponse({ type: [EventTitleAndIdDto] })
   @Get('title-and-Id')
   async getEventNameAndId(): Promise<EventTitleAndIdDto[]> {
-    return (await this.eventsService.findAll()).map((event) =>
-        eventTitleAndIdGetDto(event) //todo do this wrap in controller or in service?
+    return (await this.eventsService.findAll()).map(
+      (event) => eventTitleAndIdGetDto(event) //todo do this wrap in controller or in service?
     );
   }
 
@@ -74,7 +74,7 @@ export class EventsController {
   @ApiOkResponse({ type: [MyEventsGetDto] })
   @Get('my-events')
   async getMyEvents() {
-    return this.eventsService.getMyEvents()
+    return this.eventsService.getMyEvents();
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
@@ -98,7 +98,7 @@ export class EventsController {
   @UseInterceptors(ClassSerializerInterceptor)
   @ApiOkResponse({ type: [EventProgressGetDto] })
   @Get('progress')
-  getAllEventsProgress() : Promise<IEventProgress[]> {
+  getAllEventsProgress(): Promise<IEventProgress[]> {
     return this.eventsService.getAllEventsProgress();
   }
 
@@ -165,14 +165,17 @@ export class EventsController {
 
   @UseInterceptors(ClassSerializerInterceptor)
   @ApiOkResponse({ type: [PerformanceReportGetDto] })
-  @Get(':eventId/performance-report/:evaluateeId')
-  getPerformanceReportByEvaluateeId(
-    @Param('eventId') eventId: number,
-    @Param('evaluateeId') evaluateeId: number
+  @Get('performance-report')
+  async getPerformanceReport(
+    @Query() eventSearchDto: EventSearchDto
   ): Promise<PerformanceReportGetDto[]> {
+    const params: IEventSearch = { ...eventSearchDto };
+    const currentEvent = (await this.eventsService.search(params)).map(
+      (event) => eventGetDto(event)
+    );
+
     return this.eventsService.getPerformanceReportByEvaluateeId(
-      eventId,
-      evaluateeId
+      currentEvent[0].id
     );
   }
 

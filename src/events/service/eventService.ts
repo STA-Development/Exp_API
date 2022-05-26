@@ -81,13 +81,9 @@ export class EventsService {
   }
 
   getPerformanceReportByEvaluateeId(
-    eventId: number,
-    evaluateeId: number
+    eventId: number
   ): Promise<PerformanceReportGetDto[]> {
-    return this.eventsRepository.getPerformanceReportByEvaluateeId(
-      eventId,
-      evaluateeId
-    );
+    return this.eventsRepository.getPerformanceReportByEvaluateeId(eventId);
   }
 
   async addRating(eventId: number, ratingId: number): Promise<Event> {
@@ -158,15 +154,24 @@ export class EventsService {
   findAll(): Promise<Event[]> {
     return this.eventsRepository.findAll();
   }
-  async getMyEvents(){
-    return this.eventsRepository.getMyEvents()
+  async getMyEvents() {
+    return this.eventsRepository.getMyEvents();
   }
 
-  search(params: IEventSearch): Promise<Event[]> {
+  async search(params: IEventSearch): Promise<Event[]> {
     if (params.title) return this.eventsRepository.findByTitle(params.title);
     if (params.bonus) return this.eventsRepository.findAllByBonus(params.bonus);
     if (params.period)
       return this.eventsRepository.findAllByTimePeriod(params.period);
+    if (params.date) return this.eventsRepository.findAllByDate(params.date);
+    if (params.completedEventTitle)
+      return [
+        await this.eventsRepository.findOneByTitle(params.completedEventTitle)
+      ];
+    if (params.completedEventDate)
+      return [
+        await this.eventsRepository.findOneByDate(params.completedEventDate)
+      ];
   }
 
   findOneById(id: number): Promise<Event> {
