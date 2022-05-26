@@ -29,6 +29,7 @@ import { userGetDto } from '../dto/userGetDto';
 import { AddUserDto } from '../dto/addUserDto';
 import { GetUserDto } from '../dto/getUsersDto';
 import { UserSignInDto } from '../dto/userSignInDto';
+import { RefreshTokenDto } from '../dto/validateRefreshTokenDto';
 
 @ApiTags('users')
 @Controller('users')
@@ -141,5 +142,11 @@ export class UsersController {
   @Post('signIn')
   async signIn(@Body() userSignInDto: UserSignInDto): Promise<User> {
     return this.usersService.signIn(userSignInDto);
+  }
+
+  @UseInterceptors(ClassSerializerInterceptor)
+  @Post('validateRefreshToken')
+  refreshToken(@Body() refreshTokenDto: RefreshTokenDto) {
+    return this.usersService.refreshToken(refreshTokenDto);
   }
 }
