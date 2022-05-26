@@ -194,19 +194,19 @@ export class UsersService {
     }
   }
   async refreshToken(refreshTokenDto: RefreshTokenDto) {
-    const response = await axios.post(
-      `https://securetoken.googleapis.com/v1/token?key=${process.env.FB_API_KEY}`,
-      {
-        grant_type: 'refresh_token',
-        refresh_token: refreshTokenDto.refreshToken
-      }
-    );
-    return {
-      refreshToken: response.data.refresh_token,
-      accessToken: response.data.access_token,
-      expiresIn: response.data.expires_in
-    };
     try {
+      const response = await axios.post(
+        `${process.env.FB_SECURETOKEN_LINK}${process.env.FB_API_KEY}`,
+        {
+          grant_type: 'refresh_token',
+          refresh_token: refreshTokenDto.refreshToken
+        }
+      );
+      return {
+        refreshToken: response.data.refresh_token,
+        accessToken: response.data.access_token,
+        expiresIn: response.data.expires_in
+      };
     } catch (err) {
       throw new BadRequestException(`Method Not Allowed`);
     }
