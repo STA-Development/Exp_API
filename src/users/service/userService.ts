@@ -18,7 +18,8 @@ import { UserSignInDto } from '../dto/userSignInDto';
 import { CreateUserDto } from '../dto/userCreateDto';
 import { UpdateUserDto } from '../dto/userUpdateDto';
 import { User } from '../entity/user';
-import { logger } from '../../logger';
+import { RefreshTokenDto } from '../dto/validateRefreshTokenDto';
+import axios from 'axios';
 
 @Injectable()
 export class UsersService {
@@ -44,7 +45,7 @@ export class UsersService {
         createUserDto.password
       );
       await this.usersRepository.create(createUserDto);
-      return data.user['stsTokenManager'].accessToken;
+      return data.user['stsTokenManager'];
     } catch (err) {
       throw new BadRequestException(`Method Not Allowed`);
     }
@@ -163,7 +164,7 @@ export class UsersService {
         userSignInDto.email,
         userSignInDto.password
       );
-      return data.user['stsTokenManager'].accessToken;
+      return data.user['stsTokenManager'];
     } catch (err) {
       throw new UnauthorizedException(
         `Login Failed: Your user email or password is incorrect`
@@ -189,6 +190,24 @@ export class UsersService {
       );
     } catch (err) {
       throw new NotFoundException(`file is not found`);
+    }
+  }
+  async refreshToken(refreshTokenDto: RefreshTokenDto) {
+    try {
+      const response = await axios.post(
+        `${process.env.FB_SECURETOKEN_LINK}${process.env.FB_API_KEY}`,
+        {
+          grant_type: 'refresh_token',
+          refresh_token: refreshTokenDto.refreshToken
+        }
+      );
+      return {
+        refreshToken: response.data.refresh_token,
+        accessToken: response.data.access_token,
+        expiresIn: response.data.expires_in
+      };
+    } catch (err) {
+      throw new BadRequestException(`Method Not Allowed`);
     }
   }
 }
