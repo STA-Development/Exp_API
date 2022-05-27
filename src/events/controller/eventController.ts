@@ -1,5 +1,5 @@
 import {
-  Get,
+  // Get,
   Post,
   Body,
   Param,
