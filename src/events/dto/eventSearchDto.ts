@@ -27,4 +27,8 @@ export class EventSearchDto implements IEventSearch {
   @ApiPropertyOptional()
   @IsOptional()
   completedEventDate?: Date;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  evaluatorName?: string;
 }

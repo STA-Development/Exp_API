@@ -196,7 +196,7 @@ export class EventsRepository {
     );
   }
 
-  async getPerformanceReportByEvaluateeId(
+  async getPerformanceReport(
     eventId: number
   ): Promise<PerformanceReportGetDto[]> {
     const criteriaRatings = await getRepository(UserSubCriteria)
@@ -544,6 +544,24 @@ export class EventsRepository {
 
   findOneByTitle(title: string): Promise<Event> {
     return this.eventRepository.findOne({ title: Like(`%${title}%`) });
+  }
+
+  async findEvaluator(evaluatorName: string): Promise<Event[]> {
+    const evaluator = await this.userRepository.findOne({
+      where: { firstName: evaluatorName }
+    });
+    const events = await getRepository(Event)
+      .createQueryBuilder('event')
+      .where('evaluator.userId = :value', { value: evaluator.id })
+      .select('evaluator.userId, event.id')
+      .leftJoin(EventEvaluator, 'evaluator', 'evaluator.eventId = event.id')
+      .execute();
+    const trueEvents = [];
+    events.map((event) =>
+      trueEvents.push(this.eventRepository.findOne(event.id))
+    );
+
+    return Promise.all(trueEvents);
   }
 
   findOneByDate(date: Date): Promise<Event> {

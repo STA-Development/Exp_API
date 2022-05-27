@@ -7,4 +7,5 @@ export interface IEventSearch {
   date?: Date;
   completedEventTitle?: string;
   completedEventDate?: Date;
+  evaluatorName?: string;
 }

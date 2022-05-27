@@ -6,7 +6,7 @@ import { IsKeyValueValidate } from '../../utils/keyValueValidation';
 export class EvaluationResultRequestDto implements IEvaluationResult {
   @ApiProperty({
     type: 'object',
-    properties: { subCriteriaId: { type: 'boolean' } }
+    properties: { subCriteriaId: { type: 'number' } }
   })
   @Validate(IsKeyValueValidate)
   results: {
