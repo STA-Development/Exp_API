@@ -17,6 +17,8 @@ import { ISubmission } from '../interface/submissionInterface';
 import { IEventProgress } from '../interface/eventProgress';
 import { INotEvaluated } from '../interface/notEvaluatedEvaluators';
 import { UserCriteriaRatingGetDto } from '../dto/userCriteriaRatingGetDto';
+import { UserRatingGetDto } from "../dto/userRatingGetDto";
+import { UserPerformerTypeGetDto } from "../dto/userPerformerTypeGetDto";
 import { PerformanceReportGetDto } from '../dto/performanceReportGetDto';
 
 @Injectable()
@@ -45,8 +47,12 @@ export class EventsService {
     return this.eventsRepository.getNotEvaluatedEvaluators(eventId);
   }
 
-  getUserRating(eventId: number): Promise<User[]> {
+  getUserRating(eventId: number): Promise<UserRatingGetDto[]> {
     return this.eventsRepository.getUserRating(eventId);
+  }
+
+  getUserPerformerType(eventId: number): Promise<UserPerformerTypeGetDto[]> {
+    return this.eventsRepository.getUserPerformerType(eventId);
   }
 
   getUserCriteriaRating(
