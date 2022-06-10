@@ -80,10 +80,8 @@ export class EventsService {
     return this.eventsRepository.getSubmissions(eventId);
   }
 
-  getPerformanceReportByEvaluateeId(
-    eventId: number
-  ): Promise<PerformanceReportGetDto[]> {
-    return this.eventsRepository.getPerformanceReportByEvaluateeId(eventId);
+  getPerformanceReport(eventId: number): Promise<PerformanceReportGetDto[]> {
+    return this.eventsRepository.getPerformanceReport(eventId);
   }
 
   async addRating(eventId: number, ratingId: number): Promise<Event> {
@@ -172,6 +170,8 @@ export class EventsService {
       return [
         await this.eventsRepository.findOneByDate(params.completedEventDate)
       ];
+    if (params.evaluatorName)
+      return await this.eventsRepository.findEvaluator(params.evaluatorName);
   }
 
   findOneById(id: number): Promise<Event> {

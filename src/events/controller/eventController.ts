@@ -168,15 +168,12 @@ export class EventsController {
   @Get('performance-report')
   async getPerformanceReport(
     @Query() eventSearchDto: EventSearchDto
-  ): Promise<PerformanceReportGetDto[]> {
+  ): Promise<PerformanceReportGetDto[][]> {
     const params: IEventSearch = { ...eventSearchDto };
-    const currentEvent = (await this.eventsService.search(params)).map(
-      (event) => eventGetDto(event)
-    );
-
-    return this.eventsService.getPerformanceReportByEvaluateeId(
-      currentEvent[0].id
-    );
+    const currentEvents = (await this.eventsService.search(params));
+    const reportedEvents = [];
+    currentEvents.map(async event => reportedEvents.push( await this.eventsService.getPerformanceReport(event.id)))
+    return reportedEvents
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
