@@ -22,7 +22,6 @@ import { CreateEventDto } from '../dto/eventCreateDto';
 import { UpdateEventDto } from '../dto/eventUpdateDto';
 import { Event, EventDto } from '../entity/event';
 import { eventGetDto } from '../dto/eventGetDto';
-import { User } from '../../users/entity/user';
 import { IEventSearch } from '../interface/eventSearchInterface';
 import { EventSubCriteriaUpdateDto } from '../dto/eventSubCriteriaUpdateDto';
 import { IEventProgress } from '../interface/eventProgress';
@@ -40,6 +39,7 @@ import {
 import { EvaluationResultRequestDto } from '../dto/evaluationResultRequestDto';
 import { ElementDto } from '../dto/elementDto';
 import { PerformanceReportGetDto } from '../dto/performanceReportGetDto';
+import { UserPerformerTypeGetDto } from '../dto/userPerformerTypeGetDto';
 
 @ApiTags('event')
 @Controller('events')
@@ -78,6 +78,13 @@ export class EventsController {
 
   @UseInterceptors(ClassSerializerInterceptor)
   @ApiOkResponse({ type: [EventProgressGetDto] })
+  @Get('progress')
+  getAllEventsProgress() : Promise<IEventProgress[]> {
+    return this.eventsService.getAllEventsProgress();
+  }
+
+  @UseInterceptors(ClassSerializerInterceptor)
+  @ApiOkResponse({ type: [EventProgressGetDto] })
   @Get(':id/progress')
   getEventProgress(@Param('id') eventId: number): Promise<IEventProgress> {
     return this.eventsService.getEventProgress(eventId);
@@ -95,8 +102,17 @@ export class EventsController {
   @UseInterceptors(ClassSerializerInterceptor)
   @ApiOkResponse({ type: [UserRatingGetDto] })
   @Get(':id/user-rating')
-  getUserRating(@Param('id') eventId: number): Promise<User[]> {
+  getUserRating(@Param('id') eventId: number): Promise<UserRatingGetDto[]> {
     return this.eventsService.getUserRating(eventId);
+  }
+
+  @UseInterceptors(ClassSerializerInterceptor)
+  @ApiOkResponse({ type: [UserPerformerTypeGetDto] })
+  @Get(':id/user/performer-type')
+  getUserPerformerType(
+    @Param('id') eventId: number
+  ): Promise<UserPerformerTypeGetDto[]> {
+    return this.eventsService.getUserPerformerType(eventId);
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
@@ -111,10 +127,10 @@ export class EventsController {
 
   @UseInterceptors(ClassSerializerInterceptor)
   @ApiOkResponse({ type: [SubmissionGetDto] })
-  @Get(':id/submissions/:submissionId')
+  @Get(':id/submissions/:evaluatorId')
   getSubmissionByEvaluatorId(
     @Param('id') eventId: number,
-    @Param('submissionId') evaluatorId: number
+    @Param('evaluatorId') evaluatorId: number
   ): Promise<SubmissionGetDto[]> {
     return this.eventsService.getSubmissionByEvaluatorId(eventId, evaluatorId);
   }
