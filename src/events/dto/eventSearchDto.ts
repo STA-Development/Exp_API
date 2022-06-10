@@ -1,9 +1,9 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
-import { IEventSearch } from "../interface/eventSearchInterface";
-import { Period } from "../../enums/eventPeriod";
-import { IsOptional } from "class-validator";
+import { IEventSearch } from '../interface/eventSearchInterface';
+import { Period } from '../../enums/eventPeriod';
+import { IsOptional } from 'class-validator';
 
-export class EventSearchDto implements IEventSearch{
+export class EventSearchDto implements IEventSearch {
   @ApiPropertyOptional()
   @IsOptional()
   title?: string;
@@ -15,4 +15,16 @@ export class EventSearchDto implements IEventSearch{
   @ApiPropertyOptional()
   @IsOptional()
   period?: Period;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  date?: Date;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  completedEventTitle?: string;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  completedEventDate?: Date;
 }
