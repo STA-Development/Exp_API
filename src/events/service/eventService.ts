@@ -158,6 +158,9 @@ export class EventsService {
   findAll(): Promise<Event[]> {
     return this.eventsRepository.findAll();
   }
+  async getMyEvents(){
+    return this.eventsRepository.getMyEvents()
+  }
 
   search(params: IEventSearch): Promise<Event[]> {
     if (params.title) return this.eventsRepository.findByTitle(params.title);

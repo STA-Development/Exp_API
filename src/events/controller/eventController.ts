@@ -10,10 +10,9 @@ import {
   Controller,
   UseInterceptors,
   ClassSerializerInterceptor,
-  Req
+  Query
 } from '@nestjs/common';
 import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
-import { Request } from 'express';
 import { JwtService } from '@nestjs/jwt';
 import { JwtPayload } from 'jsonwebtoken';
 import * as jwt from 'jsonwebtoken';
@@ -41,6 +40,8 @@ import { ElementDto } from '../dto/elementDto';
 import { PerformanceReportGetDto } from '../dto/performanceReportGetDto';
 import { UserPerformerTypeGetDto } from '../dto/userPerformerTypeGetDto';
 import {eventTitleAndIdGetDto} from "../dto/eventTitleAndIdGetDto";
+import {EventSearchDto} from "../dto/eventSearchDto";
+import {MyEventsGetDto} from "../dto/myEventsGetDto";
 
 @ApiTags('event')
 @Controller('events')
@@ -62,7 +63,7 @@ export class EventsController {
 
   @UseInterceptors(ClassSerializerInterceptor)
   @ApiOkResponse({ type: [EventTitleAndIdDto] })
-  @Get('titleAndId')
+  @Get('title-and-Id')
   async getEventNameAndId(): Promise<EventTitleAndIdDto[]> {
     return (await this.eventsService.findAll()).map((event) =>
         eventTitleAndIdGetDto(event) //todo do this wrap in controller or in service?
@@ -70,10 +71,18 @@ export class EventsController {
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
+  @ApiOkResponse({ type: [MyEventsGetDto] })
+  @Get('my-events')
+  async getMyEvents() {
+    return this.eventsService.getMyEvents()
+  }
+
+  @UseInterceptors(ClassSerializerInterceptor)
   @ApiOkResponse({ type: [EventDto] })
   @Get('search')
-  async search(@Req() req: Request): Promise<EventDto[]> {
-    const params: IEventSearch = { ...req.query };
+  async search(@Query() eventSearchDto: EventSearchDto): Promise<EventDto[]> {
+    const params: IEventSearch = { ...eventSearchDto };
+
     return (await this.eventsService.search(params)).map((event) =>
       eventGetDto(event)
     );
