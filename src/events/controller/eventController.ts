@@ -65,8 +65,8 @@ export class EventsController {
   @ApiOkResponse({ type: [EventTitleAndIdDto] })
   @Get('title-and-Id')
   async getEventNameAndId(): Promise<EventTitleAndIdDto[]> {
-    return (await this.eventsService.findAll()).map(
-      (event) => eventTitleAndIdGetDto(event) //todo do this wrap in controller or in service?
+    return (await this.eventsService.findAll()).map((event) =>
+      eventTitleAndIdGetDto(event)
     );
   }
 
@@ -170,10 +170,14 @@ export class EventsController {
     @Query() eventSearchDto: EventSearchDto
   ): Promise<PerformanceReportGetDto[][]> {
     const params: IEventSearch = { ...eventSearchDto };
-    const currentEvents = (await this.eventsService.search(params));
+    const currentEvents = await this.eventsService.search(params);
     const reportedEvents = [];
-    currentEvents.map(async event => reportedEvents.push( await this.eventsService.getPerformanceReport(event.id)))
-    return reportedEvents
+    currentEvents.map(async (event) =>
+      reportedEvents.push(
+        await this.eventsService.getPerformanceReport(event.id)
+      )
+    );
+    return reportedEvents;
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
@@ -185,8 +189,19 @@ export class EventsController {
 
   @UseInterceptors(ClassSerializerInterceptor)
   @Post()
-  create(@Body() createEventDto: CreateEventDto): Promise<EventDto> {
-    return this.eventsService.create(createEventDto);
+  async create(@Body() createEventDto: CreateEventDto): Promise<EventDto> {
+    const event = await this.eventsService.create(createEventDto);
+    await Promise.all([
+      this.eventsService.addEvaluatees(event.id, createEventDto.evaluateeId),
+      this.eventsService.addEvaluators(event.id, createEventDto.evaluatorId),
+      this.eventsService.addSubCriteria(
+        createEventDto.criteriaSubCriteriaId,
+        createEventDto.subCriteriaIds
+      ),
+      this.eventsService.addCriteria(event.id, createEventDto.criteriaId),
+      this.eventsService.addRating(event.id, createEventDto.ratingId)
+    ]);
+    return event;
   }
 
   @UseInterceptors(ClassSerializerInterceptor)
@@ -237,33 +252,6 @@ export class EventsController {
     @Body() criteriaRef: ElementDto
   ): Promise<Event> {
     return this.eventsService.removeCriteria(eventId, criteriaRef.id);
-  }
-
-  @UseInterceptors(ClassSerializerInterceptor)
-  @Patch(':eventId/subCriteria')
-  addSubCriteria(
-    @Param('eventId') eventId: number,
-    @Body() criteriaRef: EventSubCriteriaUpdateDto
-  ): Promise<void> {
-    return this.eventsService.addSubCriteria(eventId, criteriaRef);
-  }
-
-  @UseInterceptors(ClassSerializerInterceptor)
-  @Patch(':eventId/evaluator')
-  async addEvaluators(
-    @Param('eventId') eventId: number,
-    @Body() userRef: ElementDto
-  ): Promise<void> {
-    await this.eventsService.addEvaluators(eventId, userRef.id);
-  }
-
-  @UseInterceptors(ClassSerializerInterceptor)
-  @Patch(':eventId/evaluatee')
-  async addEvaluatees(
-    @Param('eventId') eventId: number,
-    @Body() userRef: ElementDto
-  ): Promise<void> {
-    await this.eventsService.addEvaluatees(eventId, userRef.id);
   }
 
   @UseInterceptors(ClassSerializerInterceptor)

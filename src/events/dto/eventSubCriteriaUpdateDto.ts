@@ -7,5 +7,5 @@ export class EventSubCriteriaUpdateDto {
 
   @ApiProperty()
   @IsInt()
-  userId: number;
+  criteriaSubCriteriaId: number;
 }
