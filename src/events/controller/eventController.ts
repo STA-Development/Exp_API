@@ -20,7 +20,7 @@ import * as jwt from 'jsonwebtoken';
 import { EventsService } from '../service/eventService';
 import { CreateEventDto } from '../dto/eventCreateDto';
 import { UpdateEventDto } from '../dto/eventUpdateDto';
-import { Event, EventDto } from '../entity/event';
+import { Event, EventDto, EventTitleAndIdDto } from '../entity/event';
 import { eventGetDto } from '../dto/eventGetDto';
 import { IEventSearch } from '../interface/eventSearchInterface';
 import { EventSubCriteriaUpdateDto } from '../dto/eventSubCriteriaUpdateDto';
@@ -40,6 +40,7 @@ import { EvaluationResultRequestDto } from '../dto/evaluationResultRequestDto';
 import { ElementDto } from '../dto/elementDto';
 import { PerformanceReportGetDto } from '../dto/performanceReportGetDto';
 import { UserPerformerTypeGetDto } from '../dto/userPerformerTypeGetDto';
+import {eventTitleAndIdGetDto} from "../dto/eventTitleAndIdGetDto";
 
 @ApiTags('event')
 @Controller('events')
@@ -56,6 +57,15 @@ export class EventsController {
   async findAll(): Promise<EventDto[]> {
     return (await this.eventsService.findAll()).map((event) =>
       eventGetDto(event)
+    );
+  }
+
+  @UseInterceptors(ClassSerializerInterceptor)
+  @ApiOkResponse({ type: [EventTitleAndIdDto] })
+  @Get('titleAndId')
+  async getEventNameAndId(): Promise<EventTitleAndIdDto[]> {
+    return (await this.eventsService.findAll()).map((event) =>
+        eventTitleAndIdGetDto(event) //todo do this wrap in controller or in service?
     );
   }
 
