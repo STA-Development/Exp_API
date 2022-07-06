@@ -61,53 +61,6 @@ export class EventsRepository {
       .getMany();
   }
 
-  async addSubCriteria(eventId: number, idRef: EventSubCriteriaUpdateDto) {
-    const userSubCriteriaRepository = await getRepository(UserSubCriteria);
-    const userSubCriteria = await userSubCriteriaRepository.findOne({
-      order: { id: 'DESC' },
-      where: { eventId }
-    });
-
-    const { ratingId } = userSubCriteria || {
-      ratingId: 0
-    };
-
-    const userSubCriterias = [];
-    for (let i = 0; i < idRef.subCriteriaId.length; i++) {
-      const userSubCriteria = new UserSubCriteria();
-      userSubCriteria.subCriteriaId = idRef.subCriteriaId[i];
-      userSubCriteria.eventId = eventId;
-      userSubCriteria.criteriaId = (
-        await this.subCriteriaRepository.findOneById(idRef.subCriteriaId[i])
-      ).criteria.id;
-      userSubCriteria.ratingId = ratingId;
-      userSubCriteria.userId = idRef.userId;
-      !(await userSubCriteriaRepository.findOne(userSubCriteria))
-        ? userSubCriterias.push(userSubCriteria)
-        : logger.info('data already exists');
-    }
-
-    if (
-      await userSubCriteriaRepository
-        .createQueryBuilder()
-        .where({ eventId })
-        .getOne()
-    )
-      await userSubCriteriaRepository
-        .createQueryBuilder()
-        .insert()
-        .values(userSubCriterias)
-        .execute();
-    else
-      throw new HttpException(
-        {
-          status: HttpStatus.BAD_REQUEST,
-          error: 'Cannot make changes in event'
-        },
-        HttpStatus.BAD_REQUEST
-      );
-  }
-
   async getSubmissionByEvaluatorId(
     eventId: number,
     evaluatorId: number
@@ -416,7 +369,7 @@ export class EventsRepository {
     });
   }
 
-  async addEvaluators(eventId: number, userId: number): Promise<void> {
+  async addEvaluators(eventId: number, userId: number[]): Promise<void> {
     if (!isUpcomingEvent(await this.eventRepository.findOne(eventId))) {
       throw new HttpException(
         {
@@ -427,28 +380,38 @@ export class EventsRepository {
       );
     }
     const eventEvaluatorRepository = await getRepository(EventEvaluator);
-    (await eventEvaluatorRepository
-      .createQueryBuilder()
-      .where({ eventId })
-      .getOne())
-      ? (await eventEvaluatorRepository
+    for (let i = 0; i < userId.length; i++) {
+      if (
+        await eventEvaluatorRepository
           .createQueryBuilder()
           .where({ eventId })
-          .andWhere({ userId })
-          .getOne())
-        ? logger.info('data already exists')
-        : await eventEvaluatorRepository
+          .getOne()
+      ) {
+        if (
+          await eventEvaluatorRepository
+            .createQueryBuilder()
+            .where({ eventId })
+            .andWhere({ userId: userId[i] })
+            .getOne()
+        ) {
+          logger.info('data already exists');
+        } else {
+          await eventEvaluatorRepository
             .createQueryBuilder()
             .insert()
             .values({
-              userId,
+              userId: userId[i],
               eventId
             })
-            .execute()
-      : logger.error("couldn't find event");
+            .execute();
+        }
+      } else {
+        logger.error("couldn't find event");
+      }
+    }
   }
 
-  async addEvaluatees(eventId: number, userId: number) {
+  async addEvaluatees(eventId: number, userId: number[]) {
     if (!isUpcomingEvent(await this.eventRepository.findOne(eventId))) {
       throw new HttpException(
         {
@@ -460,25 +423,35 @@ export class EventsRepository {
     }
     const eventEvaluateeRepository = await getRepository(EventEvaluatee);
 
-    (await eventEvaluateeRepository
-      .createQueryBuilder()
-      .where({ eventId })
-      .getOne())
-      ? (await eventEvaluateeRepository
+    for (let i = 0; i < userId.length; i++) {
+      if (
+        await eventEvaluateeRepository
           .createQueryBuilder()
           .where({ eventId })
-          .andWhere({ userId })
-          .getOne())
-        ? logger.info('data already exists')
-        : await eventEvaluateeRepository
+          .getOne()
+      ) {
+        if (
+          await eventEvaluateeRepository
+            .createQueryBuilder()
+            .where({ eventId })
+            .andWhere({ userId: userId[i] })
+            .getOne()
+        ) {
+          logger.info('data already exists');
+        } else {
+          await eventEvaluateeRepository
             .createQueryBuilder()
             .insert()
             .values({
-              userId,
+              userId: userId[i],
               eventId
             })
-            .execute()
-      : logger.error("couldn't find event");
+            .execute();
+        }
+      } else {
+        logger.error("couldn't find event");
+      }
+    }
   }
 
   addElement(event: Event) {

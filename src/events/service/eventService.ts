@@ -134,18 +134,15 @@ export class EventsService {
     return this.eventsRepository.removeElement(event);
   }
 
-  async addSubCriteria(
-    Id: number,
-    idRef: EventSubCriteriaUpdateDto
-  ): Promise<void> {
-    await this.eventsRepository.addSubCriteria(Id, idRef);
+  async addSubCriteria(Id: number, idRef: number[]): Promise<void> {
+    await this.criteriaRepository.addSubCriteria(Id, idRef);
   }
 
-  addEvaluators(eventId: number, userId: number): Promise<void> {
+  addEvaluators(eventId: number, userId: number[]): Promise<void> {
     return this.eventsRepository.addEvaluators(eventId, userId);
   }
 
-  addEvaluatees(eventId: number, userId: number): Promise<void> {
+  addEvaluatees(eventId: number, userId: number[]): Promise<void> {
     return this.eventsRepository.addEvaluatees(eventId, userId);
   }
 

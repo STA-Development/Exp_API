@@ -33,10 +33,9 @@ export class SubCriteriaController {
     @Body() createCriteriaDto: CreateSubCriteriaDto
   ): Promise<SubCriteria> {
     const subCriteria = await this.subCriteriaService.create(createCriteriaDto);
-    await this.criteriaService.addSubCriteria(
-      createCriteriaDto.criteriaId,
+    await this.criteriaService.addSubCriteria(createCriteriaDto.criteriaId, [
       subCriteria.id
-    );
+    ]);
     return subCriteria;
   }
 

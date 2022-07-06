@@ -1,16 +1,32 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { getRepository, Repository } from 'typeorm';
 import { CreateCriteriaDto } from '../dto/criteriaCreateDto';
 import { UpdateCriteriaDto } from '../dto/criteriaUpdateDto';
 import { Criteria } from '../entity/criteria';
+import { SubCriteria } from '../entity/subCriteria';
+import { SubCriteriaRepository } from './subCriteriaRepository';
 
 @Injectable()
 export class CriteriaRepository {
   @InjectRepository(Criteria)
   criteriaRepository: Repository<Criteria>;
 
-  addSubCriteria(criteria: Criteria) {
+  @Inject()
+  subCriteriaRepository: SubCriteriaRepository;
+
+  async addSubCriteria(criteriaId: number, idRef: number[]): Promise<Criteria> {
+    const subCriterias: SubCriteria[] = [];
+    for (let i = 0; i < idRef.length; i++) {
+      subCriterias.push(await this.subCriteriaRepository.findOneById(idRef[i]));
+    }
+    const criteria = await this.criteriaRepository.findOne(criteriaId);
+    if (!criteria?.subCriteria) {
+      criteria.subCriteria = subCriterias;
+    } else {
+      criteria.subCriteria.push(...subCriterias);
+    }
+
     return this.criteriaRepository.save(criteria);
   }
 

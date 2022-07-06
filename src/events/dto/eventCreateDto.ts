@@ -5,7 +5,8 @@ import {
   IsNumber,
   Min,
   Max,
-  IsEmpty
+  IsEmpty,
+  IsArray
 } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { Rating } from '../entity/rating';
@@ -38,4 +39,28 @@ export class CreateEventDto {
   @ApiProperty()
   @IsEmpty()
   rating: Rating[];
+
+  @ApiProperty()
+  @IsArray()
+  readonly evaluatorId: number[];
+
+  @ApiProperty()
+  @IsArray()
+  readonly evaluateeId: number[];
+
+  @ApiProperty()
+  @IsInt()
+  readonly criteriaId: number;
+
+  @ApiProperty()
+  @IsInt()
+  readonly ratingId: number;
+
+  @ApiProperty({ type: 'array', items: { type: 'number' } })
+  @IsArray()
+  subCriteriaIds: number[];
+
+  @ApiProperty()
+  @IsInt()
+  criteriaSubCriteriaId: number;
 }

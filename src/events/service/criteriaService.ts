@@ -13,16 +13,11 @@ export class CriteriaService {
   @Inject()
   subCriteriaRepository: SubCriteriaRepository;
 
-  async addSubCriteria(criteriaId: number, subCriteriaRef: number) {
-    const subCriteria = await this.subCriteriaRepository.findOneById(
-      subCriteriaRef
-    );
-    const criteria = await this.criteriaRepository.findOneById(criteriaId);
-
-    !criteria?.subCriteria
-      ? (criteria.subCriteria = [subCriteria])
-      : criteria.subCriteria.push(subCriteria);
-    return this.criteriaRepository.addSubCriteria(criteria);
+  async addSubCriteria(
+    criteriaId: number,
+    subCriteriaIds: number[]
+  ): Promise<Criteria> {
+    return this.criteriaRepository.addSubCriteria(criteriaId, subCriteriaIds);
   }
 
   create(createCriteriaDto: CreateCriteriaDto) {
